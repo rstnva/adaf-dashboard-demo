@@ -56,7 +56,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile=false --legacy-peer-deps
+        run: pnpm install --no-frozen-lockfile
 
       - name: Setup environment variables
         run: |
@@ -129,7 +129,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile=false --legacy-peer-deps
+        run: pnpm install --no-frozen-lockfile
 
       - name: Setup environment variables
         run: |
