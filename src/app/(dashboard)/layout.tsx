@@ -1,35 +1,46 @@
-import { ReactNode } from "react"
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu"
-import { ThemeToggle } from "@/components/ThemeToggle"
-import { HealthBadge } from "@/components/HealthBadge"
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+import QueryProvider from "@/components/providers/query-provider";
+import { HotkeyProvider } from "@/components/providers/hotkey-provider";
+import { SpotlightProvider } from "@/components/spotlight/Spotlight";
+import { TopBar } from "@/components/layout/TopBar";
+import { NavLeft } from "@/components/layout/NavLeft";
+import { NavigationGuard } from "@/components/NavigationGuard";
 
-export default function DashboardLayout({ children }: { children: ReactNode }) {
+const inter = Inter({ subsets: ["latin"] });
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div className="min-h-screen grid grid-rows-[auto_1fr]">
-      <header className="border-b">
-        <div className="container mx-auto flex items-center justify-between p-4">
-          <div className="flex items-center gap-4">
-            <div className="font-bold">ADAF Dashboard Pro</div>
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuLink href="#">Dashboard</NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink href="#">Reports</NavigationMenuLink>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+    <QueryProvider>
+      <HotkeyProvider context="global">
+        <SpotlightProvider>
+          <div className={cn("min-h-screen bg-gray-50 font-sans antialiased", inter.className)}>
+            <div className="flex h-screen">
+              {/* Left Navigation */}
+              <NavLeft />
+              
+              {/* Main Content Area */}
+              <div className="flex flex-1 flex-col overflow-hidden">
+                {/* Top Bar */}
+                <TopBar />
+                
+                {/* Page Content */}
+                <main className="flex-1 overflow-y-auto">
+                  <div className="container mx-auto px-6 py-8">
+                    <NavigationGuard>
+                      {children}
+                    </NavigationGuard>
+                  </div>
+                </main>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-4">
-            <HealthBadge />
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-      <main className="container mx-auto p-6">
-        {children}
-      </main>
-    </div>
-  )
+        </SpotlightProvider>
+      </HotkeyProvider>
+    </QueryProvider>
+  );
 }
