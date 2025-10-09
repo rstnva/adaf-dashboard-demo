@@ -1,0 +1,8 @@
+{
+  "name": "@lav-adaf/mock-gateway",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "dependencies": {}
+}

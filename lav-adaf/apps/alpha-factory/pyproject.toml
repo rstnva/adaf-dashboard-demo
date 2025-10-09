@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "alpha-factory"
+version = "0.1.0"
+description = "ML/Alpha agent for LAV/ADAF - mock data version"
+authors = ["LAV/ADAF Team <engineering@lav-adaf.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+fastapi = "^0.110.0"
+uvicorn = "^0.29.0"
+pandas = "^2.2.2"
+numpy = "^1.26.4"
+scikit-learn = "^1.5.0"
+
+[tool.poetry.scripts]
+alpha-factory = "alpha_factory.main:app"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

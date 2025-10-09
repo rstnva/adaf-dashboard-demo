@@ -1,0 +1,432 @@
+# ======================================================================================
+# LAV/ADAF Docker Compose Configuration
+# ======================================================================================
+# Profiles:
+#   - infra: Database, message queues, monitoring
+#   - core: Essential trading services
+#   - ml: Machine learning and analytics services
+#   - solana: Solana-specific services
+#   - full: Complete stack
+# ======================================================================================
+
+version: '3.8'
+
+# ======================================================================================
+# SHARED NETWORKS
+# ======================================================================================
+networks:
+  lav-network:
+    driver: bridge
+
+# ======================================================================================
+# SHARED VOLUMES
+# ======================================================================================
+volumes:
+  postgres_data:
+  clickhouse_data:
+  redis_data:
+  grafana_data:
+  kafka_data:
+  zookeeper_data:
+
+# ======================================================================================
+# SERVICES
+# ======================================================================================
+services:
+
+  # ======================================================================================
+  # INFRASTRUCTURE SERVICES
+  # ======================================================================================
+
+  postgres:
+    image: postgres:16-alpine
+    profiles: ["infra", "core", "full"]
+    environment:
+      POSTGRES_DB: lav_adaf_db
+      POSTGRES_USER: lav_user
+      POSTGRES_PASSWORD: lav_password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infra/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - lav-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lav_user -d lav_adaf_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:23.12-alpine
+    profiles: ["infra", "ml", "full"]
+    environment:
+      CLICKHOUSE_DB: lav_analytics
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - ./infra/clickhouse/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    networks:
+      - lav-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8123/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    profiles: ["infra", "core", "full"]
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - lav-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    profiles: ["infra", "core", "full"]
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    volumes:
+      - zookeeper_data:/var/lib/zookeeper/data
+    networks:
+      - lav-network
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    profiles: ["infra", "core", "full"]
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    networks:
+      - lav-network
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-topics --bootstrap-server localhost:9092 --list"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  prometheus:
+    image: prom/prometheus:latest
+    profiles: ["infra", "full"]
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - lav-network
+
+  grafana:
+    image: grafana/grafana:latest
+    profiles: ["infra", "full"]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: false
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./infra/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./infra/grafana/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - lav-network
+    depends_on:
+      - prometheus
+
+  # ======================================================================================
+  # CORE TRADING SERVICES
+  # ======================================================================================
+
+  gateway:
+    build:
+      context: ./apps/gateway
+      dockerfile: Dockerfile
+    profiles: ["core", "full"]
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - REDIS_URL=redis://redis:6379
+      - KAFKA_BROKERS=kafka:9092
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - lav-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  market-sentinel:
+    build:
+      context: ./apps/market-sentinel
+      dockerfile: Dockerfile
+    profiles: ["core", "full"]
+    ports:
+      - "3010:3010"
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - REDIS_URL=redis://redis:6379
+      - KAFKA_BROKERS=kafka:9092
+      - TIMEZONE=America/Mexico_City
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - lav-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3010/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  risk-warden:
+    build:
+      context: ./apps/risk-warden
+      dockerfile: Dockerfile
+    profiles: ["core", "full"]
+    ports:
+      - "3012:3012"
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - REDIS_URL=redis://redis:6379
+      - KAFKA_BROKERS=kafka:9092
+      - MAX_VAR_1D=0.03
+      - MAX_DRAWDOWN=0.10
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - lav-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3012/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  executioner:
+    build:
+      context: ./apps/executioner
+      dockerfile: Dockerfile
+    profiles: ["core", "full"]
+    ports:
+      - "3011:3011"
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - KAFKA_BROKERS=kafka:9092
+      - DEFAULT_SLIPPAGE_LIMIT=0.005
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - lav-network
+
+  # ======================================================================================
+  # DEFI SERVICES
+  # ======================================================================================
+
+  defi-ranger:
+    build:
+      context: ./apps/defi-ranger
+      dockerfile: Dockerfile
+    profiles: ["core", "full"]
+    ports:
+      - "3020:3020"
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - KAFKA_BROKERS=kafka:9092
+      - ETH_RPC_URL=${ETH_RPC_URL}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - lav-network
+
+  basis-maker:
+    build:
+      context: ./apps/basis-maker
+      dockerfile: Dockerfile
+    profiles: ["core", "full"]
+    ports:
+      - "3021:3021"
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - KAFKA_BROKERS=kafka:9092
+    networks:
+      - lav-network
+
+  pendle-alchemist:
+    build:
+      context: ./apps/pendle-alchemist
+      dockerfile: Dockerfile
+    profiles: ["core", "full"]
+    ports:
+      - "3022:3022"
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - KAFKA_BROKERS=kafka:9092
+    networks:
+      - lav-network
+
+  # ======================================================================================
+  # ML & INTELLIGENCE SERVICES
+  # ======================================================================================
+
+  alpha-factory:
+    build:
+      context: ./apps/alpha-factory
+      dockerfile: Dockerfile
+    profiles: ["ml", "full"]
+    ports:
+      - "4010:4010"
+    environment:
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - CLICKHOUSE_URL=http://clickhouse:8123
+      - KAFKA_BROKERS=kafka:9092
+    depends_on:
+      postgres:
+        condition: service_healthy
+      clickhouse:
+        condition: service_healthy
+    networks:
+      - lav-network
+    volumes:
+      - ./data/models:/app/models
+      - ./data/features:/app/features
+
+  regime-detector:
+    build:
+      context: ./apps/regime-detector
+      dockerfile: Dockerfile
+    profiles: ["ml", "full"]
+    ports:
+      - "4011:4011"
+    environment:
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - CLICKHOUSE_URL=http://clickhouse:8123
+      - KAFKA_BROKERS=kafka:9092
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    networks:
+      - lav-network
+
+  # ======================================================================================
+  # SECURITY SERVICES
+  # ======================================================================================
+
+  security-aegis:
+    build:
+      context: ./apps/security-aegis
+      dockerfile: Dockerfile
+    profiles: ["core", "full"]
+    ports:
+      - "5010:5010"
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - FIREBLOCKS_API_KEY=${FIREBLOCKS_API_KEY}
+      - SAFE_ADDRESS=${SAFE_ADDRESS}
+    networks:
+      - lav-network
+    volumes:
+      - ./secrets:/app/secrets:ro
+
+  compliance-scribe:
+    build:
+      context: ./apps/compliance-scribe
+      dockerfile: Dockerfile
+    profiles: ["core", "full"]
+    ports:
+      - "5011:5011"
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - TRM_API_KEY=${TRM_API_KEY}
+      - CHAINALYSIS_API_KEY=${CHAINALYSIS_API_KEY}
+    networks:
+      - lav-network
+
+  # ======================================================================================
+  # DASHBOARD (Migrated from existing)
+  # ======================================================================================
+
+  dashboard:
+    build:
+      context: ./apps/dashboard
+      dockerfile: Dockerfile
+    profiles: ["core", "full"]
+    ports:
+      - "3005:3005"
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_URL=postgresql://lav_user:lav_password@postgres:5432/lav_adaf_db
+      - NEXT_PUBLIC_API_URL=http://gateway:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      gateway:
+        condition: service_healthy
+    networks:
+      - lav-network
+
+  # ======================================================================================
+  # SOLANA SERVICES (Optional Profile)
+  # ======================================================================================
+
+  solana-executor:
+    build:
+      context: ./apps/solana-executor
+      dockerfile: Dockerfile
+    profiles: ["solana", "full"]
+    ports:
+      - "3030:3030"
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=${SOLANA_RPC_URL}
+      - KAFKA_BROKERS=kafka:9092
+    networks:
+      - lav-network
