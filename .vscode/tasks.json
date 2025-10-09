@@ -6,6 +6,26 @@
 			"type": "shell",
 			"command": "node -e \"import('./infra/seed.ts').catch(e=>{console.error(e);process.exit(1)})\"",
 			"group": "build"
+		},
+		{
+			"label": "Run ADAF + LAV dev (watch)",
+			"type": "shell",
+			"command": "pnpm dev:ambos",
+			"isBackground": true,
+			"problemMatcher": [
+				"$tsc",
+				"$eslint - stylish"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Build (quick)",
+			"type": "shell",
+			"command": "pnpm -s build",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
 		}
 	]
 }

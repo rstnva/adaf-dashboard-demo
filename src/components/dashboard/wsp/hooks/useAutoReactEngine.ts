@@ -1,6 +1,6 @@
 "use client";
 // Motor de reglas y señales para Auto-React Engine (poll 60s, cooldown 30m, stale-aware)
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { WspEvent } from '../../../../types/wsp';
 
 type Feeds = {
@@ -24,46 +24,52 @@ export function useAutoReactEngine() {
   const guardrails = useMemo(() => [
     'slippage ≤ 0.5%', 'LTV ≤ 35%', 'HF ≥ 1.6–1.8', 'Real-Yield ≥ 60–70%', 'Semáforo LAV vigente'
   ], []);
+  const fetchFeed = useCallback(async (url: string) => {
+    const res = await fetch(url, { cache: 'no-store' });
+    const stale = res.headers.get('X-WSP-Data') === 'stale';
+    const data = await res.json();
+    return { data, stale } as const;
+  }, []);
 
-  useEffect(() => {
-    async function fetchFeed(url: string) {
-      const res = await fetch(url, { cache: 'no-store' });
-      const stale = res.headers.get('X-WSP-Data') === 'stale';
-      const data = await res.json();
-      return { data, stale };
+  const getCooldown = useCallback(async (kind: string): Promise<{ active: boolean }> => {
+    try {
+      const res = await fetch(`/api/wsp/events/cooldown?kind=${encodeURIComponent(kind)}`, { cache: 'no-store' });
+      if (res.ok) {
+        const j = await res.json();
+        return { active: Boolean(j.active) };
+      }
+    } catch {
+      // ignore network errors
     }
-
-    async function getCooldown(kind: string): Promise<{ active: boolean }> {
-      try {
-        const res = await fetch(`/api/wsp/events/cooldown?kind=${encodeURIComponent(kind)}`, { cache: 'no-store' });
-        if (res.ok) {
-          const j = await res.json();
-          return { active: Boolean(j.active) };
-        }
-      } catch {}
-      // Fallback localStorage
-      try {
-        const item = localStorage.getItem(`wsp:cooldown:${kind}`);
-        if (item) {
-          const exp = Number(item);
-          if (Date.now() < exp) return { active: true };
-        }
-      } catch {}
-      return { active: false };
+    // Fallback localStorage
+    try {
+      const item = localStorage.getItem(`wsp:cooldown:${kind}`);
+      if (item) {
+        const exp = Number(item);
+        if (Date.now() < exp) return { active: true };
+      }
+    } catch {
+      // ignore storage errors
     }
+    return { active: false };
+  }, []);
 
-    async function setCooldown(kind: string) {
-      // Try server first
-      try {
-        await fetch('/api/wsp/events/cooldown', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ kind }) });
-      } catch {}
-      // Always set local fallback
-      try {
-        localStorage.setItem(`wsp:cooldown:${kind}`, String(Date.now() + COOLDOWN_SEC * 1000));
-      } catch {}
+  const setCooldown = useCallback(async (kind: string) => {
+    // Try server first
+    try {
+      await fetch('/api/wsp/events/cooldown', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ kind }) });
+    } catch {
+      // ignore network errors
     }
+    // Always set local fallback
+    try {
+      localStorage.setItem(`wsp:cooldown:${kind}`, String(Date.now() + COOLDOWN_SEC * 1000));
+    } catch {
+      // ignore storage errors
+    }
+  }, []);
 
-    async function poll() {
+  const poll = useCallback(async () => {
       try {
         const [etfRes, ratesRes, indicesRes, wspsRes, calRes] = await Promise.all([
           fetchFeed('/api/wsp/etf?asset=BTC&window=1d'),
@@ -177,12 +183,13 @@ export function useAutoReactEngine() {
       } catch (e) {
         // silent fail, keep prior event
       }
-    }
+  }, [fetchFeed, getCooldown, setCooldown, guardrails]);
 
+  useEffect(() => {
     poll();
     timer.current = window.setInterval(poll, 60000);
     return () => { if (timer.current) window.clearInterval(timer.current); };
-  }, []);
+  }, [poll]);
 
   return { event, stale };
 }

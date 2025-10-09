@@ -1,6 +1,5 @@
 "use client";
 import React, { createContext, useContext } from 'react';
-import { recordEvent } from '@/metrics/wsp.metrics';
 
 type RBACContextValue = {
   hasPermission: (perm: string) => boolean;
@@ -27,7 +26,19 @@ export function useRBAC() {
 }
 
 export function rbacTelemetry(route: string, allowed: boolean, userId?: string) {
-  // Minimal telemetry: reuse metrics event counter and console log
-  try { recordEvent(); } catch {}
+  // Client-safe telemetry: avoid importing server-only modules in client bundle.
+  // Defer server metrics to a dynamic import only on the server.
+  try {
+    // Fire-and-forget dynamic import for server environments only
+    if (typeof window === 'undefined') {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      (async () => {
+        try {
+          const mod = await import('@/metrics/wsp.metrics');
+          mod.recordEvent();
+        } catch {}
+      })();
+    }
+  } catch {}
   try { console.info('RBAC', { route, allowed, userId }); } catch {}
 }

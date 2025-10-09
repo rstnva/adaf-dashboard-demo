@@ -1,0 +1,155 @@
+# Summer.fi Prometheus Alerting Rules
+# File: summer-fi-alerts.yml
+
+groups:
+  - name: "summer-fi-integration"
+    interval: "30s"
+    rules:
+      # High API Latency Alert
+      - alert: SummerFiHighLatency
+        expr: |
+          histogram_quantile(0.95, 
+            sum(rate(http_request_duration_seconds_bucket{path=~"/api/integrations/summer.*"}[5m])) 
+            by (le)
+          ) > 0.45
+        for: "5m"
+        labels:
+          severity: "warning"
+          service: "summer-fi"
+          component: "api"
+        annotations:
+          summary: "Summer.fi API p95 latency is high"
+          description: "Summer.fi API p95 response time {{ $value }}s exceeds 450ms threshold for 5 minutes"
+          runbook_url: "https://docs.adaf.com/runbooks/summer-fi-latency"
+
+      # High Error Rate Alert  
+      - alert: SummerFiHighErrorRate
+        expr: |
+          sum(rate(http_requests_total{path=~"/api/integrations/summer.*", status_code=~"5.."}[5m])) /
+          sum(rate(http_requests_total{path=~"/api/integrations/summer.*"}[5m])) > 0.01
+        for: "3m"
+        labels:
+          severity: "critical"
+          service: "summer-fi"
+          component: "api"
+        annotations:
+          summary: "Summer.fi API error rate is high"
+          description: "Summer.fi 5xx error rate {{ $value | humanizePercentage }} exceeds 1% for 3 minutes"
+          runbook_url: "https://docs.adaf.com/runbooks/summer-fi-errors"
+
+      # RBAC Permission Mismatch Alert
+      - alert: SummerFiRBACMismatch  
+        expr: |
+          increase(wsp_rbac_denied_total{feature="summer"}[5m]) > 10
+        for: "5m"
+        labels:
+          severity: "warning"
+          service: "summer-fi"
+          component: "rbac"
+        annotations:
+          summary: "High Summer.fi RBAC denials detected"
+          description: "{{ $value }} Summer.fi RBAC denials in 5 minutes - possible permission misconfiguration"
+          runbook_url: "https://docs.adaf.com/runbooks/summer-fi-rbac"
+
+      # Widget Load Failure Alert
+      - alert: SummerFiWidgetFailure
+        expr: |
+          sum(rate(wsp_widget_load_failures_total{widget_type=~"Summer.*"}[5m])) > 0.05
+        for: "2m"
+        labels:
+          severity: "warning"
+          service: "summer-fi"
+          component: "widget"
+        annotations:
+          summary: "Summer.fi widget load failures detected"
+          description: "{{ $value }}/s Summer.fi widget load failures - check API connectivity"
+          runbook_url: "https://docs.adaf.com/runbooks/summer-fi-widgets"
+
+      # Feature Flag Disable Detection
+      - alert: SummerFiFeatureFlagDisabled
+        expr: |
+          wsp_feature_flag_enabled{flag="summer"} == 0
+        for: "1m"
+        labels:
+          severity: "info"
+          service: "summer-fi"
+          component: "feature-flag"
+        annotations:
+          summary: "Summer.fi feature flag has been disabled"
+          description: "NEXT_PUBLIC_FF_SUMMER_ENABLED is false - Summer.fi widgets are hidden"
+          runbook_url: "https://docs.adaf.com/runbooks/summer-fi-feature-flags"
+
+      # No Recent Widget Interactions (Stale Data)
+      - alert: SummerFiStaleInteractions
+        expr: |
+          (time() - wsp_integrations_click_total{provider="summer"}) > 3600
+        for: "10m"
+        labels:
+          severity: "info"
+          service: "summer-fi" 
+          component: "interactions"
+        annotations:
+          summary: "No Summer.fi widget interactions detected"
+          description: "No Summer.fi clicks recorded for over 1 hour - check user activity or widget visibility"
+
+# Canary Release Specific Alerts
+  - name: "summer-fi-canary"
+    interval: "15s"
+    rules:
+      # Canary vs Stable Comparison
+      - alert: SummerFiCanaryLatencyRegression
+        expr: |
+          (
+            histogram_quantile(0.95, 
+              sum(rate(http_request_duration_seconds_bucket{
+                path=~"/api/integrations/summer.*",
+                deployment="canary"
+              }[2m])) by (le)
+            )
+            -
+            histogram_quantile(0.95, 
+              sum(rate(http_request_duration_seconds_bucket{
+                path=~"/api/integrations/summer.*",
+                deployment="stable"  
+              }[2m])) by (le)
+            )
+          ) / 
+          histogram_quantile(0.95, 
+            sum(rate(http_request_duration_seconds_bucket{
+              path=~"/api/integrations/summer.*",
+              deployment="stable"
+            }[2m])) by (le)
+          ) > 0.20
+        for: "2m"
+        labels:
+          severity: "critical"
+          service: "summer-fi"
+          component: "canary"
+          action: "rollback"
+        annotations:
+          summary: "Summer.fi canary latency regression detected"
+          description: "Canary p95 latency is {{ $value | humanizePercentage }} higher than stable"
+          runbook_url: "https://docs.adaf.com/runbooks/canary-rollback"
+
+      - alert: SummerFiCanaryErrorSpike
+        expr: |
+          sum(rate(http_requests_total{
+            path=~"/api/integrations/summer.*",
+            deployment="canary", 
+            status_code=~"5.."
+          }[1m])) > 
+          sum(rate(http_requests_total{
+            path=~"/api/integrations/summer.*",
+            deployment="stable",
+            status_code=~"5.."
+          }[1m])) * 2
+        for: "1m"
+        labels:
+          severity: "critical"
+          service: "summer-fi"
+          component: "canary"
+          action: "rollback"
+        annotations:
+          summary: "Summer.fi canary error spike - immediate rollback required"
+          description: "Canary 5xx errors are 2x higher than stable deployment"
+          runbook_url: "https://docs.adaf.com/runbooks/canary-rollback"

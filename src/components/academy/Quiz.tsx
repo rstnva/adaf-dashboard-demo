@@ -25,7 +25,7 @@ interface QuizQuestion {
   points: number;
 }
 
-interface Quiz {
+interface QuizModel {
   id: string;
   lessonId: string;
   title: string;
@@ -46,7 +46,7 @@ interface QuizAttempt {
 }
 
 interface QuizProps {
-  quiz: Quiz;
+  quiz: QuizModel;
   previousAttempts: QuizAttempt[];
   onSubmit: (answers: Record<string, string>) => Promise<QuizAttempt>;
   onRetake?: () => void;

@@ -3,16 +3,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import crypto from 'crypto'
 import { PrismaClient } from '@prisma/client'
-import { Redis } from 'ioredis'
+import { getSafeRedis } from '@/lib/safe-redis'
 
 const prisma = new PrismaClient()
-const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379')
+const redis = getSafeRedis()
 
 // Schema de validación para TVLPoint
 const TVLPointSchema = z.object({
   chain: z.string().min(1),
   protocol: z.string().min(1),
-  metric: z.string().regex(/^[a-z0-9\.\-_]+$/).default('tvl.usd'),
+  metric: z.string().regex(/^[a-z0-9.\-_]+$/).default('tvl.usd'),
   value: z.number(),
   ts: z.string().datetime()
 })
@@ -32,17 +32,24 @@ export async function POST(request: NextRequest) {
     // Generar hash para deduplicación
     const hash = generateTVLHash(point)
     
-    // Verificar duplicados en Redis (3 horas de ventana)
-    const isDuplicate = await redis.setnx(`dedupe:onchain:${hash}`, '1')
-    if (!isDuplicate) {
+    // Verificar duplicados en Redis (3 horas de ventana) emulando setnx
+    const key = `dedupe:onchain:${hash}`
+    const exists = await (redis as any).get(key)
+    const isDuplicate = !!exists
+    if (isDuplicate) {
       return NextResponse.json({
         status: 'duplicate',
         hash
       })
     }
     
-    // Configurar expiración
-    await redis.expire(`dedupe:onchain:${hash}`, 3 * 3600)
+    // Configurar valor y expiración
+    if ((redis as any).setex) {
+      await (redis as any).setex(key, 3 * 3600, '1')
+    } else {
+      await (redis as any).set(key, '1')
+      await (redis as any).expire(key, 3 * 3600)
+    }
     
     // Severidad básica (el análisis real se hace en el worker)
     const severity = 'low'

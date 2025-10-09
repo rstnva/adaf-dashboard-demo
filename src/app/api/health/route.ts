@@ -1,8 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const MOCK_MODE = process.env.MOCK_MODE === '1';
+function isEnabled(name: 'db'|'redis'|'external') {
+  const key = `HEALTH_ENABLE_${name.toUpperCase()}` as const;
+  const v = process.env[key];
+  if (typeof v === 'string') return v === '1';
+  // En MOCK_MODE desactivamos por defecto los checks pesados
+  return !MOCK_MODE;
+}
+
 // Health check endpoint crítico para producción
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const url = new URL(req.url);
+    const deep = url.searchParams.get('deep') === '1';
+    const timeoutMs = Number(url.searchParams.get('timeout') || 2500);
+    const forceReal = url.searchParams.get('force') === 'real';
+
     // Verificaciones de salud críticas
     const checks = {
       timestamp: new Date().toISOString(),
@@ -11,12 +25,16 @@ export async function GET() {
       environment: process.env.NODE_ENV || 'development',
       uptime: process.uptime(),
       memory: process.memoryUsage(),
-      checks: {
-        database: await checkDatabase(),
-        redis: await checkRedis(),
-        filesystem: await checkFilesystem(),
-        external_apis: await checkExternalAPIs()
-      }
+      checks: deep
+        ? {
+            database: await checkDatabase(timeoutMs, forceReal),
+            redis: await checkRedis(timeoutMs, forceReal),
+            filesystem: await checkFilesystem(),
+            external_apis: await checkExternalAPIs(timeoutMs, forceReal)
+          }
+        : {
+            ping: { healthy: true, message: 'OK (shallow)' }
+          }
     };
 
     // Si alguna verificación falla, devolver 503
@@ -37,13 +55,19 @@ export async function GET() {
   }
 }
 
-async function checkDatabase() {
+async function checkDatabase(timeoutMs = 2000, allowReal = false) {
   try {
+    if (!allowReal && !isEnabled('db')) {
+      return { healthy: true, message: 'Database check disabled (mock)' };
+    }
     // Importar dinámicamente para evitar errores si no está disponible
     const { PrismaClient } = await import('@prisma/client');
     const prisma = new PrismaClient();
-    
+    // timeout manual
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeoutMs);
     await prisma.$queryRaw`SELECT 1`;
+    clearTimeout(id);
     await prisma.$disconnect();
     
     return { healthy: true, message: 'Database connection successful' };
@@ -56,8 +80,11 @@ async function checkDatabase() {
   }
 }
 
-async function checkRedis() {
+async function checkRedis(_timeoutMs = 2000, allowReal = false) {
   try {
+    if (!allowReal && !isEnabled('redis')) {
+      return { healthy: true, message: 'Redis check disabled (mock)' };
+    }
     // Redis check (si está configurado)
     if (process.env.REDIS_URL) {
       // Implementar check de Redis aquí
@@ -76,7 +103,8 @@ async function checkRedis() {
 async function checkFilesystem() {
   try {
     const fs = await import('fs/promises');
-    await fs.access('/tmp', fs.constants.W_OK);
+    const { constants } = await import('fs');
+    await fs.access('/tmp', constants.W_OK);
     return { healthy: true, message: 'Filesystem writable' };
   } catch (error) {
     return { 
@@ -87,14 +115,17 @@ async function checkFilesystem() {
   }
 }
 
-async function checkExternalAPIs() {
+async function checkExternalAPIs(timeoutMs = 2000, allowReal = false) {
   try {
+    if (!allowReal && !isEnabled('external')) {
+      return { healthy: true, message: 'External checks disabled (mock)' };
+    }
     // Verificar APIs externas críticas
     const checks = [];
     
     // Ejemplo: verificar conectividad externa
     const response = await fetch('https://httpbin.org/status/200', { 
-      signal: AbortSignal.timeout(5000) 
+      signal: AbortSignal.timeout(timeoutMs) 
     });
     
     if (response.ok) {

@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
 export default function DashboardRootRedirect() {
-  redirect('/academy');
+  redirect('/dashboard');
   return null;
 }

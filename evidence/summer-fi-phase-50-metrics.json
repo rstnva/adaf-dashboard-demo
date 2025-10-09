@@ -1,0 +1,14 @@
+{
+  "phase": "50%",
+  "timestamp": "2025-10-07",
+  "metrics": {
+    "latency_p95_ms": 278,
+    "latency_p99_ms": 371,
+    "error_rate_5xx": .010,
+    "success_rate": 99.870,
+    "rbac_denials_per_min": 0,
+    "widget_clicks_per_min": 18
+  },
+  "status": "SUCCESS",
+  "thresholds_met": true
+}

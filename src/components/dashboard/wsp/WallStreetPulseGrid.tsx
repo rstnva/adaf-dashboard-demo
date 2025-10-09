@@ -1,7 +1,7 @@
 "use client";
 // Grid drag & drop con persistencia para Wall Street Pulse
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { EtfFlowWidget } from './widgets/EtfFlowWidget';
@@ -10,14 +10,18 @@ import { IndicesBetaWidget } from './widgets/IndicesBetaWidget';
 import { CalendarCatalystWidget } from './widgets/CalendarCatalystWidget';
 import { WspsScoreWidget } from './widgets/WspsScoreWidget';
 import { EventBannerWidget } from './widgets/EventBannerWidget';
+import { SummerLazyVaultsWidget } from './widgets/SummerLazyVaultsWidget';
+import { SummerMultiplyWidget } from './widgets/SummerMultiplyWidget';
 
 const WIDGETS = [
-  { key: 'etf', component: <EtfFlowWidget /> },
-  { key: 'indices', component: <IndicesBetaWidget /> },
-  { key: 'rates', component: <RatesFxWidget /> },
-  { key: 'wsps', component: <WspsScoreWidget /> },
-  { key: 'calendar', component: <CalendarCatalystWidget /> },
-  { key: 'event', component: <EventBannerWidget /> },
+  { key: 'etf', component: <EtfFlowWidget />, lane: 'market-data' },
+  { key: 'indices', component: <IndicesBetaWidget />, lane: 'market-data' },
+  { key: 'rates', component: <RatesFxWidget />, lane: 'market-data' },
+  { key: 'wsps', component: <WspsScoreWidget />, lane: 'scoring' },
+  { key: 'calendar', component: <CalendarCatalystWidget />, lane: 'events' },
+  { key: 'event', component: <EventBannerWidget />, lane: 'events' },
+  { key: 'summer-lazy', component: <SummerLazyVaultsWidget />, lane: 'onchain-yield' },
+  { key: 'summer-multiply', component: <SummerMultiplyWidget />, lane: 'onchain-yield' },
 ];
 
 const STORAGE_KEY = 'wsp-layout-v1';
@@ -49,12 +53,12 @@ export function WallStreetPulseGrid() {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   }, []);
 
-  const onDragEnd = useCallback((event: any) => {
+  const onDragEnd = useCallback((event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
     setOrder(prev => {
-      const oldIndex = prev.indexOf(active.id);
-      const newIndex = prev.indexOf(over.id);
+      const oldIndex = prev.indexOf(String(active.id));
+      const newIndex = prev.indexOf(String(over.id));
       const next = arrayMove(prev, oldIndex, newIndex);
       persist(next);
       return next;

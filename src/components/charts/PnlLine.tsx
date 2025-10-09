@@ -13,7 +13,6 @@ export function PnlLine() {
     if (!chartRef.current) return;
     setExporting(true);
     try {
-      // @ts-expect-error: html-to-image types not installed; resolved at runtime
       const mod = await import('html-to-image')
   await mod.toPng(chartRef.current)
         .then((dataUrl: string) => {

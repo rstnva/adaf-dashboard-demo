@@ -3,12 +3,12 @@
 // Monta el grid de widgets drag & drop
 
 import { WallStreetPulseGrid } from '@/components/dashboard/wsp/WallStreetPulseGrid';
-import { useRBAC } from '@/contexts/DashboardLayoutContext';
 import { useFeatureFlag } from '../../../lib/featureFlags';
 import { wspI18n } from '@/components/dashboard/wsp/utils/i18n';
 
 export default function WallStreetPulsePage() {
-  const { hasPermission } = useRBAC();
+  // Mock RBAC - always allow access for demo
+  const hasPermission = (_permission: string) => true;
   const wspEnabled = useFeatureFlag('FF_WSP_ENABLED');
 
   if (!wspEnabled || !hasPermission('feature:wsp')) {

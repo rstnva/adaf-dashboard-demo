@@ -1,4 +1,6 @@
 "use client"
+
+import React from 'react';
 import { useEffect, useMemo, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -6,8 +8,8 @@ type VarResp = { varUsd: number; varPct: number; ts: string }
 type DdResp = Array<{ date: string; nav: number; ddPct: number; ddUsd: number; peak: number }>
 
 type LimitsResp = {
-  limits: { ltv: number; hf: number; slippage: number; realyield: number }
-  runtime: { ltv_current: number; hf_current: number; slippage_current: number; realyield_current: number }
+  limits: Array<{ key: string; value: number; notes: string | null }>
+  metrics: Array<{ key: string; value: number; ts: string | null }>
 }
 
 function useRiskData() {
@@ -65,12 +67,39 @@ function MiniLine({ data }: { data: Array<{ date: string; value: number }> }) {
 
 export default function RiskPanel() {
   const { var1d, var7d, dd, limits, error } = useRiskData()
-  const ddMini = useMemo(() => (dd ?? []).map(r => ({ date: r.date, value: r.ddPct })), [dd])
-  const ddCurrent = dd?.length ? dd[dd.length - 1] : null
+  
+  // Ensure dd is always an array, even if API returns error
+  const ddArray = Array.isArray(dd) ? dd : []
+  
+  const ddMini = useMemo(() => ddArray.map(r => ({ date: r.date, value: r.ddPct })), [ddArray])
+  const ddCurrent = ddArray.length ? ddArray[ddArray.length - 1] : null
   const ddMax = useMemo(() => {
-    if (!dd?.length) return null
-    return dd.reduce((m, r) => Math.min(m, r.ddPct), 0)
-  }, [dd])
+    if (!ddArray.length) return null
+    return ddArray.reduce((m, r) => Math.min(m, r.ddPct), 0)
+  }, [ddArray])
+
+  // Transform API response to expected structure
+  const limitsStructured = useMemo(() => {
+    if (!limits || !limits.limits || !Array.isArray(limits.limits)) return null
+    
+    const limitsMap = Object.fromEntries(limits.limits.map((l: any) => [l.key, l.value]))
+    const metricsMap = Object.fromEntries((limits.metrics || []).map((m: any) => [m.key, m.value]))
+    
+    return {
+      limits: {
+        ltv: limitsMap.ltv || 0.8,
+        hf: limitsMap.hf || 1.6, 
+        slippage: limitsMap.slippage || 0.02,
+        realyield: limitsMap.realyield || 0.06
+      },
+      runtime: {
+        ltv_current: metricsMap['ltv.current'] || 0,
+        hf_current: metricsMap['hf.current'] || 0,
+        slippage_current: metricsMap['slippage.current'] || 0,
+        realyield_current: metricsMap['realyield.current'] || 0
+      }
+    }
+  }, [limits])
 
   return (
     <div className="space-y-4">
@@ -79,7 +108,16 @@ export default function RiskPanel() {
           <CardTitle>Riesgo & Límites</CardTitle>
         </CardHeader>
         <CardContent>
-          {error && <div className="text-sm text-red-500 mb-2">{error}</div>}
+          {error && (
+            <div className="text-sm text-red-500 mb-2">
+              {error}
+              {error.includes('relation "metrics" does not exist') && (
+                <div className="text-xs text-amber-500 mt-1">
+                  Tip: Run "pnpm seed" to create database tables and sample data
+                </div>
+              )}
+            </div>
+          )}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="rounded border border-white/10 p-3">
               <div className="text-xs text-muted-foreground">VaR 1d</div>
@@ -110,13 +148,15 @@ export default function RiskPanel() {
           <div className="mt-4">
             <div className="text-xs text-muted-foreground mb-2">Uso de límites</div>
             <div className="flex flex-wrap gap-2">
-              {limits && (
+              {limitsStructured ? (
                 <>
-                  <Chip name="Slippage" value={limits.runtime.slippage_current} limit={limits.limits.slippage} tone="amber" />
-                  <Chip name="LTV" value={limits.runtime.ltv_current} limit={limits.limits.ltv} tone="emerald" />
-                  <Chip name="HF" value={limits.runtime.hf_current} limit={limits.limits.hf} tone="blue" inverse />
-                  <Chip name="RealYield" value={limits.runtime.realyield_current} limit={limits.limits.realyield} tone="violet" />
+                  <Chip name="Slippage" value={limitsStructured.runtime.slippage_current} limit={limitsStructured.limits.slippage} tone="amber" />
+                  <Chip name="LTV" value={limitsStructured.runtime.ltv_current} limit={limitsStructured.limits.ltv} tone="emerald" />
+                  <Chip name="HF" value={limitsStructured.runtime.hf_current} limit={limitsStructured.limits.hf} tone="blue" inverse />
+                  <Chip name="RealYield" value={limitsStructured.runtime.realyield_current} limit={limitsStructured.limits.realyield} tone="violet" />
                 </>
+              ) : (
+                <div className="text-xs text-muted-foreground">No limit data available</div>
               )}
             </div>
           </div>

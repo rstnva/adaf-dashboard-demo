@@ -25,8 +25,9 @@ jq -c '.[]' "$DATA_FILE" | while read -r it; do
   labels=$(echo "$it" | jq -r '.labels | join(",")')
   milestone=$(echo "$it" | jq -r .milestone)
 
-  ms_number=$(gh api repos/$REPO_SLUG/milestones | jq -r --arg t "$milestone" '.[] | select(.title==$t) | .number')
-  if [[ -z "$ms_number" ]]; then
+  # Check if milestone exists
+  ms_exists=$(gh api repos/$REPO_SLUG/milestones | jq -r --arg t "$milestone" '.[] | select(.title==$t) | .title')
+  if [[ -z "$ms_exists" ]]; then
     echo "Milestone no encontrado: $milestone" >&2
     continue
   fi
@@ -35,7 +36,7 @@ jq -c '.[]' "$DATA_FILE" | while read -r it; do
     --title "$title" \
     --body "$body" \
     --label "$labels" \
-    --milestone "$ms_number"
+    --milestone "$milestone"
 done
 
 echo "Issues creados. Vincula al Project en la UI o usa 'gh project' para automatizar campos."

@@ -254,7 +254,8 @@ function GammaPanel({ defaultAsset = 'BTC' }: { defaultAsset?: string }) {
     );
   }
 
-  const assetGamma = gammaData?.filter(g => g.asset === selectedAsset) || [];
+  const gammaList = Array.isArray(gammaData) ? gammaData : (gammaData ? [] : []);
+  const assetGamma = gammaList.filter(g => g.asset === selectedAsset);
   const latestUpdate = assetGamma[0]?.timestamp;
 
   // Calculate gamma metrics

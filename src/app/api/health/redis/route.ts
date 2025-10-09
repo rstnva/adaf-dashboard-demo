@@ -1,26 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getSafeRedis } from '@/lib/safe-redis'
 
 export async function GET(request: NextRequest) {
   try {
-    // This would be your Redis client
-    // For now, we'll simulate Redis health check
-    // Replace this with actual Redis connection when implemented
-    
     const startTime = Date.now()
-    
-    // Simulate Redis operations
+    const redis = getSafeRedis()
+    let connected = true
+    let memory = 0
+    let clients = 0
+    let total = 0
+    let hits = 0
+    let misses = 0
+
+    try {
+      await (redis as any).ping?.()
+      const memoryInfo: string = await (redis as any).info?.('memory') || ''
+      const statsInfo: string = await (redis as any).info?.('stats') || ''
+      const parseVal = (s: string, k: string) => {
+        const m = s.match(new RegExp(`${k}:(\\d+)`))
+        return m ? parseInt(m[1]) : 0
+      }
+      memory = parseVal(memoryInfo, 'used_memory') / (1024 * 1024)
+      clients = parseVal(memoryInfo, 'connected_clients')
+      total = parseVal(statsInfo, 'total_commands_processed')
+      hits = parseVal(statsInfo, 'keyspace_hits')
+      misses = parseVal(statsInfo, 'keyspace_misses')
+    } catch {
+      connected = false // memory client or no info available
+    }
+
     const health = {
       status: 'healthy',
       timestamp: new Date().toISOString(),
       redis: {
-        connected: true,
+        connected,
         response_time_ms: Date.now() - startTime,
-        memory_usage_mb: 0,
-        connected_clients: 0,
-        total_commands_processed: 0,
-        keyspace_hits: 0,
-        keyspace_misses: 0,
-        hit_rate_percent: 0
+        memory_usage_mb: Math.round(memory * 100) / 100,
+        connected_clients: clients,
+        total_commands_processed: total,
+        keyspace_hits: hits,
+        keyspace_misses: misses,
+        hit_rate_percent: (hits + misses) > 0 ? Math.round((hits / (hits + misses)) * 100) : 0
       }
     }
 

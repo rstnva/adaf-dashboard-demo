@@ -1,0 +1,87 @@
+# Summer.fi Grafana Dashboard Configuration
+# Dashboard: WSP · Summer.fi Integration Monitoring
+
+dashboard:
+  id: "summer-fi-integration"
+  title: "WSP · Summer.fi Integration"
+  tags: ["wsp", "summer", "integration", "defi"]
+  refresh: "30s"
+  time:
+    from: "now-1h"
+    to: "now"
+
+panels:
+  - title: "Summer.fi Widget Clicks"
+    type: "stat"
+    targets:
+      - expr: |
+          sum(rate(wsp_integrations_click_total{provider="summer"}[5m])) by (widget_type)
+    fieldConfig:
+      displayName: "Clicks/min"
+    options:
+      reduceOptions:
+        calcs: ["lastNotNull"]
+
+  - title: "API Response Times (p50/p95/p99)"  
+    type: "timeseries"
+    targets:
+      - expr: |
+          histogram_quantile(0.50, 
+            sum(rate(http_request_duration_seconds_bucket{path=~"/api/integrations/summer.*"}[5m])) 
+            by (le)
+          )
+        legendFormat: "p50"
+      - expr: |
+          histogram_quantile(0.95, 
+            sum(rate(http_request_duration_seconds_bucket{path=~"/api/integrations/summer.*"}[5m])) 
+            by (le)
+          )
+        legendFormat: "p95"
+      - expr: |
+          histogram_quantile(0.99, 
+            sum(rate(http_request_duration_seconds_bucket{path=~"/api/integrations/summer.*"}[5m])) 
+            by (le)
+          )
+        legendFormat: "p99"
+
+  - title: "Error Rate (4xx/5xx)"
+    type: "timeseries"
+    targets:
+      - expr: |
+          sum(rate(http_requests_total{path=~"/api/integrations/summer.*", status_code=~"4.."}[5m])) /
+          sum(rate(http_requests_total{path=~"/api/integrations/summer.*"}[5m])) * 100
+        legendFormat: "4xx Rate %"
+      - expr: |
+          sum(rate(http_requests_total{path=~"/api/integrations/summer.*", status_code=~"5.."}[5m])) /
+          sum(rate(http_requests_total{path=~"/api/integrations/summer.*"}[5m])) * 100  
+        legendFormat: "5xx Rate %"
+
+  - title: "RBAC Denials"
+    type: "stat"
+    targets:
+      - expr: |
+          sum(rate(wsp_rbac_denied_total{feature="summer"}[5m]))
+    options:
+      colorMode: "background"
+      graphMode: "none"
+      
+  - title: "Feature Flag Usage"
+    type: "pie"
+    targets:
+      - expr: |
+          sum(wsp_feature_flag_check_total{flag="summer"}) by (enabled)
+          
+  - title: "Widget Interaction Heatmap"
+    type: "heatmap"
+    targets:
+      - expr: |
+          sum(rate(wsp_integrations_click_total{provider="summer"}[5m])) 
+          by (widget_type, hour)
+
+  - title: "Deep Link Click Through Rate"
+    type: "timeseries"
+    targets:
+      - expr: |
+          sum(rate(wsp_integrations_click_total{provider="summer", action="deep_link"}[5m])) /
+          sum(rate(wsp_integrations_click_total{provider="summer"}[5m])) * 100
+        legendFormat: "CTR %"

@@ -1,11 +1,8 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { LessonViewer } from '@/components/academy/LessonViewer';
-import { Quiz } from '@/components/academy/Quiz';
-import { Checklist } from '@/components/academy/Checklist';
-import { ExerciseRunner } from '@/components/academy/ExerciseRunner';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Loader2 } from 'lucide-react';
@@ -30,7 +27,7 @@ interface Lesson {
   learningObjectives: string[];
 }
 
-interface Quiz {
+interface LessonQuiz {
   id: string;
   lessonId: string;
   title: string;
@@ -47,7 +44,7 @@ interface Quiz {
   passingScore: number;
 }
 
-interface ChecklistType {
+interface LessonChecklist {
   id: string;
   lessonId: string;
   title: string;
@@ -90,20 +87,14 @@ export default function LessonPage() {
   const lessonId = params.id as string;
   
   const [lesson, setLesson] = useState<Lesson | null>(null);
-  const [quiz, setQuiz] = useState<Quiz | null>(null);
-  const [checklist, setChecklist] = useState<ChecklistType | null>(null);
+  const [quiz, setQuiz] = useState<LessonQuiz | null>(null);
+  const [checklist, setChecklist] = useState<LessonChecklist | null>(null);
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (lessonId) {
-      fetchLessonData();
-    }
-  }, [lessonId]);
-
-  const fetchLessonData = async () => {
+  const fetchLessonData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -201,7 +192,13 @@ export default function LessonPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [lessonId]);
+
+  useEffect(() => {
+    if (lessonId) {
+      fetchLessonData();
+    }
+  }, [lessonId, fetchLessonData]);
 
   const handleUpdateProgress = async (progress: Partial<UserProgress>) => {
     if (!userProgress) return;
@@ -225,47 +222,7 @@ export default function LessonPage() {
     window.location.href = '/academy?completed=' + lessonId;
   };
 
-  const handleQuizSubmit = async (answers: Record<string, string>) => {
-    try {
-      const response = await fetch('/api/learn/quiz/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          quizId: quiz?.id,
-          lessonId,
-          answers
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit quiz');
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Quiz submission failed:', error);
-      throw error;
-    }
-  };
-
-  const handleExerciseExecute = async (exerciseId: string) => {
-    try {
-      const response = await fetch('/api/learn/exercise/run', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ exerciseId, lessonId })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to execute exercise');
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Exercise execution failed:', error);
-      throw error;
-    }
-  };
+  // Quiz submission and exercise execution are handled server-side via API endpoints
 
   if (loading) {
     return (

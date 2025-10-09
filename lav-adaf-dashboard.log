@@ -1,0 +1,15 @@
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/parallels/Desktop/adaf-dashboard-pro/pnpm-lock.yaml as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /home/parallels/Desktop/adaf-dashboard-pro/lav-adaf/pnpm-lock.yaml
+
+   ▲ Next.js 15.5.4
+   - Local:        http://localhost:3005
+   - Network:      http://10.211.55.3:3005
+   - Environments: .env.local, .env.development, .env
+
+ ✓ Starting...
+ ✓ Ready in 1437ms
+[?25h

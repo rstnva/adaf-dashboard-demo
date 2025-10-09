@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function KpiCard({ title, value, subtitle }: { title: string; value: string; subtitle?: string }) {
   return (
     <div className="rounded-xl border border-white/10 p-4">

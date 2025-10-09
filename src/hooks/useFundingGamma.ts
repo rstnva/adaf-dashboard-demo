@@ -27,7 +27,7 @@ export function useFundingGamma() {
   // Funding rates data
   const fundingQuery = useQuery({
     queryKey: ['derivs', 'funding', selectedAssets, range, timezone],
-    queryFn: async (): Promise<FundingData[]> => {
+  queryFn: async (): Promise<FundingData[]> => {
       const params = new URLSearchParams({
         asset: selectedAssets.join(','),
         days: range.replace('D', ''),
@@ -35,10 +35,15 @@ export function useFundingGamma() {
       });
       
       const response = await fetch(`/api/read/derivs/funding?${params}`);
+      // Si falla, devolvemos [] para no romper la UI
       if (!response.ok) {
-        throw new Error(`Funding API error: ${response.status}`);
+        return [];
       }
-      return response.json();
+      const data = await response.json().catch(() => []);
+      // Normalización a array
+      if (Array.isArray(data)) return data as FundingData[];
+      if (data && Array.isArray(data?.data)) return data.data as FundingData[];
+      return [];
     },
     staleTime: 120_000, // 2 minutes
     retry: 1,
@@ -47,7 +52,7 @@ export function useFundingGamma() {
   // Gamma exposure data
   const gammaQuery = useQuery({
     queryKey: ['derivs', 'gamma', selectedAssets, timezone],
-    queryFn: async (): Promise<GammaData[]> => {
+  queryFn: async (): Promise<GammaData[]> => {
       const params = new URLSearchParams({
         asset: selectedAssets.join(','),
         tenors: '7,14,30',
@@ -55,10 +60,15 @@ export function useFundingGamma() {
       });
       
       const response = await fetch(`/api/read/derivs/gamma?${params}`);
+      // Si falla, devolvemos [] para no romper la UI
       if (!response.ok) {
-        throw new Error(`Gamma API error: ${response.status}`);
+        return [];
       }
-      return response.json();
+      const data = await response.json().catch(() => []);
+      // Normalización a array
+      if (Array.isArray(data)) return data as GammaData[];
+      if (data && Array.isArray(data?.data)) return data.data as GammaData[];
+      return [];
     },
     staleTime: 120_000, // 2 minutes
     retry: 1,

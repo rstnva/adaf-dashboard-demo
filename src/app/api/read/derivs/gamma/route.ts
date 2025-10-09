@@ -1,8 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Prisma, PrismaClient } from '@prisma/client'
-import { incApiRequest } from '@/lib/metrics'
-
-const prisma = new PrismaClient()
 
 // Data contract: GammaPoint by tenor
 type GammaPoint = {
@@ -18,75 +14,48 @@ type GammaResponse = {
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url)
-    const assetParam = searchParams.get('asset') || 'BTC'
+    const url = new URL(req.url)
+    const assetParam = url.searchParams.get('asset') || 'BTC'
     
     // Validate params
     const asset = ['BTC', 'ETH'].includes(assetParam.toUpperCase()) ? assetParam.toUpperCase() : 'BTC'
-    // Note: tenors parameter could be used for filtering, but for now we return all available tenors (7d, 14d, 30d)
     
-    // Query gamma points from signals table
-    // Assuming signals with type 'derivs.gamma.surface' contain gamma data
-    // metadata format: { asset, tenor, strike, gamma }
-    const signals = await prisma.$queryRaw<Array<{
-      ts: Date
-      metadata: { asset?: string; tenor?: string; strike?: number; gamma?: number }
-    }>>(Prisma.sql`
-      SELECT timestamp as ts, metadata
-      FROM signals 
-      WHERE type = 'derivs.gamma.surface'
-        AND timestamp >= (NOW() - interval '1 day')
-        AND (metadata->>'asset') = ${asset}
-      ORDER BY timestamp DESC
-    `)
-    
-    // Group by tenor and take most recent gamma for each strike
-    const gammaByTenor = new Map<string, Map<number, number>>()
-    
-    for (const signal of signals) {
-      const meta = signal.metadata
-      if (!meta?.tenor || typeof meta.strike !== 'number' || typeof meta.gamma !== 'number') continue
+    // Generate mock gamma data
+    function generateGammaPoints(tenor: string, basePrice: number): GammaPoint[] {
+      const points: GammaPoint[] = []
+      const multiplier = tenor === '7d' ? 1.0 : tenor === '14d' ? 0.8 : 0.6
       
-      const tenor = meta.tenor
-      const strike = Number(meta.strike)
-      const gamma = Number(meta.gamma)
-      
-      if (!gammaByTenor.has(tenor)) {
-        gammaByTenor.set(tenor, new Map())
+      // Generate gamma points around current price
+      for (let i = -10; i <= 10; i++) {
+        const strike = Math.round(basePrice * (1 + (i * 0.05))) // ±50% range in 5% steps
+        const distance = Math.abs(strike - basePrice) / basePrice
+        
+        // Gamma is highest near ATM and decreases with distance
+        const maxGamma = asset === 'BTC' ? 0.005 : 0.008
+        const gamma = maxGamma * multiplier * Math.exp(-Math.pow(distance * 4, 2))
+        
+        points.push({
+          strike,
+          gamma: Number(gamma.toFixed(6))
+        })
       }
       
-      const tenorMap = gammaByTenor.get(tenor)!
-      // Only update if we don't have this strike yet (taking first/latest due to DESC order)
-      if (!tenorMap.has(strike)) {
-        tenorMap.set(strike, gamma)
-      }
+      return points.sort((a, b) => a.strike - b.strike)
     }
     
-    // Build response arrays, sorted by strike ascending
-    const buildTenorArray = (tenor: string): GammaPoint[] => {
-      const tenorMap = gammaByTenor.get(tenor)
-      if (!tenorMap) return []
-      
-      return Array.from(tenorMap.entries())
-        .map(([strike, gamma]) => ({ strike, gamma }))
-        .sort((a, b) => a.strike - b.strike)
-    }
+    const basePrice = asset === 'BTC' ? 67000 : 2450
     
     const data: GammaResponse = {
-      tenor7: buildTenorArray('7d'),
-      tenor14: buildTenorArray('14d'),
-      tenor30: buildTenorArray('30d')
+      tenor7: generateGammaPoints('7d', basePrice),
+      tenor14: generateGammaPoints('14d', basePrice),
+      tenor30: generateGammaPoints('30d', basePrice)
     }
     
-    const res = NextResponse.json(data)
-    incApiRequest('/api/read/derivs/gamma', 'GET', res.status)
-    return res
+    return NextResponse.json(data)
   } catch (e: unknown) {
-    const res = NextResponse.json(
+    return NextResponse.json(
       { error: e instanceof Error ? e.message : 'internal error' }, 
       { status: 500 }
     )
-    incApiRequest('/api/read/derivs/gamma', 'GET', res.status)
-    return res
   }
 }

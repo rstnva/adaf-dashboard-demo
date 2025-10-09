@@ -324,7 +324,7 @@ export class CacheService {
 
   async setMultiple(entries: Map<string, { data: unknown; ttl: number }>): Promise<number> {
     try {
-      const pipeline = redisClient.pipeline();
+  const pipeline = (redisClient as any).pipeline();
       let count = 0;
       
       for (const [key, { data, ttl }] of entries) {
@@ -463,7 +463,7 @@ export class CacheService {
   }
 
   private async addTags(key: string, tags: string[]): Promise<void> {
-    const pipeline = redisClient.pipeline();
+  const pipeline = (redisClient as any).pipeline();
     
     for (const tag of tags) {
       const tagKey = `tag:${tag}`;

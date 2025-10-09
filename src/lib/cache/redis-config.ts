@@ -1,5 +1,6 @@
-import { Redis, RedisOptions } from 'ioredis';
+import type { RedisOptions } from 'ioredis';
 import { logger } from '../logger';
+import { getSafeRedis } from '../safe-redis';
 
 // Cache configuration for different data types
 export interface CacheConfig {
@@ -145,23 +146,23 @@ const redisOptions: RedisOptions = {
   enableReadyCheck: true
 };
 
-// Create Redis client instances
-export const redisClient = new Redis(redisOptions);
-export const redisPubClient = new Redis(redisOptions); // For publishing cache invalidation events  
-export const redisSubClient = new Redis(redisOptions); // For subscribing to cache invalidation events
+// Create Redis client instances via safe wrapper (lazy, in-memory in MOCK_MODE)
+export const redisClient = getSafeRedis(redisOptions) as any;
+export const redisPubClient = getSafeRedis(redisOptions) as any; // For publishing cache invalidation events  
+export const redisSubClient = getSafeRedis(redisOptions) as any; // For subscribing to cache invalidation events
 
 // Connection event handlers
-redisClient.on('connect', () => {
-  logger.info('Redis cache client connected');
-});
-
-redisClient.on('error', (error) => {
-  logger.error('Redis cache client error:', { error: error.message, stack: error.stack });
-});
-
-redisClient.on('ready', () => {
-  logger.info('Redis cache client ready');
-});
+if (typeof (redisClient as any).on === 'function') {
+  (redisClient as any).on('connect', () => {
+    logger.info('Redis cache client connected');
+  });
+  (redisClient as any).on('error', (error: any) => {
+    logger.error('Redis cache client error:', { error: error?.message, stack: error?.stack });
+  });
+  (redisClient as any).on('ready', () => {
+    logger.info('Redis cache client ready');
+  });
+}
 
 // Health check function
 export async function checkRedisHealth(): Promise<boolean> {
@@ -336,12 +337,18 @@ export class CacheInvalidation {
   }
 
   private static setupEventSubscriptions(): void {
-    redisSubClient.psubscribe('cache:invalidate:*');
-    
-    redisSubClient.on('pmessage', (pattern, channel, message) => {
-      const event = channel.replace('cache:invalidate:', '');
-      this.handleInvalidationEvent(event, JSON.parse(message));
-    });
+    // Only subscribe if pub/sub supported (not in-memory)
+    if (typeof (redisSubClient as any).psubscribe === 'function' && typeof (redisSubClient as any).on === 'function') {
+      (redisSubClient as any).psubscribe('cache:invalidate:*');
+      (redisSubClient as any).on('pmessage', (_pattern: string, channel: string, message: string) => {
+        const event = channel.replace('cache:invalidate:', '');
+        try {
+          this.handleInvalidationEvent(event, JSON.parse(message));
+        } catch {
+          this.handleInvalidationEvent(event, message);
+        }
+      });
+    }
   }
 
   static async invalidateByEvent(event: string, metadata?: unknown): Promise<void> {

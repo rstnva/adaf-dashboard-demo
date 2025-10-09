@@ -33,10 +33,17 @@
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "types/**/*.d.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "lav-adaf/**",
+    "ADAF-ok/**",
+    "**/apps/**/node_modules/**",
+    "**/backup/**"
   ]
 }

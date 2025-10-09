@@ -24,7 +24,7 @@ interface ChecklistItem {
   verificationMethod?: 'self_check' | 'peer_review' | 'instructor_check';
 }
 
-interface Checklist {
+interface ChecklistModel {
   id: string;
   lessonId: string;
   title: string;
@@ -37,9 +37,9 @@ interface ChecklistProgress {
 }
 
 interface ChecklistProps {
-  checklist: Checklist;
+  checklist: ChecklistModel;
   progress: ChecklistProgress;
-  onUpdateProgress: (itemId: string, completed: boolean) => void;
+  onUpdateProgress: (_itemId: string, _completed: boolean) => void;
   onComplete?: () => void;
 }
 

@@ -21,8 +21,9 @@ import Link from 'next/link';
 
 // ETF Autoswitch Card as Hero variant
 function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: boolean }) {
-  const { flows } = useEtfFlows();
+  const { flows, compare } = useEtfFlows();
   const { data: flowsData, isLoading, error, refetch } = flows;
+  const compareData = compare.data as any;
   const { selectedAssets } = useUIStore();
 
   if (isLoading) {
@@ -63,7 +64,39 @@ function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: bool
     );
   }
 
-  const topFlows = flowsData?.slice(0, 8) || [];
+  // Normalize flows list for UI
+  const mxnRate = 17.3; // simple demo conversion
+  const flowsList = Array.isArray(flowsData)
+    ? flowsData
+    : (() => {
+        // If we have compare data (BTC/ETH series), synthesize latest entries
+        const out: any[] = [];
+        const btcSeries = compareData?.BTC || compareData?.btc || [];
+        const ethSeries = compareData?.ETH || compareData?.eth || [];
+        const lastBtc = btcSeries[btcSeries.length - 1];
+        const lastEth = ethSeries[ethSeries.length - 1];
+        if (lastBtc) {
+          out.push({
+            symbol: 'BTC Spot ETF',
+            provider: 'Mock',
+            date: lastBtc.date,
+            flowsUsd: lastBtc.dailyNetInflow ?? lastBtc.flows ?? 0,
+            flowsMxn: Math.round((lastBtc.dailyNetInflow ?? lastBtc.flows ?? 0) * mxnRate),
+          });
+        }
+        if (lastEth) {
+          out.push({
+            symbol: 'ETH Spot ETF',
+            provider: 'Mock',
+            date: lastEth.date,
+            flowsUsd: lastEth.dailyNetInflow ?? lastEth.flows ?? 0,
+            flowsMxn: Math.round((lastEth.dailyNetInflow ?? lastEth.flows ?? 0) * mxnRate),
+          });
+        }
+        return out;
+      })();
+
+  const topFlows = flowsList.slice(0, 8);
   const totalFlowUsd = topFlows.reduce((sum, etf) => sum + Math.abs(etf.flowsUsd), 0);
 
   const getFlowIndicator = (flowUsd: number) => {
@@ -132,7 +165,7 @@ function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: bool
             Top ETF Flows
           </div>
           
-          {topFlows.map((etf, index) => {
+          {topFlows.map((etf: any, index: number) => {
             const { icon: FlowIcon, color } = getFlowIndicator(etf.flowsUsd);
             const signal = getFlowSignal(etf.flowsUsd);
             
@@ -184,8 +217,8 @@ function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: bool
 // ETF Compare Panel (7D BTC vs ETH)
 function EtfComparePanel({ defaultMode = 'daily' }: { defaultMode?: 'daily' | 'cumulative' }) {
   console.log('Compare mode:', defaultMode); // TODO: Implement mode switching
-  const { flows } = useEtfFlows();
-  const { data: flowsData, isLoading } = flows;
+  const { compare } = useEtfFlows();
+  const { data: compareData, isLoading } = compare;
 
   if (isLoading) {
     return (
@@ -201,16 +234,19 @@ function EtfComparePanel({ defaultMode = 'daily' }: { defaultMode?: 'daily' | 'c
     );
   }
 
-  // Mock comparison data - in real implementation this would be separate API
-  const btcFlows = flowsData?.filter(f => f.symbol && f.symbol.includes('BTC')).slice(0, 7) || [];
-  const ethFlows = flowsData?.filter(f => f.symbol && f.symbol.includes('ETH')).slice(0, 7) || [];
+  // Use compare series directly (BTC/ETH)
+  const btcSeries = (compareData as any)?.BTC || (compareData as any)?.btc || [];
+  const ethSeries = (compareData as any)?.ETH || (compareData as any)?.eth || [];
+  const toRow = (row: any) => ({ symbol: row.symbol || '—', flowsUsd: row.dailyNetInflow ?? row.flows ?? 0 });
+  const btcFlows = btcSeries.slice(-7).map(toRow);
+  const ethFlows = ethSeries.slice(-7).map(toRow);
 
   return (
     <Card className="adaf-card">
       <CardHeader 
         title="BTC vs ETH Comparison (7D)"
         badge="Daily and cumulative flow comparison"
-        asOf={flowsData?.[0]?.date}
+        asOf={(compareData as any)?.BTC?.[0]?.date || (compareData as any)?.btc?.[0]?.date}
         actions={
           <Button variant="outline" size="sm">
             Toggle Mode
@@ -226,7 +262,7 @@ function EtfComparePanel({ defaultMode = 'daily' }: { defaultMode?: 'daily' | 'c
               BTC ETF Flows
             </h4>
             <div className="space-y-2">
-              {btcFlows.map((flow, i) => (
+              {btcFlows.map((flow: any, i: number) => (
                 <div key={i} className="flex justify-between p-2 rounded bg-muted/30">
                   <span className="text-sm">{flow.symbol}</span>
                   <span className={cn("text-sm font-medium", flow.flowsUsd > 0 ? "text-green-600" : "text-red-600")}>
@@ -243,7 +279,7 @@ function EtfComparePanel({ defaultMode = 'daily' }: { defaultMode?: 'daily' | 'c
               ETH ETF Flows
             </h4>
             <div className="space-y-2">
-              {ethFlows.map((flow, i) => (
+              {ethFlows.map((flow: any, i: number) => (
                 <div key={i} className="flex justify-between p-2 rounded bg-muted/30">
                   <span className="text-sm">{flow.symbol}</span>
                   <span className={cn("text-sm font-medium", flow.flowsUsd > 0 ? "text-green-600" : "text-red-600")}>

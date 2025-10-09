@@ -4,6 +4,7 @@
 
 const FLAGS: Record<string, boolean> = {
   FF_WSP_ENABLED: process.env.NEXT_PUBLIC_FF_WSP_ENABLED !== 'false',
+  FF_SUMMER_ENABLED: process.env.NEXT_PUBLIC_FF_SUMMER_ENABLED === 'true',
 };
 
 export function useFeatureFlag(name: string): boolean {

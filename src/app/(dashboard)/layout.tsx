@@ -6,6 +6,7 @@ import { SpotlightProvider } from "@/components/spotlight/Spotlight";
 import { TopBar } from "@/components/layout/TopBar";
 import { NavLeft } from "@/components/layout/NavLeft";
 import { NavigationGuard } from "@/components/NavigationGuard";
+import { PageGuide } from "@/components/learn/PageGuide";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,8 @@ export default function DashboardLayout({
                 {/* Page Content */}
                 <main className="flex-1 overflow-y-auto">
                   <div className="container mx-auto px-6 py-8">
+                    {/* Contextual novice guide */}
+                    <PageGuide className="print:hidden" />
                     <NavigationGuard>
                       {children}
                     </NavigationGuard>

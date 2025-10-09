@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -19,7 +21,9 @@ import {
   GraduationCap,
   Settings,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Bot,
+  ExternalLink
 } from 'lucide-react';
 
 interface NavItem {
@@ -101,6 +105,18 @@ const NAV_ITEMS: NavItem[] = [
     icon: Settings,
     label: 'Control',
     description: 'Límites, reglas, auditoría'
+  },
+  {
+    href: '/monitoring',
+    icon: Shield,
+    label: 'Monitoring',
+    description: 'Estado y diagnósticos rápidos'
+  },
+  {
+    href: 'http://localhost:3005',
+    icon: Bot,
+    label: 'LAV-ADAF',
+    description: 'Sistema de Agentes Cuantitativos'
   }
 ];
 
@@ -140,25 +156,34 @@ export function NavLeft() {
         <div className="space-y-1 px-2">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
-            const isActive = item.href === '/'
+            const isExternal = item.href.startsWith('http');
+            const isActive = !isExternal && (item.href === '/'
               ? pathname === '/'
-              : pathname === item.href || pathname.startsWith(item.href + '/');
+              : pathname === item.href || pathname.startsWith(item.href + '/'));
+
+            const linkProps = isExternal 
+              ? { href: item.href, target: '_blank', rel: 'noopener noreferrer' }
+              : { href: item.href };
 
             return (
-              <Link key={item.href} href={item.href}>
+              <Link key={item.href} {...linkProps}>
                 <Button
                   variant={isActive ? "secondary" : "ghost"}
                   size="sm"
                   className={cn(
                     "w-full justify-start transition-colors",
                     sidebarCollapsed ? "px-2" : "px-3",
-                    isActive && "bg-blue-50 text-blue-700 hover:bg-blue-100"
+                    isActive && "bg-blue-50 text-blue-700 hover:bg-blue-100",
+                    isExternal && "bg-gradient-to-r from-purple-50 to-blue-50 hover:from-purple-100 hover:to-blue-100 text-purple-700"
                   )}
                 >
                   <Icon className={cn("h-4 w-4 flex-shrink-0", sidebarCollapsed ? "" : "mr-3")} />
                   {!sidebarCollapsed && (
                     <div className="flex flex-col items-start">
-                      <span className="font-medium">{item.label}</span>
+                      <div className="flex items-center gap-1">
+                        <span className="font-medium">{item.label}</span>
+                        {isExternal && <ExternalLink className="h-3 w-3" />}
+                      </div>
                       {item.description && (
                         <span className="text-xs text-gray-500 font-normal">
                           {item.description}
@@ -178,7 +203,7 @@ export function NavLeft() {
         <div className="border-t p-4">
           <div className="text-xs text-gray-500">
             <div className="font-medium">ADAF Dashboard Pro</div>
-            <div>v2.1.0 • {new Date().getFullYear()}</div>
+            <div>v2.1.0 • 2025</div>
           </div>
         </div>
       )}

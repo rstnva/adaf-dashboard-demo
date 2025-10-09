@@ -2,17 +2,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import crypto from 'crypto'
 import { PrismaClient } from '@prisma/client'
-import { Redis } from 'ioredis'
+import { getSafeRedis } from '@/lib/safe-redis'
 
 const prisma = new PrismaClient()
 
-// Redis opcional - si falla la conexión, usar deduplicación en memoria
-let redis: Redis | null = null
-try {
-  redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379')
-} catch (error) {
-  console.warn('Redis not available, using in-memory deduplication')
-}
+// Redis opcional via safe wrapper - fallback a memoria en MOCK_MODE o error
+const redis = getSafeRedis()
 
 // Fallback in-memory storage for deduplication
 const inMemoryDedup = new Set<string>()
@@ -64,22 +59,18 @@ export async function POST(request: NextRequest) {
     // Verificar duplicados con Redis o fallback in-memory
     let isDuplicate = false
     
-    if (redis) {
-      try {
-        const redisResult = await redis.setnx(`dedupe:news:${fingerprint}`, '1')
-        isDuplicate = !redisResult
-        if (!isDuplicate) {
-          await redis.expire(`dedupe:news:${fingerprint}`, 6 * 3600)
-        }
-      } catch (error) {
-        console.warn('Redis error, using in-memory deduplication:', error)
-        isDuplicate = inMemoryDedup.has(fingerprint)
-        if (!isDuplicate) {
-          inMemoryDedup.add(fingerprint)
-        }
+    try {
+      // Emular setnx con get+setex si no está disponible
+      const key = `dedupe:news:${fingerprint}`
+      const existing = await (redis as any).get(key)
+      if (existing) {
+        isDuplicate = true
+      } else {
+        await ((redis as any).setex ? (redis as any).setex(key, 6 * 3600, '1') : (async () => { await (redis as any).set(key, '1'); await (redis as any).expire(key, 6 * 3600) })())
+        isDuplicate = false
       }
-    } else {
-      // Fallback a deduplicación en memoria
+    } catch (error) {
+      console.warn('Redis error, using in-memory deduplication:', error)
       isDuplicate = inMemoryDedup.has(fingerprint)
       if (!isDuplicate) {
         inMemoryDedup.add(fingerprint)

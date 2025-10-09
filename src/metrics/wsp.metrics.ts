@@ -5,19 +5,21 @@ export const wspMetrics = {
   eventsTotal: 0,
   cacheHits: 0,
   apiHits: 0,
+  integrationsClicks: 0,
 };
 
 // Optional Prometheus client (server-only)
 let promEnabled = false;
 let register: import('prom-client').Registry | undefined;
-let counters: {
+const counters: {
   adapterRequests?: import('prom-client').Counter<string>;
   apiHits?: import('prom-client').Counter<string>;
   cacheHits?: import('prom-client').Counter<string>;
   eventsTotal?: import('prom-client').Counter<string>;
+  integrationsClicks?: import('prom-client').Counter<string>;
 } = {};
-let gauges: { wspsScore?: import('prom-client').Gauge<string> } = {};
-let histograms: {
+const gauges: { wspsScore?: import('prom-client').Gauge<string> } = {};
+const histograms: {
   adapterLatency?: import('prom-client').Histogram<string>;
   apiLatency?: import('prom-client').Histogram<string>;
 } = {};
@@ -31,6 +33,7 @@ if (typeof window === 'undefined') {
   counters.apiHits = new prom.Counter({ name: 'wsp_api_hits_total', help: 'Total API hits for WSP routes', labelNames: ['route','status'] });
   counters.cacheHits = new prom.Counter({ name: 'wsp_cache_hits_total', help: 'Cache hits in WSP adapters', labelNames: ['source'] });
     counters.eventsTotal = new prom.Counter({ name: 'wsp_events_total', help: 'Total WSP notable events' });
+    counters.integrationsClicks = new prom.Counter({ name: 'wsp_integrations_click_total', help: 'Integration widget clicks', labelNames: ['provider', 'widget'] });
     gauges.wspsScore = new prom.Gauge({ name: 'wsp_wsps_score', help: 'Latest WSPS score value' });
   histograms.adapterLatency = new prom.Histogram({ name: 'wsp_adapter_latency_seconds', help: 'Adapter latency seconds', labelNames: ['adapter'], buckets: [0.05,0.1,0.2,0.5,1,2,5] });
   histograms.apiLatency = new prom.Histogram({ name: 'wsp_api_latency_seconds', help: 'API route latency seconds', labelNames: ['route'], buckets: [0.01,0.05,0.1,0.2,0.5,1,2] });
@@ -65,6 +68,13 @@ export function recordCacheHit(source: 'redis'|'memory'|'etag'|'other' = 'redis'
 export function recordEvent() {
   wspMetrics.eventsTotal++;
   if (promEnabled && counters.eventsTotal) counters.eventsTotal.inc();
+}
+
+export function recordIntegrationClick(provider: string, widget: string) {
+  wspMetrics.integrationsClicks++;
+  if (promEnabled && counters.integrationsClicks) {
+    counters.integrationsClicks.inc({ provider, widget });
+  }
 }
 
 export async function getPromMetrics(): Promise<string | null> {

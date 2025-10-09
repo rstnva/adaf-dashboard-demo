@@ -1,12 +1,21 @@
-# OPERACIONES — ADAF v0.9
+# Summer.fi Integration Operations Manual
 
-## Paneles y endpoints
-- Grafana: `URL o ruta`
-- Prometheus: `URL o ruta`
-- Tracing (Jaeger): `URL o ruta`
-- Health app: /api/health/app
-- Health DB: /api/health/db
-- Health Redis: /api/health/redis
+## 🚀 Release Overview
+
+**Version:** Summer.fi v1.0  
+**Release Date:** October 7, 2025  
+**Integration Type:** DeFi Partner Widget Integration  
+**Deployment:** Canary Release (10% → 50% → 100%)  
+
+### 📋 What Was Released
+
+- **Two draggable widgets** in WSP "On-chain Yield & Leverage" lane:
+  - `SummerLazyVaultsWidget`: Displays yield farming opportunities
+  - `SummerMultiplyWidget`: Shows leverage/multiply positions
+- **Feature flag controlled**: `NEXT_PUBLIC_FF_SUMMER_ENABLED`
+- **RBAC protected**: Requires `feature:summer` permission
+- **Deep-link integration**: Direct links to Summer.fi platform
+- **Comprehensive monitoring**: Grafana dashboards + Prometheus alerts
 
 ## Runbooks
 - Ver `RUNBOOK.md` para incidentes, DR (PITR) y chaos.

@@ -1,6 +1,5 @@
-'use client';
-
-import { useState } from 'react';
+"use client";
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -16,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useUIStore } from '@/store/ui';
 import { cn } from '@/lib/utils';
+import { Sparkles } from 'lucide-react';
 
 const AVAILABLE_ASSETS = [
   { symbol: 'BTC', name: 'Bitcoin', color: 'bg-orange-500' },
@@ -68,6 +68,14 @@ export function TopBar({ children }: TopBarProps = {}) {
   const [showTimezoneSelector, setShowTimezoneSelector] = useState(false);
   const [isRunningWorker, setIsRunningWorker] = useState(false);
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [asOfText, setAsOfText] = useState<string>('—');
+  const [keyHint, setKeyHint] = useState<string>('Ctrl');
+  const [guidesAlways, setGuidesAlways] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return true;
+    const v = window.localStorage.getItem('pageguide:always');
+    return v === null ? true : v !== '0' && v !== 'false';
+  });
 
   const handleAssetToggle = (assetSymbol: string) => {
     if (selectedAssets.includes(assetSymbol)) {
@@ -171,6 +179,31 @@ export function TopBar({ children }: TopBarProps = {}) {
       setIsGeneratingReport(false);
     }
   };
+
+  const toggleGuidesAlways = () => {
+    const next = !guidesAlways;
+    setGuidesAlways(next);
+    try {
+      window.localStorage.setItem('pageguide:always', next ? '1' : '0');
+      window.dispatchEvent(new Event('pageguide:always-changed'));
+    } catch {}
+  };
+
+  // Hydration-safe UI bits: compute after mount only
+  useEffect(() => {
+    setMounted(true);
+    try {
+      setAsOfText(getFormattedAsOf());
+    } catch {
+      setAsOfText('—');
+    }
+    try {
+      const isMac = typeof navigator !== 'undefined' && navigator.platform?.toUpperCase().includes('MAC');
+      setKeyHint(isMac ? '⌘' : 'Ctrl');
+    } catch {
+      setKeyHint('Ctrl');
+    }
+  }, [getFormattedAsOf]);
 
   return (
     <div className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -333,9 +366,7 @@ export function TopBar({ children }: TopBarProps = {}) {
           </div>
 
           {/* As-of timestamp */}
-          <Badge variant="outline" className="text-xs">
-            as of {getFormattedAsOf()}
-          </Badge>
+          <Badge variant="outline" className="text-xs">as of {mounted ? asOfText : '—'}</Badge>
         </div>
 
         {/* Centro: Búsqueda Spotlight */}
@@ -348,9 +379,7 @@ export function TopBar({ children }: TopBarProps = {}) {
             <Search className="mr-2 h-4 w-4" />
             <span>Búsqueda Spotlight...</span>
             <div className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
-              <kbd className="px-1.5 py-0.5 text-xs bg-gray-100 rounded border">
-                {navigator.platform.toUpperCase().indexOf('MAC') >= 0 ? '⌘' : 'Ctrl'}
-              </kbd>
+              <kbd className="px-1.5 py-0.5 text-xs bg-gray-100 rounded border">{keyHint}</kbd>
               <kbd className="px-1.5 py-0.5 text-xs bg-gray-100 rounded border">K</kbd>
             </div>
           </Button>
@@ -358,6 +387,11 @@ export function TopBar({ children }: TopBarProps = {}) {
 
         {/* Right: Quick Actions & Notifications */}
         <div className="flex items-center gap-2">
+          {/* Guides toggle */}
+          <Button size="sm" variant={guidesAlways ? 'default' : 'outline'} onClick={toggleGuidesAlways} title="Mostrar guías siempre">
+            <Sparkles className="mr-1 h-4 w-4" />
+            {guidesAlways ? 'Guías: ON' : 'Guías: OFF'}
+          </Button>
           {/* Quick Actions */}
           <Button
             size="sm"

@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AlertTriangle, CheckCircle, XCircle, TrendingDown } from 'lucide-react';
@@ -195,7 +197,7 @@ export function SemaforoLAV({
       {/* Footer */}
       <div className="mt-4 pt-4 border-t border-slate-700">
         <p className="text-xs text-slate-500 text-center">
-          Last updated: {new Date().toLocaleTimeString()} • 
+          Last updated: 8:54:49 PM • 
           Experimental signals for research only
         </p>
       </div>

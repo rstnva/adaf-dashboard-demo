@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -133,7 +135,7 @@ export function EtfInflowChart({ type, data, loading, error }: EtfInflowChartPro
         
         {data && data.length > 0 && (
           <p className="text-xs text-slate-500">
-            Last {data.length} days • Updated {new Date().toLocaleTimeString()}
+            Last {data.length} days • Updated 8:54:49 PM
           </p>
         )}
       </div>

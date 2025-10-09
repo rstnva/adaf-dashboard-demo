@@ -11,6 +11,14 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./tests/setup.ts'],
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/e2e/**',
+      '**/*.e2e.test.{ts,tsx}',
+      '**/playwright/**',
+      '**/*.spec.ts'
+    ],
     coverage: {
       provider: 'v8',
       reportsDirectory: 'coverage/wsp',

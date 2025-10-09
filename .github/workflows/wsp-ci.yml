@@ -18,6 +18,8 @@ jobs:
         run: corepack enable
       - name: Install deps
         run: pnpm install --frozen-lockfile || pnpm install
+      - name: Generate Prisma client
+        run: pnpm run --if-present db:generate
       - name: Typecheck (WSP)
         run: pnpm run --if-present typecheck
       - name: Unit tests (Vitest) with coverage

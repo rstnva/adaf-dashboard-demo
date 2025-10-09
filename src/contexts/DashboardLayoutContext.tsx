@@ -1,29 +1,5 @@
 "use client";
 import React, { createContext, useContext, useState, useCallback } from 'react';
-
-type RBACContextValue = {
-  hasPermission: (perm: string) => boolean;
-  userId?: string;
-  permissions: string[];
-};
-
-const RBACContext = createContext<RBACContextValue>({
-  hasPermission: () => true,
-  permissions: [],
-});
-
-export function RBACProvider({ children, permissions = [], userId }: { children: React.ReactNode; permissions?: string[]; userId?: string }) {
-  const value: RBACContextValue = {
-    permissions,
-    userId,
-    hasPermission: (perm: string) => permissions.includes(perm),
-  };
-  return <RBACContext.Provider value={value}>{children}</RBACContext.Provider>;
-}
-
-export function useRBAC() {
-  return useContext(RBACContext);
-}
 import { arrayMove } from '@dnd-kit/sortable';
 
 export interface DashboardItem {

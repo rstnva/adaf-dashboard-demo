@@ -28,6 +28,18 @@ export const wspI18n = {
   'wsp.checklist.title': 'Checklist ADAF',
   'wsp.checklist.slippage': 'Slippage ≤ 0.5%',
   'wsp.checklist.ltv': 'LTV ≤ 35%',
+  
+  // Summer.fi Integration i18n
+  'wsp.summer.title': 'Summer.fi',
+  'wsp.summer.lazy.title': 'Lazy Vaults (Yield)',
+  'wsp.summer.multiply.title': 'Multiply & Automation',
+  'wsp.summer.note.rewards': 'Rewards en $SUMR; rebalanced by AI/keepers.',
+  'wsp.summer.actions.open': 'Abrir en Summer',
+  'wsp.summer.badge.autoBuy': 'Auto-Buy',
+  'wsp.summer.badge.autoSell': 'Auto-Sell',
+  'wsp.summer.badge.takeProfit': 'Take-Profit',
+  'wsp.summer.badge.stopLoss': 'Stop-Loss',
+  'wsp.summer.badge.trailingSL': 'Trailing SL',
   'wsp.checklist.hf': 'HF ≥ 1.6–1.8',
   'wsp.checklist.realYield': 'Real-Yield ≥ 60–70%',
   'wsp.checklist.semaforo': 'Semáforo LAV vigente',
