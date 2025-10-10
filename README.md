@@ -1,4 +1,3 @@
-
 ## Avances recientes (Octubre 2025)
 
 ### Resumen para humanos y agentes
@@ -100,6 +99,28 @@ curl http://localhost:3005/            # ✅ Debe responder OK
 - 🐛 **Problemas**: Ver sección "RECUPERACIÓN DE EMERGENCIA" en la [guía completa](./motor-del-dash/documentacion/README-COMPLETO.md)
 - 🏗️ **Desarrollo**: Consultar [documentación técnica](./motor-del-dash/arquitectura/ARCHITECTURE.md)
 - 🧠 **Decisiones**: Revisar [memoria técnica](./motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md)
+
+---
+
+## 🚀 Arranque rápido con Docker Compose (Desarrollo)
+
+Puedes levantar todo el entorno de desarrollo (Postgres, Redis, ADAF Dashboard, LAV-ADAF Dashboard) con un solo comando:
+
+```bash
+docker compose -f docker-compose.dev.yml up --build
+```
+
+- ADAF Dashboard: http://localhost:3000
+- LAV-ADAF Dashboard: http://localhost:3005
+- Base de datos Postgres: localhost:5432 (usuario: adaf_user, pass: adaf_pass)
+- Redis: localhost:6379
+
+> El código fuente se monta en caliente (hot reload) para desarrollo. Puedes modificar archivos y ver los cambios en tiempo real.
+
+Para detener todo:
+```bash
+docker compose -f docker-compose.dev.yml down
+```
 
 ---
 

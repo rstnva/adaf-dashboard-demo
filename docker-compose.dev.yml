@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: adaf_postgres_dev
+    environment:
+      POSTGRES_DB: adaf_dashboard
+      POSTGRES_USER: adaf_user
+      POSTGRES_PASSWORD: adaf_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata_dev:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adaf_user -d adaf_dashboard"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: adaf_redis_dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata_dev:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  adaf-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: adaf_dashboard_dev
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://adaf_user:adaf_pass@postgres:5432/adaf_dashboard
+      REDIS_URL: redis://redis:6379
+      MOCK_MODE: 1
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    command: pnpm dev
+
+  lav-adaf-dashboard:
+    build:
+      context: ./lav-adaf/apps/dashboard
+      dockerfile: Dockerfile.prod
+    container_name: lav_adaf_dashboard_dev
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://adaf_user:adaf_pass@postgres:5432/adaf_dashboard
+      REDIS_URL: redis://redis:6379
+      MOCK_MODE: 1
+    ports:
+      - "3005:3005"
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./lav-adaf/apps/dashboard:/app
+      - /app/node_modules
+    command: pnpm dev -- --port 3005
+
+volumes:
+  pgdata_dev:
+  redisdata_dev:
