@@ -14,10 +14,12 @@ import {
   TrendingDown,
   Download,
   BarChart3,
-  Activity
+  Activity,
+  Filter
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useState } from 'react';
 
 // ETF Autoswitch Card as Hero variant
 function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: boolean }) {
@@ -25,6 +27,8 @@ function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: bool
   const { data: flowsData, isLoading, error, refetch } = flows;
   const compareData = compare.data as any;
   const { selectedAssets } = useUIStore();
+  const [showAssetFilter, setShowAssetFilter] = useState(false);
+  const [selectedAsset, setSelectedAsset] = useState('ALL');
 
   if (isLoading) {
     return (
@@ -109,6 +113,37 @@ function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: bool
     return flowUsd > 0 ? 'BUY' : 'SELL';
   };
 
+  // Asset filter functionality
+  const handleAssetFilter = () => {
+    setShowAssetFilter(!showAssetFilter);
+  };
+
+  const handleExportCSV = () => {
+    const csvData = topFlows.map(flow => ({
+      Symbol: flow.symbol,
+      Provider: flow.provider,
+      Date: flow.date,
+      'Flow USD': flow.flowsUsd,
+      'Flow MXN': flow.flowsMxn,
+      Signal: getFlowSignal(flow.flowsUsd) || 'NEUTRAL'
+    }));
+    
+    const csvContent = [
+      Object.keys(csvData[0]).join(','),
+      ...csvData.map(row => Object.values(row).join(','))
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', `etf-flows-${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
   return (
     <Card className="adaf-card">
       <CardHeader 
@@ -118,14 +153,19 @@ function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: bool
         actions={
           <div className="flex gap-2">
             {showAssetPicker && (
-              <Button variant="outline" size="sm">
-                Asset Filter
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={handleAssetFilter}
+                >
+                  <Filter className="h-4 w-4 mr-2" />
+                  Asset Filter
               </Button>
             )}
             <Button 
               variant="outline" 
               size="sm"
-              onClick={() => window.open(`/api/read/etf/flow?asset=${selectedAssets[0] || 'BTC'}&days=14&format=csv`)}
+                onClick={handleExportCSV}
             >
               <Download className="h-4 w-4 mr-2" />
               Export CSV
@@ -216,16 +256,20 @@ function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: bool
 
 // ETF Compare Panel (7D BTC vs ETH)
 function EtfComparePanel({ defaultMode = 'daily' }: { defaultMode?: 'daily' | 'cumulative' }) {
-  console.log('Compare mode:', defaultMode); // TODO: Implement mode switching
+  const [mode, setMode] = useState<'daily' | 'cumulative'>(defaultMode);
   const { compare } = useEtfFlows();
   const { data: compareData, isLoading } = compare;
+
+  const handleToggleMode = () => {
+    setMode(mode === 'daily' ? 'cumulative' : 'daily');
+  };
 
   if (isLoading) {
     return (
       <Card className="adaf-card">
         <CardHeader 
           title="BTC vs ETH Comparison (7D)"
-          badge="Daily and cumulative flow comparison"
+            badge={`${mode === 'daily' ? 'Daily' : 'Cumulative'} flow comparison`}
         />
         <CardContent className="p-6">
           <SkeletonPatterns.Table />
@@ -238,18 +282,36 @@ function EtfComparePanel({ defaultMode = 'daily' }: { defaultMode?: 'daily' | 'c
   const btcSeries = (compareData as any)?.BTC || (compareData as any)?.btc || [];
   const ethSeries = (compareData as any)?.ETH || (compareData as any)?.eth || [];
   const toRow = (row: any) => ({ symbol: row.symbol || '—', flowsUsd: row.dailyNetInflow ?? row.flows ?? 0 });
-  const btcFlows = btcSeries.slice(-7).map(toRow);
-  const ethFlows = ethSeries.slice(-7).map(toRow);
+  
+    // Calculate flows based on mode
+    const calculateFlows = (series: any[]) => {
+      const flows = series.slice(-7).map(toRow);
+      if (mode === 'cumulative') {
+        let cumulative = 0;
+        return flows.map(flow => {
+          cumulative += flow.flowsUsd;
+          return { ...flow, flowsUsd: cumulative };
+        });
+      }
+      return flows;
+    };
+
+    const btcFlows = calculateFlows(btcSeries);
+    const ethFlows = calculateFlows(ethSeries);
 
   return (
     <Card className="adaf-card">
       <CardHeader 
         title="BTC vs ETH Comparison (7D)"
-        badge="Daily and cumulative flow comparison"
+          badge={`${mode === 'daily' ? 'Daily' : 'Cumulative'} flow comparison`}
         asOf={(compareData as any)?.BTC?.[0]?.date || (compareData as any)?.btc?.[0]?.date}
         actions={
-          <Button variant="outline" size="sm">
-            Toggle Mode
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={handleToggleMode}
+            >
+              {mode === 'daily' ? 'Show Cumulative' : 'Show Daily'}
           </Button>
         }
       />
@@ -300,6 +362,38 @@ function FundingTable({ asset = 'BTC', days = 14 }: { asset?: string; days?: num
   const { funding } = useFundingGamma();
   const { data: fundingData, isLoading, error } = funding;
 
+  const handleExportFundingCSV = () => {
+    try {
+      // Try API first
+      window.open(`/api/read/derivs/funding?asset=${asset}&days=${days}&format=csv`);
+    } catch (apiError) {
+      // Fallback to local CSV generation
+      const assetFunding = fundingData?.filter(f => f.asset === asset) || [];
+      const csvData = assetFunding.map(funding => ({
+        Exchange: funding.exchange,
+        Asset: funding.asset,
+        Rate: funding.rate,
+        Timestamp: funding.timestamp,
+        Status: funding.rate < 0 ? 'Negative' : 'Normal'
+      }));
+      
+      const csvContent = [
+        Object.keys(csvData[0] || {}).join(','),
+        ...csvData.map(row => Object.values(row).join(','))
+      ].join('\n');
+      
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('hidden', '');
+      a.setAttribute('href', url);
+      a.setAttribute('download', `funding-rates-${asset}-${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };
+
   if (isLoading) {
     return (
       <Card className="adaf-card">
@@ -310,7 +404,7 @@ function FundingTable({ asset = 'BTC', days = 14 }: { asset?: string; days?: num
             <Button 
               variant="outline" 
               size="sm"
-              onClick={() => window.open(`/api/read/derivs/funding?asset=${asset}&days=${days}&format=csv`)}
+                onClick={handleExportFundingCSV}
             >
               <Download className="h-4 w-4 mr-2" />
               Export CSV
@@ -352,7 +446,7 @@ function FundingTable({ asset = 'BTC', days = 14 }: { asset?: string; days?: num
           <Button 
             variant="outline" 
             size="sm"
-            onClick={() => window.open(`/api/read/derivs/funding?asset=${asset}&days=${days}&format=csv`)}
+              onClick={handleExportFundingCSV}
           >
             <Download className="h-4 w-4 mr-2" />
             Export CSV

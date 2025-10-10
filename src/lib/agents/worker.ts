@@ -5,6 +5,14 @@ import type { RuleExpr } from '../rules'
 import cron from 'node-cron'
 import { incDerivsFundingAlert, setDerivsFundingNegHours, incDqpIncident, setDqpSourcesStatus } from '../metrics'
 import { createDqpIncident } from '../dqp/calculations'
+import Redis from 'ioredis'
+
+const redis = new Redis({
+  host: 'localhost',
+  port: 6379,
+  lazyConnect: true,
+  maxRetriesPerRequest: 1
+})
 
 const prisma = new PrismaClient()
 
@@ -248,6 +256,38 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
   try {
     console.log('🤖 Processing new signals...')
     
+    // Check cooldown period (30 segundos entre procesamiento)
+    const cooldownKey = 'signal_processing_cooldown'
+    let lastProcessed: string | null = null
+    
+    try {
+      lastProcessed = await redis.get(cooldownKey)
+    } catch (error) {
+      // Redis no disponible - continuar sin cooldown
+    }
+    
+    const now = Date.now()
+    const cooldownPeriod = 30 * 1000 // 30 seconds
+    
+    if (lastProcessed && (now - parseInt(lastProcessed)) < cooldownPeriod) {
+      const remainingTime = cooldownPeriod - (now - parseInt(lastProcessed))
+      console.log(`⏳ Cooldown active, ${Math.ceil(remainingTime/1000)}s remaining`)
+      
+      // Contar cuántas señales pendientes hay
+      const pendingSignals = await prisma.signal.count({
+        where: { processed: false }
+      })
+      
+      return { processed: 0, alerts: 0, opportunities: 0, skipped: pendingSignals }
+    }
+    
+    // Set cooldown
+    try {
+      await redis.set(cooldownKey, now.toString(), 'EX', 60) // TTL 60s
+    } catch (error) {
+      // Redis no disponible - continuar sin cooldown
+    }
+    
     const signals = await prisma.signal.findMany({
       where: { processed: false },
       take: 200,
@@ -280,50 +320,101 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
         description = signal.description
       }
       
-      // OC-1: TVL delta analysis
-      if (signal.type === 'onchain' && signal.source === 'OC-1') {
+      // TVL analysis: both OC-1 (delta calculation) and DeFiLlama (direct change)
+      if (signal.type === 'onchain') {
         const md = signal.metadata as Prisma.JsonObject | null
-        const protocol = (md?.protocol as string) || ''
         
-        if (protocol) {
-          // Get last 2 points for this protocol
-          const lastSignals = await prisma.signal.findMany({
-            where: {
-              type: 'onchain',
-              source: 'OC-1',
-              title: { contains: protocol }
-            },
-            orderBy: { timestamp: 'desc' },
-            take: 2
-          })
+        // DeFiLlama: direct change24h analysis  
+        if (signal.source === 'DeFiLlama') {
+          const change24h = Number(md?.change24h ?? 0)
+          const protocol = (md?.protocol as string) || ''
           
-          if (lastSignals.length === 2) {
-            const md0 = lastSignals[1].metadata as Prisma.JsonObject | null
-            const md1 = lastSignals[0].metadata as Prisma.JsonObject | null
-            const v0 = Number(md0?.value ?? 0)
-            const v1 = Number(md1?.value ?? 0)
-            const delta = (v1 - v0) / Math.max(v0, 1)
+          // Threshold for significant TVL drop
+          if (change24h <= -0.12) {
+            createAlert = true
+            title = `TVL drop ${protocol}`
+            description = `TVL drop detected: ${(change24h * 100).toFixed(1)}% decrease`
+          }
+        }
+        
+        // OC-1: calculate delta from historical data
+        else if (signal.source === 'OC-1') {
+          const protocol = (md?.protocol as string) || ''
+          
+          if (protocol) {
+            // Get last 2 points for this protocol
+            const lastSignals = await prisma.signal.findMany({
+              where: {
+                type: 'onchain',
+                source: 'OC-1',
+                title: { contains: protocol }
+              },
+              orderBy: { timestamp: 'desc' },
+              take: 2
+            })
             
-            // -12% threshold for alert + opportunity
-            if (delta <= -0.12) {
-              createAlert = true
-              title = `TVL drop ${protocol}`
-              description = `Delta ${(delta * 100).toFixed(1)}%`
+            if (lastSignals.length === 2) {
+              const md0 = lastSignals[1].metadata as Prisma.JsonObject | null
+              const md1 = lastSignals[0].metadata as Prisma.JsonObject | null
+              const v0 = Number(md0?.value ?? 0)
+              const v1 = Number(md1?.value ?? 0)
+              const delta = (v1 - v0) / Math.max(v0, 1)
               
-              // Create opportunity (schema expects signalId and metadata JSON)
-              await prisma.opportunity.create({
-                data: {
-                  signalId: signal.id,
-                  type: 'realYield',
-                  confidence: 0.5,
-                  title: `TVL drop ${protocol}`,
-                  description: `Delta ${(delta * 100).toFixed(1)}%`,
-                  metadata: { protocol, delta }
-                }
-              })
-              opportunitiesCount += 1
+              // -12% threshold for alert + opportunity
+              if (delta <= -0.12) {
+                createAlert = true
+                title = `TVL drop ${protocol}`
+                description = `Delta ${(delta * 100).toFixed(1)}%`
+                
+                // Create opportunity (schema expects signalId and metadata JSON)
+                await prisma.opportunity.create({
+                  data: {
+                    signalId: signal.id,
+                    type: 'realYield',
+                    confidence: 0.5,
+                    title: `TVL drop ${protocol}`,
+                    description: `Delta ${(delta * 100).toFixed(1)}%`,
+                    metadata: { protocol, delta }
+                  }
+                })
+                opportunitiesCount += 1
+              }
             }
           }
+        }
+      }
+      
+      // Procesar señales de precio para detectar arbitraje
+      if (signal.type === 'price') {
+        const md = signal.metadata as Prisma.JsonObject | null
+        const priceDiff = Number(md?.priceDiff ?? 0)
+        const asset = (md?.asset as string) || 'Unknown'
+        
+        if (priceDiff > 0.02) { // 2% threshold para arbitraje
+          console.log(`💰 Arbitrage opportunity detected: ${asset}`)
+          
+          // Crear oportunidad de arbitraje
+          await prisma.opportunity.create({
+            data: {
+              signalId: signal.id,
+              type: 'arbitrage',
+              confidence: Math.min(0.95, 0.6 + priceDiff * 10), // Base 0.6 + 10x factor para diferencias
+              title: `Arbitrage ${asset}`,
+              description: `Price difference of ${(priceDiff * 100).toFixed(1)}% between exchanges`,
+              metadata: {
+                asset,
+                priceDiff,
+                exchanges: md?.exchanges,
+                volume: md?.volume,
+                expectedReturn: priceDiff * 0.8 // 80% accounting for fees
+              }
+            }
+          })
+          opportunitiesCount += 1
+          
+          createAlert = true
+          title = `Arbitrage Opportunity: ${asset}`
+          description = `Price difference of ${(priceDiff * 100).toFixed(1)}% detected between exchanges`
         }
       }
       
@@ -378,11 +469,33 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
 
       // Create alert if conditions are met
       if (createAlert) {
+        // Determinar tipo y severidad basado en la señal original
+        let alertType = 'market'
+        let alertSeverity = signal.severity || 'medium'
+        
+        // Mapear tipos específicos basados en contenido
+        if (signal.type === 'news') {
+          const titleText = (signal.title || '').toLowerCase()
+          if (titleText.includes('hack') || titleText.includes('security') || titleText.includes('breach')) {
+            alertType = 'security'
+          }
+        } else if (signal.type === 'onchain') {
+          const titleText = (title || signal.title || '').toLowerCase()
+          if (titleText.includes('tvl') || titleText.includes('liquidity')) {
+            alertType = 'liquidity'
+          }
+        } else if (signal.type === 'price') {
+          const titleText = (title || signal.title || '').toLowerCase()
+          if (titleText.includes('arbitrage') || titleText.includes('opportunity')) {
+            alertType = 'opportunity'
+          }
+        }
+        
         await prisma.alert.create({
           data: {
             signalId: signal.id,
-            type: 'market',
-            severity: 'medium',
+            type: alertType,
+            severity: alertSeverity,
             title,
             description,
             metadata: {}

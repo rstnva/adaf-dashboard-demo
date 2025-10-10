@@ -5,7 +5,7 @@
 // Executes SQL retention policies safely with transaction support
 // ================================================================================================
 
-import { PrismaClient } from '@prisma/client';
+
 
 // Retention job result interface
 interface RetentionResult {
@@ -31,12 +31,21 @@ interface RetentionJobSummary {
  * Data Retention Job Class
  */
 export class RetentionJob {
-  private prisma: PrismaClient;
+  private prisma: any;
   private dryRun: boolean;
 
   constructor(dryRun: boolean = false) {
-    this.prisma = new PrismaClient();
+    this.prisma = null;
     this.dryRun = dryRun;
+  }
+
+  // Lazy-load PrismaClient instance
+  private async getPrisma() {
+    if (!this.prisma) {
+      const mod = await import('@prisma/client');
+      this.prisma = new mod.PrismaClient();
+    }
+    return this.prisma;
   }
 
   /**
@@ -49,10 +58,11 @@ export class RetentionJob {
     let results: RetentionResult[] = [];
 
     try {
+      const prisma = await this.getPrisma();
       if (this.dryRun) {
-        results = await this.simulateRetentionPolicies();
+        results = await this.simulateRetentionPolicies(prisma);
       } else {
-        results = await this.executeRetentionPolicies();
+        results = await this.executeRetentionPolicies(prisma);
       }
 
       const endTime = Date.now();
@@ -95,27 +105,17 @@ export class RetentionJob {
       console.error('❌ Retention job failed:', error);
       throw error;
     } finally {
-      await this.prisma.$disconnect();
+  if (this.prisma) await this.prisma.$disconnect();
     }
   }
 
   /**
    * Execute retention policies via SQL function
    */
-  private async executeRetentionPolicies(): Promise<RetentionResult[]> {
+  private async executeRetentionPolicies(prisma: any): Promise<RetentionResult[]> {
     const results: RetentionResult[] = [];
-
     try {
-      // Execute the master retention function
-      const policyResults = await this.prisma.$queryRaw<{
-        policy_name: string;
-        rows_affected: number;
-        execution_time_ms: number;
-        success: boolean;
-        error_message: string | null;
-      }[]>`SELECT * FROM run_retention_policies()`;
-
-      // Convert to our result format
+  const policyResults = (await prisma.$queryRaw(`SELECT * FROM run_retention_policies()`)) as Array<{ policy_name: string; rows_affected: number; execution_time_ms: number; success: boolean; error_message: string | null }>;
       for (const row of policyResults) {
         results.push({
           policyName: row.policy_name,
@@ -125,9 +125,7 @@ export class RetentionJob {
           errorMessage: row.error_message || undefined
         });
       }
-
       return results;
-
     } catch (error) {
       console.error('Failed to execute retention policies:', error);
       throw error;
@@ -137,53 +135,40 @@ export class RetentionJob {
   /**
    * Simulate retention policies for dry-run mode
    */
-  private async simulateRetentionPolicies(): Promise<RetentionResult[]> {
+  private async simulateRetentionPolicies(prisma: any): Promise<RetentionResult[]> {
     console.log('🔍 Running in dry-run mode - no data will be modified');
-
-    // Simulate policy execution with count queries
     const policies = [
       'signals_retention',
-      'lineage_events_retention', 
+      'lineage_events_retention',
       'alerts_retention',
       'opportunities_retention',
       'reports_retention',
       'backtests_retention'
     ];
-
     const results: RetentionResult[] = [];
-
     for (const policyName of policies) {
       const startTime = Date.now();
       try {
         let estimatedRows = 0;
-
-        // Estimate rows that would be affected based on policy
         switch (policyName) {
-          case 'signals_retention':
-            const oldSignals = await this.prisma.$queryRaw<[{ count: bigint }]>`
-              SELECT COUNT(*) as count FROM signals WHERE ts < NOW() - INTERVAL '90 days'
-            `;
+          case 'signals_retention': {
+            const oldSignals = (await prisma.$queryRaw(`SELECT COUNT(*) as count FROM signals WHERE ts < NOW() - INTERVAL '90 days'`)) as Array<{ count: bigint }>;
             estimatedRows = Number(oldSignals[0]?.count || 0);
             break;
-
-          case 'lineage_events_retention':
-            const oldLineage = await this.prisma.$queryRaw<[{ count: bigint }]>`
-              SELECT COUNT(*) as count FROM lineage_events WHERE created_at < NOW() - INTERVAL '365 days'
-            `;
+          }
+          case 'lineage_events_retention': {
+            const oldLineage = (await prisma.$queryRaw(`SELECT COUNT(*) as count FROM lineage_events WHERE created_at < NOW() - INTERVAL '365 days'`)) as Array<{ count: bigint }>;
             estimatedRows = Number(oldLineage[0]?.count || 0);
             break;
-
-          case 'alerts_retention':
-            const oldAlerts = await this.prisma.$queryRaw<[{ count: bigint }]>`
-              SELECT COUNT(*) as count FROM alerts WHERE created_at < NOW() - INTERVAL '1 year'
-            `;
+          }
+          case 'alerts_retention': {
+            const oldAlerts = (await prisma.$queryRaw(`SELECT COUNT(*) as count FROM alerts WHERE created_at < NOW() - INTERVAL '1 year'`)) as Array<{ count: bigint }>;
             estimatedRows = Number(oldAlerts[0]?.count || 0);
             break;
-
+          }
           default:
             estimatedRows = 0;
         }
-
         const endTime = Date.now();
         results.push({
           policyName,
@@ -191,9 +176,7 @@ export class RetentionJob {
           executionTimeMs: endTime - startTime,
           success: true
         });
-
         console.log(`📋 ${policyName}: ${estimatedRows} rows would be affected`);
-
       } catch (error) {
         const endTime = Date.now();
         results.push({
@@ -205,7 +188,6 @@ export class RetentionJob {
         });
       }
     }
-
     return results;
   }
 
@@ -230,7 +212,8 @@ export class RetentionJob {
         at: summary.executedAt
       };
 
-      await this.prisma.$executeRaw`
+  const prisma = await this.getPrisma();
+  await prisma.$executeRaw`
         INSERT INTO change_logs(actor, entity, entityId, field, old, new, at) 
         VALUES (${logData.actor}, ${logData.entity}, ${logData.entityId}, ${logData.field}, 
                 ${JSON.stringify(logData.old)}, ${JSON.stringify(logData.new)}, ${logData.at})
@@ -269,7 +252,8 @@ export class RetentionJob {
 
     try {
       // Check if retention function exists
-      const functionExists = await this.prisma.$queryRaw<[{ exists: boolean }]>`
+      const prisma = await this.getPrisma();
+  const functionExists = (await prisma.$queryRaw(`SELECT EXISTS(SELECT 1 FROM pg_proc WHERE proname = 'run_retention_policies') as exists`)) as Array<{ exists: boolean }>;
         SELECT EXISTS(
           SELECT 1 FROM pg_proc WHERE proname = 'run_retention_policies'
         ) as exists
@@ -280,7 +264,7 @@ export class RetentionJob {
       }
 
       // Check if archive tables exist
-      const tablesExist = await this.prisma.$queryRaw<[{ count: bigint }]>`
+  const tablesExist = (await prisma.$queryRaw(`SELECT COUNT(*) as count FROM information_schema.tables WHERE table_name IN ('signals_archive', 'alerts_archive')`)) as Array<{ count: bigint }>;
         SELECT COUNT(*) as count FROM information_schema.tables 
         WHERE table_name IN ('signals_archive', 'alerts_archive')
       `;

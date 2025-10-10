@@ -27,6 +27,36 @@ function FundingPanel({ defaultAsset = 'BTC' }: { defaultAsset?: string }) {
   const { funding } = useFundingGamma();
   const { data: fundingData, isLoading, error } = funding;
 
+  const handleExportFundingCSV = () => {
+    try {
+      window.open(`/api/read/derivs/funding?asset=${selectedAsset}&format=csv`);
+    } catch (apiError) {
+      const assetFunding = fundingData?.filter(f => f.asset === selectedAsset) || [];
+      const csvData = assetFunding.map(funding => ({
+        Exchange: funding.exchange,
+        Asset: funding.asset,
+        Rate: funding.rate,
+        Timestamp: funding.timestamp,
+        Status: funding.rate < 0 ? 'Negative' : 'Normal'
+      }));
+      
+      const csvContent = [
+        Object.keys(csvData[0] || {}).join(','),
+        ...csvData.map(row => Object.values(row).join(','))
+      ].join('\n');
+      
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('hidden', '');
+      a.setAttribute('href', url);
+      a.setAttribute('download', `funding-rates-${selectedAsset}-${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };
+
   if (isLoading) {
     return (
       <Card className="adaf-card">
@@ -41,7 +71,7 @@ function FundingPanel({ defaultAsset = 'BTC' }: { defaultAsset?: string }) {
               <Button 
                 variant="outline" 
                 size="sm"
-                onClick={() => window.open(`/api/read/derivs/funding?asset=${selectedAsset}&format=csv`)}
+                  onClick={handleExportFundingCSV}
               >
                 <Download className="h-4 w-4 mr-2" />
                 Export CSV
@@ -105,7 +135,7 @@ function FundingPanel({ defaultAsset = 'BTC' }: { defaultAsset?: string }) {
             <Button 
               variant="outline" 
               size="sm"
-              onClick={() => window.open(`/api/read/derivs/funding?asset=${selectedAsset}&format=csv`)}
+                onClick={handleExportFundingCSV}
             >
               <Download className="h-4 w-4 mr-2" />
               Export CSV
@@ -209,6 +239,37 @@ function GammaPanel({ defaultAsset = 'BTC' }: { defaultAsset?: string }) {
   const { gamma } = useFundingGamma();
   const { data: gammaData, isLoading, error } = gamma;
 
+  const handleExportGammaCSV = () => {
+    try {
+      window.open(`/api/read/derivs/gamma?asset=${selectedAsset}&format=csv`);
+    } catch (apiError) {
+      const assetGamma = gammaData?.filter(g => g.asset === selectedAsset) || [];
+      const csvData = assetGamma.map(gamma => ({
+        Tenor: gamma.tenor,
+        Asset: gamma.asset,
+        Strike: gamma.strike,
+        Gamma: gamma.gamma,
+        Exposure: gamma.exposure,
+        Timestamp: gamma.timestamp,
+      }));
+      
+      const csvContent = [
+        Object.keys(csvData[0] || {}).join(','),
+        ...csvData.map(row => Object.values(row).join(','))
+      ].join('\n');
+      
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('hidden', '');
+      a.setAttribute('href', url);
+      a.setAttribute('download', `gamma-exposure-${selectedAsset}-${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };
+
   if (isLoading) {
     return (
       <Card className="adaf-card">
@@ -223,7 +284,7 @@ function GammaPanel({ defaultAsset = 'BTC' }: { defaultAsset?: string }) {
               <Button 
                 variant="outline" 
                 size="sm"
-                onClick={() => window.open(`/api/read/derivs/gamma?asset=${selectedAsset}&format=csv`)}
+                  onClick={handleExportGammaCSV}
               >
                 <Download className="h-4 w-4 mr-2" />
                 Export CSV
@@ -288,7 +349,7 @@ function GammaPanel({ defaultAsset = 'BTC' }: { defaultAsset?: string }) {
             <Button 
               variant="outline" 
               size="sm"
-              onClick={() => window.open(`/api/read/derivs/gamma?asset=${selectedAsset}&format=csv`)}
+                onClick={handleExportGammaCSV}
             >
               <Download className="h-4 w-4 mr-2" />
               Export CSV

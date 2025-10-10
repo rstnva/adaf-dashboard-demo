@@ -1,145 +1,590 @@
+nohup: ignoring input
 
 > adaf-dashboard@1.0.0 dev /home/parallels/Desktop/adaf-dashboard-pro
-> next dev --port 3005
+> next dev --port 3000
 
    ▲ Next.js 15.5.4
-   - Local:        http://localhost:3005
-   - Network:      http://10.211.55.3:3005
+   - Local:        http://localhost:3000
+   - Network:      http://10.211.55.3:3000
    - Environments: .env.local, .env
 
  ✓ Starting...
- ✓ Ready in 1109ms
- ○ Compiling /api/read/whoami ...
- ✓ Compiled /api/read/whoami in 1307ms (396 modules)
- GET /api/read/whoami 200 in 1450ms
- ✓ Compiled /api/control/keys in 160ms (398 modules)
- GET /api/control/keys 403 in 206ms
- GET /api/control/keys 403 in 708ms
- GET /api/read/whoami 200 in 657ms
- GET /api/read/whoami 200 in 639ms
- GET /api/control/keys 200 in 677ms
- POST /api/control/keys 201 in 918ms
- ✓ Compiled /api/actions/opx/approve in 227ms (400 modules)
- POST /api/actions/opx/approve 403 in 281ms
- GET /api/read/whoami 200 in 971ms
- GET /api/read/whoami 200 in 13ms
- GET /api/control/keys 403 in 14ms
- POST /api/actions/opx/approve 403 in 13ms
- ✓ Compiled /api/read/opx/list in 124ms (402 modules)
- GET /api/read/opx/list?limit=1 500 in 181ms
- GET /api/read/whoami 200 in 25ms
- GET /api/read/whoami 200 in 19ms
- GET /api/read/whoami 200 in 703ms
- GET /api/read/whoami 200 in 895ms
- GET /api/control/keys 403 in 13ms
- GET /api/control/keys 200 in 686ms
- POST /api/actions/opx/approve 403 in 14ms
- POST /api/control/keys 201 in 894ms
- GET /api/read/whoami 200 in 1098ms
- ✓ Compiled /api/control/keys/disable in 177ms (402 modules)
-🔒 Disabled 1 API key(s) matching prefix: a03d7022
- POST /api/control/keys/disable 200 in 949ms
- ✓ Compiled /api/read/opx/list in 63ms (210 modules)
- GET /api/read/opx/list?limit=1 500 in 125ms
- ✓ Compiled /api/read/dqp/overview in 133ms (408 modules)
-DQP overview error: Error [PrismaClientKnownRequestError]: 
-Invalid `prisma.$queryRawUnsafe()` invocation:
+ ✓ Ready in 1311ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 2.6s (1254 modules)
+ HEAD /dashboard 200 in 3163ms
+ ✓ Compiled in 547ms (469 modules)
+ GET /dashboard?id=f3d53503-e074-4b25-b536-1344ef72ee7a&vscodeBrowserReqId=1760049300015 200 in 117ms
+ ○ Compiling /markets ...
+ ✓ Compiled /markets in 1025ms (1282 modules)
+ GET /markets 200 in 1178ms
+ ○ Compiling /api/read/derivs/gamma ...
+ ✓ Compiled /api/read/derivs/gamma in 635ms (1347 modules)
+ GET /api/read/etf/flow2?range=7D&currency=USD&timezone=America%2FMexico_City 200 in 748ms
+ GET /api/read/derivs/gamma?asset=BTC%2CETH&tenors=7%2C14%2C30&timezone=America%2FMexico_City 200 in 753ms
+ GET /api/read/derivs/funding?asset=BTC%2CETH&days=7&timezone=America%2FMexico_City 200 in 759ms
+ GET /api/read/etf/flow?asset=BTC%7CETH&days=7&provider=any&currency=USD&timezone=America%2FMexico_City 200 in 783ms
+ ✓ Compiled /onchain in 358ms (1356 modules)
+ GET /onchain 200 in 457ms
+ ✓ Compiled /api/read/onchain/tvl-heatmap in 229ms (1358 modules)
+ GET /api/read/onchain/tvl-heatmap?days=7&timezone=America%2FMexico_City 200 in 270ms
+ GET /markets 200 in 75ms
+ ✓ Compiled /api/read/derivs/gamma in 983ms (1300 modules)
+ ✓ Compiled in 1ms (872 modules)
+ GET /api/read/etf/flow2?range=7D&currency=USD&timezone=America%2FMexico_City 200 in 682ms
+ GET /api/read/derivs/funding?asset=BTC%2CETH&days=7&timezone=America%2FMexico_City 200 in 688ms
+ GET /api/read/derivs/gamma?asset=BTC%2CETH&tenors=7%2C14%2C30&timezone=America%2FMexico_City 200 in 688ms
+ GET /api/read/etf/flow?asset=BTC%7CETH&days=7&provider=any&currency=USD&timezone=America%2FMexico_City 200 in 719ms
+ GET /markets 200 in 440ms
+ ✓ Compiled in 453ms (1364 modules)
+ GET /markets 200 in 80ms
+ ✓ Compiled in 406ms (1364 modules)
+ GET /markets 200 in 78ms
+ ✓ Compiled in 426ms (1366 modules)
+ GET /markets 200 in 90ms
+ ✓ Compiled in 332ms (1302 modules)
+ GET /markets 200 in 169ms
+ ✓ Compiled /api/read/etf/flow in 116ms (867 modules)
+ GET /api/read/etf/flow?asset=BTC%7CETH&days=7&provider=any&currency=USD&timezone=America%2FMexico_City 200 in 216ms
+ ✓ Compiled in 332ms (1360 modules)
+ GET /markets 200 in 79ms
+ ✓ Compiled in 376ms (1360 modules)
+ GET /markets 200 in 97ms
+ ✓ Compiled in 325ms (1360 modules)
+ GET /markets 200 in 65ms
+ ⨯ ./src/app/(dashboard)/markets/page.tsx
+Error:   [31mx[0m Unexpected token. Did you mean `{'>'}` or `&gt;`?
+     ,-[[36;1;4m/home/parallels/Desktop/adaf-dashboard-pro/src/app/(dashboard)/markets/page.tsx[0m:451:1]
+ [2m448[0m |                       isNegative ? "text-red-600" : "text-green-600"
+ [2m449[0m |                     )}>
+ [2m450[0m |                       {(funding.rate * 100).toFixed(4)}%
+ [2m451[0m |                         const handleExportFundingCSV = () => {
+     : [35;1m                                                           ^[0m
+ [2m452[0m |                           try {
+ [2m453[0m |                             // Try API first
+ [2m454[0m |                             window.open(`/api/read/derivs/funding?asset=${asset}&days=${days}&format=csv`);
+     `----
+  [31mx[0m Expected '</', got 'try'
+     ,-[[36;1;4m/home/parallels/Desktop/adaf-dashboard-pro/src/app/(dashboard)/markets/page.tsx[0m:452:1]
+ [2m449[0m |                     )}>
+ [2m450[0m |                       {(funding.rate * 100).toFixed(4)}%
+ [2m451[0m |                         const handleExportFundingCSV = () => {
+ [2m452[0m |                           try {
+     : [35;1m                          ^^^[0m
+ [2m453[0m |                             // Try API first
+ [2m454[0m |                             window.open(`/api/read/derivs/funding?asset=${asset}&days=${days}&format=csv`);
+ [2m455[0m |                           } catch (apiError) {
+     `----
 
+Caused by:
+    Syntax Error
 
-Raw query failed. Code: `42703`. Message: `column r.agent_code does not exist`
-    at async getDqpOverview (src/lib/dqp/calculations.ts:271:21)
-    at async GET (src/app/api/read/dqp/overview/route.ts:34:18)
-  269 |   params.push(limit);
-  270 |
-> 271 |   const rawResult = await prisma.$queryRawUnsafe(query, ...params) as Array<{
-      |                     ^
-  272 |     source: string;
-  273 |     agent_code: string;
-  274 |     type: string; {
-  code: 'P2010',
-  clientVersion: '5.22.0',
-  meta: [Object]
-}
- GET /api/read/dqp/overview?limit=1 500 in 277ms
- GET /api/control/keys 403 in 947ms
- POST /api/actions/opx/approve 403 in 912ms
- GET /api/control/keys 200 in 688ms
- GET /api/control/keys 403 in 886ms
- GET /api/control/keys 403 in 13ms
- GET /api/read/opx/list?status=proposed%27OR%271%27=%271 500 in 36ms
- GET /api/read/whoami 200 in 666ms
- GET /api/read/whoami 200 in 641ms
- GET /api/read/opx/list?limit=1 500 in 20ms
- ✓ Compiled in 64ms (194 modules)
- ✓ Compiled in 38ms (194 modules)
- ✓ Compiled in 49ms (194 modules)
- ✓ Compiled in 37ms (194 modules)
- ✓ Compiled in 50ms (194 modules)
- ✓ Compiled /api/read/opx/plan in 247ms (392 modules)
- GET /api/read/opx/plan?oppId=sample_opp_001 404 in 341ms
-Get execution plan error: Error [PrismaClientKnownRequestError]: 
+Import trace for requested module:
+./src/app/(dashboard)/markets/page.tsx
+ ○ Compiling /_error ...
+ ⨯ ./src/app/(dashboard)/markets/page.tsx
+Error:   [31mx[0m Unexpected token. Did you mean `{'>'}` or `&gt;`?
+     ,-[[36;1;4m/home/parallels/Desktop/adaf-dashboard-pro/src/app/(dashboard)/markets/page.tsx[0m:451:1]
+ [2m448[0m |                       isNegative ? "text-red-600" : "text-green-600"
+ [2m449[0m |                     )}>
+ [2m450[0m |                       {(funding.rate * 100).toFixed(4)}%
+ [2m451[0m |                         const handleExportFundingCSV = () => {
+     : [35;1m                                                           ^[0m
+ [2m452[0m |                           try {
+ [2m453[0m |                             // Try API first
+ [2m454[0m |                             window.open(`/api/read/derivs/funding?asset=${asset}&days=${days}&format=csv`);
+     `----
+  [31mx[0m Expected '</', got 'try'
+     ,-[[36;1;4m/home/parallels/Desktop/adaf-dashboard-pro/src/app/(dashboard)/markets/page.tsx[0m:452:1]
+ [2m449[0m |                     )}>
+ [2m450[0m |                       {(funding.rate * 100).toFixed(4)}%
+ [2m451[0m |                         const handleExportFundingCSV = () => {
+ [2m452[0m |                           try {
+     : [35;1m                          ^^^[0m
+ [2m453[0m |                             // Try API first
+ [2m454[0m |                             window.open(`/api/read/derivs/funding?asset=${asset}&days=${days}&format=csv`);
+ [2m455[0m |                           } catch (apiError) {
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/(dashboard)/markets/page.tsx
+ GET /markets 500 in 2455ms
+ GET /markets 500 in 136ms
+ GET /markets 500 in 62ms
+ GET /markets 500 in 28ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /markets 500 in 318ms
+ ✓ Compiled /_error in 1093ms (1722 modules)
+ GET /markets 200 in 748ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /markets 200 in 530ms
+ GET /markets 200 in 81ms
+ ✓ Compiled /api/read/derivs/gamma in 185ms (1149 modules)
+ ✓ Compiled (1155 modules)
+ GET /api/read/etf/flow2?range=7D&currency=USD&timezone=America%2FMexico_City 200 in 420ms
+ GET /api/read/derivs/funding?asset=BTC%2CETH&days=7&timezone=America%2FMexico_City 200 in 425ms
+ GET /api/read/derivs/gamma?asset=BTC%2CETH&tenors=7%2C14%2C30&timezone=America%2FMexico_City 200 in 430ms
+ GET /api/read/etf/flow?asset=BTC%7CETH&days=7&provider=any&currency=USD&timezone=America%2FMexico_City 200 in 450ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ✓ Compiled in 499ms (1800 modules)
+ GET /markets 200 in 415ms
+ GET /markets 200 in 605ms
+ GET /api/read/etf/flow?asset=BTC%7CETH&days=7&provider=any&currency=USD&timezone=America%2FMexico_City 200 in 74ms
+ GET /api/read/etf/flow2?range=7D&currency=USD&timezone=America%2FMexico_City 200 in 100ms
+ GET /api/read/derivs/funding?asset=BTC%2CETH&days=7&timezone=America%2FMexico_City 200 in 103ms
+ GET /api/read/derivs/gamma?asset=BTC%2CETH&tenors=7%2C14%2C30&timezone=America%2FMexico_City 200 in 106ms
+ ✓ Compiled in 403ms (1800 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /markets 200 in 95ms
+ GET /markets 200 in 175ms
+ GET /api/read/etf/flow?asset=BTC%7CETH&days=7&provider=any&currency=USD&timezone=America%2FMexico_City 200 in 56ms
+ GET /api/read/etf/flow2?range=7D&currency=USD&timezone=America%2FMexico_City 200 in 72ms
+ GET /api/read/derivs/funding?asset=BTC%2CETH&days=7&timezone=America%2FMexico_City 200 in 75ms
+ GET /api/read/derivs/gamma?asset=BTC%2CETH&tenors=7%2C14%2C30&timezone=America%2FMexico_City 200 in 77ms
+ ✓ Compiled in 342ms (1800 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /markets 200 in 86ms
+ GET /markets 200 in 157ms
+ GET /api/read/etf/flow?asset=BTC%7CETH&days=7&provider=any&currency=USD&timezone=America%2FMexico_City 200 in 54ms
+ GET /api/read/etf/flow2?range=7D&currency=USD&timezone=America%2FMexico_City 200 in 73ms
+ GET /api/read/derivs/funding?asset=BTC%2CETH&days=7&timezone=America%2FMexico_City 200 in 76ms
+ GET /api/read/derivs/gamma?asset=BTC%2CETH&tenors=7%2C14%2C30&timezone=America%2FMexico_City 200 in 77ms
+ ✓ Compiled in 182ms (645 modules)
+ GET /markets 200 in 49ms
+ ✓ Compiled in 178ms (645 modules)
+ GET /markets 200 in 68ms
+ ✓ Compiled in 208ms (645 modules)
+ GET /markets 200 in 41ms
+ ✓ Compiled in 376ms (645 modules)
+ GET /markets 200 in 41ms
+ ✓ Compiled in 182ms (645 modules)
+ GET /markets 200 in 46ms
+ ✓ Compiled in 158ms (645 modules)
+ GET /markets 200 in 38ms
+ ✓ Compiled in 179ms (645 modules)
+ GET /markets 200 in 42ms
+ ✓ Compiled in 160ms (645 modules)
+ GET /markets 200 in 62ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 615ms (1727 modules)
+ HEAD /dashboard/markets 404 in 784ms
+ HEAD /markets 200 in 169ms
+ GET /markets?id=f3d53503-e074-4b25-b536-1344ef72ee7a&vscodeBrowserReqId=1760049971669 200 in 129ms
+ ✓ Compiled /api/read/derivs/gamma in 143ms (1150 modules)
+ ✓ Compiled (1156 modules)
+ GET /api/read/etf/flow2?range=7D&currency=USD&timezone=America%2FMexico_City 200 in 380ms
+ GET /api/read/derivs/funding?asset=BTC%2CETH&days=7&timezone=America%2FMexico_City 200 in 391ms
+ GET /api/read/derivs/gamma?asset=BTC%2CETH&tenors=7%2C14%2C30&timezone=America%2FMexico_City 200 in 395ms
+ GET /api/read/etf/flow?asset=BTC%7CETH&days=7&provider=any&currency=USD&timezone=America%2FMexico_City 200 in 414ms
+ ✓ Compiled in 1261ms (1736 modules)
+ GET /markets?id=f3d53503-e074-4b25-b536-1344ef72ee7a&vscodeBrowserReqId=1760049971669 200 in 196ms
+ GET /markets?id=f3d53503-e074-4b25-b536-1344ef72ee7a&vscodeBrowserReqId=1760050600427 200 in 226ms
+ ✓ Compiled /api/read/derivs/gamma in 158ms (1149 modules)
+ ✓ Compiled (1155 modules)
+ GET /api/read/etf/flow2?range=7D&currency=USD&timezone=America%2FMexico_City 200 in 394ms
+ GET /api/read/derivs/funding?asset=BTC%2CETH&days=7&timezone=America%2FMexico_City 200 in 400ms
+ GET /api/read/etf/flow?asset=BTC%7CETH&days=7&provider=any&currency=USD&timezone=America%2FMexico_City 200 in 423ms
+ GET /api/read/derivs/gamma?asset=BTC%2CETH&tenors=7%2C14%2C30&timezone=America%2FMexico_City 200 in 428ms
+ ○ Compiling /onchain ...
+ ✓ Compiled /onchain in 648ms (1161 modules)
+ GET /onchain 200 in 751ms
+ ✓ Compiled /api/read/onchain/tvl-heatmap in 242ms (1163 modules)
+ GET /api/read/onchain/tvl-heatmap?days=7&timezone=America%2FMexico_City 200 in 291ms
+ ✓ Compiled /news in 498ms (1824 modules)
+ GET /news 200 in 586ms
+ ✓ Compiled /_not-found in 460ms (1829 modules)
+ GET /api/read/news?limit=20&timezone=America%2FMexico_City 404 in 588ms
+ GET /api/read/reg/calendar?days=7&timezone=America%2FMexico_City 404 in 586ms
+ GET /api/read/news?limit=20&timezone=America%2FMexico_City 404 in 49ms
+ ✓ Compiled /derivatives in 453ms (1838 modules)
+ GET /derivatives 200 in 568ms
+ GET /news 200 in 59ms
+ GET /api/read/news?limit=20&timezone=America%2FMexico_City 404 in 67ms
+ GET /api/read/news?limit=20&timezone=America%2FMexico_City 404 in 32ms
+ ○ Compiling /research ...
+ ✓ Compiled /research in 1045ms (2966 modules)
+ GET /research 200 in 1174ms
+ GET /research 200 in 44ms
+ ✓ Compiled /api/research/backtest in 383ms (2895 modules)
+✓ Created backtest 1760051436513: "ETF Spike Strategy" by ui@adaf.com
+ POST /api/research/backtest 201 in 503ms
+ ✓ Compiled /api/research/backtests in 411ms (2897 modules)
+📋 Listed 20 backtests (0-20 of 127)
+ GET /api/research/backtests?limit=20&orderBy=created_at&orderDir=DESC 200 in 459ms
+📋 Listed 20 backtests (0-20 of 127)
+ GET /api/research/backtests?limit=20&orderBy=created_at&orderDir=DESC 200 in 20ms
+ ✓ Compiled /api/research/backtest/[id] in 322ms (2899 modules)
+ GET /api/research/backtest/1760050695913 400 in 678ms
+ GET /api/research/backtest/1760050695913 400 in 43ms
+ ○ Compiling /opx ...
+ ✓ Compiled /opx in 510ms (2920 modules)
+ GET /opx 200 in 600ms
+ ○ Compiling /api/read/opx/list ...
+ ✓ Compiled /api/read/opx/list in 617ms (2961 modules)
+ GET /api/read/opx/list?status=proposed&order=score&dir=desc&limit=50&page=1 200 in 732ms
+ GET /api/read/opx/list?status=proposed&order=score&dir=desc&limit=50&page=1 200 in 728ms
+ GET /api/read/opx/list?status=proposed&order=score&dir=desc&limit=50&page=1 200 in 726ms
+ GET /api/read/opx/list?status=proposed&order=score&dir=desc&limit=50&page=1 200 in 736ms
+ GET /opx?status=proposed&order=score&dir=desc&limit=50 200 in 752ms
+ GET /opx?status=proposed&order=score&dir=desc&limit=50 200 in 32ms
+ ✓ Compiled / in 469ms (2963 modules)
+ GET / 200 in 547ms
+ ✓ Compiled /_not-found in 345ms (2966 modules)
+ GET /dashboard/main 404 in 401ms
+ GET /dashboard/main 404 in 117ms
+ ✓ Compiled /markets in 228ms (1672 modules)
+ GET /markets?id=f3d53503-e074-4b25-b536-1344ef72ee7a&vscodeBrowserReqId=1760050782343 200 in 540ms
+ ✓ Compiled /api/read/derivs/gamma in 327ms (1730 modules)
+ ✓ Compiled (1736 modules)
+ GET /api/read/etf/flow2?range=7D&currency=USD&timezone=America%2FMexico_City 200 in 713ms
+ GET /api/read/derivs/funding?asset=BTC%2CETH&days=7&timezone=America%2FMexico_City 200 in 717ms
+ GET /api/read/derivs/gamma?asset=BTC%2CETH&tenors=7%2C14%2C30&timezone=America%2FMexico_City 200 in 722ms
+ GET /api/read/etf/flow?asset=BTC%7CETH&days=7&provider=any&currency=USD&timezone=America%2FMexico_City 200 in 744ms
+ ✓ Compiled /reports in 448ms (3000 modules)
+ GET /reports 200 in 520ms
+ ✓ Compiled /dqp in 353ms (2991 modules)
+ GET /dqp 200 in 411ms
+ GET /dqp 200 in 36ms
+ ✓ Compiled /_not-found in 339ms (2450 modules)
+ GET /lineage 404 in 386ms
+ GET /lineage 404 in 68ms
+ GET /reports 200 in 170ms
+ ○ Compiling /academy ...
+ ✓ Compiled /academy in 1481ms (2427 modules)
+ GET /academy 200 in 1701ms
+ ✓ Compiled /control in 335ms (2424 modules)
+ GET /control 200 in 414ms
+ ○ Compiling /api/read/audit ...
+ ✓ Compiled /api/read/audit in 786ms (2484 modules)
+Error [PrismaClientInitializationError]: 
 Invalid `prisma.$queryRaw()` invocation:
 
 
-Raw query failed. Code: `42P01`. Message: `relation "metrics" does not exist`
-    at async GET (src/app/api/read/opx/plan/route.ts:86:25)
-  84 |
-  85 |     // Get current runtime metrics
-> 86 |     const metricsRows = await prisma.$queryRaw<Array<{ key: string; value: number }>>`
-     |                         ^
-  87 |       SELECT DISTINCT ON (key) key, value::float8 AS value
-  88 |       FROM metrics
-  89 |       WHERE key IN ('ltv.current', 'hf.current', 'slippage.current', 'realyield.current', 'nav.usd') {
-  code: 'P2010',
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+    at async GET (src/app/api/control/limits/route.ts:9:18)
+   7 |
+   8 | export async function GET() {
+>  9 |   const limits = await prisma.$queryRaw<LimitRow[]>`
+     |                  ^
+  10 |     SELECT key, value, notes, "createdAt", "updatedAt" FROM "limits" ORDER BY key ASC
+  11 |   `
+  12 |   return NextResponse.json(limits) {
   clientVersion: '5.22.0',
-  meta: [Object]
+  errorCode: undefined
 }
- GET /api/read/opx/plan?oppId=sample_opp_001 500 in 87ms
-Get execution plan error: Error [PrismaClientKnownRequestError]: 
+Error [PrismaClientInitializationError]: 
 Invalid `prisma.$queryRaw()` invocation:
 
 
-Raw query failed. Code: `42P01`. Message: `relation "metrics" does not exist`
-    at async GET (src/app/api/read/opx/plan/route.ts:86:25)
-  84 |
-  85 |     // Get current runtime metrics
-> 86 |     const metricsRows = await prisma.$queryRaw<Array<{ key: string; value: number }>>`
-     |                         ^
-  87 |       SELECT DISTINCT ON (key) key, value::float8 AS value
-  88 |       FROM metrics
-  89 |       WHERE key IN ('ltv.current', 'hf.current', 'slippage.current', 'realyield.current', 'nav.usd') {
-  code: 'P2010',
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+    at async GET (src/app/api/control/limits/route.ts:9:18)
+   7 |
+   8 | export async function GET() {
+>  9 |   const limits = await prisma.$queryRaw<LimitRow[]>`
+     |                  ^
+  10 |     SELECT key, value, notes, "createdAt", "updatedAt" FROM "limits" ORDER BY key ASC
+  11 |   `
+  12 |   return NextResponse.json(limits) {
   clientVersion: '5.22.0',
-  meta: [Object]
+  errorCode: undefined
 }
- GET /api/read/opx/plan?oppId=sample_opp_001 500 in 58ms
- ✓ Compiled in 11ms
- ✓ Compiled /api/read/opx/plan in 83ms (198 modules)
- GET /api/read/opx/plan?oppId=sample_opp_001 200 in 158ms
- ✓ Compiled /api/read/opx/plan/status in 190ms (395 modules)
- POST /api/read/opx/plan/status 400 in 260ms
- ✓ Compiled /api/read/opx/plan/task in 114ms (397 modules)
- POST /api/read/opx/plan/task 200 in 176ms
- POST /api/read/opx/plan/status 200 in 49ms
- ✓ Compiled /api/read/opx/plan/artifact in 162ms (399 modules)
- POST /api/read/opx/plan/artifact 201 in 226ms
- GET /api/read/opx/plan?oppId=sample_opp_001 200 in 53ms
- GET /api/read/opx/plan?oppId=sample_opp_001 200 in 23ms
- ✓ Compiled in 65ms (194 modules)
- ✓ Compiled in 37ms (194 modules)
- ✓ Compiled in 34ms (194 modules)
- ✓ Compiled /api/read/report/kpis in 134ms (393 modules)
-[API] Metrics table not available, using defaults
-[API] No metrics data available, returning defaults
- GET /api/read/report/kpis 200 in 212ms
- ✓ Compiled /api/read/report/por in 107ms (395 modules)
-[API] Metrics table not available for PoR, using defaults
- GET /api/read/report/por 200 in 173ms
- ✓ Compiled /api/read/report/summary in 111ms (397 modules)
-[API] Metrics table not available for summary, using synthetic data
- GET /api/read/report/summary?range=last90d 200 in 173ms
- ✓ Compiled in 49ms (194 modules)
- ✓ Compiled in 68ms (194 modules)
- ✓ Compiled in 34ms (194 modules)
+ GET /api/control/limits 500 in 1051ms
+ GET /api/control/limits 500 in 1055ms
+ GET /api/read/audit 500 in 1055ms
+ GET /api/read/audit 500 in 1048ms
+Error [PrismaClientInitializationError]: 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+    at async GET (src/app/api/control/rules/route.ts:13:7)
+  11 |   const rows = agentCode
+  12 |     ? await prisma.$queryRaw<RuleRow[]>`SELECT * FROM rules WHERE "agentCode" = ${agentCode} ORDER BY "createdAt" DESC`
+> 13 |     : await prisma.$queryRaw<RuleRow[]>`SELECT * FROM rules ORDER BY "createdAt" DESC`
+     |       ^
+  14 |   const parsed = rows.map(r => ({ ...r, expr: safeParse(r.expr) }))
+  15 |   return NextResponse.json(parsed)
+  16 | } {
+  clientVersion: '5.22.0',
+  errorCode: undefined
+}
+Error [PrismaClientInitializationError]: 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+    at async GET (src/app/api/control/rules/route.ts:13:7)
+  11 |   const rows = agentCode
+  12 |     ? await prisma.$queryRaw<RuleRow[]>`SELECT * FROM rules WHERE "agentCode" = ${agentCode} ORDER BY "createdAt" DESC`
+> 13 |     : await prisma.$queryRaw<RuleRow[]>`SELECT * FROM rules ORDER BY "createdAt" DESC`
+     |       ^
+  14 |   const parsed = rows.map(r => ({ ...r, expr: safeParse(r.expr) }))
+  15 |   return NextResponse.json(parsed)
+  16 | } {
+  clientVersion: '5.22.0',
+  errorCode: undefined
+}
+ GET /api/control/rules 500 in 1134ms
+ GET /api/control/rules 500 in 1129ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /control 200 in 144ms
+Error [PrismaClientInitializationError]: 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+    at async GET (src/app/api/control/limits/route.ts:9:18)
+   7 |
+   8 | export async function GET() {
+>  9 |   const limits = await prisma.$queryRaw<LimitRow[]>`
+     |                  ^
+  10 |     SELECT key, value, notes, "createdAt", "updatedAt" FROM "limits" ORDER BY key ASC
+  11 |   `
+  12 |   return NextResponse.json(limits) {
+  clientVersion: '5.22.0',
+  errorCode: undefined
+}
+ GET /api/control/limits 500 in 99ms
+ GET /api/read/audit 500 in 101ms
+Error [PrismaClientInitializationError]: 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+    at async GET (src/app/api/control/rules/route.ts:13:7)
+  11 |   const rows = agentCode
+  12 |     ? await prisma.$queryRaw<RuleRow[]>`SELECT * FROM rules WHERE "agentCode" = ${agentCode} ORDER BY "createdAt" DESC`
+> 13 |     : await prisma.$queryRaw<RuleRow[]>`SELECT * FROM rules ORDER BY "createdAt" DESC`
+     |       ^
+  14 |   const parsed = rows.map(r => ({ ...r, expr: safeParse(r.expr) }))
+  15 |   return NextResponse.json(parsed)
+  16 | } {
+  clientVersion: '5.22.0',
+  errorCode: undefined
+}
+ GET /api/control/rules 500 in 142ms
+ GET /?id=f3d53503-e074-4b25-b536-1344ef72ee7a&vscodeBrowserReqId=1760051084879 200 in 112ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 607ms (2489 modules)
+ GET /dashboard/main 404 in 687ms
+ GET /dashboard/main 404 in 112ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.2s (2430 modules)
+ GET /dashboard/main 404 in 1706ms
+ GET /dashboard/main 404 in 18ms
+ GET /dashboard/main 404 in 82ms
+ ✓ Compiled in 251ms (1286 modules)
+ GET /dashboard/main 404 in 47ms
+ GET /dashboard/main 404 in 30ms
+ ✓ Compiled in 273ms (1286 modules)
+ GET /dashboard/main 404 in 47ms
+ GET /dashboard/main 404 in 29ms
+ GET /?id=f3d53503-e074-4b25-b536-1344ef72ee7a&vscodeBrowserReqId=1760052778591 200 in 174ms
+ GET /dashboard/main 404 in 54ms
+ GET /dashboard/main 404 in 35ms
+ GET /?id=f3d53503-e074-4b25-b536-1344ef72ee7a&vscodeBrowserReqId=1760052892726 200 in 125ms
+ GET /dashboard/main 404 in 25ms
+ GET /dashboard/main 404 in 44ms
+ GET /?id=f3d53503-e074-4b25-b536-1344ef72ee7a&vscodeBrowserReqId=1760052974098 200 in 103ms
+ GET /dashboard/main 404 in 27ms
+ GET /dashboard/main 404 in 47ms
+ ✓ Compiled in 706ms (1286 modules)
+ GET /dashboard/main 404 in 29ms
+ GET /dashboard/main 404 in 27ms
+ GET /?id=f3d53503-e074-4b25-b536-1344ef72ee7a&vscodeBrowserReqId=1760052983713 200 in 67ms
+ GET /dashboard/main 404 in 16ms
+ GET /dashboard/main 404 in 28ms
+ GET /?id=f3d53503-e074-4b25-b536-1344ef72ee7a&vscodeBrowserReqId=1760052989503 200 in 62ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 769ms (1168 modules)
+ HEAD /dashboard 200 in 1144ms
+ HEAD / 200 in 80ms
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/routes-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/routes-manifest.json'
+}
+ GET / 500 in 159ms
+ GET / 500 in 38ms
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/routes-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/routes-manifest.json'
+}
+ GET / 500 in 108ms
+ GET / 500 in 28ms
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/routes-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/routes-manifest.json'
+}
+ GET / 500 in 88ms
+ GET / 500 in 24ms
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/routes-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/routes-manifest.json'
+}
+ GET / 500 in 91ms
+ GET / 500 in 25ms
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/app-paths-manifest.json',
+  page: '/'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/server/pages-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open '/home/parallels/Desktop/adaf-dashboard-pro/.next/routes-manifest.json'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/parallels/Desktop/adaf-dashboard-pro/.next/routes-manifest.json'
+}
+ GET / 500 in 89ms
+ GET / 500 in 25ms
  ELIFECYCLE  Command failed.
 [?25h

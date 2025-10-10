@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { currency, percent, number } from '@/lib/format';

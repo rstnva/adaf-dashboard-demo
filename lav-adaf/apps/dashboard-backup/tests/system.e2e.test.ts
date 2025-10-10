@@ -2,10 +2,11 @@
  * Pruebas end-to-end del sistema completo ADAF
  * Valida el flujo completo desde ingesta hasta alertas y oportunidades
  */
+import './setup'
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import { NextRequest } from 'next/server'
 import { PrismaClient } from '@prisma/client'
-import Redis from 'ioredis'
+// Redis will be imported dynamically after mock registration
 
 // Imports de los handlers
 import { POST as newsHandler } from '../src/app/api/ingest/news/route'
@@ -14,10 +15,14 @@ import { GET as alertsHandler } from '../src/app/api/read/alerts/route'
 import { GET as opportunitiesHandler } from '../src/app/api/read/opportunities/route'
 
 const prisma = new PrismaClient()
-const redis = new Redis({
-  host: process.env.REDIS_HOST || 'localhost',
-  port: parseInt(process.env.REDIS_PORT || '6379'),
-  db: 15 // Base de datos separada para pruebas
+let redis
+beforeAll(async () => {
+  const redisMod = await import('ioredis');
+  redis = new redisMod.default({
+    host: process.env.REDIS_HOST || 'localhost',
+    port: parseInt(process.env.REDIS_PORT || '6379'),
+    db: 15 // Base de datos separada para pruebas
+  });
 })
 
 describe('ADAF System End-to-End', () => {

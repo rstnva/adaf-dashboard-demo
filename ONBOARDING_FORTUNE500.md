@@ -5,8 +5,11 @@ Bienvenido/a al equipo ADAF Dashboard Pro. Este onboarding te guiará paso a pas
 ---
 
 ## 1. Documentación clave
-- [README.md](../README.md): visión, arquitectura, instalación y operación.
-- [MEMORIA_GITHUB_COPILOT.md](../MEMORIA_GITHUB_COPILOT.md): bitácora institucional, decisiones, incidentes y estándares.
+- [README.md](../README.md): visión general e inicio rápido del sistema.
+- [Documentación Completa](../motor-del-dash/README.md): toda la documentación organizada profesionalmente.
+- [Guía Completa de Uso](../motor-del-dash/documentacion/README-COMPLETO.md): guías paso a paso, instalación y operación.
+- [Arquitectura Técnica](../motor-del-dash/arquitectura/ARCHITECTURE.md): documentación técnica detallada.
+- [Memoria Técnica](../motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md): bitácora institucional, decisiones, incidentes y estándares.
 - [docs/runbooks/README.md](../docs/runbooks/README.md): runbooks operativos y respuesta a incidentes.
 - [docs/runbooks/templates/POSTMORTEM.md](../docs/runbooks/templates/POSTMORTEM.md): plantilla de post-mortem.
 - [SECURITY_README.md](../SECURITY_README.md): políticas de seguridad, manejo de secretos y roles.

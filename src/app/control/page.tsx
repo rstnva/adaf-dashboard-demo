@@ -7,12 +7,16 @@ type Rule = { id: string; agentCode: string; name: string; expr: unknown; enable
 type ChangeRow = { id: string; actor: string; entity: string; entityId: string; field: string; old: unknown; new: unknown; at: string }
 
 export default function ControlPage() {
+  // ...existing code...
+  const [audit, setAudit] = useState<ChangeRow[]>([]);
+  // Siempre renderizar como array para evitar errores de tipo
+  const auditArray: ChangeRow[] = Array.isArray(audit) ? audit : [];
   const [limits, setLimits] = useState<Limit[]>([])
   const [saving, setSaving] = useState(false)
   const [rules, setRules] = useState<Rule[]>([])
   const [agentFilter, setAgentFilter] = useState<string>('')
   const [newRule, setNewRule] = useState<{ agentCode: string; name: string; expr: string; enabled: boolean }>({ agentCode: '', name: '', expr: '{"kind":"keyword","field":"news.title","anyOf":["hack","exploit"],"severity":"high"}', enabled: true })
-  const [audit, setAudit] = useState<ChangeRow[]>([])
+  // (Eliminada declaración duplicada de audit)
   const [auditEntity, setAuditEntity] = useState<string>('')
   const [toast, setToast] = useState<string>('')
 
@@ -36,7 +40,7 @@ export default function ControlPage() {
     const url = auditEntity ? `/api/read/audit?entity=${encodeURIComponent(auditEntity)}` : '/api/read/audit'
     const res = await fetch(url, { cache: 'no-store' })
     const data = await res.json()
-    setAudit(data as ChangeRow[])
+    setAudit(Array.isArray(data) ? data : [])
   }, [auditEntity])
 
   useEffect(() => { loadLimits().catch(console.error) }, [loadLimits])
@@ -199,19 +203,20 @@ export default function ControlPage() {
               </tr>
             </thead>
             <tbody>
-              {audit.map(a => (
-                <tr key={a.id} className="border-t align-top">
-                  <td className="p-2 whitespace-nowrap">{new Date(a.at).toLocaleString()}</td>
-                  <td className="p-2">{a.actor}</td>
-                  <td className="p-2">{a.entity}:{a.entityId}</td>
-                  <td className="p-2">{a.field}</td>
-                  <td className="p-2 max-w-sm"><pre className="text-xs whitespace-pre-wrap">{JSON.stringify(a.old, null, 2)}</pre></td>
-                  <td className="p-2 max-w-sm"><pre className="text-xs whitespace-pre-wrap">{JSON.stringify(a.new, null, 2)}</pre></td>
-                </tr>
-              ))}
-              {audit.length === 0 && (
-                <tr><td className="p-2 text-gray-500" colSpan={6}>Sin cambios</td></tr>
-              )}
+              {Array.isArray(auditArray) && auditArray.length > 0
+                ? auditArray.map(a => (
+                    <tr key={a.id} className="border-t align-top">
+                      <td className="p-2 whitespace-nowrap">{a.at && !isNaN(Date.parse(a.at)) ? new Date(a.at).toLocaleString() : ''}</td>
+                      <td className="p-2">{a.actor ?? ''}</td>
+                      <td className="p-2">{a.entity ?? ''}:{a.entityId ?? ''}</td>
+                      <td className="p-2">{a.field ?? ''}</td>
+                      <td className="p-2 max-w-sm"><pre className="text-xs whitespace-pre-wrap">{JSON.stringify(a.old, null, 2)}</pre></td>
+                      <td className="p-2 max-w-sm"><pre className="text-xs whitespace-pre-wrap">{JSON.stringify(a.new, null, 2)}</pre></td>
+                    </tr>
+                  ))
+                : (
+                    <tr><td className="p-2 text-gray-500" colSpan={6}>Sin cambios</td></tr>
+                  )}
             </tbody>
           </table>
         </div>

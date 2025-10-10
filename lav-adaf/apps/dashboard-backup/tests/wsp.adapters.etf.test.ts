@@ -1,8 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach, afterAll } from 'vitest';
 import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
+
+import * as metrics from '@/metrics/wsp.metrics';
 import { getEtfFlows } from '../src/lib/wsp/adapters/etfFlow.adapter';
-import * as metrics from '../src/metrics/wsp.metrics';
+
 
 const server = setupServer();
 
@@ -15,7 +17,7 @@ describe('Adapter: ETF Flows', () => {
   afterAll(() => server.close());
 
   it('200 then 304 uses cache and not stale', async () => {
-  const url = process.env.WSP_ETF_API_URL!;
+    const url = process.env.WSP_ETF_API_URL!;
     const etag = 'W/"abc"';
     server.use(
       http.get(url, () => HttpResponse.json([{ date: '2025-10-06', asset: 'BTC', netFlowUSD: 123 }], { headers: { ETag: etag } })),

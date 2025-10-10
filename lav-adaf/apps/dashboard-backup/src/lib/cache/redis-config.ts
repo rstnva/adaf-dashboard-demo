@@ -1,5 +1,70 @@
-import { Redis, RedisOptions } from 'ioredis';
+
 import { logger } from '../logger';
+let MockRedis: any = null;
+if (process.env.VITEST || process.env.NODE_ENV === 'test') {
+  // Always use globalThis.MockRedis in test mode
+  if (typeof globalThis !== 'undefined' && globalThis.MockRedis) {
+    MockRedis = globalThis.MockRedis;
+  } else {
+    throw new Error('MockRedis must be defined in globalThis for test mode.');
+  }
+}
+import type { RedisOptions } from 'ioredis';
+
+let redisClientSingleton: any = null;
+let redisPubClientSingleton: any = null;
+let redisSubClientSingleton: any = null;
+
+async function getRedisClient() {
+  if (!redisClientSingleton) {
+    let Redis;
+    if (process.env.VITEST || process.env.NODE_ENV === 'test') {
+      Redis = MockRedis;
+    } else {
+      const mod = await import('ioredis');
+      Redis = mod.default || mod.Redis;
+    }
+    redisClientSingleton = new Redis(redisOptions);
+    redisClientSingleton.on('connect', () => {
+      logger.info('Redis cache client connected');
+    });
+    redisClientSingleton.on('error', (error: any) => {
+      logger.error('Redis cache client error:', { error: error.message, stack: error.stack });
+    });
+    redisClientSingleton.on('ready', () => {
+      logger.info('Redis cache client ready');
+    });
+  }
+  return redisClientSingleton;
+}
+
+async function getRedisPubClient() {
+  if (!redisPubClientSingleton) {
+    let Redis;
+    if (process.env.VITEST || process.env.NODE_ENV === 'test') {
+      Redis = MockRedis;
+    } else {
+      const mod = await import('ioredis');
+      Redis = mod.default || mod.Redis;
+    }
+    redisPubClientSingleton = new Redis(redisOptions);
+  }
+  return redisPubClientSingleton;
+}
+
+async function getRedisSubClient() {
+  if (!redisSubClientSingleton) {
+    let Redis;
+    if (process.env.VITEST || process.env.NODE_ENV === 'test') {
+      Redis = MockRedis;
+    } else {
+      const mod = await import('ioredis');
+      Redis = mod.default || mod.Redis;
+    }
+    redisSubClientSingleton = new Redis(redisOptions);
+  }
+  return redisSubClientSingleton;
+}
 
 // Cache configuration for different data types
 export interface CacheConfig {
@@ -145,27 +210,14 @@ const redisOptions: RedisOptions = {
   enableReadyCheck: true
 };
 
-// Create Redis client instances
-export const redisClient = new Redis(redisOptions);
-export const redisPubClient = new Redis(redisOptions); // For publishing cache invalidation events  
-export const redisSubClient = new Redis(redisOptions); // For subscribing to cache invalidation events
 
-// Connection event handlers
-redisClient.on('connect', () => {
-  logger.info('Redis cache client connected');
-});
-
-redisClient.on('error', (error) => {
-  logger.error('Redis cache client error:', { error: error.message, stack: error.stack });
-});
-
-redisClient.on('ready', () => {
-  logger.info('Redis cache client ready');
-});
+// Export dynamic Redis client getters
+export { getRedisClient, getRedisPubClient, getRedisSubClient };
 
 // Health check function
 export async function checkRedisHealth(): Promise<boolean> {
   try {
+    const redisClient = await getRedisClient();
     await redisClient.ping();
     return true;
   } catch (error) {
@@ -305,10 +357,12 @@ export class CacheWarming {
 }
 
 // Cache invalidation event handling
+
 export class CacheInvalidation {
   private static invalidationPatterns = new Map<string, string[]>();
 
-  static {
+  // Call this in app runtime, not in tests
+  static initialize() {
     // Build invalidation pattern map from cache configurations
     Object.values(CACHE_CONFIGS).forEach(config => {
       if (Array.isArray(config)) {
@@ -319,7 +373,6 @@ export class CacheInvalidation {
         Object.values(config).forEach(subConfig => this.addInvalidationPatterns(subConfig));
       }
     });
-
     // Subscribe to invalidation events
     this.setupEventSubscriptions();
   }
@@ -336,11 +389,12 @@ export class CacheInvalidation {
   }
 
   private static setupEventSubscriptions(): void {
-    redisSubClient.psubscribe('cache:invalidate:*');
-    
-    redisSubClient.on('pmessage', (pattern, channel, message) => {
-      const event = channel.replace('cache:invalidate:', '');
-      this.handleInvalidationEvent(event, JSON.parse(message));
+    getRedisSubClient().then(redisSubClient => {
+      redisSubClient.psubscribe('cache:invalidate:*');
+      redisSubClient.on('pmessage', (pattern: string, channel: string, message: string) => {
+        const event = channel.replace('cache:invalidate:', '');
+        this.handleInvalidationEvent(event, JSON.parse(message));
+      });
     });
   }
 
@@ -355,12 +409,14 @@ export class CacheInvalidation {
       }
       
       // Publish invalidation event for other instances
-      await redisPubClient.publish(`cache:invalidate:${event}`, JSON.stringify(metadata || {}));
+  const redisPubClient = await getRedisPubClient();
+  await redisPubClient.publish(`cache:invalidate:${event}`, JSON.stringify(metadata || {}));
     }
   }
 
   static async invalidateByPattern(pattern: string): Promise<number> {
     try {
+      const redisClient = await getRedisClient();
       const keys = await redisClient.keys(pattern);
       if (keys.length > 0) {
         const deletedCount = await redisClient.del(...keys);
@@ -389,4 +445,4 @@ export class CacheInvalidation {
 
 // Export Redis configuration for use in cache service
 export { redisOptions };
-export default redisClient;
+export default getRedisClient;

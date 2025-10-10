@@ -6,6 +6,7 @@ type RedisLike = {
   get(key: string): Promise<string | null>
   set(key: string, value: string): Promise<'OK' | null>
   setex(key: string, ttl: number, value: string): Promise<'OK' | null>
+  setnx: (key: string, value: string) => Promise<boolean>
   del: (...keys: string[]) => Promise<number>
   ttl: (key: string) => Promise<number>
   mget: (...keys: string[]) => Promise<(string | null)[]>
@@ -37,6 +38,11 @@ const mem = new Map<string, { v: string; exp: number }>()
 function now() { return Date.now() }
 
 const memClient: RedisLike = {
+  async setnx(key, value) {
+    if (mem.has(key)) return false;
+    mem.set(key, { v: value, exp: now() + 24 * 3600 * 1000 });
+    return true;
+  },
   async get(key) {
     const e = mem.get(key)
     if (!e) return null

@@ -1,11 +1,171 @@
- ⨯ Failed to start server
-Error: listen EADDRINUSE: address already in use :::3000
-    at <unknown> (Error: listen EADDRINUSE: address already in use :::3000)
-    at new Promise (<anonymous>) {
-  code: 'EADDRINUSE',
-  errno: -98,
-  syscall: 'listen',
-  address: '::',
-  port: 3000
-}
-[?25h
+   ▲ Next.js 15.5.4
+   - Local:        http://localhost:3000
+   - Network:      http://10.211.55.3:3000
+   - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 1344ms
+ ○ Compiling / ...
+ ✓ Compiled / in 2.8s (935 modules)
+ GET / 200 in 3164ms
+ ✓ Compiled in 393ms (319 modules)
+ GET / 200 in 89ms
+ GET /?id=125f6e50-be16-4997-8fbc-32a5295977af&vscodeBrowserReqId=1760057999943 200 in 132ms
+ ✓ Compiled /_not-found in 274ms (917 modules)
+ GET /dashboard/markets 404 in 390ms
+ ○ Compiling /markets ...
+ ✓ Compiled /markets in 1585ms (1283 modules)
+ GET /markets 200 in 1928ms
+ ✓ Compiled in 450ms (1287 modules)
+ GET /?id=125f6e50-be16-4997-8fbc-32a5295977af&vscodeBrowserReqId=1760057999943 200 in 73ms
+ ✓ Compiled in 440ms (1287 modules)
+ GET /?id=125f6e50-be16-4997-8fbc-32a5295977af&vscodeBrowserReqId=1760057999943 200 in 57ms
+ GET /markets 200 in 197ms
+ ○ Compiling /academy ...
+ ✓ Compiled /academy in 771ms (1368 modules)
+ GET /academy 200 in 1015ms
+ ✓ Compiled /derivatives in 304ms (1377 modules)
+ GET /derivatives 200 in 470ms
+ ✓ Compiled /news in 300ms (1388 modules)
+ GET /news 200 in 479ms
+ GET /markets 200 in 61ms
+ ○ Compiling /api/read/derivs/gamma ...
+ ✓ Compiled /api/read/derivs/gamma in 692ms (1448 modules)
+ GET /api/read/etf/flow2?range=7D&currency=USD&timezone=America%2FMexico_City 200 in 802ms
+ GET /api/read/derivs/gamma?asset=BTC%2CETH&tenors=7%2C14%2C30&timezone=America%2FMexico_City 200 in 804ms
+ GET /api/read/derivs/funding?asset=BTC%2CETH&days=7&timezone=America%2FMexico_City 200 in 814ms
+ GET /api/read/etf/flow?asset=BTC%7CETH&days=7&provider=any&currency=USD&timezone=America%2FMexico_City 200 in 846ms
+ ✓ Compiled in 1087ms (1339 modules)
+ GET /markets 200 in 161ms
+ ✓ Compiled /api/health in 437ms (1346 modules)
+ GET /api/health 200 in 533ms
+ ✓ Compiled /api/metrics in 344ms (1370 modules)
+ GET /api/metrics 200 in 454ms
+ ✓ Compiled /api/read/alerts in 205ms (1385 modules)
+ GET /api/read/alerts 200 in 304ms
+ ✓ Compiled /api/wsp/etf in 343ms (1403 modules)
+ GET /api/wsp/etf 502 in 393ms
+ GET /api/wsp/etf 502 in 23ms
+ ○ Compiling /api/blockspace/routes ...
+ ✓ Compiled /api/blockspace/routes in 700ms (1333 modules)
+ POST /api/blockspace/routes 200 in 868ms
+ ✓ Compiled /api/blockspace/rebates in 388ms (1336 modules)
+ POST /api/blockspace/rebates 200 in 436ms
+ ✓ Compiled /api/blockspace/sequencer in 371ms (1339 modules)
+ GET /api/blockspace/sequencer 200 in 452ms
+ POST /api/blockspace/routes 200 in 924ms
+ POST /api/blockspace/rebates 200 in 177ms
+ GET /api/blockspace/sequencer 200 in 140ms
+ ✓ Compiled in 2.7s (547 modules)
+ GET /markets 200 in 152ms
+ POST /api/blockspace/routes 200 in 80ms
+ POST /api/blockspace/rebates 200 in 38ms
+ GET /api/blockspace/sequencer 200 in 32ms
+ POST /api/blockspace/routes 200 in 71ms
+ POST /api/blockspace/rebates 200 in 43ms
+ GET /api/blockspace/sequencer 200 in 39ms
+ ✓ Compiled in 707ms (547 modules)
+ GET /markets 200 in 51ms
+ POST /api/blockspace/routes 200 in 72ms
+ POST /api/blockspace/rebates 200 in 34ms
+ GET /api/blockspace/sequencer 200 in 70ms
+ POST /api/blockspace/routes 200 in 120ms
+ POST /api/blockspace/rebates 200 in 70ms
+ GET /api/blockspace/sequencer 200 in 80ms
+ POST /api/blockspace/routes 200 in 86ms
+ POST /api/blockspace/rebates 200 in 43ms
+ GET /api/blockspace/sequencer 200 in 49ms
+ POST /api/blockspace/routes 200 in 77ms
+ POST /api/blockspace/rebates 200 in 57ms
+ GET /api/blockspace/sequencer 200 in 59ms
+ POST /api/blockspace/routes 200 in 100ms
+ POST /api/blockspace/rebates 200 in 69ms
+ GET /api/blockspace/sequencer 200 in 44ms
+ POST /api/blockspace/routes 200 in 89ms
+ POST /api/blockspace/rebates 200 in 46ms
+ GET /api/blockspace/sequencer 200 in 46ms
+ POST /api/blockspace/routes 200 in 115ms
+ POST /api/blockspace/rebates 200 in 56ms
+ GET /api/blockspace/sequencer 200 in 75ms
+ POST /api/blockspace/routes 200 in 61ms
+ POST /api/blockspace/rebates 200 in 61ms
+ GET /api/blockspace/sequencer 200 in 55ms
+ POST /api/blockspace/routes 200 in 105ms
+ POST /api/blockspace/rebates 200 in 49ms
+ GET /api/blockspace/sequencer 200 in 129ms
+ POST /api/blockspace/routes 200 in 85ms
+ POST /api/blockspace/rebates 200 in 57ms
+ GET /api/blockspace/sequencer 200 in 61ms
+ POST /api/blockspace/routes 200 in 79ms
+ POST /api/blockspace/rebates 200 in 67ms
+ GET /api/blockspace/sequencer 200 in 62ms
+ POST /api/blockspace/routes 200 in 65ms
+ POST /api/blockspace/rebates 200 in 50ms
+ GET /api/blockspace/sequencer 200 in 59ms
+ POST /api/blockspace/routes 200 in 84ms
+ POST /api/blockspace/rebates 200 in 87ms
+ GET /api/blockspace/sequencer 200 in 63ms
+ POST /api/blockspace/routes 200 in 77ms
+ POST /api/blockspace/rebates 200 in 47ms
+ GET /api/blockspace/sequencer 200 in 39ms
+ POST /api/blockspace/routes 200 in 127ms
+ POST /api/blockspace/rebates 200 in 51ms
+ GET /api/blockspace/sequencer 200 in 98ms
+ ✓ Compiled in 490ms (547 modules)
+ ✓ Compiled in 342ms (547 modules)
+ ✓ Compiled in 265ms (547 modules)
+ ✓ Compiled in 504ms (547 modules)
+ POST /api/blockspace/routes 200 in 137ms
+ POST /api/blockspace/rebates 200 in 72ms
+ GET /api/blockspace/sequencer 200 in 44ms
+ ✓ Compiled in 433ms (547 modules)
+ ✓ Compiled in 173ms (547 modules)
+ POST /api/blockspace/routes 200 in 103ms
+ POST /api/blockspace/rebates 200 in 102ms
+ GET /api/blockspace/sequencer 200 in 85ms
+ ✓ Compiled in 502ms (547 modules)
+ POST /api/blockspace/routes 200 in 53ms
+ POST /api/blockspace/rebates 200 in 46ms
+ GET /api/blockspace/sequencer 200 in 77ms
+ POST /api/blockspace/routes 200 in 80ms
+ POST /api/blockspace/rebates 200 in 54ms
+ GET /api/blockspace/sequencer 200 in 46ms
+ ✓ Compiled in 330ms (547 modules)
+ ✓ Compiled in 178ms (547 modules)
+ ✓ Compiled in 351ms (547 modules)
+ ✓ Compiled in 258ms (547 modules)
+ ✓ Compiled in 283ms (547 modules)
+ POST /api/blockspace/routes 200 in 91ms
+ POST /api/blockspace/rebates 200 in 58ms
+ GET /api/blockspace/sequencer 200 in 52ms
+ ✓ Compiled in 543ms (547 modules)
+ ✓ Compiled in 478ms (547 modules)
+ ✓ Compiled in 149ms (547 modules)
+ ✓ Compiled in 363ms (547 modules)
+ POST /api/blockspace/routes 200 in 65ms
+ POST /api/blockspace/rebates 200 in 60ms
+ GET /api/blockspace/sequencer 200 in 105ms
+ ✓ Compiled in 677ms (547 modules)
+ ✓ Compiled in 260ms (547 modules)
+ POST /api/blockspace/routes 200 in 47ms
+ POST /api/blockspace/rebates 200 in 33ms
+ GET /api/blockspace/sequencer 200 in 51ms
+ POST /api/blockspace/routes 200 in 76ms
+ POST /api/blockspace/rebates 200 in 51ms
+ GET /api/blockspace/sequencer 200 in 44ms
+ POST /api/blockspace/routes 200 in 70ms
+ POST /api/blockspace/rebates 200 in 40ms
+ GET /api/blockspace/sequencer 200 in 43ms
+ POST /api/blockspace/routes 200 in 56ms
+ POST /api/blockspace/rebates 200 in 37ms
+ GET /api/blockspace/sequencer 200 in 64ms
+ ✓ Compiled in 380ms (547 modules)
+ POST /api/blockspace/routes 200 in 95ms
+ POST /api/blockspace/rebates 200 in 63ms
+ GET /api/blockspace/sequencer 200 in 52ms
+ POST /api/blockspace/routes 200 in 51ms
+ POST /api/blockspace/rebates 200 in 37ms
+ GET /api/blockspace/sequencer 200 in 40ms
+ POST /api/blockspace/routes 200 in 121ms
+ POST /api/blockspace/rebates 200 in 53ms
+ GET /api/blockspace/sequencer 200 in 54ms

@@ -1,12 +1,20 @@
 // Worker de procesamiento de agentes integrado en Next.js
-import { Prisma, PrismaClient } from '@prisma/client'
+
 import { evalRule } from '../rules/engine'
 import type { RuleExpr } from '../rules'
 import cron from 'node-cron'
 import { incDerivsFundingAlert, setDerivsFundingNegHours, incDqpIncident, setDqpSourcesStatus } from '../metrics'
 import { createDqpIncident } from '../dqp/calculations'
 
-const prisma = new PrismaClient()
+
+let prisma: any = null;
+async function getPrisma() {
+  if (!prisma) {
+    const mod = await import('@prisma/client');
+    prisma = new mod.PrismaClient();
+  }
+  return prisma;
+}
 
 // Heurísticas: palabras clave high/med; TVL drop; consenso multi-fuente
 const HI_KWS = ['hack', 'exploit', 'depeg', 'halt']
@@ -22,15 +30,14 @@ async function processFundingAlerts(): Promise<void> {
   try {
     const assets: Array<'BTC' | 'ETH'> = ['BTC', 'ETH']
     const exchanges = ['deribit', 'okx', 'binance']
-    
-    // Check for funding < 0 for 48-72h (6-9 periods of 8h each)
     const cutoff48h = new Date(Date.now() - 48 * 60 * 60 * 1000)
     const cutoff72h = new Date(Date.now() - 72 * 60 * 60 * 1000)
     
     for (const asset of assets) {
       for (const exchange of exchanges) {
-        // Get recent funding signals for this asset/exchange
-        const recentSignals = await prisma.signal.findMany({
+  const prismaClient = await getPrisma();
+  // Get recent funding signals for this asset/exchange
+  const recentSignals = await prismaClient.signal.findMany({
           where: {
             type: 'derivs.funding.point',
             timestamp: { gte: cutoff72h },
@@ -42,32 +49,26 @@ async function processFundingAlerts(): Promise<void> {
           orderBy: { timestamp: 'desc' },
           take: 10 // last 10 periods (80h if 8h windows)
         })
-        
         if (recentSignals.length < 6) continue // need at least 6 periods for 48h check
-        
         // Count consecutive negative funding periods
         let negativeHours = 0
-        
         for (const signal of recentSignals) {
           const metadata = signal.metadata as { rate?: number; window?: string } | null
           const rate = Number(metadata?.rate || 0)
           const window = metadata?.window || '8h'
           const hours = window === '1d' ? 24 : 8
-          
           if (rate < 0) {
             negativeHours += hours
           } else {
             break // stop on first positive rate (checking consecutive)
           }
         }
-        
         // Update metrics
         setDerivsFundingNegHours(asset, exchange, negativeHours)
-        
         // Create alert if negative for 48h+ and haven't alerted recently
         if (negativeHours >= 48) {
           // Check if we already have a recent alert for this asset/exchange
-          const recentAlert = await prisma.alert.findFirst({
+          const recentAlert = await prismaClient.alert.findFirst({
             where: {
               type: 'derivs.funding.signal',
               timestamp: { gte: cutoff48h },
@@ -80,7 +81,8 @@ async function processFundingAlerts(): Promise<void> {
           
           if (!recentAlert) {
             // Create alert (using raw query to avoid schema constraints)
-            await prisma.$executeRaw`
+            const prismaClient = await getPrisma();
+            await prismaClient.$executeRaw`
               INSERT INTO alerts (type, severity, title, description, metadata, timestamp, "createdAt", "updatedAt")
               VALUES (
                 'derivs.funding.signal',
@@ -95,7 +97,7 @@ async function processFundingAlerts(): Promise<void> {
             `
             
             // Create basis opportunity if not exists
-            const existingOpp = await prisma.opportunity.findFirst({
+            const existingOpp = await prismaClient.opportunity.findFirst({
               where: {
                 type: 'basis',
                 status: 'proposed',
@@ -109,7 +111,8 @@ async function processFundingAlerts(): Promise<void> {
             
             if (!existingOpp) {
               // Create opportunity using raw query
-              await prisma.$executeRaw`
+              const prismaClient = await getPrisma();
+              await prismaClient.$executeRaw`
                 INSERT INTO opportunities (type, confidence, title, description, metadata, "createdAt", "updatedAt")
                 VALUES (
                   'basis',
@@ -174,7 +177,8 @@ async function processDqpHealthChecks(): Promise<void> {
     
     for (const failure of criticalFailures) {
       // Check if we already have a recent incident for this source+agent+type
-      const recentIncident = await prisma.changeLog.findFirst({
+  const prismaClient = await getPrisma();
+  const recentIncident = await prismaClient.changeLog.findFirst({
         where: {
           entity: 'DQP',
           entityId: `${failure.source}:${failure.agentCode}:${failure.type}`,
@@ -185,7 +189,7 @@ async function processDqpHealthChecks(): Promise<void> {
       
       if (!recentIncident) {
         // Create freshness incident
-        await createDqpIncident(
+  await createDqpIncident(
           failure.source,
           failure.agentCode,
           failure.type,
@@ -201,7 +205,7 @@ async function processDqpHealthChecks(): Promise<void> {
         )
         
         // Increment metrics
-        incDqpIncident('freshness', failure.source, failure.agentCode)
+  incDqpIncident('freshness', failure.source, failure.agentCode)
         console.log(`📊 Created DQP freshness incident: ${failure.source}:${failure.agentCode}:${failure.type}`)
       }
     }
@@ -210,7 +214,8 @@ async function processDqpHealthChecks(): Promise<void> {
     const duplicateIssues = overviewData.filter(row => row.dupes24h > 5) // more than 5 dupes
     
     for (const issue of duplicateIssues) {
-      const recentDupeIncident = await prisma.changeLog.findFirst({
+  const prismaClient = await getPrisma();
+  const recentDupeIncident = await prismaClient.changeLog.findFirst({
         where: {
           entity: 'DQP',
           entityId: `${issue.source}:${issue.agentCode}:${issue.type}`,
@@ -220,7 +225,7 @@ async function processDqpHealthChecks(): Promise<void> {
       })
       
       if (!recentDupeIncident) {
-        await createDqpIncident(
+  await createDqpIncident(
           issue.source,
           issue.agentCode,
           issue.type,
@@ -232,7 +237,7 @@ async function processDqpHealthChecks(): Promise<void> {
           }
         )
         
-        incDqpIncident('duplicate', issue.source, issue.agentCode)
+  incDqpIncident('duplicate', issue.source, issue.agentCode)
         console.log(`🔄 Created DQP duplicate incident: ${issue.source}:${issue.agentCode}`)
       }
     }
@@ -248,7 +253,8 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
   try {
     console.log('🤖 Processing new signals...')
     
-    const signals = await prisma.signal.findMany({
+  const prismaClient = await getPrisma();
+  const signals = await prismaClient.signal.findMany({
       where: { processed: false },
       take: 200,
       orderBy: { timestamp: 'asc' }
@@ -282,12 +288,16 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
       
       // OC-1: TVL delta analysis
       if (signal.type === 'onchain' && signal.source === 'OC-1') {
-        const md = signal.metadata as Prisma.JsonObject | null
+        type JsonObject = import('@prisma/client/runtime/library').JsonObject;
+        let md: JsonObject | null = null;
+        if (signal.metadata) {
+          md = signal.metadata as JsonObject;
+        }
         const protocol = (md?.protocol as string) || ''
         
         if (protocol) {
           // Get last 2 points for this protocol
-          const lastSignals = await prisma.signal.findMany({
+          const lastSignals = await prismaClient.signal.findMany({
             where: {
               type: 'onchain',
               source: 'OC-1',
@@ -298,8 +308,15 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
           })
           
           if (lastSignals.length === 2) {
-            const md0 = lastSignals[1].metadata as Prisma.JsonObject | null
-            const md1 = lastSignals[0].metadata as Prisma.JsonObject | null
+            type JsonObject = import('@prisma/client/runtime/library').JsonObject;
+            let md0: JsonObject | null = null;
+            let md1: JsonObject | null = null;
+            if (lastSignals[1].metadata) {
+              md0 = lastSignals[1].metadata as JsonObject;
+            }
+            if (lastSignals[0].metadata) {
+              md1 = lastSignals[0].metadata as JsonObject;
+            }
             const v0 = Number(md0?.value ?? 0)
             const v1 = Number(md1?.value ?? 0)
             const delta = (v1 - v0) / Math.max(v0, 1)
@@ -334,7 +351,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
         if (signal.type === 'onchain' && signal.source === 'OC-1') candidateAgents.push('OC-1')
         if (signal.type === 'offchain') candidateAgents.push('OF-1')
         if (candidateAgents.length > 0) {
-          const rules = await prisma.rule.findMany({
+          const rules = await prismaClient.rule.findMany({
             where: { agentCode: { in: candidateAgents }, enabled: true },
             orderBy: { createdAt: 'desc' }
           })
@@ -351,7 +368,11 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
 
       // OF-1: ETF flow thresholds (offchain signals from ingest/etf/flow)
       if (signal.type === 'offchain') {
-        const md = signal.metadata as Prisma.JsonObject | null
+        type JsonObject = import('@prisma/client/runtime/library').JsonObject;
+        let md: JsonObject | null = null;
+        if (signal.metadata) {
+          md = signal.metadata as JsonObject;
+        }
         const asset = ((md?.asset as string) || '').toUpperCase()
         const flow = Number(md?.netInUsd ?? 0)
         if (asset === 'BTC' || asset === 'ETH') {
@@ -361,7 +382,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
             title = `Inflow Alto ETF ${asset}`
             description = `${(flow / 1e6).toFixed(1)}M USD netos`
             // Create opportunity
-            await prisma.opportunity.create({
+            await prismaClient.opportunity.create({
               data: {
                 signalId: signal.id,
                 type: 'beta',
@@ -378,7 +399,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
 
       // Create alert if conditions are met
       if (createAlert) {
-        await prisma.alert.create({
+  await prismaClient.alert.create({
           data: {
             signalId: signal.id,
             type: 'market',
@@ -389,7 +410,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
           }
         })
         
-        await prisma.signal.update({
+  await prismaClient.signal.update({
           where: { id: signal.id },
           data: { processed: true }
         })
@@ -398,7 +419,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
         alertsCount += 1
         processedCount += 1
       } else {
-        await prisma.signal.update({
+  await prismaClient.signal.update({
           where: { id: signal.id },
           data: { processed: true }
         })

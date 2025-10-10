@@ -5,7 +5,7 @@ import { Providers } from "@/components/Providers";
 import { RBACProvider } from "@/contexts/RBACContext";
 import { Toaster } from "@/components/ui/toaster";
 import ChunkRecovery from "@/components/ChunkRecovery";
-import HealthMonitor from "@/components/HealthMonitor";
+import SystemHealthMonitor from "@/components/SystemHealthMonitor";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,8 +24,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <RBACProvider permissions={["feature:wsp"]}>
           <ChunkRecovery />
-          <HealthMonitor />
-          <Providers>{children}</Providers>
+          <Providers>
+            {/* <SystemHealthMonitor /> */}
+            {children}
+          </Providers>
           <Toaster />
         </RBACProvider>
       </body>

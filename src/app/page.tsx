@@ -40,7 +40,7 @@ export default function HomePage() {
     total: 30,
     active: 27,
     alerts: 3,
-    lastUpdate: new Date().toLocaleTimeString()
+    lastUpdate: '' // Solo se setea en el cliente
   });
 
   useEffect(() => {
@@ -53,7 +53,13 @@ export default function HomePage() {
     };
     setMarketData(mockData);
 
-    // Update agent status every 30 seconds
+    // Set lastUpdate solo en el cliente
+    setAgentStatus(prev => ({
+      ...prev,
+      lastUpdate: new Date().toLocaleTimeString()
+    }));
+
+    // Update agent status every 30 seconds solo en el cliente
     const interval = setInterval(() => {
       setAgentStatus(prev => ({
         ...prev,
@@ -95,7 +101,8 @@ export default function HomePage() {
               <p className="text-sm text-gray-600 mb-4">
                 Acceso completo a mercados, research y reportes
               </p>
-              <Link href="/dashboard">
+              {/* Forzar la ruta a /markets para evitar hydration mismatch */}
+              <Link href="/markets" prefetch={false}>
                 <Button className="w-full">Abrir Dashboard</Button>
               </Link>
             </CardContent>
@@ -137,7 +144,7 @@ export default function HomePage() {
               <p className="text-sm text-gray-600 mb-4">
                 Cursos interactivos y certificaciones
               </p>
-              <Link href="/academy">
+              <Link href="/academy" prefetch={false}>
                 <Button variant="outline" className="w-full">Continuar Aprendiendo</Button>
               </Link>
             </CardContent>
@@ -299,28 +306,25 @@ export default function HomePage() {
 
         {/* Quick Links */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Link href="/markets">
+          <Link href="/markets" prefetch={false}>
             <Button variant="outline" className="w-full h-16 flex-col">
               <TrendingUp className="h-5 w-5 mb-1" />
               <span>Mercados</span>
             </Button>
           </Link>
-          
-          <Link href="/research">
+          <Link href="/research" prefetch={false}>
             <Button variant="outline" className="w-full h-16 flex-col">
               <BarChart3 className="h-5 w-5 mb-1" />
               <span>Research</span>
             </Button>
           </Link>
-          
-          <Link href="/reports">
+          <Link href="/reports" prefetch={false}>
             <Button variant="outline" className="w-full h-16 flex-col">
               <Shield className="h-5 w-5 mb-1" />
               <span>Reportes</span>
             </Button>
           </Link>
-          
-          <Link href="/control">
+          <Link href="/control" prefetch={false}>
             <Button variant="outline" className="w-full h-16 flex-col">
               <Activity className="h-5 w-5 mb-1" />
               <span>Control</span>

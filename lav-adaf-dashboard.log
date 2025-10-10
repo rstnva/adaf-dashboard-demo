@@ -1,3 +1,7 @@
+
+> @lav-adaf/dashboard@1.3.0 dev /home/parallels/Desktop/adaf-dashboard-pro/lav-adaf/apps/dashboard
+> next dev --port 3005 "--port" "3005"
+
  ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
  We detected multiple lockfiles and selected the directory of /home/parallels/Desktop/adaf-dashboard-pro/pnpm-lock.yaml as the root directory.
  To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
@@ -11,5 +15,9 @@
    - Environments: .env.local, .env.development, .env
 
  ✓ Starting...
- ✓ Ready in 1437ms
-[?25h
+ ✓ Ready in 1421ms
+ ○ Compiling / ...
+ ✓ Compiled / in 3.1s (841 modules)
+ GET / 200 in 3470ms
+ ✓ Compiled in 407ms (294 modules)
+ GET / 200 in 70ms

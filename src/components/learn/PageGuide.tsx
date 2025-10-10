@@ -394,4 +394,3 @@ export function PageGuide({ className }: { className?: string }) {
   );
 }
 
-export default PageGuide;

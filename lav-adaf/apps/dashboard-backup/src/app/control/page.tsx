@@ -199,7 +199,7 @@ export default function ControlPage() {
               </tr>
             </thead>
             <tbody>
-              {audit.map(a => (
+              {Array.isArray(audit) ? audit.map(a => (
                 <tr key={a.id} className="border-t align-top">
                   <td className="p-2 whitespace-nowrap">{new Date(a.at).toLocaleString()}</td>
                   <td className="p-2">{a.actor}</td>
@@ -208,7 +208,7 @@ export default function ControlPage() {
                   <td className="p-2 max-w-sm"><pre className="text-xs whitespace-pre-wrap">{JSON.stringify(a.old, null, 2)}</pre></td>
                   <td className="p-2 max-w-sm"><pre className="text-xs whitespace-pre-wrap">{JSON.stringify(a.new, null, 2)}</pre></td>
                 </tr>
-              ))}
+              )) : null}
               {audit.length === 0 && (
                 <tr><td className="p-2 text-gray-500" colSpan={6}>Sin cambios</td></tr>
               )}

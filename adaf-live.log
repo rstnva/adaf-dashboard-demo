@@ -1,0 +1,71 @@
+nohup: ignoring input
+
+> adaf-dashboard@1.0.0 dev
+> next dev --port 3000
+
+   ▲ Next.js 15.5.4
+   - Local:        http://localhost:3000
+   - Network:      http://10.211.55.3:3000
+   - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 949ms
+ ○ Compiling / ...
+ ✓ Compiled / in 3.1s (938 modules)
+ GET / 200 in 3427ms
+ ✓ Compiled in 617ms (320 modules)
+ GET / 200 in 73ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 2.6s (2241 modules)
+ ○ Compiling /api/read/kpi/alerts7d ...
+ ✓ Compiled /api/read/kpi/alerts7d in 530ms (2302 modules)
+ GET /api/read/kpi/nav 200 in 660ms
+ GET /api/read/kpi/alerts7d 200 in 686ms
+ GET /dashboard 200 in 3851ms
+ ✓ Compiled /api/health in 330ms (1108 modules)
+ GET /api/health 200 in 390ms
+ ✓ Compiled /_not-found in 473ms (1517 modules)
+ GET /dashboard/main 404 in 635ms
+ ✓ Compiled /dashboard in 349ms (1299 modules)
+ ✓ Compiled /api/read/kpi/alerts7d in 128ms (1301 modules)
+ ✓ Compiled (1341 modules)
+ GET /api/read/kpi/nav 200 in 371ms
+ GET /api/read/kpi/alerts7d 200 in 375ms
+ GET /dashboard?id=3633cf59-0264-4f48-aa1a-4ba746f2c965&vscodeBrowserReqId=1760034747377 200 in 1174ms
+ GET /api/read/kpi/nav 200 in 31ms
+ GET /api/read/kpi/alerts7d 200 in 52ms
+ GET /dashboard?id=3633cf59-0264-4f48-aa1a-4ba746f2c965&vscodeBrowserReqId=1760034786920 200 in 368ms
+ ✓ Compiled / in 180ms (1348 modules)
+ GET / 200 in 334ms
+ ✓ Compiled /api/health in 207ms (1351 modules)
+ GET /api/health 200 in 245ms
+ GET /dashboard/main 404 in 34ms
+ GET /dashboard/main 404 in 47ms
+ GET /api/health 200 in 19ms
+ GET / 200 in 93ms
+ GET /api/health 200 in 31ms
+ GET /api/health 200 in 38ms
+ GET /api/health 200 in 40ms
+ GET /api/health 200 in 35ms
+ GET /api/health 200 in 36ms
+ GET /api/health 200 in 48ms
+ GET /api/health 200 in 30ms
+ GET /api/health 200 in 18ms
+ GET /api/health 200 in 25ms
+ GET /api/health 200 in 31ms
+ GET /api/health 200 in 25ms
+ GET /api/health 200 in 24ms
+ GET /api/health 200 in 37ms
+ GET /api/health 200 in 32ms
+ GET /api/health 200 in 27ms
+ GET /api/health 200 in 37ms
+ GET /api/health 200 in 32ms
+ GET /api/health 200 in 38ms
+ GET /api/health 200 in 36ms
+ GET /api/health 200 in 36ms
+ GET /api/health 200 in 34ms
+ GET /api/health 200 in 37ms
+ GET /api/health 200 in 27ms
+ GET /api/health 200 in 42ms
+ GET /api/health 200 in 39ms
+[?25h

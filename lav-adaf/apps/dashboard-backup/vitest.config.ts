@@ -17,7 +17,6 @@ export default defineConfig({
       '**/node_modules/**',
       '**/dist/**',
       '**/e2e/**',
-      '**/*.e2e.test.{ts,tsx}',
       '**/playwright/**',
       '**/*.spec.ts'
     ],

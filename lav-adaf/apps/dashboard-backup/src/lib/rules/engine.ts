@@ -1,7 +1,12 @@
-import { PrismaClient } from '@prisma/client'
+let prisma: any = null;
+async function getPrisma() {
+  if (!prisma) {
+    const mod = await import('@prisma/client');
+    prisma = new mod.PrismaClient();
+  }
+  return prisma;
+}
 import type { RuleExpr, Evaluated } from '../rules'
-
-const prisma = new PrismaClient()
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function evalRule(expr: RuleExpr, signal: any): Promise<Evaluated> {
@@ -18,7 +23,8 @@ export async function evalRule(expr: RuleExpr, signal: any): Promise<Evaluated> 
     const proto = expr.protocol ?? signal.metadata?.protocol
     if (!proto) return { pass: false, reason: 'no_protocol' }
 
-    const last = await prisma.tVLData.findMany({
+    const prismaClient = await getPrisma();
+    const last = await prismaClient.tVLData.findMany({
       where: { protocol: proto },
       orderBy: { timestamp: 'desc' },
       take: 2
@@ -34,7 +40,8 @@ export async function evalRule(expr: RuleExpr, signal: any): Promise<Evaluated> 
   if (expr.kind === 'guardrail') {
     // Casting prisma to unknown/any to avoid transient type mismatch until Prisma Client reloads
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const lim = await (prisma as unknown as any).limit.findFirst({ where: { key: expr.key }})
+    const prismaClient = await getPrisma();
+    const lim = await (prismaClient as unknown as any).limit.findFirst({ where: { key: expr.key }})
     if (!lim) return { pass: false, reason: 'no_limit' }
     const v = Number(lim.value)
     const pass = (expr.op === '<=') ? (v <= expr.value) : (v >= expr.value)
