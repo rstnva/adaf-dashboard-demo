@@ -33,6 +33,7 @@ Esta carpeta contiene **TODA la documentación core** del sistema ADAF Dashboard
 - 🚨 Recuperación de emergencia
 - ⚡ Comandos de diagnóstico
 - 🔧 Troubleshooting completo
+- 📚 Contexto histórico y memorias centralizadas en [`documentacion/CONTEXTO_UNIFICADO.md`](./documentacion/CONTEXTO_UNIFICADO.md)
 
 ### 👨‍💻 **¿Quieres desarrollar?** 
 👉 **[arquitectura/ARCHITECTURE.md](./arquitectura/ARCHITECTURE.md)**

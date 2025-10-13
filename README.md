@@ -1,3 +1,5 @@
+> **Contexto Unificado:** La documentación extendida vive ahora en `motor-del-dash/documentacion/CONTEXTO_UNIFICADO.md`.
+
 ## Avances recientes (Octubre 2025)
 
 ### Resumen para humanos y agentes
@@ -32,6 +34,7 @@ cd adaf-dashboard-pro
 | 🧠 **[`memoria/`](./motor-del-dash/memoria/)** | Historial de decisiones técnicas | **Entender el por qué de cada cambio** |
 
 ### 🎯 **Accesos Rápidos:**
+- 📚 **[Contexto Unificado](./motor-del-dash/documentacion/CONTEXTO_UNIFICADO.md)** ← Documentación extendida + memorias
 - 📖 **[Guía Completa de Uso](./motor-del-dash/documentacion/README-COMPLETO.md)** ← **¡Empieza aquí!**
 - 🏗️ **[Documentación Técnica](./motor-del-dash/arquitectura/ARCHITECTURE.md)** ← Para desarrolladores
 - 🧠 **[Memoria Técnica](./motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md)** ← Historial de decisiones
@@ -122,8 +125,20 @@ Para detener todo:
 docker compose -f docker-compose.dev.yml down
 ```
 
+### Arranque aún más rápido
+
+Puedes iniciar todo el entorno con un solo comando:
+
+```bash
+./inicio-docker.sh
+```
+
+Esto levantará ADAF Dashboard, LAV-ADAF, Postgres y Redis en modo desarrollo usando Docker Compose.
+
 ---
 
 ### Sistema enterprise-grade listo para uso inmediato
 
 **📂 TODA la documentación está perfectamente organizada en `motor-del-dash/`** 🚀
+
+---

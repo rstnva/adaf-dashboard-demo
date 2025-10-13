@@ -1,0 +1,6 @@
+FROM node:20-bullseye
+
+# Install pnpm globally for development usage
+RUN npm install -g pnpm@10.18.2
+
+WORKDIR /app
