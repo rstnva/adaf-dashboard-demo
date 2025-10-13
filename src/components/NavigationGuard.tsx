@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
+import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { 
@@ -93,6 +94,9 @@ export function NavigationGuard({
     return fallbackUrl
   }, [backUrl, fallbackUrl])
 
+  const backTarget = useMemo(() => resolveBackTarget(), [resolveBackTarget])
+  const backHref = backTarget === 'back' ? (backUrl ?? fallbackUrl ?? '/') : backTarget
+
   // Handle browser back/forward/close
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -123,17 +127,16 @@ export function NavigationGuard({
   }, [hasUnsavedChanges, autoSave])
 
   const handleBackClick = () => {
-    const target = resolveBackTarget()
-
     if (hasUnsavedChanges) {
       setShowExitDialog(true)
-      setPendingNavigation(target)
+      setPendingNavigation(backTarget)
+      return
+    }
+
+    if (backTarget === 'back') {
+      router.back()
     } else {
-      if (target === 'back') {
-        router.back()
-      } else {
-        router.push(target)
-      }
+      router.push(backTarget)
     }
   }
 
@@ -162,7 +165,7 @@ export function NavigationGuard({
     
     // Navigate
     setShowExitDialog(false)
-    const target = pendingNavigation ?? resolveBackTarget()
+    const target = pendingNavigation ?? backTarget
     if (target === 'back') {
       router.back()
     } else {
@@ -175,7 +178,7 @@ export function NavigationGuard({
     await autoSave()
     
     setShowExitDialog(false)
-    const target = pendingNavigation ?? resolveBackTarget()
+    const target = pendingNavigation ?? backTarget
     if (target === 'back') {
       router.back()
     } else {
@@ -191,6 +194,7 @@ export function NavigationGuard({
   return (
     <>
       {showBackButton && (
+        hasUnsavedChanges ? (
         <Button
           variant="ghost"
           size="sm"
@@ -200,6 +204,19 @@ export function NavigationGuard({
           <ArrowLeft className="w-4 h-4 mr-2" />
           Regresar
         </Button>
+        ) : (
+        <Button
+          asChild
+          variant="ghost"
+          size="sm"
+          className="mb-4 text-muted-foreground hover:text-foreground"
+        >
+          <Link href={backHref} prefetch={false}>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Regresar
+          </Link>
+        </Button>
+        )
       )}
 
       {children}
