@@ -137,6 +137,18 @@ Esto levantará ADAF Dashboard, LAV-ADAF, Postgres y Redis en modo desarrollo us
 
 ---
 
+### Alternativa guiada
+
+Si prefieres que el proyecto valide el acceso a Docker antes de levantar los servicios, usa:
+
+```bash
+./scripts/start-dev-containers.sh
+```
+
+Si ves el error `cannot set capabilities: Operation not permitted` (o mensajes emitidos por el script) significa que estás en un entorno sin privilegios de Docker. Ejecuta el script desde tu máquina anfitriona con Docker instalado, servicio activo y tu usuario dentro del grupo `docker`.
+
+---
+
 ### Sistema enterprise-grade listo para uso inmediato
 
 **📂 TODA la documentación está perfectamente organizada en `motor-del-dash/`** 🚀

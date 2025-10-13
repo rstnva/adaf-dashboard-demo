@@ -20,6 +20,8 @@ inicio-completo.bat
 pnpm install && pnpm dev
 ```
 
+> 💡 **¿Docker sin privilegios?** Usa `./scripts/start-dev-containers.sh` para validar que Docker esté disponible. Si recibes `cannot set capabilities: Operation not permitted`, ejecuta el script desde tu máquina anfitriona con Docker instalado, servicio activo (`sudo systemctl start docker`) y tu usuario en el grupo `docker`.
+
 ### 3️⃣ **Acceder al Sistema**
 - 🖥️ **Dashboard Principal**: http://localhost:3000
 - 🤖 **Sistema de Agentes**: http://localhost:3005
