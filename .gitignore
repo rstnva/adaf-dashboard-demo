@@ -24,6 +24,7 @@
 .DS_Store
 *.tgz
 *.pem
+ADAF-DASHBOARD-v1.1/
 
 # debug
 npm-debug.log*
