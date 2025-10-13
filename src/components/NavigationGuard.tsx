@@ -21,6 +21,7 @@ interface NavigationGuardProps {
   storageKey?: string
   showBackButton?: boolean
   backUrl?: string
+  fallbackUrl?: string
   children?: React.ReactNode
 }
 
@@ -31,7 +32,8 @@ export function NavigationGuard({
   storageKey,
   children,
   showBackButton = true,
-  backUrl 
+  backUrl,
+  fallbackUrl = '/'
 }: NavigationGuardProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -83,6 +85,14 @@ export function NavigationGuard({
     cleanExpiredData()
   }, [])
 
+  const resolveBackTarget = useCallback((): string => {
+    if (backUrl) return backUrl
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      return 'back'
+    }
+    return fallbackUrl
+  }, [backUrl, fallbackUrl])
+
   // Handle browser back/forward/close
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -113,14 +123,16 @@ export function NavigationGuard({
   }, [hasUnsavedChanges, autoSave])
 
   const handleBackClick = () => {
+    const target = resolveBackTarget()
+
     if (hasUnsavedChanges) {
       setShowExitDialog(true)
-      setPendingNavigation(backUrl || 'back')
+      setPendingNavigation(target)
     } else {
-      if (backUrl) {
-        router.push(backUrl)
-      } else {
+      if (target === 'back') {
         router.back()
+      } else {
+        router.push(target)
       }
     }
   }
@@ -150,10 +162,11 @@ export function NavigationGuard({
     
     // Navigate
     setShowExitDialog(false)
-    if (pendingNavigation === 'back') {
+    const target = pendingNavigation ?? resolveBackTarget()
+    if (target === 'back') {
       router.back()
-    } else if (pendingNavigation) {
-      router.push(pendingNavigation)
+    } else {
+      router.push(target)
     }
   }
 
@@ -162,10 +175,11 @@ export function NavigationGuard({
     await autoSave()
     
     setShowExitDialog(false)
-    if (pendingNavigation === 'back') {
+    const target = pendingNavigation ?? resolveBackTarget()
+    if (target === 'back') {
       router.back()
-    } else if (pendingNavigation) {
-      router.push(pendingNavigation)
+    } else {
+      router.push(target)
     }
   }
 
