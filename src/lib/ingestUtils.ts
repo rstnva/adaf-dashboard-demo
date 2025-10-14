@@ -3,12 +3,16 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 export interface IngestHandlerOptions<T> {
-  schema: { parse: (input: any) => T };
-  dedupeKey: (item: T) => string;
+  schema: { parse: (_payload: any) => T };
+  dedupeKey: (_item: T) => string;
   getRedis: () => Promise<any>;
-  classify?: (item: T) => any;
-  responseShape?: (item: T, hash: string, extra?: any) => any;
-  batchResponseShape?: (signals: any[], errors: any[], processed: number) => any;
+  classify?: (_item: T) => any;
+  responseShape?: (_item: T, _hash: string, _extra?: any) => any;
+  batchResponseShape?: (
+    _signals: any[],
+    _errors: any[],
+    _processed: number
+  ) => any;
 }
 
 export function createIngestHandler<T>({
@@ -17,7 +21,7 @@ export function createIngestHandler<T>({
   getRedis,
   classify,
   responseShape,
-  batchResponseShape
+  batchResponseShape,
 }: IngestHandlerOptions<T>) {
   return async function POST(request: NextRequest) {
     const body = await request.json();
@@ -34,7 +38,11 @@ export function createIngestHandler<T>({
           const isNew = redis.setnx(`dedupe:${hash}`, '1');
           if (isNew) {
             const extra = classify ? classify(item) : {};
-            signals.push(responseShape ? responseShape(item, hash, extra) : { ...item, fingerprint: hash });
+            signals.push(
+              responseShape
+                ? responseShape(item, hash, extra)
+                : { ...item, fingerprint: hash }
+            );
             processed++;
           }
         } catch (e) {
@@ -42,7 +50,10 @@ export function createIngestHandler<T>({
         }
       }
       if (batchResponseShape) {
-        return NextResponse.json(batchResponseShape(signals, errors, processed), { status: 200 });
+        return NextResponse.json(
+          batchResponseShape(signals, errors, processed),
+          { status: 200 }
+        );
       }
       return NextResponse.json({ processed, signals, errors }, { status: 200 });
     }
@@ -51,15 +62,26 @@ export function createIngestHandler<T>({
     try {
       item = schema.parse(body);
     } catch (e: any) {
-      return NextResponse.json({ success: false, error: 'validation error', details: e.errors || e }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: 'validation error', details: e.errors || e },
+        { status: 400 }
+      );
     }
     const hash = dedupeKey(item);
     const redis = await getRedis();
     const isNew = redis.setnx(`dedupe:${hash}`, '1');
     if (!isNew) {
-      return NextResponse.json({ success: false, error: 'already exists', fingerprint: hash }, { status: 409 });
+      return NextResponse.json(
+        { success: false, error: 'already exists', fingerprint: hash },
+        { status: 409 }
+      );
     }
     const extra = classify ? classify(item) : {};
-    return NextResponse.json(responseShape ? responseShape(item, hash, extra) : { success: true, signalId: hash, fingerprint: hash, ...extra }, { status: 201 });
+    return NextResponse.json(
+      responseShape
+        ? responseShape(item, hash, extra)
+        : { success: true, signalId: hash, fingerprint: hash, ...extra },
+      { status: 201 }
+    );
   };
 }

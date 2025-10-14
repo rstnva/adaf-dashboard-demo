@@ -12,48 +12,48 @@ import { type ReportType } from './reports';
 
 export interface GeneratedReport {
   id: string;
-  
+
   // Report Classification
   type: ReportType;
-  period: string;           // 'YYYY-MM' | 'YYYYQX'
-  
+  period: string; // 'YYYY-MM' | 'YYYYQX'
+
   // File Storage & Integrity
-  url: string;              // Path to stored PDF
-  sha256: string;           // SHA256 hash for verification
+  url: string; // Path to stored PDF
+  sha256: string; // SHA256 hash for verification
   fileSizeBytes: number;
-  
+
   // Metadata
-  createdAt: string;        // ISO timestamp
-  actor: string;            // Generator email or 'cron'
+  createdAt: string; // ISO timestamp
+  actor: string; // Generator email or 'cron'
   notes?: string;
-  
+
   // Distribution Tracking
-  recipients: string[];     // Array of delivered emails
+  recipients: string[]; // Array of delivered emails
   status: 'ok' | 'failed' | 'pending';
-  
+
   // Audit Fields
-  deliveredAt?: string;     // ISO timestamp
-  deliveryActor?: string;   // Who initiated delivery
+  deliveredAt?: string; // ISO timestamp
+  deliveryActor?: string; // Who initiated delivery
   deliveryNotes?: string;
 }
 
 export interface ReportDelivery {
   id: string;
   reportId: string;
-  
+
   // Delivery Details
   recipientEmail: string;
   deliveryMethod: 'email' | 's3' | 'direct';
   deliveryStatus: 'sent' | 'failed' | 'bounced';
-  
+
   // Timestamps
   attemptedAt: string;
   deliveredAt?: string;
-  
+
   // Error Tracking
   errorMessage?: string;
   retryCount: number;
-  
+
   // Metadata
   actor: string;
   deliveryMetadata: Record<string, unknown>;
@@ -61,24 +61,24 @@ export interface ReportDelivery {
 
 export interface ReportScheduleRun {
   id: string;
-  
+
   // Job Details
   jobType: 'onepager' | 'quarterly' | 'health_check';
   scheduledAt: string;
   startedAt: string;
   finishedAt?: string;
-  
+
   // Results
   status: 'running' | 'success' | 'failed' | 'skipped';
   reportsGenerated: number;
   errorMessage?: string;
-  
+
   // Execution Metadata
   executionTimeMs?: number;
   nextRunAt?: string;
-  
+
   // Context
-  triggerReason: string;    // 'scheduled' | 'manual' | 'retry'
+  triggerReason: string; // 'scheduled' | 'manual' | 'retry'
   metadata: Record<string, unknown>;
 }
 
@@ -88,7 +88,7 @@ export interface ReportScheduleRun {
 
 export interface DeliverReportRequest {
   reportId: string;
-  recipients: string[];     // Array of email addresses
+  recipients: string[]; // Array of email addresses
   actor: string;
   notes?: string;
   deliveryMethod?: 'email' | 's3';
@@ -106,20 +106,22 @@ export interface DeliverReportResponse {
 }
 
 export interface ReportHistoryQuery {
-  limit?: number;           // Default 50
-  offset?: number;          // For pagination
-  type?: ReportType;        // Filter by report type
-  period?: string;          // Filter by specific period
-  status?: string;          // Filter by status
-  actor?: string;           // Filter by generator
+  limit?: number; // Default 50
+  offset?: number; // For pagination
+  type?: ReportType; // Filter by report type
+  period?: string; // Filter by specific period
+  status?: string; // Filter by status
+  actor?: string; // Filter by generator
 }
 
 export interface ReportHistoryResponse {
-  reports: Array<GeneratedReport & {
-    deliveryAttempts: number;
-    successfulDeliveries: number;
-    lastDeliveryAt?: string;
-  }>;
+  reports: Array<
+    GeneratedReport & {
+      deliveryAttempts: number;
+      successfulDeliveries: number;
+      lastDeliveryAt?: string;
+    }
+  >;
   total: number;
   hasMore: boolean;
 }
@@ -130,7 +132,7 @@ export interface ReportHealthResponse {
   reportsLast30d: number;
   failedLast7d: number;
   avgFileSizeBytes: number;
-  
+
   // Health Status Indicators
   status: 'healthy' | 'warning' | 'critical';
   issues: string[];
@@ -143,22 +145,22 @@ export interface ReportHealthResponse {
 
 export interface ScheduleConfig {
   enableAutoGeneration: boolean;
-  
+
   // OnePager Schedule (monthly)
-  onePagerDay: number;      // Day of month (1-31, or -1 for last day)
-  onePagerTime: string;     // HH:mm in UTC
-  
+  onePagerDay: number; // Day of month (1-31, or -1 for last day)
+  onePagerTime: string; // HH:mm in UTC
+
   // Quarterly Schedule
-  quarterlyDay: number;     // Day of quarter end month
-  quarterlyTime: string;    // HH:mm in UTC
-  
+  quarterlyDay: number; // Day of quarter end month
+  quarterlyTime: string; // HH:mm in UTC
+
   // Delivery Settings
   autoDelivery: boolean;
   defaultRecipients: {
     onepager: string[];
     quarterly: string[];
   };
-  
+
   // Retry Settings
   maxRetries: number;
   retryDelayMinutes: number;
@@ -182,26 +184,26 @@ export interface EmailDeliveryConfig {
   smtpHost: string;
   smtpPort: number;
   smtpUser: string;
-  smtpPassword: string;     // From vault/env
+  smtpPassword: string; // From vault/env
   fromEmail: string;
   fromName: string;
-  
+
   // Templates
   onePagerSubject: string;
   quarterlySubject: string;
-  emailTemplate: string;    // HTML template path
+  emailTemplate: string; // HTML template path
 }
 
 export interface S3DeliveryConfig {
   enabled: boolean;
   bucketName: string;
   region: string;
-  accessKeyId: string;      // From vault/env
-  secretAccessKey: string;  // From vault/env
-  
+  accessKeyId: string; // From vault/env
+  secretAccessKey: string; // From vault/env
+
   // URL Settings
   urlExpirationHours: number; // Default 72 hours
-  pathPrefix: string;       // 'reports/' for organization
+  pathPrefix: string; // 'reports/' for organization
 }
 
 export interface DeliveryProvider {
@@ -216,7 +218,7 @@ export interface DeliveryProvider {
 // =============================================================================
 
 export interface PeriodInfo {
-  period: string;           // 'YYYY-MM' | 'YYYYQX'
+  period: string; // 'YYYY-MM' | 'YYYYQX'
   isMonthEnd: boolean;
   isQuarterEnd: boolean;
   nextOnePagerDate: Date;
@@ -237,39 +239,65 @@ export interface ReportIntegrityCheck {
 // =============================================================================
 
 export type GetCurrentPeriodInfo = () => PeriodInfo;
-export type IsValidEmail = (email: string) => boolean;
-export type CalculateSha256 = (buffer: Buffer) => string;
-export type FormatPeriodDisplay = (period: string) => string;
-export type ShouldGenerateReport = (type: ReportType, config: ScheduleConfig) => boolean;
-export type SanitizeRecipients = (recipients: string[]) => {
+export type IsValidEmail = (_email: string) => boolean;
+export type CalculateSha256 = (_buffer: Buffer) => string;
+export type FormatPeriodDisplay = (_period: string) => string;
+export type ShouldGenerateReport = (
+  _type: ReportType,
+  _config: ScheduleConfig
+) => boolean;
+export type SanitizeRecipients = (_recipients: string[]) => {
   valid: string[];
   invalid: string[];
 };
-export type GenerateReportFilename = (type: ReportType, period: string) => string;
+export type GenerateReportFilename = (
+  _type: ReportType,
+  _period: string
+) => string;
 
 // =============================================================================
 // Error Types for Scheduling & Distribution
 // =============================================================================
 
 export class ReportSchedulingError extends Error {
+  public code: 'GENERATION_FAILED' | 'SCHEDULING_ERROR' | 'CONFIG_INVALID';
+  public details?: Record<string, unknown>;
+
   constructor(
     message: string,
-    public code: 'GENERATION_FAILED' | 'SCHEDULING_ERROR' | 'CONFIG_INVALID',
-    public details?: Record<string, unknown>
+    code: 'GENERATION_FAILED' | 'SCHEDULING_ERROR' | 'CONFIG_INVALID',
+    details?: Record<string, unknown>
   ) {
     super(message);
+    this.code = code;
+    this.details = details;
     this.name = 'ReportSchedulingError';
   }
 }
 
 export class ReportDeliveryError extends Error {
+  public code:
+    | 'EMAIL_FAILED'
+    | 'S3_FAILED'
+    | 'INVALID_RECIPIENTS'
+    | 'FILE_NOT_FOUND';
+  public recipients?: string[];
+  public details?: Record<string, unknown>;
+
   constructor(
     message: string,
-    public code: 'EMAIL_FAILED' | 'S3_FAILED' | 'INVALID_RECIPIENTS' | 'FILE_NOT_FOUND',
-    public recipients?: string[],
-    public details?: Record<string, unknown>
+    code:
+      | 'EMAIL_FAILED'
+      | 'S3_FAILED'
+      | 'INVALID_RECIPIENTS'
+      | 'FILE_NOT_FOUND',
+    recipients?: string[],
+    details?: Record<string, unknown>
   ) {
     super(message);
+    this.code = code;
+    this.recipients = recipients;
+    this.details = details;
     this.name = 'ReportDeliveryError';
   }
 }
@@ -281,21 +309,25 @@ export class ReportDeliveryError extends Error {
 export interface ReportMetrics {
   // Generation Metrics
   reportsGeneratedTotal: Record<ReportType, number>;
-  generationDurationMs: Array<{ type: ReportType; duration: number; timestamp: string }>;
+  generationDurationMs: Array<{
+    type: ReportType;
+    duration: number;
+    timestamp: string;
+  }>;
   generationErrorsTotal: Record<string, number>; // By error type
-  
+
   // Delivery Metrics
   deliveryAttemptsTotal: Record<'email' | 's3', number>;
   deliverySuccessTotal: Record<'email' | 's3', number>;
   deliveryFailuresTotal: Record<string, number>; // By failure reason
-  
+
   // Health Metrics
   lastSuccessfulGeneration: Record<ReportType, string>;
   avgFileSizeBytes: Record<ReportType, number>;
   schedulingHealth: 'healthy' | 'degraded' | 'unhealthy';
 }
 
-export type SchedulingEventType = 
+export type SchedulingEventType =
   | 'report_generated'
   | 'report_delivery_attempt'
   | 'report_delivery_success'

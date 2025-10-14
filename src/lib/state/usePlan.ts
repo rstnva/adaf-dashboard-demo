@@ -1,24 +1,24 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 
 export type Preset = {
-  id: string
-  name: string
-  apy: number
-  costos: string
-}
+  id: string;
+  name: string;
+  apy: number;
+  costos: string;
+};
 
 export type ExecutionPlan = {
-  presets: Array<Preset>
-  confirmedAt?: string
-}
+  presets: Array<Preset>;
+  confirmedAt?: string;
+};
 
 type PlanState = {
-  presets: Preset[]
-  executionPlan: ExecutionPlan | null
-  addPreset: (p: Preset) => void
-  clear: () => void
-  confirm: () => void
-}
+  presets: Preset[];
+  executionPlan: ExecutionPlan | null;
+  addPreset: (_preset: Preset) => void;
+  clear: () => void;
+  confirm: () => void;
+};
 
 export const usePlan = create<PlanState>((set, get) => ({
   presets: [
@@ -27,7 +27,13 @@ export const usePlan = create<PlanState>((set, get) => ({
     { id: '3', name: 'Aggressive', apy: 7.2, costos: '$250' },
   ],
   executionPlan: null,
-  addPreset: (p) => set((s) => ({ presets: [...s.presets, p] })),
+  addPreset: p => set(s => ({ presets: [...s.presets, p] })),
   clear: () => set({ executionPlan: null }),
-  confirm: () => set({ executionPlan: { presets: get().presets, confirmedAt: new Date().toISOString() } }),
-}))
+  confirm: () =>
+    set({
+      executionPlan: {
+        presets: get().presets,
+        confirmedAt: new Date().toISOString(),
+      },
+    }),
+}));

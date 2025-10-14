@@ -70,7 +70,7 @@ interface StrategyPresetSelectorProps {
 interface ParameterInputProps {
   parameter: StrategyParameter;
   value: any;
-  onChange: (value: any) => void;
+  onChange: (_value: any) => void;
   error?: string;
 }
 

@@ -57,7 +57,10 @@ export class RetentionJob {
 
       const endTime = Date.now();
       const totalDurationMs = endTime - startTime;
-      const totalRowsAffected = results.reduce((sum, result) => sum + result.rowsAffected, 0);
+      const totalRowsAffected = results.reduce(
+        (sum, result) => sum + result.rowsAffected,
+        0
+      );
       const successfulPolicies = results.filter(r => r.success).length;
       const failedPolicies = results.filter(r => !r.success).length;
 
@@ -68,19 +71,23 @@ export class RetentionJob {
         policiesExecuted: results.length,
         successfulPolicies,
         failedPolicies,
-        results
+        results,
       };
 
       // Log summary
       console.log(`✅ Retention job completed in ${totalDurationMs}ms`);
       console.log(`📊 Total rows affected: ${totalRowsAffected}`);
-      console.log(`🎯 Success rate: ${successfulPolicies}/${results.length} policies`);
+      console.log(
+        `🎯 Success rate: ${successfulPolicies}/${results.length} policies`
+      );
 
       if (failedPolicies > 0) {
         console.warn(`⚠️  ${failedPolicies} policies failed`);
-        results.filter(r => !r.success).forEach(result => {
-          console.error(`❌ ${result.policyName}: ${result.errorMessage}`);
-        });
+        results
+          .filter(r => !r.success)
+          .forEach(result => {
+            console.error(`❌ ${result.policyName}: ${result.errorMessage}`);
+          });
       }
 
       // Log to change_logs for audit trail
@@ -90,7 +97,6 @@ export class RetentionJob {
       await this.updateMetrics(results);
 
       return summary;
-
     } catch (error) {
       console.error('❌ Retention job failed:', error);
       throw error;
@@ -107,13 +113,15 @@ export class RetentionJob {
 
     try {
       // Execute the master retention function
-      const policyResults = await this.prisma.$queryRaw<{
-        policy_name: string;
-        rows_affected: number;
-        execution_time_ms: number;
-        success: boolean;
-        error_message: string | null;
-      }[]>`SELECT * FROM run_retention_policies()`;
+      const policyResults = await this.prisma.$queryRaw<
+        {
+          policy_name: string;
+          rows_affected: number;
+          execution_time_ms: number;
+          success: boolean;
+          error_message: string | null;
+        }[]
+      >`SELECT * FROM run_retention_policies()`;
 
       // Convert to our result format
       for (const row of policyResults) {
@@ -122,12 +130,11 @@ export class RetentionJob {
           rowsAffected: row.rows_affected,
           executionTimeMs: row.execution_time_ms,
           success: row.success,
-          errorMessage: row.error_message || undefined
+          errorMessage: row.error_message || undefined,
         });
       }
 
       return results;
-
     } catch (error) {
       console.error('Failed to execute retention policies:', error);
       throw error;
@@ -143,11 +150,11 @@ export class RetentionJob {
     // Simulate policy execution with count queries
     const policies = [
       'signals_retention',
-      'lineage_events_retention', 
+      'lineage_events_retention',
       'alerts_retention',
       'opportunities_retention',
       'reports_retention',
-      'backtests_retention'
+      'backtests_retention',
     ];
 
     const results: RetentionResult[] = [];
@@ -159,26 +166,29 @@ export class RetentionJob {
 
         // Estimate rows that would be affected based on policy
         switch (policyName) {
-          case 'signals_retention':
+          case 'signals_retention': {
             const oldSignals = await this.prisma.$queryRaw<[{ count: bigint }]>`
-              SELECT COUNT(*) as count FROM signals WHERE ts < NOW() - INTERVAL '90 days'
-            `;
+                SELECT COUNT(*) as count FROM signals WHERE ts < NOW() - INTERVAL '90 days'
+              `;
             estimatedRows = Number(oldSignals[0]?.count || 0);
             break;
+          }
 
-          case 'lineage_events_retention':
+          case 'lineage_events_retention': {
             const oldLineage = await this.prisma.$queryRaw<[{ count: bigint }]>`
-              SELECT COUNT(*) as count FROM lineage_events WHERE created_at < NOW() - INTERVAL '365 days'
-            `;
+                SELECT COUNT(*) as count FROM lineage_events WHERE created_at < NOW() - INTERVAL '365 days'
+              `;
             estimatedRows = Number(oldLineage[0]?.count || 0);
             break;
+          }
 
-          case 'alerts_retention':
+          case 'alerts_retention': {
             const oldAlerts = await this.prisma.$queryRaw<[{ count: bigint }]>`
-              SELECT COUNT(*) as count FROM alerts WHERE created_at < NOW() - INTERVAL '1 year'
-            `;
+                SELECT COUNT(*) as count FROM alerts WHERE created_at < NOW() - INTERVAL '1 year'
+              `;
             estimatedRows = Number(oldAlerts[0]?.count || 0);
             break;
+          }
 
           default:
             estimatedRows = 0;
@@ -189,11 +199,12 @@ export class RetentionJob {
           policyName,
           rowsAffected: estimatedRows,
           executionTimeMs: endTime - startTime,
-          success: true
+          success: true,
         });
 
-        console.log(`📋 ${policyName}: ${estimatedRows} rows would be affected`);
-
+        console.log(
+          `📋 ${policyName}: ${estimatedRows} rows would be affected`
+        );
       } catch (error) {
         const endTime = Date.now();
         results.push({
@@ -201,7 +212,8 @@ export class RetentionJob {
           rowsAffected: 0,
           executionTimeMs: endTime - startTime,
           success: false,
-          errorMessage: error instanceof Error ? error.message : 'Unknown error'
+          errorMessage:
+            error instanceof Error ? error.message : 'Unknown error',
         });
       }
     }
@@ -212,7 +224,9 @@ export class RetentionJob {
   /**
    * Log retention execution to change_logs table
    */
-  private async logRetentionExecution(summary: RetentionJobSummary): Promise<void> {
+  private async logRetentionExecution(
+    summary: RetentionJobSummary
+  ): Promise<void> {
     try {
       const logData = {
         actor: 'system:retention-job',
@@ -225,9 +239,9 @@ export class RetentionJob {
           rowsAffected: summary.totalRowsAffected,
           policiesExecuted: summary.policiesExecuted,
           successRate: `${summary.successfulPolicies}/${summary.policiesExecuted}`,
-          dryRun: this.dryRun
+          dryRun: this.dryRun,
         },
-        at: summary.executedAt
+        at: summary.executedAt,
       };
 
       await this.prisma.$executeRaw`
@@ -235,7 +249,6 @@ export class RetentionJob {
         VALUES (${logData.actor}, ${logData.entity}, ${logData.entityId}, ${logData.field}, 
                 ${JSON.stringify(logData.old)}, ${JSON.stringify(logData.new)}, ${logData.at})
       `;
-
     } catch (error) {
       console.error('Failed to log retention execution:', error);
       // Don't throw - logging failure shouldn't fail the job
@@ -249,13 +262,18 @@ export class RetentionJob {
     try {
       // In a real implementation, you would update Prometheus metrics here
       // For now, we'll just log the metrics that would be updated
-      
-      results.forEach(result => {
-        console.log(`📊 Metric: adaf_retention_purged_rows_total{table="${result.policyName}"} += ${result.rowsAffected}`);
-        console.log(`📊 Metric: adaf_retention_duration_ms{table="${result.policyName}"} = ${result.executionTimeMs}`);
-        console.log(`📊 Metric: adaf_retention_success{table="${result.policyName}"} = ${result.success ? 1 : 0}`);
-      });
 
+      results.forEach(result => {
+        console.log(
+          `📊 Metric: adaf_retention_purged_rows_total{table="${result.policyName}"} += ${result.rowsAffected}`
+        );
+        console.log(
+          `📊 Metric: adaf_retention_duration_ms{table="${result.policyName}"} = ${result.executionTimeMs}`
+        );
+        console.log(
+          `📊 Metric: adaf_retention_success{table="${result.policyName}"} = ${result.success ? 1 : 0}`
+        );
+      });
     } catch (error) {
       console.error('Failed to update retention metrics:', error);
     }
@@ -291,11 +309,12 @@ export class RetentionJob {
 
       return {
         healthy: issues.length === 0,
-        issues
+        issues,
       };
-
     } catch (error) {
-      issues.push(`Health check failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      issues.push(
+        `Health check failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
       return { healthy: false, issues };
     }
   }

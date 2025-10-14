@@ -4,14 +4,19 @@ import type Redis from 'ioredis';
 let client: Redis | null = null;
 // In-memory fallback with TTL when no Redis client is set (useful for tests/dev)
 const memStore = new Map<string, { v: string; exp: number }>();
-export function setRedisClient(c: Redis) { client = c; }
+export function setRedisClient(c: Redis) {
+  client = c;
+}
 
 export const redisClient = {
   async get(key: string): Promise<string | null> {
     if (!client) {
       const e = memStore.get(key);
       if (!e) return null;
-      if (Date.now() > e.exp) { memStore.delete(key); return null; }
+      if (Date.now() > e.exp) {
+        memStore.delete(key);
+        return null;
+      }
       return e.v;
     }
     return await client.get(key);
@@ -24,7 +29,10 @@ export const redisClient = {
     await client.set(key, value, 'EX', ttlSec);
   },
   async del(key: string): Promise<void> {
-    if (!client) { memStore.delete(key); return; }
+    if (!client) {
+      memStore.delete(key);
+      return;
+    }
     await client.del(key);
   },
 };
@@ -32,7 +40,11 @@ export const redisClient = {
 // Token bucket rate limiter (in-memory per process)
 type Bucket = { tokens: number; lastRefill: number };
 const buckets = new Map<string, Bucket>();
-export function tokenBucket(key: string, ratePerSec: number, burst: number): boolean {
+export function tokenBucket(
+  key: string,
+  ratePerSec: number,
+  burst: number
+): boolean {
   const now = Date.now();
   let b = buckets.get(key);
   if (!b) {
@@ -51,7 +63,11 @@ export function tokenBucket(key: string, ratePerSec: number, burst: number): boo
 
 // Circuit breaker per adapter
 type CBState = 'closed' | 'open' | 'half-open';
-interface Breaker { state: CBState; failures: number; nextTry: number }
+interface Breaker {
+  state: CBState;
+  failures: number;
+  nextTry: number;
+}
 const breakers = new Map<string, Breaker>();
 
 export function canPassCircuit(name: string): boolean {
@@ -73,7 +89,8 @@ export function reportCircuitFailure(name: string, baseBackoffMs = 1000) {
   const b = breakers.get(name) || { state: 'closed', failures: 0, nextTry: 0 };
   const failures = b.failures + 1;
   const jitter = Math.floor(Math.random() * 250);
-  const backoff = Math.min(60000, baseBackoffMs * Math.pow(2, failures)) + jitter;
+  const backoff =
+    Math.min(60000, baseBackoffMs * Math.pow(2, failures)) + jitter;
   const state: CBState = failures >= 3 ? 'open' : 'closed';
   const nextTry = Date.now() + backoff;
   breakers.set(name, { state, failures, nextTry });
@@ -92,7 +109,6 @@ export async function fetchWithCacheETag(
   const hdrs = new Headers(headers);
   if (prevEtag) hdrs.set('If-None-Match', prevEtag);
 
-  const start = Date.now();
   try {
     const res = await fetch(url, { headers: hdrs });
     const status = res.status;

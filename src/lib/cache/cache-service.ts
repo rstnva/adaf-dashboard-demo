@@ -1,9 +1,9 @@
-import redisClient, { 
-  CacheConfig, 
-  CACHE_CONFIGS, 
-  CacheKeyBuilder, 
+import redisClient, {
+  CacheConfig,
+  CACHE_CONFIGS,
+  CacheKeyBuilder,
   CacheStats,
-  CacheInvalidation 
+  CacheInvalidation,
 } from './redis-config';
 
 // Type definitions for cache operations
@@ -34,7 +34,7 @@ export interface CacheMetrics {
  */
 export class CacheService {
   private static instance: CacheService;
-  
+
   private constructor() {
     // Private constructor for singleton pattern
   }
@@ -52,17 +52,17 @@ export class CacheService {
   /**
    * Generic cache get operation
    */
-  async get<T>(key: string, config?: CacheConfig): Promise<CacheResult<T>> {
+  async get<T>(key: string, _config?: CacheConfig): Promise<CacheResult<T>> {
     try {
       const cachedData = await redisClient.get(key);
-      
+
       if (cachedData === null) {
         CacheStats.recordMiss();
         return { data: null, hit: false };
       }
 
       CacheStats.recordHit();
-      
+
       let parsedData: T;
       try {
         parsedData = JSON.parse(cachedData);
@@ -75,14 +75,13 @@ export class CacheService {
 
       // Get remaining TTL
       const ttl = await redisClient.ttl(key);
-      
+
       return {
         data: parsedData,
         hit: true,
         ttl: ttl > 0 ? ttl : undefined,
-        size: Buffer.byteLength(cachedData, 'utf8')
+        size: Buffer.byteLength(cachedData, 'utf8'),
       };
-
     } catch (error) {
       console.error('Cache get error:', error);
       CacheStats.recordError();
@@ -94,28 +93,28 @@ export class CacheService {
    * Generic cache set operation
    */
   async set<T>(
-    key: string, 
-    data: T, 
-    config: CacheConfig, 
+    key: string,
+    data: T,
+    config: CacheConfig,
     options?: CacheOptions
   ): Promise<boolean> {
     try {
       const ttl = options?.ttl || config.ttl;
       const serializedData = JSON.stringify(data);
-      
+
       if (ttl > 0) {
         await redisClient.setex(key, ttl, serializedData);
       } else {
         await redisClient.set(key, serializedData);
       }
-      
+
       CacheStats.recordSet();
-      
+
       // Add tags for easier invalidation if provided
       if (options?.tags) {
         await this.addTags(key, options.tags);
       }
-      
+
       return true;
     } catch (error) {
       console.error('Cache set error:', error);
@@ -135,7 +134,7 @@ export class CacheService {
   ): Promise<T | null> {
     // Try to get from cache first
     const cached = await this.get<T>(key, config);
-    
+
     if (cached.hit && cached.data !== null) {
       return cached.data;
     }
@@ -143,11 +142,11 @@ export class CacheService {
     // Cache miss - execute function and cache result
     try {
       const data = await fetchFunction();
-      
+
       if (data !== null && data !== undefined) {
         await this.set(key, data, config, options);
       }
-      
+
       return data;
     } catch (error) {
       console.error('Cache getOrSet fetch function error:', error);
@@ -158,15 +157,19 @@ export class CacheService {
   /**
    * Strategy-specific cache operations
    */
-  async getStrategy(symbol: string, type: string, params?: Record<string, unknown>): Promise<CacheResult<unknown>> {
+  async getStrategy(
+    symbol: string,
+    type: string,
+    params?: Record<string, unknown>
+  ): Promise<CacheResult<unknown>> {
     const key = CacheKeyBuilder.strategy(symbol, type, params);
     return this.get(key, CACHE_CONFIGS.strategies);
   }
 
   async setStrategy(
-    symbol: string, 
-    type: string, 
-    data: unknown, 
+    symbol: string,
+    type: string,
+    data: unknown,
     params?: Record<string, unknown>,
     options?: CacheOptions
   ): Promise<boolean> {
@@ -189,8 +192,8 @@ export class CacheService {
    * Market data cache operations
    */
   async getMarketData(
-    symbol: string, 
-    timeframe: string, 
+    symbol: string,
+    timeframe: string,
     type: 'realtime' | 'historical' | 'aggregated' = 'realtime'
   ): Promise<CacheResult<unknown>> {
     const key = CacheKeyBuilder.marketData(symbol, timeframe, type);
@@ -216,7 +219,12 @@ export class CacheService {
     options?: CacheOptions
   ): Promise<T | null> {
     const key = CacheKeyBuilder.marketData(symbol, timeframe, type);
-    return this.getOrSet(key, fetchFunction, CACHE_CONFIGS.marketData[type], options);
+    return this.getOrSet(
+      key,
+      fetchFunction,
+      CACHE_CONFIGS.marketData[type],
+      options
+    );
   }
 
   /**
@@ -250,7 +258,12 @@ export class CacheService {
     options?: CacheOptions
   ): Promise<T | null> {
     const key = CacheKeyBuilder.portfolio(userId, type, date);
-    return this.getOrSet(key, fetchFunction, CACHE_CONFIGS.portfolio[type], options);
+    return this.getOrSet(
+      key,
+      fetchFunction,
+      CACHE_CONFIGS.portfolio[type],
+      options
+    );
   }
 
   /**
@@ -287,7 +300,12 @@ export class CacheService {
   ): Promise<T | null> {
     const key = CacheKeyBuilder.api(endpoint, params, userId);
     const endpointType = this.getEndpointCacheType(endpoint);
-    return this.getOrSet(key, fetchFunction, CACHE_CONFIGS.api[endpointType], options);
+    return this.getOrSet(
+      key,
+      fetchFunction,
+      CACHE_CONFIGS.api[endpointType],
+      options
+    );
   }
 
   /**
@@ -297,7 +315,7 @@ export class CacheService {
     try {
       const results = await redisClient.mget(...keys);
       const resultMap = new Map<string, T | null>();
-      
+
       for (let i = 0; i < keys.length; i++) {
         const result = results[i];
         if (result !== null) {
@@ -313,7 +331,7 @@ export class CacheService {
           CacheStats.recordMiss();
         }
       }
-      
+
       return resultMap;
     } catch (error) {
       console.error('Bulk cache get error:', error);
@@ -322,11 +340,13 @@ export class CacheService {
     }
   }
 
-  async setMultiple(entries: Map<string, { data: unknown; ttl: number }>): Promise<number> {
+  async setMultiple(
+    entries: Map<string, { data: unknown; ttl: number }>
+  ): Promise<number> {
     try {
-  const pipeline = (redisClient as any).pipeline();
+      const pipeline = (redisClient as any).pipeline();
       let count = 0;
-      
+
       for (const [key, { data, ttl }] of entries) {
         const serializedData = JSON.stringify(data);
         if (ttl > 0) {
@@ -336,7 +356,7 @@ export class CacheService {
         }
         count++;
       }
-      
+
       await pipeline.exec();
       CacheStats.recordSet();
       return count;
@@ -366,24 +386,27 @@ export class CacheService {
     return CacheInvalidation.invalidateByPattern(pattern);
   }
 
-  async invalidateByEvent(event: string, metadata?: Record<string, unknown>): Promise<void> {
+  async invalidateByEvent(
+    event: string,
+    metadata?: Record<string, unknown>
+  ): Promise<void> {
     return CacheInvalidation.invalidateByEvent(event, metadata);
   }
 
   async invalidateByTags(tags: string[]): Promise<number> {
     let totalInvalidated = 0;
-    
+
     for (const tag of tags) {
       const tagKey = `tag:${tag}`;
       const keys = await redisClient.smembers(tagKey);
-      
+
       if (keys.length > 0) {
         const deleted = await redisClient.del(...keys);
         totalInvalidated += deleted;
         await redisClient.del(tagKey); // Remove tag set
       }
     }
-    
+
     return totalInvalidated;
   }
 
@@ -394,15 +417,15 @@ export class CacheService {
     try {
       const info = await redisClient.info('memory');
       const dbSize = await redisClient.dbsize();
-      
+
       // Parse memory info
       const memoryMatch = info.match(/used_memory:(\d+)/);
       const memoryUsage = memoryMatch ? parseInt(memoryMatch[1]) : 0;
-      
+
       return {
         ...CacheStats.getStats(),
         memoryUsage,
-        activeKeys: dbSize
+        activeKeys: dbSize,
       };
     } catch (error) {
       console.error('Cache metrics error:', error);
@@ -410,7 +433,7 @@ export class CacheService {
         hitRate: 0,
         totalRequests: 0,
         memoryUsage: 0,
-        activeKeys: 0
+        activeKeys: 0,
       };
     }
   }
@@ -420,13 +443,19 @@ export class CacheService {
       // Use SCAN for better performance than KEYS in production
       const keys: string[] = [];
       let cursor = '0';
-      
+
       do {
-        const result = await redisClient.scan(cursor, 'MATCH', pattern, 'COUNT', limit);
+        const result = await redisClient.scan(
+          cursor,
+          'MATCH',
+          pattern,
+          'COUNT',
+          limit
+        );
         cursor = result[0];
         keys.push(...result[1]);
       } while (cursor !== '0' && keys.length < limit);
-      
+
       return keys.slice(0, limit);
     } catch (error) {
       console.error('Get keys by pattern error:', error);
@@ -437,17 +466,21 @@ export class CacheService {
   /**
    * Cache health check
    */
-  async healthCheck(): Promise<{ healthy: boolean; latency?: number; error?: string }> {
+  async healthCheck(): Promise<{
+    healthy: boolean;
+    latency?: number;
+    error?: string;
+  }> {
     try {
       const start = Date.now();
       await redisClient.ping();
       const latency = Date.now() - start;
-      
+
       return { healthy: true, latency };
     } catch (error) {
-      return { 
-        healthy: false, 
-        error: error instanceof Error ? error.message : 'Unknown error' 
+      return {
+        healthy: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
       };
     }
   }
@@ -455,7 +488,9 @@ export class CacheService {
   /**
    * Utility methods
    */
-  private getEndpointCacheType(endpoint: string): keyof typeof CACHE_CONFIGS.api {
+  private getEndpointCacheType(
+    endpoint: string
+  ): keyof typeof CACHE_CONFIGS.api {
     if (endpoint.includes('dashboard')) return 'dashboard';
     if (endpoint.includes('report')) return 'reports';
     if (endpoint.includes('search')) return 'search';
@@ -463,15 +498,15 @@ export class CacheService {
   }
 
   private async addTags(key: string, tags: string[]): Promise<void> {
-  const pipeline = (redisClient as any).pipeline();
-    
+    const pipeline = (redisClient as any).pipeline();
+
     for (const tag of tags) {
       const tagKey = `tag:${tag}`;
       pipeline.sadd(tagKey, key);
       // Set TTL for tag sets to prevent memory leaks
       pipeline.expire(tagKey, 86400); // 24 hours
     }
-    
+
     await pipeline.exec();
   }
 }

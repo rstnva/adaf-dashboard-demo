@@ -24,7 +24,10 @@ export async function hashToken(token: string): Promise<string> {
 /**
  * Verify a token against its hash
  */
-export async function verifyToken(token: string, hash: string): Promise<boolean> {
+export async function verifyToken(
+  token: string,
+  hash: string
+): Promise<boolean> {
   try {
     return await bcrypt.compare(token, hash);
   } catch {
@@ -53,7 +56,9 @@ export function extractToken(request: NextRequest): string | null {
 /**
  * Get authentication context from request
  */
-export async function getAuthContext(request: NextRequest): Promise<AuthContext | null> {
+export async function getAuthContext(
+  request: NextRequest
+): Promise<AuthContext | null> {
   // Try API key first
   const token = extractToken(request);
   if (token) {
@@ -62,7 +67,7 @@ export async function getAuthContext(request: NextRequest): Promise<AuthContext 
 
   // TODO: Add session-based auth here if needed
   // For now, we only support API key authentication
-  
+
   return null;
 }
 
@@ -74,7 +79,7 @@ async function getAuthFromApiKey(token: string): Promise<AuthContext | null> {
     // Get all active API keys to check against
     const apiKeys = await prisma.apiKey.findMany({
       where: { active: true },
-      include: { role: true }
+      include: { role: true },
     });
 
     // Check token against each hash
@@ -83,7 +88,7 @@ async function getAuthFromApiKey(token: string): Promise<AuthContext | null> {
       if (isValid) {
         return {
           role: apiKey.role.name as Role,
-          source: 'apikey'
+          source: 'apikey',
         };
       }
     }
@@ -99,30 +104,29 @@ async function getAuthFromApiKey(token: string): Promise<AuthContext | null> {
  * Middleware helper to require minimum role for endpoint
  */
 export async function requireRole(
-  request: NextRequest, 
+  request: NextRequest,
   minRole: Role
 ): Promise<{ authorized: boolean; context?: AuthContext; error?: string }> {
-  
   const authContext = await getAuthContext(request);
-  
+
   if (!authContext) {
-    return { 
-      authorized: false, 
-      error: 'Authentication required' 
+    return {
+      authorized: false,
+      error: 'Authentication required',
     };
   }
 
   if (!hasMinimumRole(authContext.role, minRole)) {
-    return { 
-      authorized: false, 
+    return {
+      authorized: false,
       context: authContext,
-      error: `Insufficient permissions. Required: ${minRole}, have: ${authContext.role}` 
+      error: `Insufficient permissions. Required: ${minRole}, have: ${authContext.role}`,
     };
   }
 
-  return { 
-    authorized: true, 
-    context: authContext 
+  return {
+    authorized: true,
+    context: authContext,
   };
 }
 
@@ -133,12 +137,15 @@ export function sanitizeActor(actor: string): string {
   if (!actor || typeof actor !== 'string') {
     return 'unknown';
   }
-  
-  // Remove control characters and limit length
-  return actor
-    .replace(/[\x00-\x1F\x7F]/g, '') // Remove control characters
-    .substring(0, 120)
-    .trim();
+
+  const sanitized = Array.from(actor)
+    .filter(char => {
+      const code = char.charCodeAt(0);
+      return code >= 0x20 && code !== 0x7f;
+    })
+    .join('');
+
+  return sanitized.substring(0, 120).trim();
 }
 
 /**
@@ -160,8 +167,8 @@ export async function auditRbacAction(
         entityId,
         field: action,
         old: JSON.stringify(oldData),
-        new: JSON.stringify(newData)
-      }
+        new: JSON.stringify(newData),
+      },
     });
   } catch (error) {
     console.error('Failed to create audit log:', error);

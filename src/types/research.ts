@@ -14,63 +14,63 @@ export type Benchmark = 'BTC' | 'ETH' | 'NAV';
 export type BacktestStatus = 'queued' | 'running' | 'done' | 'failed';
 
 export interface RuleExpr {
-  expr: string;         // DSL expression (e.g., "etf.flow.usd > 100e6 AND tvl.change7d > 0")
-  weight?: number;      // 0..1 (default 1)
+  expr: string; // DSL expression (e.g., "etf.flow.usd > 100e6 AND tvl.change7d > 0")
+  weight?: number; // 0..1 (default 1)
   description?: string; // Optional human-readable description
 }
 
 export interface BacktestConfig {
   name: string;
-  agents: string[];     // Agent codes (e.g., ['NM-1', 'OF-1', 'OC-1'])
+  agents: string[]; // Agent codes (e.g., ['NM-1', 'OF-1', 'OC-1'])
   rules: RuleExpr[];
-  window: { 
-    from: string;       // ISO timestamp
-    to: string;         // ISO timestamp
+  window: {
+    from: string; // ISO timestamp
+    to: string; // ISO timestamp
   };
-  feesBps?: number;     // Round-trip fees in basis points (default 5)
+  feesBps?: number; // Round-trip fees in basis points (default 5)
   slippageBps?: number; // Slippage per trade in basis points (default 3)
-  sizing: { 
-    notionalPctNAV: number;  // Position size as % of NAV (0..1)
+  sizing: {
+    notionalPctNAV: number; // Position size as % of NAV (0..1)
   };
   benchmark: Benchmark;
-  rebalanceDays?: number;    // Days between rebalancing (default 1)
+  rebalanceDays?: number; // Days between rebalancing (default 1)
 }
 
 export interface BacktestKpis {
-  pnlUsd: number;           // Absolute PnL in USD
-  pnlPct: number;           // Percentage return
-  maxDDPct: number;         // Maximum drawdown (negative value)
-  sharpe: number;           // Sharpe ratio (annualized)
-  hitRate: number;          // Win rate (wins/total trades)
-  trades: number;           // Total number of trades
-  volPct: number;           // Annualized volatility
-  vsBenchmarkPct: number;   // Excess return vs benchmark
+  pnlUsd: number; // Absolute PnL in USD
+  pnlPct: number; // Percentage return
+  maxDDPct: number; // Maximum drawdown (negative value)
+  sharpe: number; // Sharpe ratio (annualized)
+  hitRate: number; // Win rate (wins/total trades)
+  trades: number; // Total number of trades
+  volPct: number; // Annualized volatility
+  vsBenchmarkPct: number; // Excess return vs benchmark
 }
 
 export interface EquityPoint {
-  ts: string;               // ISO timestamp
-  nav: number;              // Base NAV (usually 1.0)
-  strat: number;            // Strategy equity curve
-  bench: number;            // Benchmark equity curve
+  ts: string; // ISO timestamp
+  nav: number; // Base NAV (usually 1.0)
+  strat: number; // Strategy equity curve
+  bench: number; // Benchmark equity curve
 }
 
 export interface MonthlyPnL {
-  ym: string;               // YYYY-MM format
-  pnlPct: number;           // Monthly return percentage
+  ym: string; // YYYY-MM format
+  pnlPct: number; // Monthly return percentage
 }
 
 export interface BacktestResults {
   kpis: BacktestKpis;
   equity: EquityPoint[];
   monthlyPnL: MonthlyPnL[];
-  notes?: string[];         // Warnings, data quality issues, etc.
+  notes?: string[]; // Warnings, data quality issues, etc.
 }
 
 export interface Backtest {
   id: number;
   name: string;
-  createdAt: string;        // ISO timestamp
-  updatedAt: string;        // ISO timestamp
+  createdAt: string; // ISO timestamp
+  updatedAt: string; // ISO timestamp
   actor: string;
   config: BacktestConfig;
   status: BacktestStatus;
@@ -79,14 +79,14 @@ export interface Backtest {
   errorMessage?: string;
   durationMs?: number;
   dataPoints?: number;
-  coveragePct?: number;     // Data coverage percentage
+  coveragePct?: number; // Data coverage percentage
 }
 
 export interface BacktestRun {
   id: number;
   backtestId: number;
-  startedAt: string;        // ISO timestamp
-  finishedAt?: string;      // ISO timestamp
+  startedAt: string; // ISO timestamp
+  finishedAt?: string; // ISO timestamp
   stats?: BacktestRunStats;
   actor: string;
   version?: string;
@@ -99,7 +99,7 @@ export interface BacktestRunStats {
   tradesExecuted: number;
   dataQualityScore: number; // 0..1
   executionPhases: {
-    dataLoading: number;    // Milliseconds
+    dataLoading: number; // Milliseconds
     signalProcessing: number;
     pnlCalculation: number;
     kpiAggregation: number;
@@ -124,7 +124,7 @@ export interface CreateBacktestResponse {
 export interface RunBacktestRequest {
   id: number;
   actor: string;
-  force?: boolean;          // Force rerun if already done
+  force?: boolean; // Force rerun if already done
 }
 
 export interface RunBacktestResponse {
@@ -146,8 +146,8 @@ export interface GetBacktestResponse {
 }
 
 export interface ListBacktestsQuery {
-  limit?: number;           // Default 50, max 200
-  offset?: number;          // Default 0
+  limit?: number; // Default 50, max 200
+  offset?: number; // Default 0
   status?: BacktestStatus | 'any'; // Default 'any'
   actor?: string;
   benchmark?: Benchmark;
@@ -186,14 +186,14 @@ export interface PromoteBacktestRequest {
   name: string;
   description?: string;
   actor?: string;
-  confidenceLevel?: number;     // 0..1
+  confidenceLevel?: number; // 0..1
   targetAllocationPct?: number; // 0..1
   maxDrawdownThreshold?: number; // negative value
   priority?: OpXPriority;
   tags?: string[];
-  notionalCapacity?: number;    // USD
-  minHoldingPeriod?: number;    // hours
-  maxPositionSize?: number;     // 0..1 (% of allocation)
+  notionalCapacity?: number; // USD
+  minHoldingPeriod?: number; // hours
+  maxPositionSize?: number; // 0..1 (% of allocation)
 }
 
 export interface PromoteBacktestResponse {
@@ -208,7 +208,13 @@ export interface PromoteBacktestResponse {
 // OP-X Opportunity Types
 // =============================================================================
 
-export type OpXOpportunityStatus = 'PENDING_REVIEW' | 'APPROVED' | 'REJECTED' | 'ACTIVE' | 'PAUSED' | 'CLOSED';
+export type OpXOpportunityStatus =
+  | 'PENDING_REVIEW'
+  | 'APPROVED'
+  | 'REJECTED'
+  | 'ACTIVE'
+  | 'PAUSED'
+  | 'CLOSED';
 export type OpXPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
 
 export interface OpXOpportunity {
@@ -218,28 +224,28 @@ export interface OpXOpportunity {
   backtestId: number;
   status: OpXOpportunityStatus;
   actor: string;
-  
+
   // Strategy configuration
   agents: string[];
   benchmark: Benchmark;
-  
+
   // Performance expectations
   expectedReturn: number;
   expectedSharpe: number;
   expectedMaxDD: number;
   expectedHitRate: number;
-  
+
   // Risk management
   confidenceLevel: number;
   targetAllocationPct: number;
   maxDrawdownThreshold: number;
-  
+
   // Metadata
   priority: OpXPriority;
   tags: string[];
   createdAt: string;
   updatedAt: string;
-  
+
   // Approval workflow
   reviewRequired: boolean;
   approvalStatus: 'PENDING' | 'APPROVED' | 'REJECTED';
@@ -247,7 +253,7 @@ export interface OpXOpportunity {
   approvedBy?: string;
   approvedAt?: string;
   rejectionReason?: string;
-  
+
   // Simulation parameters
   notionalCapacity: number;
   minHoldingPeriod: number;
@@ -262,7 +268,7 @@ export type ComparisonOperator = '>' | '<' | '>=' | '<=' | '==' | '!=';
 export type LogicalOperator = 'AND' | 'OR';
 
 export interface ParsedExpression {
-  field: string;            // e.g., "etf.flow.usd"
+  field: string; // e.g., "etf.flow.usd"
   operator: ComparisonOperator;
   value: number | string;
   dataType: 'number' | 'string';
@@ -280,23 +286,23 @@ export interface ParsedRule {
 // =============================================================================
 
 export interface SignalData {
-  ts: string;               // ISO timestamp
+  ts: string; // ISO timestamp
   agentCode: string;
   signalType: string;
   data: Record<string, unknown>; // Flexible signal data structure
 }
 
 export interface ProcessedSignal {
-  date: string;             // YYYY-MM-DD format
+  date: string; // YYYY-MM-DD format
   signals: SignalData[];
   aggregated: Record<string, number>; // Aggregated metrics for rule evaluation
 }
 
 export interface PositionSignal {
-  date: string;             // YYYY-MM-DD format
-  targetPosition: number;   // 0..1 (percentage of NAV)
-  signals: string[];        // Contributing signal descriptions
-  confidence: number;       // 0..1 confidence score
+  date: string; // YYYY-MM-DD format
+  targetPosition: number; // 0..1 (percentage of NAV)
+  signals: string[]; // Contributing signal descriptions
+  confidence: number; // 0..1 confidence score
 }
 
 // =============================================================================
@@ -304,26 +310,26 @@ export interface PositionSignal {
 // =============================================================================
 
 export interface DailyReturn {
-  date: string;             // YYYY-MM-DD format
-  stratReturn: number;      // Strategy daily return
-  benchReturn: number;      // Benchmark daily return
-  position: number;         // Position size (0..1)
-  trades: number;           // Number of trades executed
-  fees: number;             // Fees paid
+  date: string; // YYYY-MM-DD format
+  stratReturn: number; // Strategy daily return
+  benchReturn: number; // Benchmark daily return
+  position: number; // Position size (0..1)
+  trades: number; // Number of trades executed
+  fees: number; // Fees paid
 }
 
 export interface PerformanceMetrics {
   totalReturn: number;
   annualizedReturn: number;
-  volatility: number;       // Annualized
+  volatility: number; // Annualized
   sharpeRatio: number;
   maxDrawdown: number;
-  calmarRatio: number;      // Annual return / max drawdown
-  sortinoRatio: number;     // Downside deviation adjusted
-  winRate: number;          // Percentage of positive periods
-  avgWin: number;           // Average winning return
-  avgLoss: number;          // Average losing return
-  profitFactor: number;     // Gross profit / gross loss
+  calmarRatio: number; // Annual return / max drawdown
+  sortinoRatio: number; // Downside deviation adjusted
+  winRate: number; // Percentage of positive periods
+  avgWin: number; // Average winning return
+  avgLoss: number; // Average losing return
+  profitFactor: number; // Gross profit / gross loss
 }
 
 // =============================================================================
@@ -349,36 +355,36 @@ export interface ValidationResult {
 export const BACKTEST_CONSTRAINTS = {
   NAME: {
     MIN_LENGTH: 3,
-    MAX_LENGTH: 200
+    MAX_LENGTH: 200,
   },
   WINDOW: {
     MIN_DAYS: 7,
-    MAX_DAYS: 1095 // ~3 years
+    MAX_DAYS: 1095, // ~3 years
   },
   FEES: {
     MIN_BPS: 0,
-    MAX_BPS: 100 // 1%
+    MAX_BPS: 100, // 1%
   },
   SLIPPAGE: {
     MIN_BPS: 0,
-    MAX_BPS: 50 // 0.5%
+    MAX_BPS: 50, // 0.5%
   },
   SIZING: {
     MIN_PCT: 0.01, // 1%
-    MAX_PCT: 1.0   // 100%
+    MAX_PCT: 1.0, // 100%
   },
   REBALANCE: {
     MIN_DAYS: 1,
-    MAX_DAYS: 30
+    MAX_DAYS: 30,
   },
   RULES: {
     MIN_COUNT: 1,
-    MAX_COUNT: 10
+    MAX_COUNT: 10,
   },
   AGENTS: {
     MIN_COUNT: 1,
-    MAX_COUNT: 20
-  }
+    MAX_COUNT: 20,
+  },
 } as const;
 
 // =============================================================================
@@ -386,12 +392,17 @@ export const BACKTEST_CONSTRAINTS = {
 // =============================================================================
 
 export class BacktestError extends Error {
+  public code: string;
+  public details?: Record<string, unknown>;
+
   constructor(
     message: string,
-    public code: string,
-    public details?: Record<string, unknown>
+    code: string,
+    details?: Record<string, unknown>
   ) {
     super(message);
+    this.code = code;
+    this.details = details;
     this.name = 'BacktestError';
   }
 }
@@ -426,11 +437,15 @@ export function isValidBacktestStatus(value: string): value is BacktestStatus {
   return ['queued', 'running', 'done', 'failed'].includes(value);
 }
 
-export function isValidComparisonOperator(value: string): value is ComparisonOperator {
+export function isValidComparisonOperator(
+  value: string
+): value is ComparisonOperator {
   return ['>', '<', '>=', '<=', '==', '!='].includes(value);
 }
 
-export function isValidLogicalOperator(value: string): value is LogicalOperator {
+export function isValidLogicalOperator(
+  value: string
+): value is LogicalOperator {
   return ['AND', 'OR'].includes(value);
 }
 
@@ -447,11 +462,25 @@ export type BacktestConfigPartial = Partial<BacktestConfig> & {
   benchmark: Benchmark;
 };
 
-export type CreateBacktestData = Omit<Backtest, 'id' | 'createdAt' | 'updatedAt' | 'status'> & {
+export type CreateBacktestData = Omit<
+  Backtest,
+  'id' | 'createdAt' | 'updatedAt' | 'status'
+> & {
   status?: BacktestStatus;
 };
 
-export type UpdateBacktestData = Partial<Pick<Backtest, 'status' | 'results' | 'logs' | 'errorMessage' | 'durationMs' | 'dataPoints' | 'coveragePct'>>;
+export type UpdateBacktestData = Partial<
+  Pick<
+    Backtest,
+    | 'status'
+    | 'results'
+    | 'logs'
+    | 'errorMessage'
+    | 'durationMs'
+    | 'dataPoints'
+    | 'coveragePct'
+  >
+>;
 
 // =============================================================================
 // All types are exported above with their individual export statements

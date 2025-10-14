@@ -8,14 +8,14 @@ export interface PollingOptions {
 }
 
 export function usePolling<T>(
-  fn: (signal?: AbortSignal) => Promise<T>,
+  fn: (_signal?: AbortSignal) => Promise<T>,
   options: PollingOptions
 ) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
-  
+
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const { interval, immediate = true, enabled = true } = options;
@@ -86,7 +86,7 @@ export function usePolling<T>(
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    
+
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
@@ -103,7 +103,7 @@ export function usePolling<T>(
     } else {
       stop();
     }
-    
+
     return stop;
   }, [start, stop, enabled]);
 

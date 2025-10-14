@@ -1,5 +1,5 @@
 /**
- * Módulo F — Reportería Institucional 
+ * Módulo F — Reportería Institucional
  * Tipos TypeScript estrictos sin any para KPIs, PoR y PDFs
  */
 
@@ -8,39 +8,39 @@
 // =============================================================================
 
 export interface ReportKpis {
-  irr: number;           // Internal Rate of Return [-2..+2] clamped
-  tvpi: number;          // Total Value to Paid-In capital
-  moic: number;          // Multiple on Invested Capital  
-  dpi: number;           // Distributions to Paid-In capital
-  rvpi: number;          // Residual Value to Paid-In capital
-  navUsd: number;        // Net Asset Value in USD
+  irr: number; // Internal Rate of Return [-2..+2] clamped
+  tvpi: number; // Total Value to Paid-In capital
+  moic: number; // Multiple on Invested Capital
+  dpi: number; // Distributions to Paid-In capital
+  rvpi: number; // Residual Value to Paid-In capital
+  navUsd: number; // Net Asset Value in USD
   flows: {
-    in: number;          // Inflows USD
-    out: number;         // Outflows USD
+    in: number; // Inflows USD
+    out: number; // Outflows USD
   };
-  ts: string;            // Timestamp ISO string
+  ts: string; // Timestamp ISO string
 }
 
 export interface ReportPor {
   chains: Array<{
-    chain: string;       // 'ETH' | 'BTC' | 'SOL' | etc.
-    custodian?: string;  // Optional custodian name
-    addrCount: number;   // Number of addresses
-    assetsUsd: number;   // Assets value in USD
+    chain: string; // 'ETH' | 'BTC' | 'SOL' | etc.
+    custodian?: string; // Optional custodian name
+    addrCount: number; // Number of addresses
+    assetsUsd: number; // Assets value in USD
   }>;
-  totalUsd: number;      // Total PoR value across all chains
-  ts: string;            // Timestamp ISO string
+  totalUsd: number; // Total PoR value across all chains
+  ts: string; // Timestamp ISO string
 }
 
 export interface ReportSummary {
   navSeries: Array<{
-    date: string;        // YYYY-MM-DD format
-    navUsd: number;      // NAV value for that date
+    date: string; // YYYY-MM-DD format
+    navUsd: number; // NAV value for that date
   }>;
   flowSeries: Array<{
-    date: string;        // YYYY-MM-DD format
-    inUsd: number;       // Inflows for that date
-    outUsd: number;      // Outflows for that date
+    date: string; // YYYY-MM-DD format
+    inUsd: number; // Inflows for that date
+    outUsd: number; // Outflows for that date
   }>;
 }
 
@@ -49,14 +49,14 @@ export interface ReportSummary {
 // =============================================================================
 
 export interface GenerateReportRequest {
-  actor: string;         // Max 120 chars, sanitized
-  notes?: string;        // Optional notes, max 500 chars
-  quarter?: string;      // For quarterly reports: 'YYYY Q1/Q2/Q3/Q4'
+  actor: string; // Max 120 chars, sanitized
+  notes?: string; // Optional notes, max 500 chars
+  quarter?: string; // For quarterly reports: 'YYYY Q1/Q2/Q3/Q4'
 }
 
 export interface GenerateReportResponse {
   ok: boolean;
-  url: string;           // Path to generated PDF
+  url: string; // Path to generated PDF
   meta: {
     type: 'onepager' | 'quarterly';
     generatedAt: string;
@@ -67,7 +67,7 @@ export interface GenerateReportResponse {
 export interface ReportHistoryItem {
   id: string;
   type: 'onepager' | 'quarterly';
-  period?: string;       // Quarter for quarterly reports
+  period?: string; // Quarter for quarterly reports
   url: string;
   createdAt: string;
   actor: string;
@@ -105,13 +105,21 @@ export function clampIrr(irr: number): number {
  */
 export function sanitizeText(input: string, maxLength: number): string {
   if (!input) return '';
-  
+
   // Remove control characters and HTML/XML tags
-  const cleaned = input
-    .replace(/[\x00-\x1F\x7F-\x9F]/g, '') // Control chars
-    .replace(/<[^>]*>/g, '')              // HTML tags
-    .replace(/[<>]/g, '');                // Remaining < >
-  
+  const withoutControl = Array.from(input)
+    .filter(char => {
+      const code = char.charCodeAt(0);
+      const isBasicControl = code < 0x20;
+      const isExtendedControl = code >= 0x7f && code <= 0x9f;
+      return !isBasicControl && !isExtendedControl;
+    })
+    .join('');
+
+  const cleaned = withoutControl
+    .replace(/<[^>]*>/g, '') // HTML tags
+    .replace(/[<>]/g, ''); // Remaining < >
+
   return cleaned.substring(0, maxLength).trim();
 }
 
@@ -123,7 +131,14 @@ export function validateKpis(kpis: Partial<ReportKpis>): ValidationResult {
   const errors: string[] = [];
 
   // Check for NaN/missing values
-  const requiredFields = ['irr', 'tvpi', 'moic', 'dpi', 'rvpi', 'navUsd'] as const;
+  const requiredFields = [
+    'irr',
+    'tvpi',
+    'moic',
+    'dpi',
+    'rvpi',
+    'navUsd',
+  ] as const;
   for (const field of requiredFields) {
     const value = kpis[field];
     if (value === undefined || value === null || isNaN(value as number)) {
@@ -140,7 +155,7 @@ export function validateKpis(kpis: Partial<ReportKpis>): ValidationResult {
   if (typeof kpis.tvpi === 'number' && kpis.tvpi < 0) {
     warnings.push('TVPI should not be negative');
   }
-  
+
   if (typeof kpis.navUsd === 'number' && kpis.navUsd < 0) {
     warnings.push('NAV should not be negative');
   }
@@ -148,7 +163,7 @@ export function validateKpis(kpis: Partial<ReportKpis>): ValidationResult {
   return {
     isValid: errors.length === 0,
     warnings,
-    errors
+    errors,
   };
 }
 
@@ -183,7 +198,7 @@ export function validatePor(por: Partial<ReportPor>): ValidationResult {
   return {
     isValid: errors.length === 0,
     warnings,
-    errors
+    errors,
   };
 }
 
@@ -200,9 +215,9 @@ export function getDefaultKpis(): ReportKpis {
     navUsd: 0,
     flows: {
       in: 0,
-      out: 0
+      out: 0,
     },
-    ts: new Date().toISOString()
+    ts: new Date().toISOString(),
   };
 }
 
@@ -211,19 +226,40 @@ export function getDefaultKpis(): ReportKpis {
  */
 export function getValidatedKpis(kpis: Partial<ReportKpis>): ReportKpis {
   const defaults = getDefaultKpis();
-  
+
   return {
     irr: clampIrr(kpis.irr ?? defaults.irr),
-    tvpi: (typeof kpis.tvpi === 'number' && !isNaN(kpis.tvpi)) ? Math.max(0, kpis.tvpi) : defaults.tvpi,
-    moic: (typeof kpis.moic === 'number' && !isNaN(kpis.moic)) ? Math.max(0, kpis.moic) : defaults.moic,
-    dpi: (typeof kpis.dpi === 'number' && !isNaN(kpis.dpi)) ? Math.max(0, kpis.dpi) : defaults.dpi,
-    rvpi: (typeof kpis.rvpi === 'number' && !isNaN(kpis.rvpi)) ? Math.max(0, kpis.rvpi) : defaults.rvpi,
-    navUsd: (typeof kpis.navUsd === 'number' && !isNaN(kpis.navUsd)) ? Math.max(0, kpis.navUsd) : defaults.navUsd,
+    tvpi:
+      typeof kpis.tvpi === 'number' && !isNaN(kpis.tvpi)
+        ? Math.max(0, kpis.tvpi)
+        : defaults.tvpi,
+    moic:
+      typeof kpis.moic === 'number' && !isNaN(kpis.moic)
+        ? Math.max(0, kpis.moic)
+        : defaults.moic,
+    dpi:
+      typeof kpis.dpi === 'number' && !isNaN(kpis.dpi)
+        ? Math.max(0, kpis.dpi)
+        : defaults.dpi,
+    rvpi:
+      typeof kpis.rvpi === 'number' && !isNaN(kpis.rvpi)
+        ? Math.max(0, kpis.rvpi)
+        : defaults.rvpi,
+    navUsd:
+      typeof kpis.navUsd === 'number' && !isNaN(kpis.navUsd)
+        ? Math.max(0, kpis.navUsd)
+        : defaults.navUsd,
     flows: {
-      in: (typeof kpis.flows?.in === 'number' && !isNaN(kpis.flows.in)) ? Math.max(0, kpis.flows.in) : defaults.flows.in,
-      out: (typeof kpis.flows?.out === 'number' && !isNaN(kpis.flows.out)) ? Math.max(0, kpis.flows.out) : defaults.flows.out
+      in:
+        typeof kpis.flows?.in === 'number' && !isNaN(kpis.flows.in)
+          ? Math.max(0, kpis.flows.in)
+          : defaults.flows.in,
+      out:
+        typeof kpis.flows?.out === 'number' && !isNaN(kpis.flows.out)
+          ? Math.max(0, kpis.flows.out)
+          : defaults.flows.out,
     },
-    ts: kpis.ts || defaults.ts
+    ts: kpis.ts || defaults.ts,
   };
 }
 
@@ -234,7 +270,7 @@ export function getDefaultPor(): ReportPor {
   return {
     chains: [],
     totalUsd: 0,
-    ts: new Date().toISOString()
+    ts: new Date().toISOString(),
   };
 }
 
@@ -243,27 +279,32 @@ export function getDefaultPor(): ReportPor {
  */
 export function getValidatedPor(por: Partial<ReportPor>): ReportPor {
   const defaults = getDefaultPor();
-  
+
   if (!por.chains || por.chains.length === 0) {
     return defaults;
   }
-  
+
   // Validate and clean chains
   const validChains = por.chains
-    .filter(chain => chain.chain && typeof chain.assetsUsd === 'number' && !isNaN(chain.assetsUsd))
+    .filter(
+      chain =>
+        chain.chain &&
+        typeof chain.assetsUsd === 'number' &&
+        !isNaN(chain.assetsUsd)
+    )
     .map(chain => ({
       chain: chain.chain,
       custodian: chain.custodian || null,
       addrCount: Math.max(0, Math.floor(chain.addrCount || 0)),
-      assetsUsd: Math.max(0, chain.assetsUsd)
+      assetsUsd: Math.max(0, chain.assetsUsd),
     }));
-  
+
   const totalUsd = validChains.reduce((sum, chain) => sum + chain.assetsUsd, 0);
-  
+
   return {
     chains: validChains,
     totalUsd,
-    ts: por.ts || defaults.ts
+    ts: por.ts || defaults.ts,
   };
 }
 

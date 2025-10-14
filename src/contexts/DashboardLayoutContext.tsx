@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { arrayMove } from '@dnd-kit/sortable';
 
@@ -11,42 +11,53 @@ export interface DashboardItem {
 
 interface DashboardLayoutContextType {
   items: DashboardItem[];
-  moveItem: (activeId: string, overId: string) => void;
-  reorderItems: (newItems: DashboardItem[]) => void;
+  moveItem: (_activeId: string, _overId: string) => void;
+  reorderItems: (_newItems: DashboardItem[]) => void;
   resetLayout: () => void;
   isEditMode: boolean;
-  setEditMode: (enabled: boolean) => void;
+  setEditMode: (_enabled: boolean) => void;
 }
 
-const DashboardLayoutContext = createContext<DashboardLayoutContextType | undefined>(undefined);
+const DashboardLayoutContext = createContext<
+  DashboardLayoutContextType | undefined
+>(undefined);
 
 // Default dashboard layout
 const DEFAULT_LAYOUT: DashboardItem[] = [
   // Fila 1: KPIs Principales (12 cols)
   { id: 'kpi-strip', component: 'KpiStrip', span: 12, order: 0 },
-  
+
   // Fila 2: Resumen de Mercados - Flujos ETF + Comparativo
   { id: 'etf-autoswitch', component: 'EtfAutoswitchCard', span: 8, order: 1 },
   { id: 'etf-compare-mini', component: 'EtfCompareMini', span: 4, order: 2 },
-  
+
   // Fila 3: On-chain & TVL
-  { id: 'funding-snapshot', component: 'FundingSnapshotCard', span: 6, order: 3 },
+  {
+    id: 'funding-snapshot',
+    component: 'FundingSnapshotCard',
+    span: 6,
+    order: 3,
+  },
   { id: 'tvl-heatmap', component: 'TvlHeatmapCard', span: 6, order: 4 },
-  
+
   // Fila 4: Noticias & Regulatorio + Salud DQP
   { id: 'news-reg-panel', component: 'NewsRegPanel', span: 8, order: 5 },
   { id: 'dqp-health', component: 'DqpHealthCard', span: 4, order: 6 },
-  
+
   // Fila 5: Alertas + OP-X + Guardrails
   { id: 'alerts-live', component: 'AlertsLiveCard', span: 4, order: 7 },
   { id: 'opx-top-scores', component: 'OpxTopScores', span: 4, order: 8 },
   { id: 'guardrails', component: 'GuardrailsCard', span: 4, order: 9 },
-  
-  // Research Panel (span completo)  
+
+  // Research Panel (span completo)
   { id: 'research-panel', component: 'ResearchPanel', span: 12, order: 10 },
 ];
 
-export function DashboardLayoutProvider({ children }: { children: React.ReactNode }) {
+export function DashboardLayoutProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [items, setItems] = useState<DashboardItem[]>(() => {
     // Try to load from localStorage
     if (typeof window !== 'undefined') {
@@ -61,7 +72,7 @@ export function DashboardLayoutProvider({ children }: { children: React.ReactNod
     }
     return DEFAULT_LAYOUT;
   });
-  
+
   const [isEditMode, setIsEditMode] = useState(false);
 
   const saveLayout = useCallback((newItems: DashboardItem[]) => {
@@ -70,32 +81,40 @@ export function DashboardLayoutProvider({ children }: { children: React.ReactNod
     }
   }, []);
 
-  const moveItem = useCallback((activeId: string, overId: string) => {
-    setItems((items) => {
-      const oldIndex = items.findIndex(item => item.id === activeId);
-      const newIndex = items.findIndex(item => item.id === overId);
-      
-      if (oldIndex !== -1 && newIndex !== -1) {
-        const reorderedItems = arrayMove(items, oldIndex, newIndex).map((item, index) => ({
-          ...item,
-          order: index
-        }));
-        saveLayout(reorderedItems);
-        return reorderedItems;
-      }
-      
-      return items;
-    });
-  }, [saveLayout]);
+  const moveItem = useCallback(
+    (activeId: string, overId: string) => {
+      setItems(items => {
+        const oldIndex = items.findIndex(item => item.id === activeId);
+        const newIndex = items.findIndex(item => item.id === overId);
 
-  const reorderItems = useCallback((newItems: DashboardItem[]) => {
-    const reorderedItems = newItems.map((item, index) => ({
-      ...item,
-      order: index
-    }));
-    setItems(reorderedItems);
-    saveLayout(reorderedItems);
-  }, [saveLayout]);
+        if (oldIndex !== -1 && newIndex !== -1) {
+          const reorderedItems = arrayMove(items, oldIndex, newIndex).map(
+            (item, index) => ({
+              ...item,
+              order: index,
+            })
+          );
+          saveLayout(reorderedItems);
+          return reorderedItems;
+        }
+
+        return items;
+      });
+    },
+    [saveLayout]
+  );
+
+  const reorderItems = useCallback(
+    (newItems: DashboardItem[]) => {
+      const reorderedItems = newItems.map((item, index) => ({
+        ...item,
+        order: index,
+      }));
+      setItems(reorderedItems);
+      saveLayout(reorderedItems);
+    },
+    [saveLayout]
+  );
 
   const resetLayout = useCallback(() => {
     setItems(DEFAULT_LAYOUT);
@@ -125,7 +144,9 @@ export function DashboardLayoutProvider({ children }: { children: React.ReactNod
 export function useDashboardLayout() {
   const context = useContext(DashboardLayoutContext);
   if (context === undefined) {
-    throw new Error('useDashboardLayout must be used within a DashboardLayoutProvider');
+    throw new Error(
+      'useDashboardLayout must be used within a DashboardLayoutProvider'
+    );
   }
   return context;
 }
