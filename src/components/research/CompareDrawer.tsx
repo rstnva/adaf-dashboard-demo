@@ -35,14 +35,17 @@ import { cn } from '@/lib/utils';
 
 interface CompareDrawerProps {
   snapshots?: ResearchSnapshot[];
-  onLoadConfig?: (config: ResearchSnapshot['config']) => void;
+  onLoadConfig?: (_config: ResearchSnapshot['config']) => void;
   trigger?: React.ReactNode;
   open?: boolean;
-  onOpenChange?: (open: boolean) => void;
+  onOpenChange?: (_open: boolean) => void;
 }
 
 // Metric formatting utility
-function formatMetric(value: number, format: 'percent' | 'number' | 'ratio'): string {
+function formatMetric(
+  value: number,
+  format: 'percent' | 'number' | 'ratio'
+): string {
   switch (format) {
     case 'percent':
       return `${(value * 100).toFixed(2)}%`;
@@ -56,16 +59,20 @@ function formatMetric(value: number, format: 'percent' | 'number' | 'ratio'): st
 }
 
 // Metric comparison indicator
-function getMetricIndicator(current: number, baseline: number, betterIsHigher: boolean = true) {
+function getMetricIndicator(
+  current: number,
+  baseline: number,
+  betterIsHigher: boolean = true
+) {
   const diff = current - baseline;
   const threshold = Math.abs(baseline) * 0.01; // 1% threshold for "equal"
-  
+
   if (Math.abs(diff) < threshold) {
     return { icon: Equal, color: 'text-gray-500', label: 'equal' };
   }
-  
+
   const isWorse = betterIsHigher ? diff < 0 : diff > 0;
-  
+
   if (isWorse) {
     return { icon: ArrowDown, color: 'text-red-500', label: 'worse' };
   } else {
@@ -74,38 +81,45 @@ function getMetricIndicator(current: number, baseline: number, betterIsHigher: b
 }
 
 // Individual snapshot column component
-function SnapshotColumn({ 
-  snapshot, 
-  isBaseline = false, 
-  baselineSnapshot, 
-  onLoadConfig, 
-  onTogglePin 
+function SnapshotColumn({
+  snapshot,
+  isBaseline = false,
+  baselineSnapshot,
+  onLoadConfig,
+  onTogglePin,
 }: {
   snapshot: ResearchSnapshot;
   isBaseline?: boolean;
   baselineSnapshot?: ResearchSnapshot;
-  onLoadConfig?: (config: ResearchSnapshot['config']) => void;
-  onTogglePin?: (id: string, pinned: boolean) => void;
+  onLoadConfig?: (_config: ResearchSnapshot['config']) => void;
+  onTogglePin?: (_id: string, _pinned: boolean) => void;
 }) {
   return (
     <div className="min-w-0 flex-1">
-      <Card className={cn(
-        'h-full',
-        isBaseline && 'ring-2 ring-blue-500 ring-opacity-50'
-      )}>
+      <Card
+        className={cn(
+          'h-full',
+          isBaseline && 'ring-2 ring-blue-500 ring-opacity-50'
+        )}
+      >
         <CardHeader className="pb-3">
           <div className="space-y-2">
             {/* Header */}
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0 flex-1">
-                <h3 className="font-medium text-sm truncate" title={snapshot.name}>
+                <h3
+                  className="font-medium text-sm truncate"
+                  title={snapshot.name}
+                >
                   {snapshot.name}
                 </h3>
                 <p className="text-xs text-muted-foreground">
-                  {formatDistanceToNow(new Date(snapshot.createdAt), { addSuffix: true })}
+                  {formatDistanceToNow(new Date(snapshot.createdAt), {
+                    addSuffix: true,
+                  })}
                 </p>
               </div>
-              
+
               <div className="flex items-center gap-1">
                 {isBaseline && (
                   <Badge variant="secondary" className="text-xs">
@@ -162,7 +176,7 @@ function SnapshotColumn({
           <div className="space-y-3">
             {/* Key metrics */}
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <MetricItem 
+              <MetricItem
                 label="Total Return"
                 value={formatMetric(snapshot.results.pnlPercent, 'percent')}
                 baseline={baselineSnapshot?.results.pnlPercent}
@@ -218,9 +232,11 @@ function MetricItem({
   current: number;
   betterIsHigher?: boolean;
 }) {
-  const indicator = baseline !== undefined ? 
-    getMetricIndicator(current, baseline, betterIsHigher) : null;
-  
+  const indicator =
+    baseline !== undefined
+      ? getMetricIndicator(current, baseline, betterIsHigher)
+      : null;
+
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between">
@@ -234,29 +250,33 @@ function MetricItem({
   );
 }
 
-export function CompareDrawer({ 
-  snapshots: propSnapshots, 
-  onLoadConfig, 
-  trigger, 
-  open: externalOpen, 
-  onOpenChange 
+export function CompareDrawer({
+  snapshots: propSnapshots,
+  onLoadConfig,
+  trigger,
+  open: externalOpen,
+  onOpenChange,
 }: CompareDrawerProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const [baselineId, setBaselineId] = useState<string>('');
   const [selectedTab, setSelectedTab] = useState('overview');
-  
+
   // Use external open state if provided, otherwise internal
   const open = externalOpen !== undefined ? externalOpen : internalOpen;
   const setOpen = onOpenChange || setInternalOpen;
-  
+
   // Get snapshots from props or fetch from storage
-  const snapshots = propSnapshots || (() => {
-    try {
-      return JSON.parse(localStorage.getItem('adaf-research-snapshots') || '[]') as ResearchSnapshot[];
-    } catch {
-      return [];
-    }
-  })();
+  const snapshots =
+    propSnapshots ||
+    (() => {
+      try {
+        return JSON.parse(
+          localStorage.getItem('adaf-research-snapshots') || '[]'
+        ) as ResearchSnapshot[];
+      } catch {
+        return [];
+      }
+    })();
 
   // Set default baseline to first pinned or first snapshot
   const defaultBaseline = useMemo(() => {
@@ -288,7 +308,9 @@ export function CompareDrawer({
       },
     };
 
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: 'application/json',
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -298,7 +320,7 @@ export function CompareDrawer({
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    postUiEvent('Research', 'CompareExport', { 
+    postUiEvent('Research', 'CompareExport', {
       snapshotCount: snapshots.length,
       baseline: actualBaselineId,
     });
@@ -319,11 +341,11 @@ export function CompareDrawer({
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         {trigger || (
-          <Button 
+          <Button
             variant="outline"
             onClick={() => {
               setOpen(true);
-              postUiEvent('Research', 'CompareOpen', { 
+              postUiEvent('Research', 'CompareOpen', {
                 snapshotCount: snapshots.length,
               });
             }}
@@ -352,7 +374,7 @@ export function CompareDrawer({
               <label className="text-sm font-medium">Baseline:</label>
               <select
                 value={actualBaselineId}
-                onChange={(e) => setBaselineId(e.target.value)}
+                onChange={e => setBaselineId(e.target.value)}
                 className="text-sm border rounded px-2 py-1"
               >
                 {snapshots.map(snap => (
@@ -363,7 +385,11 @@ export function CompareDrawer({
               </select>
             </div>
 
-            <Button variant="outline" size="sm" onClick={handleExportComparison}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportComparison}
+            >
               <Download className="h-4 w-4 mr-2" />
               Export CSV
             </Button>
@@ -401,7 +427,10 @@ export function CompareDrawer({
                         <tr className="border-b">
                           <th className="text-left p-2">Metric</th>
                           {comparison.snapshots.map(snap => (
-                            <th key={snap.id} className="text-center p-2 min-w-[120px]">
+                            <th
+                              key={snap.id}
+                              className="text-center p-2 min-w-[120px]"
+                            >
                               <div className="truncate" title={snap.name}>
                                 {snap.name}
                               </div>
@@ -411,17 +440,23 @@ export function CompareDrawer({
                       </thead>
                       <tbody>
                         {comparison.metrics.map(({ metric, label, format }) => (
-                          <tr key={metric} className="border-b hover:bg-gray-50">
+                          <tr
+                            key={metric}
+                            className="border-b hover:bg-gray-50"
+                          >
                             <td className="p-2 font-medium">{label}</td>
                             {comparison.snapshots.map(snap => {
                               const value = snap.results[metric];
                               const isBaseline = snap.id === actualBaselineId;
-                              
+
                               return (
-                                <td key={snap.id} className={cn(
-                                  'p-2 text-center',
-                                  isBaseline && 'bg-blue-50 font-medium'
-                                )}>
+                                <td
+                                  key={snap.id}
+                                  className={cn(
+                                    'p-2 text-center',
+                                    isBaseline && 'bg-blue-50 font-medium'
+                                  )}
+                                >
                                   {formatMetric(value, format)}
                                 </td>
                               );
@@ -439,7 +474,9 @@ export function CompareDrawer({
               <div className="text-center py-8 text-muted-foreground">
                 <Settings className="h-12 w-12 mx-auto mb-2 opacity-50" />
                 <p>Configuration diff view</p>
-                <p className="text-xs">Coming soon - side-by-side DSL rules comparison</p>
+                <p className="text-xs">
+                  Coming soon - side-by-side DSL rules comparison
+                </p>
               </div>
             </TabsContent>
           </Tabs>

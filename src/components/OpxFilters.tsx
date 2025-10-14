@@ -1,22 +1,22 @@
-'use client'
+'use client';
 
 import React from 'react';
 
-import { Suspense } from 'react'
-import OpxFiltersInner from './OpxFiltersInner'
+import { Suspense } from 'react';
+import OpxFiltersInner from './OpxFiltersInner';
 
 type OpxFiltersProps = {
-  onFiltersChange: (filters: {
-    status: string
-    type: string
-    q: string
-    order: string
-    dir: string
-    limit: number
-    page: number
-  }) => void
-  onToast: (message: string, isError?: boolean) => void
-}
+  onFiltersChange: (_filters: {
+    status: string;
+    type: string;
+    q: string;
+    order: string;
+    dir: string;
+    limit: number;
+    page: number;
+  }) => void;
+  onToast: (_message: string, _isError?: boolean) => void;
+};
 
 function OpxFiltersLoader() {
   return (
@@ -29,7 +29,7 @@ function OpxFiltersLoader() {
         <div className="h-10 bg-muted-foreground/20 rounded w-32"></div>
       </div>
     </div>
-  )
+  );
 }
 
 export default function OpxFilters(props: OpxFiltersProps) {
@@ -37,5 +37,5 @@ export default function OpxFilters(props: OpxFiltersProps) {
     <Suspense fallback={<OpxFiltersLoader />}>
       <OpxFiltersInner {...props} />
     </Suspense>
-  )
+  );
 }

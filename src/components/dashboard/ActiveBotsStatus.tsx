@@ -3,14 +3,26 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Bot, Activity, Pause, Play, Settings, TrendingUp, TrendingDown, AlertTriangle } from 'lucide-react';
+import {
+  Bot,
+  Activity,
+  Pause,
+  Play,
+  Settings,
+  AlertTriangle,
+} from 'lucide-react';
 import { useState } from 'react';
 
 interface AgentStatus {
   id: string;
   name: string;
   status: 'active' | 'paused' | 'error' | 'idle';
-  type: 'arbitrage' | 'market_making' | 'momentum' | 'yield_farming' | 'risk_management';
+  type:
+    | 'arbitrage'
+    | 'market_making'
+    | 'momentum'
+    | 'yield_farming'
+    | 'risk_management';
   lastRun: string;
   performance: {
     pnl: number;
@@ -32,7 +44,7 @@ const mockAgents: AgentStatus[] = [
     type: 'arbitrage',
     lastRun: '2 min ago',
     performance: { pnl: 1250.45, trades24h: 15, successRate: 87.5 },
-    config: { enabled: true, riskLevel: 'medium' }
+    config: { enabled: true, riskLevel: 'medium' },
   },
   {
     id: 'mm-002',
@@ -41,7 +53,7 @@ const mockAgents: AgentStatus[] = [
     type: 'market_making',
     lastRun: '30 sec ago',
     performance: { pnl: 567.89, trades24h: 45, successRate: 92.1 },
-    config: { enabled: true, riskLevel: 'low' }
+    config: { enabled: true, riskLevel: 'low' },
   },
   {
     id: 'mom-003',
@@ -50,7 +62,7 @@ const mockAgents: AgentStatus[] = [
     type: 'momentum',
     lastRun: '1 hour ago',
     performance: { pnl: -123.45, trades24h: 8, successRate: 62.5 },
-    config: { enabled: false, riskLevel: 'high' }
+    config: { enabled: false, riskLevel: 'high' },
   },
   {
     id: 'yield-004',
@@ -59,7 +71,7 @@ const mockAgents: AgentStatus[] = [
     type: 'yield_farming',
     lastRun: '5 min ago',
     performance: { pnl: 890.12, trades24h: 3, successRate: 100 },
-    config: { enabled: true, riskLevel: 'low' }
+    config: { enabled: true, riskLevel: 'low' },
   },
   {
     id: 'risk-005',
@@ -68,35 +80,48 @@ const mockAgents: AgentStatus[] = [
     type: 'risk_management',
     lastRun: '1 min ago',
     performance: { pnl: 0, trades24h: 0, successRate: 0 },
-    config: { enabled: true, riskLevel: 'low' }
-  }
+    config: { enabled: true, riskLevel: 'low' },
+  },
 ];
 
 const getStatusColor = (status: AgentStatus['status']) => {
   switch (status) {
-    case 'active': return 'bg-green-100 text-green-800 border-green-300';
-    case 'paused': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
-    case 'error': return 'bg-red-100 text-red-800 border-red-300';
-    case 'idle': return 'bg-gray-100 text-gray-800 border-gray-300';
+    case 'active':
+      return 'bg-green-100 text-green-800 border-green-300';
+    case 'paused':
+      return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+    case 'error':
+      return 'bg-red-100 text-red-800 border-red-300';
+    case 'idle':
+      return 'bg-gray-100 text-gray-800 border-gray-300';
   }
 };
 
 const getStatusIcon = (status: AgentStatus['status']) => {
   switch (status) {
-    case 'active': return <Activity className="h-3 w-3" />;
-    case 'paused': return <Pause className="h-3 w-3" />;
-    case 'error': return <AlertTriangle className="h-3 w-3" />;
-    case 'idle': return <Bot className="h-3 w-3" />;
+    case 'active':
+      return <Activity className="h-3 w-3" />;
+    case 'paused':
+      return <Pause className="h-3 w-3" />;
+    case 'error':
+      return <AlertTriangle className="h-3 w-3" />;
+    case 'idle':
+      return <Bot className="h-3 w-3" />;
   }
 };
 
 const getTypeEmoji = (type: AgentStatus['type']) => {
   switch (type) {
-    case 'arbitrage': return '⚡';
-    case 'market_making': return '🎯';
-    case 'momentum': return '📈';
-    case 'yield_farming': return '🌾';
-    case 'risk_management': return '🛡️';
+    case 'arbitrage':
+      return '⚡';
+    case 'market_making':
+      return '🎯';
+    case 'momentum':
+      return '📈';
+    case 'yield_farming':
+      return '🌾';
+    case 'risk_management':
+      return '🛡️';
   }
 };
 
@@ -105,7 +130,10 @@ export function ActiveBotsStatus() {
 
   const activeCount = agents.filter(a => a.status === 'active').length;
   const totalPnl = agents.reduce((sum, a) => sum + a.performance.pnl, 0);
-  const totalTrades = agents.reduce((sum, a) => sum + a.performance.trades24h, 0);
+  const totalTrades = agents.reduce(
+    (sum, a) => sum + a.performance.trades24h,
+    0
+  );
 
   return (
     <Card>
@@ -143,12 +171,17 @@ export function ActiveBotsStatus() {
 
         {/* Agents List */}
         <div className="space-y-3 max-h-64 overflow-y-auto">
-          {agents.map((agent) => (
-            <div key={agent.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50">
+          {agents.map(agent => (
+            <div
+              key={agent.id}
+              className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50"
+            >
               <div className="flex items-center gap-3 flex-1 min-w-0">
                 <div className="text-lg">{getTypeEmoji(agent.type)}</div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-medium text-sm truncate">{agent.name}</div>
+                  <div className="font-medium text-sm truncate">
+                    {agent.name}
+                  </div>
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <span>Last: {agent.lastRun}</span>
                     <span>•</span>
@@ -156,23 +189,32 @@ export function ActiveBotsStatus() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-2">
                 {/* Performance Indicator */}
                 <div className="text-right">
-                  <div className={`text-sm font-medium ${
-                    agent.performance.pnl > 0 ? 'text-green-600' : 
-                    agent.performance.pnl < 0 ? 'text-red-600' : 'text-gray-600'
-                  }`}>
-                    {agent.performance.pnl > 0 ? '+' : ''}${agent.performance.pnl.toFixed(0)}
+                  <div
+                    className={`text-sm font-medium ${
+                      agent.performance.pnl > 0
+                        ? 'text-green-600'
+                        : agent.performance.pnl < 0
+                          ? 'text-red-600'
+                          : 'text-gray-600'
+                    }`}
+                  >
+                    {agent.performance.pnl > 0 ? '+' : ''}$
+                    {agent.performance.pnl.toFixed(0)}
                   </div>
                   <div className="text-xs text-muted-foreground">
                     {agent.performance.successRate.toFixed(1)}% win
                   </div>
                 </div>
-                
+
                 {/* Status Badge */}
-                <Badge variant="outline" className={getStatusColor(agent.status)}>
+                <Badge
+                  variant="outline"
+                  className={getStatusColor(agent.status)}
+                >
                   {getStatusIcon(agent.status)}
                   <span className="ml-1 capitalize">{agent.status}</span>
                 </Badge>

@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
+import {
   PlayCircle,
   CheckCircle,
   XCircle,
@@ -15,7 +15,7 @@ import {
   Info,
   Lightbulb,
   RotateCcw,
-  ExternalLink
+  ExternalLink,
 } from 'lucide-react';
 
 interface Exercise {
@@ -23,9 +23,20 @@ interface Exercise {
   lessonId: string;
   title: string;
   description: string;
-  action: 'backtest' | 'promote' | 'report' | 'acknowledge_alert' | 'trigger_worker' | 'retention_job' | 'csp_enforce';
+  action:
+    | 'backtest'
+    | 'promote'
+    | 'report'
+    | 'acknowledge_alert'
+    | 'trigger_worker'
+    | 'retention_job'
+    | 'csp_enforce';
   actionParams: Record<string, unknown>;
-  verificationMethod: 'api_response' | 'metric_check' | 'table_check' | 'file_hash';
+  verificationMethod:
+    | 'api_response'
+    | 'metric_check'
+    | 'table_check'
+    | 'file_hash';
   verificationConfig: Record<string, unknown>;
   points: number;
   hints: string[];
@@ -52,7 +63,7 @@ interface ExerciseAttempt {
 interface ExerciseRunnerProps {
   exercise: Exercise;
   attempt?: ExerciseAttempt;
-  onExecute: (exerciseId: string) => Promise<ExerciseAttempt>;
+  onExecute: (_exerciseId: string) => Promise<ExerciseAttempt>;
   onRetry?: () => void;
 }
 
@@ -63,7 +74,7 @@ const actionLabels = {
   acknowledge_alert: 'Acknowledge Alert',
   trigger_worker: 'Trigger Worker Process',
   retention_job: 'Run Retention Job',
-  csp_enforce: 'Enforce CSP Policy'
+  csp_enforce: 'Enforce CSP Policy',
 };
 
 const actionIcons = {
@@ -73,20 +84,26 @@ const actionIcons = {
   acknowledge_alert: '🔔',
   trigger_worker: '⚙️',
   retention_job: '🗂️',
-  csp_enforce: '🛡️'
+  csp_enforce: '🛡️',
 };
 
 const actionDescriptions = {
-  backtest: 'Execute a strategy backtest with historical data to validate performance',
+  backtest:
+    'Execute a strategy backtest with historical data to validate performance',
   promote: 'Promote a strategy from testing to production environment',
   report: 'Generate a comprehensive strategy or portfolio report',
   acknowledge_alert: 'Acknowledge and handle system alerts and notifications',
   trigger_worker: 'Start worker processes for data processing or maintenance',
   retention_job: 'Execute data retention and cleanup procedures',
-  csp_enforce: 'Enforce Content Security Policy rules and configurations'
+  csp_enforce: 'Enforce Content Security Policy rules and configurations',
 };
 
-export function ExerciseRunner({ exercise, attempt, onExecute, onRetry }: ExerciseRunnerProps) {
+export function ExerciseRunner({
+  exercise,
+  attempt,
+  onExecute,
+  onRetry,
+}: ExerciseRunnerProps) {
   const [isExecuting, setIsExecuting] = useState(false);
   const [showHints, setShowHints] = useState(false);
   const [currentHint, setCurrentHint] = useState(0);
@@ -104,7 +121,7 @@ export function ExerciseRunner({ exercise, attempt, onExecute, onRetry }: Exerci
 
   const getStatusIcon = () => {
     if (!attempt) return <PlayCircle className="h-6 w-6 text-blue-500" />;
-    
+
     switch (attempt.status) {
       case 'completed':
         return <CheckCircle className="h-6 w-6 text-green-500" />;
@@ -119,7 +136,7 @@ export function ExerciseRunner({ exercise, attempt, onExecute, onRetry }: Exerci
 
   const getStatusColor = () => {
     if (!attempt) return 'text-blue-600';
-    
+
     switch (attempt.status) {
       case 'completed':
         return 'text-green-600';
@@ -134,7 +151,7 @@ export function ExerciseRunner({ exercise, attempt, onExecute, onRetry }: Exerci
 
   const getStatusText = () => {
     if (!attempt) return 'Ready to Execute';
-    
+
     switch (attempt.status) {
       case 'completed':
         return 'Successfully Completed';
@@ -148,11 +165,11 @@ export function ExerciseRunner({ exercise, attempt, onExecute, onRetry }: Exerci
   };
 
   const nextHint = () => {
-    setCurrentHint((prev) => Math.min(prev + 1, exercise.hints.length - 1));
+    setCurrentHint(prev => Math.min(prev + 1, exercise.hints.length - 1));
   };
 
   const prevHint = () => {
-    setCurrentHint((prev) => Math.max(prev - 1, 0));
+    setCurrentHint(prev => Math.max(prev - 1, 0));
   };
 
   return (
@@ -216,9 +233,7 @@ export function ExerciseRunner({ exercise, attempt, onExecute, onRetry }: Exerci
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-gray-700">
-            {actionDescriptions[exercise.action]}
-          </p>
+          <p className="text-gray-700">{actionDescriptions[exercise.action]}</p>
 
           {/* Action Parameters */}
           {Object.keys(exercise.actionParams).length > 0 && (
@@ -319,8 +334,18 @@ export function ExerciseRunner({ exercise, attempt, onExecute, onRetry }: Exerci
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <Alert className={attempt.result.success ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}>
-                <AlertDescription className={attempt.result.success ? 'text-green-800' : 'text-red-800'}>
+              <Alert
+                className={
+                  attempt.result.success
+                    ? 'border-green-200 bg-green-50'
+                    : 'border-red-200 bg-red-50'
+                }
+              >
+                <AlertDescription
+                  className={
+                    attempt.result.success ? 'text-green-800' : 'text-red-800'
+                  }
+                >
                   {attempt.result.message}
                 </AlertDescription>
               </Alert>
@@ -329,8 +354,20 @@ export function ExerciseRunner({ exercise, attempt, onExecute, onRetry }: Exerci
               {attempt.result.verificationResult && (
                 <div className="border-t pt-4">
                   <h4 className="font-medium mb-2">Verification:</h4>
-                  <Alert className={attempt.result.verificationResult.verified ? 'border-green-200 bg-green-50' : 'border-yellow-200 bg-yellow-50'}>
-                    <AlertDescription className={attempt.result.verificationResult.verified ? 'text-green-800' : 'text-yellow-800'}>
+                  <Alert
+                    className={
+                      attempt.result.verificationResult.verified
+                        ? 'border-green-200 bg-green-50'
+                        : 'border-yellow-200 bg-yellow-50'
+                    }
+                  >
+                    <AlertDescription
+                      className={
+                        attempt.result.verificationResult.verified
+                          ? 'text-green-800'
+                          : 'text-yellow-800'
+                      }
+                    >
                       {attempt.result.verificationResult.details}
                     </AlertDescription>
                   </Alert>
@@ -391,7 +428,9 @@ export function ExerciseRunner({ exercise, attempt, onExecute, onRetry }: Exerci
             {attempt?.status === 'completed' && attempt.result?.success && (
               <div className="flex items-center gap-2 text-green-600">
                 <CheckCircle className="h-5 w-5" />
-                <span className="font-medium">Exercise Completed Successfully!</span>
+                <span className="font-medium">
+                  Exercise Completed Successfully!
+                </span>
               </div>
             )}
           </div>
@@ -401,8 +440,9 @@ export function ExerciseRunner({ exercise, attempt, onExecute, onRetry }: Exerci
             <Alert className="mt-4 border-yellow-200 bg-yellow-50">
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription className="text-yellow-800">
-                The exercise failed to complete successfully. Review the error details above and try again.
-                You can use the hints if you need guidance.
+                The exercise failed to complete successfully. Review the error
+                details above and try again. You can use the hints if you need
+                guidance.
               </AlertDescription>
             </Alert>
           )}

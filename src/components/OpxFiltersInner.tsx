@@ -1,81 +1,98 @@
-"use client"
-import { useCallback, useEffect, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+'use client';
+import { useCallback, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 type OpxFiltersProps = {
-  onFiltersChange: (filters: {
-    status: string
-    type: string
-    q: string
-    order: string
-    dir: string
-    limit: number
-    page: number
-  }) => void
-  onToast: (message: string, isError?: boolean) => void
-}
+  onFiltersChange: (_filters: {
+    status: string;
+    type: string;
+    q: string;
+    order: string;
+    dir: string;
+    limit: number;
+    page: number;
+  }) => void;
+  onToast: (_message: string, _isError?: boolean) => void;
+};
 
-export default function OpxFiltersInner({ onFiltersChange, onToast }: OpxFiltersProps) {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  
-  const [status, setStatus] = useState(searchParams.get('status') || 'proposed')
-  const [type, setType] = useState(searchParams.get('type') || 'any')
-  const [q, setQ] = useState(searchParams.get('q') || '')
-  const [order, setOrder] = useState(searchParams.get('order') || 'score')
-  const [dir, setDir] = useState(searchParams.get('dir') || 'desc')
-  const [limit, setLimit] = useState(Number(searchParams.get('limit') || '50'))
-  const [recalcLoading, setRecalcLoading] = useState(false)
+export default function OpxFiltersInner({
+  onFiltersChange,
+  onToast,
+}: OpxFiltersProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const updateUrl = useCallback((newParams: Record<string, string>) => {
-    const params = new URLSearchParams()
-    Object.entries(newParams).forEach(([k, v]) => {
-      if (v && v !== 'any' && v !== '') params.set(k, v)
-    })
-    const url = `/opx?${params.toString()}`
-    router.push(url, { scroll: false })
-  }, [router])
+  const [status, setStatus] = useState(
+    searchParams.get('status') || 'proposed'
+  );
+  const [type, setType] = useState(searchParams.get('type') || 'any');
+  const [q, setQ] = useState(searchParams.get('q') || '');
+  const [order, setOrder] = useState(searchParams.get('order') || 'score');
+  const [dir, setDir] = useState(searchParams.get('dir') || 'desc');
+  const [limit, setLimit] = useState(Number(searchParams.get('limit') || '50'));
+  const [recalcLoading, setRecalcLoading] = useState(false);
+
+  const updateUrl = useCallback(
+    (newParams: Record<string, string>) => {
+      const params = new URLSearchParams();
+      Object.entries(newParams).forEach(([k, v]) => {
+        if (v && v !== 'any' && v !== '') params.set(k, v);
+      });
+      const url = `/opx?${params.toString()}`;
+      router.push(url, { scroll: false });
+    },
+    [router]
+  );
 
   const handleFilterChange = useCallback(() => {
-    const filters = { status, type, q, order, dir, limit, page: 1 }
-    onFiltersChange(filters)
-    updateUrl({ status, type, q, order, dir, limit: limit.toString() })
-  }, [status, type, q, order, dir, limit, onFiltersChange, updateUrl])
+    const filters = { status, type, q, order, dir, limit, page: 1 };
+    onFiltersChange(filters);
+    updateUrl({ status, type, q, order, dir, limit: limit.toString() });
+  }, [status, type, q, order, dir, limit, onFiltersChange, updateUrl]);
 
   useEffect(() => {
-    handleFilterChange()
-  }, [handleFilterChange])
+    handleFilterChange();
+  }, [handleFilterChange]);
 
   const handleRecalcScores = async () => {
-    setRecalcLoading(true)
+    setRecalcLoading(true);
     try {
       const res = await fetch('/api/control/opx/score', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ actor: 'ui' })
-      })
-      const data = await res.json()
+        body: JSON.stringify({ actor: 'ui' }),
+      });
+      const data = await res.json();
       if (res.ok) {
-        onToast(`Updated ${data.updated} opportunities in ${data.ms}ms`)
+        onToast(`Updated ${data.updated} opportunities in ${data.ms}ms`);
         // trigger refresh
-        handleFilterChange()
+        handleFilterChange();
       } else {
-        onToast(`Recalc failed: ${data.error || 'Unknown error'}`, true)
+        onToast(`Recalc failed: ${data.error || 'Unknown error'}`, true);
       }
     } catch (e) {
-      onToast(`Recalc error: ${e instanceof Error ? e.message : 'Network error'}`, true)
+      onToast(
+        `Recalc error: ${e instanceof Error ? e.message : 'Network error'}`,
+        true
+      );
     } finally {
-      setRecalcLoading(false)
+      setRecalcLoading(false);
     }
-  }
+  };
 
   const handleSearchKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleFilterChange()
+      handleFilterChange();
     }
-  }
+  };
 
   return (
     <div className="space-y-4 p-4 border rounded-lg bg-card">
@@ -140,7 +157,10 @@ export default function OpxFiltersInner({ onFiltersChange, onToast }: OpxFilters
 
         <div>
           <label className="text-sm font-medium mb-1 block">Limit</label>
-          <Select value={limit.toString()} onValueChange={(v) => setLimit(Number(v))}>
+          <Select
+            value={limit.toString()}
+            onValueChange={v => setLimit(Number(v))}
+          >
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -158,7 +178,7 @@ export default function OpxFiltersInner({ onFiltersChange, onToast }: OpxFilters
           <Input
             placeholder="Search idea/thesis..."
             value={q}
-            onChange={(e) => setQ(e.target.value)}
+            onChange={e => setQ(e.target.value)}
             onKeyDown={handleSearchKeyDown}
           />
         </div>
@@ -168,9 +188,9 @@ export default function OpxFiltersInner({ onFiltersChange, onToast }: OpxFilters
         <Button onClick={handleFilterChange} variant="outline" size="sm">
           Apply Filters
         </Button>
-        <Button 
-          onClick={handleRecalcScores} 
-          variant="outline" 
+        <Button
+          onClick={handleRecalcScores}
+          variant="outline"
           size="sm"
           disabled={recalcLoading}
         >
@@ -178,5 +198,5 @@ export default function OpxFiltersInner({ onFiltersChange, onToast }: OpxFilters
         </Button>
       </div>
     </div>
-  )
+  );
 }

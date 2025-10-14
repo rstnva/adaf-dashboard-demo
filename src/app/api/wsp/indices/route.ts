@@ -4,10 +4,13 @@ import { getIndices } from '@/lib/wsp/adapters/indices.adapter';
 import { recordApiHit } from '@/metrics/wsp.metrics';
 import { tokenBucket } from '@/lib/wsp/cache/redisClient';
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   try {
     const start = Date.now();
-    if (!tokenBucket('route:wsp:indices', 10, 20)) return new Response(JSON.stringify({ error: 'rate_limited' }), { status: 429 });
+    if (!tokenBucket('route:wsp:indices', 10, 20))
+      return new Response(JSON.stringify({ error: 'rate_limited' }), {
+        status: 429,
+      });
     const { data, stale } = await getIndices();
     const ms = Date.now() - start;
     recordApiHit('/api/wsp/indices', 200, ms);

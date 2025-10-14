@@ -1,8 +1,8 @@
-"use client";
+'use client';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
+import {
   Search,
   Play,
   FileText,
@@ -11,7 +11,7 @@ import {
   ChevronDown,
   Clock,
   DollarSign,
-  Globe
+  Globe,
 } from 'lucide-react';
 import { useUIStore } from '@/store/ui';
 import { cn } from '@/lib/utils';
@@ -22,7 +22,7 @@ const AVAILABLE_ASSETS = [
   { symbol: 'ETH', name: 'Ethereum', color: 'bg-blue-500' },
   { symbol: 'SOL', name: 'Solana', color: 'bg-purple-500' },
   { symbol: 'AVAX', name: 'Avalanche', color: 'bg-red-500' },
-  { symbol: 'MATIC', name: 'Polygon', color: 'bg-indigo-500' }
+  { symbol: 'MATIC', name: 'Polygon', color: 'bg-indigo-500' },
 ];
 
 const TIME_RANGES = [
@@ -30,19 +30,19 @@ const TIME_RANGES = [
   { value: '7D', label: '7 Días' },
   { value: '30D', label: '30 Días' },
   { value: '90D', label: '90 Días' },
-  { value: '1Y', label: '1 Año' }
+  { value: '1Y', label: '1 Año' },
 ] as const;
 
 const CURRENCIES = [
   { value: 'USD', label: 'USD', symbol: '$' },
-  { value: 'MXN', label: 'MXN', symbol: '$' }
+  { value: 'MXN', label: 'MXN', symbol: '$' },
 ] as const;
 
 const TIMEZONES = [
   { value: 'America/Mexico_City', label: 'Ciudad de México', short: 'CST' },
   { value: 'America/New_York', label: 'Nueva York', short: 'EST' },
   { value: 'Europe/London', label: 'Londres', short: 'GMT' },
-  { value: 'Asia/Tokyo', label: 'Tokio', short: 'JST' }
+  { value: 'Asia/Tokyo', label: 'Tokio', short: 'JST' },
 ] as const;
 
 interface TopBarProps {
@@ -59,7 +59,7 @@ export function TopBar({ children }: TopBarProps = {}) {
     setRange,
     setCurrency,
     setTimezone,
-    getFormattedAsOf
+    getFormattedAsOf,
   } = useUIStore();
 
   const [showAssetSelector, setShowAssetSelector] = useState(false);
@@ -93,24 +93,23 @@ export function TopBar({ children }: TopBarProps = {}) {
     try {
       const response = await fetch('/api/actions/run-worker-once', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to run worker');
       }
-      
+
       // Track UI interaction
       fetch('/api/metrics/ui/event', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           component: 'TopBar',
           action: 'run_worker_once',
-          timestamp: new Date().toISOString()
-        })
+          timestamp: new Date().toISOString(),
+        }),
       }).catch(console.error);
-      
     } catch (error) {
       console.error('Failed to run worker:', error);
     } finally {
@@ -129,10 +128,10 @@ export function TopBar({ children }: TopBarProps = {}) {
           actor: 'local-user',
           // Optional metadata we may use in the PDF template later
           notes: `Assets: ${selectedAssets.join(', ')} | Range: ${range} | Currency: ${currency} | TZ: ${timezone}`,
-          period: 'q'
-        })
+          period: 'q',
+        }),
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to generate report');
       }
@@ -141,7 +140,9 @@ export function TopBar({ children }: TopBarProps = {}) {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       // Try to extract filename from Content-Disposition
-      const cd = response.headers.get('Content-Disposition') || response.headers.get('content-disposition');
+      const cd =
+        response.headers.get('Content-Disposition') ||
+        response.headers.get('content-disposition');
       const fallbackName = `ADAF_OnePager_${new Date().toISOString().split('T')[0]}.pdf`;
       let fileName = fallbackName;
       if (cd) {
@@ -154,25 +155,25 @@ export function TopBar({ children }: TopBarProps = {}) {
       a.click();
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      
+
       // Track UI interaction
       fetch('/api/metrics/ui/event', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           component: 'TopBar',
           action: 'generate_one_pager',
-          timestamp: new Date().toISOString()
-        })
+          timestamp: new Date().toISOString(),
+        }),
       }).catch(console.error);
-      
+
       // Lightweight success toast
       const toast = document.createElement('div');
-      toast.className = 'fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-md shadow-lg z-50';
+      toast.className =
+        'fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-md shadow-lg z-50';
       toast.textContent = 'Reporte generado y descargado';
       document.body.appendChild(toast);
       setTimeout(() => document.body.removeChild(toast), 2000);
-      
     } catch (error) {
       console.error('Failed to generate report:', error);
     } finally {
@@ -186,7 +187,9 @@ export function TopBar({ children }: TopBarProps = {}) {
     try {
       window.localStorage.setItem('pageguide:always', next ? '1' : '0');
       window.dispatchEvent(new Event('pageguide:always-changed'));
-    } catch {}
+    } catch (err) {
+      console.warn('Failed to persist PageGuide preference', err);
+    }
   };
 
   // Hydration-safe UI bits: compute after mount only
@@ -198,7 +201,9 @@ export function TopBar({ children }: TopBarProps = {}) {
       setAsOfText('—');
     }
     try {
-      const isMac = typeof navigator !== 'undefined' && navigator.platform?.toUpperCase().includes('MAC');
+      const isMac =
+        typeof navigator !== 'undefined' &&
+        navigator.platform?.toUpperCase().includes('MAC');
       setKeyHint(isMac ? '⌘' : 'Ctrl');
     } catch {
       setKeyHint('Ctrl');
@@ -218,16 +223,23 @@ export function TopBar({ children }: TopBarProps = {}) {
             >
               <div className="flex items-center gap-1.5">
                 {selectedAssets.slice(0, 2).map(asset => {
-                  const assetInfo = AVAILABLE_ASSETS.find(a => a.symbol === asset);
+                  const assetInfo = AVAILABLE_ASSETS.find(
+                    a => a.symbol === asset
+                  );
                   return (
                     <div
                       key={asset}
-                      className={cn("h-2.5 w-2.5 rounded-full", assetInfo?.color)}
+                      className={cn(
+                        'h-2.5 w-2.5 rounded-full',
+                        assetInfo?.color
+                      )}
                     />
                   );
                 })}
                 <span className="ml-2 font-semibold tracking-tight">
-                  {selectedAssets.length === 1 ? selectedAssets[0] : `${selectedAssets.length} Assets`}
+                  {selectedAssets.length === 1
+                    ? selectedAssets[0]
+                    : `${selectedAssets.length} Assets`}
                 </span>
               </div>
               <ChevronDown className="h-4 w-4 opacity-70" />
@@ -236,7 +248,9 @@ export function TopBar({ children }: TopBarProps = {}) {
             {showAssetSelector && (
               <div className="glass-panel absolute top-full mt-3 w-64 rounded-2xl border-white/20 bg-slate-900/70 p-4 text-slate-100">
                 <div className="space-y-3">
-                  <h4 className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-300/70">Assets</h4>
+                  <h4 className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-300/70">
+                    Assets
+                  </h4>
                   {AVAILABLE_ASSETS.map(asset => (
                     <label
                       key={asset.symbol}
@@ -249,14 +263,22 @@ export function TopBar({ children }: TopBarProps = {}) {
                           onChange={() => handleAssetToggle(asset.symbol)}
                           className="h-4 w-4 rounded border-white/30 bg-transparent text-sky-400 focus:ring-sky-400/60"
                         />
-                        <div className={cn("h-3 w-3 rounded-full", asset.color)} />
-                        <span>{asset.name} ({asset.symbol})</span>
+                        <div
+                          className={cn('h-3 w-3 rounded-full', asset.color)}
+                        />
+                        <span>
+                          {asset.name} ({asset.symbol})
+                        </span>
                       </div>
                     </label>
                   ))}
                 </div>
                 <div className="mt-4 flex justify-end">
-                  <Button size="sm" onClick={() => setShowAssetSelector(false)} className="rounded-xl bg-white/15 px-4 text-slate-100 hover:bg-white/25">
+                  <Button
+                    size="sm"
+                    onClick={() => setShowAssetSelector(false)}
+                    className="rounded-xl bg-white/15 px-4 text-slate-100 hover:bg-white/25"
+                  >
                     Done
                   </Button>
                 </div>
@@ -286,8 +308,8 @@ export function TopBar({ children }: TopBarProps = {}) {
                       setShowRangeSelector(false);
                     }}
                     className={cn(
-                      "flex w-full items-center justify-between px-4 py-2 hover:bg-white/10",
-                      range === r.value && "text-sky-300"
+                      'flex w-full items-center justify-between px-4 py-2 hover:bg-white/10',
+                      range === r.value && 'text-sky-300'
                     )}
                   >
                     {r.label}
@@ -318,7 +340,10 @@ export function TopBar({ children }: TopBarProps = {}) {
                       setCurrency(c.value);
                       setShowCurrencySelector(false);
                     }}
-                    className={cn("flex w-full items-center justify-between px-4 py-2 hover:bg-white/10", currency === c.value && "text-sky-300")}
+                    className={cn(
+                      'flex w-full items-center justify-between px-4 py-2 hover:bg-white/10',
+                      currency === c.value && 'text-sky-300'
+                    )}
                   >
                     {c.label}
                   </button>
@@ -335,7 +360,9 @@ export function TopBar({ children }: TopBarProps = {}) {
               className="h-10 rounded-2xl border-white/20 bg-white/10 px-4 text-slate-100 hover:bg-white/16"
             >
               <Globe className="h-4 w-4" />
-              <span className="ml-2 font-semibold">{TIMEZONES.find(tz => tz.value === timezone)?.short}</span>
+              <span className="ml-2 font-semibold">
+                {TIMEZONES.find(tz => tz.value === timezone)?.short}
+              </span>
               <ChevronDown className="ml-1 h-4 w-4 opacity-70" />
             </Button>
 
@@ -348,17 +375,25 @@ export function TopBar({ children }: TopBarProps = {}) {
                       setTimezone(tz.value);
                       setShowTimezoneSelector(false);
                     }}
-                    className={cn("flex w-full items-center justify-between px-4 py-2 hover:bg-white/10", timezone === tz.value && "text-sky-300")}
+                    className={cn(
+                      'flex w-full items-center justify-between px-4 py-2 hover:bg-white/10',
+                      timezone === tz.value && 'text-sky-300'
+                    )}
                   >
                     <span>{tz.label}</span>
-                    <span className="text-xs text-slate-300/70">{tz.short}</span>
+                    <span className="text-xs text-slate-300/70">
+                      {tz.short}
+                    </span>
                   </button>
                 ))}
               </div>
             )}
           </div>
 
-          <Badge variant="outline" className="border-white/20 bg-white/5 px-4 text-xs text-slate-200/80">
+          <Badge
+            variant="outline"
+            className="border-white/20 bg-white/5 px-4 text-xs text-slate-200/80"
+          >
             as of {mounted ? asOfText : '—'}
           </Badge>
         </div>
@@ -366,20 +401,31 @@ export function TopBar({ children }: TopBarProps = {}) {
         <div className="flex-1 max-w-lg">
           <Button
             variant="outline"
-            onClick={() => window.dispatchEvent(new CustomEvent('spotlight:open'))}
+            onClick={() =>
+              window.dispatchEvent(new CustomEvent('spotlight:open'))
+            }
             className="group w-full justify-start rounded-2xl border-white/20 bg-white/8 px-4 py-3 text-sm text-slate-300/90 hover:border-white/30 hover:bg-white/14 hover:text-white"
           >
             <Search className="mr-3 h-4 w-4 text-sky-300 group-hover:text-sky-200" />
             <span>Búsqueda Spotlight...</span>
             <div className="ml-auto flex items-center gap-1 text-[11px] text-slate-400/80">
-              <kbd className="rounded-lg border border-white/20 bg-white/10 px-2 py-1">{keyHint}</kbd>
-              <kbd className="rounded-lg border border-white/20 bg-white/10 px-2 py-1">K</kbd>
+              <kbd className="rounded-lg border border-white/20 bg-white/10 px-2 py-1">
+                {keyHint}
+              </kbd>
+              <kbd className="rounded-lg border border-white/20 bg-white/10 px-2 py-1">
+                K
+              </kbd>
             </div>
           </Button>
         </div>
 
         <div className="flex items-center gap-2">
-          <Button size="sm" variant={guidesAlways ? 'default' : 'outline'} onClick={toggleGuidesAlways} className="rounded-2xl px-4">
+          <Button
+            size="sm"
+            variant={guidesAlways ? 'default' : 'outline'}
+            onClick={toggleGuidesAlways}
+            className="rounded-2xl px-4"
+          >
             <Sparkles className="mr-1 h-4 w-4" />
             {guidesAlways ? 'Guías: ON' : 'Guías: OFF'}
           </Button>
@@ -404,14 +450,22 @@ export function TopBar({ children }: TopBarProps = {}) {
             {isGeneratingReport ? 'Generating...' : 'One-Pager'}
           </Button>
 
-          <Button size="sm" variant="outline" className="relative rounded-2xl border-white/20 px-3 text-slate-200 hover:border-white/30">
+          <Button
+            size="sm"
+            variant="outline"
+            className="relative rounded-2xl border-white/20 px-3 text-slate-200 hover:border-white/30"
+          >
             <Bell className="h-4 w-4" />
             <Badge className="absolute -top-2 -right-1 h-5 w-5 rounded-full border-white/20 bg-rose-500/60 text-[11px] text-white">
               3
             </Badge>
           </Button>
 
-          <Button size="sm" variant="outline" className="rounded-2xl border-white/20 px-3 text-slate-200 hover:border-white/30">
+          <Button
+            size="sm"
+            variant="outline"
+            className="rounded-2xl border-white/20 px-3 text-slate-200 hover:border-white/30"
+          >
             <Settings className="h-4 w-4" />
           </Button>
 

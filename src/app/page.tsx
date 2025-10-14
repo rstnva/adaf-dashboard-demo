@@ -6,14 +6,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  Bot, 
-  BarChart3, 
+import {
+  TrendingUp,
+  TrendingDown,
+  Bot,
+  BarChart3,
   Shield,
   Activity,
-  DollarSign,
   Users,
   Clock,
   ExternalLink,
@@ -24,12 +23,12 @@ import {
   RefreshCw,
   ShieldCheck,
   FileText,
-  Radar
+  Radar,
 } from 'lucide-react';
 
 interface MarketData {
-  btc: { price: number; change24h: number; };
-  eth: { price: number; change24h: number; };
+  btc: { price: number; change24h: number };
+  eth: { price: number; change24h: number };
   totalVolume: number;
   fear_greed: number;
 }
@@ -47,7 +46,7 @@ export default function HomePage() {
     total: 30,
     active: 27,
     alerts: 3,
-    lastUpdate: '' // Solo se setea en el cliente
+    lastUpdate: '', // Solo se setea en el cliente
   });
 
   useEffect(() => {
@@ -56,31 +55,34 @@ export default function HomePage() {
       btc: { price: 67420, change24h: 2.34 },
       eth: { price: 2685, change24h: -1.23 },
       totalVolume: 28500000000,
-      fear_greed: 74
+      fear_greed: 74,
     };
     setMarketData(mockData);
 
     // Set lastUpdate solo en el cliente
     setAgentStatus(prev => ({
       ...prev,
-      lastUpdate: new Date().toLocaleTimeString()
+      lastUpdate: new Date().toLocaleTimeString(),
     }));
 
     // Update agent status every 30 seconds solo en el cliente
     const interval = setInterval(() => {
       setAgentStatus(prev => ({
         ...prev,
-        lastUpdate: new Date().toLocaleTimeString()
+        lastUpdate: new Date().toLocaleTimeString(),
       }));
     }, 30000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const formatCurrency = (value: number) => 
-    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(value);
 
-  const formatBillions = (value: number) => 
+  const formatBillions = (value: number) =>
     `$${(value / 1000000000).toFixed(1)}B`;
 
   return (
@@ -91,9 +93,14 @@ export default function HomePage() {
           <span className="section-title">ADAF Vision Hub</span>
           <div className="mt-4 grid gap-10 lg:grid-cols-5">
             <div className="lg:col-span-3 space-y-6">
-              <h1 className="section-heading">Sistema institucional listo para Apple Vision y operaciones en tiempo real.</h1>
+              <h1 className="section-heading">
+                Sistema institucional listo para Apple Vision y operaciones en
+                tiempo real.
+              </h1>
               <p className="section-subheading">
-                Orquesta mercados, riesgos y agentes cuantitativos desde una superficie de vidrio interactiva. Optimizado para latencia baja, mock completo y handoff inmediato hacia operaciones.
+                Orquesta mercados, riesgos y agentes cuantitativos desde una
+                superficie de vidrio interactiva. Optimizado para latencia baja,
+                mock completo y handoff inmediato hacia operaciones.
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <Link href="/markets" prefetch={false}>
@@ -102,11 +109,18 @@ export default function HomePage() {
                   </Button>
                 </Link>
                 <Link href="/opx" prefetch={false}>
-                  <Button size="lg" variant="outline" className="rounded-2xl px-6 py-3 text-base">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="rounded-2xl px-6 py-3 text-base"
+                  >
                     Ver OP-X Live
                   </Button>
                 </Link>
-                <Badge variant="outline" className="rounded-full border-white/20 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em]">
+                <Badge
+                  variant="outline"
+                  className="rounded-full border-white/20 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em]"
+                >
                   MOCK MODE ACTIVO
                 </Badge>
               </div>
@@ -115,17 +129,23 @@ export default function HomePage() {
               {[
                 {
                   label: 'BTC Spot',
-                  value: marketData ? formatCurrency(marketData.btc.price) : '—',
+                  value: marketData
+                    ? formatCurrency(marketData.btc.price)
+                    : '—',
                   delta: marketData ? marketData.btc.change24h : null,
                 },
                 {
                   label: 'ETH Spot',
-                  value: marketData ? formatCurrency(marketData.eth.price) : '—',
+                  value: marketData
+                    ? formatCurrency(marketData.eth.price)
+                    : '—',
                   delta: marketData ? marketData.eth.change24h : null,
                 },
                 {
                   label: '24h Volume',
-                  value: marketData ? formatBillions(marketData.totalVolume) : '—',
+                  value: marketData
+                    ? formatBillions(marketData.totalVolume)
+                    : '—',
                   delta: null,
                 },
                 {
@@ -133,18 +153,30 @@ export default function HomePage() {
                   value: `${agentStatus.active}/${agentStatus.total}`,
                   delta: agentStatus.alerts ? -agentStatus.alerts : null,
                 },
-              ].map((stat) => (
-                <div key={stat.label} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/8 px-4 py-3">
+              ].map(stat => (
+                <div
+                  key={stat.label}
+                  className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/8 px-4 py-3"
+                >
                   <div>
-                    <p className="text-xs uppercase tracking-[0.3em] text-slate-300/70">{stat.label}</p>
-                    <p className="text-2xl font-semibold text-white">{stat.value}</p>
+                    <p className="text-xs uppercase tracking-[0.3em] text-slate-300/70">
+                      {stat.label}
+                    </p>
+                    <p className="text-2xl font-semibold text-white">
+                      {stat.value}
+                    </p>
                   </div>
                   {stat.delta !== null && (
-                    <span className={cn(
-                      "text-sm font-medium",
-                      Number(stat.delta) >= 0 ? "text-emerald-300" : "text-rose-300"
-                    )}>
-                      {Number(stat.delta) >= 0 ? '+' : ''}{stat.delta?.toFixed(2)}%
+                    <span
+                      className={cn(
+                        'text-sm font-medium',
+                        Number(stat.delta) >= 0
+                          ? 'text-emerald-300'
+                          : 'text-rose-300'
+                      )}
+                    >
+                      {Number(stat.delta) >= 0 ? '+' : ''}
+                      {stat.delta?.toFixed(2)}%
                     </span>
                   )}
                 </div>
@@ -159,7 +191,9 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-br from-sky-500/25 via-indigo-500/20 to-purple-500/25" />
             <CardHeader className="relative pb-3">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg text-white">Dashboard Principal</CardTitle>
+                <CardTitle className="text-lg text-white">
+                  Dashboard Principal
+                </CardTitle>
                 <BarChart3 className="h-5 w-5 text-sky-200" />
               </div>
             </CardHeader>
@@ -177,7 +211,9 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/25 via-fuchsia-500/20 to-sky-500/25" />
             <CardHeader className="relative pb-3">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg text-white">LAV-ADAF Sistema</CardTitle>
+                <CardTitle className="text-lg text-white">
+                  LAV-ADAF Sistema
+                </CardTitle>
                 <Bot className="h-5 w-5 text-purple-200" />
               </div>
             </CardHeader>
@@ -185,9 +221,9 @@ export default function HomePage() {
               <p className="mb-4 text-sm text-slate-300/80">
                 {agentStatus.active}/{agentStatus.total} Agentes Activos
               </p>
-              <a 
-                href="http://localhost:3005" 
-                target="_blank" 
+              <a
+                href="http://localhost:3005"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-full"
               >
@@ -212,7 +248,9 @@ export default function HomePage() {
                 Cursos interactivos y certificaciones
               </p>
               <Link href="/academy" prefetch={false}>
-                <Button variant="outline" className="w-full rounded-2xl">Continuar Aprendiendo</Button>
+                <Button variant="outline" className="w-full rounded-2xl">
+                  Continuar Aprendiendo
+                </Button>
               </Link>
             </CardContent>
           </Card>
@@ -223,12 +261,18 @@ export default function HomePage() {
           <CardHeader>
             <div className="flex items-start justify-between">
               <div>
-                <CardTitle className="text-2xl text-white">Opciones y Configuración</CardTitle>
+                <CardTitle className="text-2xl text-white">
+                  Opciones y Configuración
+                </CardTitle>
                 <p className="mt-2 text-sm text-slate-300/80">
-                  Ajusta el comportamiento clave del dashboard al estilo terminal institucional.
+                  Ajusta el comportamiento clave del dashboard al estilo
+                  terminal institucional.
                 </p>
               </div>
-              <Badge variant="outline" className="hidden rounded-full px-4 py-2 text-[11px] tracking-[0.35em] md:inline-flex">
+              <Badge
+                variant="outline"
+                className="hidden rounded-full px-4 py-2 text-[11px] tracking-[0.35em] md:inline-flex"
+              >
                 <SlidersHorizontal className="mr-2 h-3 w-3" />
                 Panel principal
               </Badge>
@@ -246,40 +290,62 @@ export default function HomePage() {
                 },
                 {
                   title: 'Alertas & Notificaciones',
-                  description: 'Sensibilidad, canales y escalaciones automáticas.',
+                  description:
+                    'Sensibilidad, canales y escalaciones automáticas.',
                   icon: BellRing,
                   href: '/alerts',
                   accent: 'from-amber-500/25 via-orange-500/20 to-pink-500/25',
                 },
                 {
                   title: 'Actualización de Datos',
-                  description: 'Auto-refresh, health checks y reinicios de agentes.',
+                  description:
+                    'Auto-refresh, health checks y reinicios de agentes.',
                   icon: RefreshCw,
                   href: '/monitoring',
                   accent: 'from-emerald-500/25 via-teal-500/20 to-sky-500/20',
                 },
                 {
                   title: 'Credenciales & Integraciones',
-                  description: 'Llaves, proveedores externos y políticas de acceso.',
+                  description:
+                    'Llaves, proveedores externos y políticas de acceso.',
                   icon: ShieldCheck,
                   href: '/security',
                   accent: 'from-purple-500/25 via-fuchsia-500/20 to-sky-500/25',
                 },
-              ].map((item) => (
-                <div key={item.title} className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/7 p-5">
-                  <div className={cn("pointer-events-none absolute inset-0 bg-gradient-to-br", item.accent)} />
+              ].map(item => (
+                <div
+                  key={item.title}
+                  className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/7 p-5"
+                >
+                  <div
+                    className={cn(
+                      'pointer-events-none absolute inset-0 bg-gradient-to-br',
+                      item.accent
+                    )}
+                  />
                   <div className="relative flex items-start justify-between gap-3">
                     <div className="flex items-start gap-3">
                       <div className="mt-1 rounded-xl border border-white/20 bg-white/10 p-3 text-slate-50">
                         <item.icon className="h-4 w-4" />
                       </div>
                       <div>
-                        <h3 className="text-sm font-semibold text-white">{item.title}</h3>
-                        <p className="mt-1 text-xs text-slate-200/75">{item.description}</p>
+                        <h3 className="text-sm font-semibold text-white">
+                          {item.title}
+                        </h3>
+                        <p className="mt-1 text-xs text-slate-200/75">
+                          {item.description}
+                        </p>
                       </div>
                     </div>
-                    <Button asChild size="sm" variant="outline" className="rounded-xl border-white/25">
-                      <Link href={item.href} prefetch={false}>Abrir</Link>
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="rounded-xl border-white/25"
+                    >
+                      <Link href={item.href} prefetch={false}>
+                        Abrir
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -303,34 +369,74 @@ export default function HomePage() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs uppercase tracking-[0.3em] text-slate-300/70">Bitcoin</p>
-                      <p className="text-2xl font-semibold text-white">{formatCurrency(marketData.btc.price)}</p>
+                      <p className="text-xs uppercase tracking-[0.3em] text-slate-300/70">
+                        Bitcoin
+                      </p>
+                      <p className="text-2xl font-semibold text-white">
+                        {formatCurrency(marketData.btc.price)}
+                      </p>
                     </div>
-                    <Badge variant={marketData.btc.change24h >= 0 ? "default" : "destructive"} className="flex items-center gap-1">
-                      {marketData.btc.change24h >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                    <Badge
+                      variant={
+                        marketData.btc.change24h >= 0
+                          ? 'default'
+                          : 'destructive'
+                      }
+                      className="flex items-center gap-1"
+                    >
+                      {marketData.btc.change24h >= 0 ? (
+                        <TrendingUp className="h-3 w-3" />
+                      ) : (
+                        <TrendingDown className="h-3 w-3" />
+                      )}
                       {marketData.btc.change24h.toFixed(2)}%
                     </Badge>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs uppercase tracking-[0.3em] text-slate-300/70">Ethereum</p>
-                      <p className="text-2xl font-semibold text-white">{formatCurrency(marketData.eth.price)}</p>
+                      <p className="text-xs uppercase tracking-[0.3em] text-slate-300/70">
+                        Ethereum
+                      </p>
+                      <p className="text-2xl font-semibold text-white">
+                        {formatCurrency(marketData.eth.price)}
+                      </p>
                     </div>
-                    <Badge variant={marketData.eth.change24h >= 0 ? "default" : "destructive"} className="flex items-center gap-1">
-                      {marketData.eth.change24h >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                    <Badge
+                      variant={
+                        marketData.eth.change24h >= 0
+                          ? 'default'
+                          : 'destructive'
+                      }
+                      className="flex items-center gap-1"
+                    >
+                      {marketData.eth.change24h >= 0 ? (
+                        <TrendingUp className="h-3 w-3" />
+                      ) : (
+                        <TrendingDown className="h-3 w-3" />
+                      )}
                       {marketData.eth.change24h.toFixed(2)}%
                     </Badge>
                   </div>
 
                   <div className="pt-4 border-t">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-slate-300/75">Volumen 24h:</span>
-                      <span className="text-lg font-semibold text-white">{formatBillions(marketData.totalVolume)}</span>
+                      <span className="text-sm text-slate-300/75">
+                        Volumen 24h:
+                      </span>
+                      <span className="text-lg font-semibold text-white">
+                        {formatBillions(marketData.totalVolume)}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center mt-2">
-                      <span className="text-sm text-slate-300/75">Fear &amp; Greed Index:</span>
-                      <Badge variant={marketData.fear_greed > 50 ? "default" : "secondary"}>
+                      <span className="text-sm text-slate-300/75">
+                        Fear &amp; Greed Index:
+                      </span>
+                      <Badge
+                        variant={
+                          marketData.fear_greed > 50 ? 'default' : 'secondary'
+                        }
+                      >
                         {marketData.fear_greed}/100
                       </Badge>
                     </div>
@@ -358,7 +464,9 @@ export default function HomePage() {
                   <CheckCircle className="h-4 w-4 text-emerald-300" />
                   <span className="text-sm">Agentes Activos</span>
                 </div>
-                <span className="text-lg font-semibold text-white">{agentStatus.active}/{agentStatus.total}</span>
+                <span className="text-lg font-semibold text-white">
+                  {agentStatus.active}/{agentStatus.total}
+                </span>
               </div>
 
               <div className="flex items-center justify-between">
@@ -366,7 +474,9 @@ export default function HomePage() {
                   <AlertTriangle className="h-4 w-4 text-rose-300" />
                   <span className="text-sm">Alertas Pendientes</span>
                 </div>
-                <Badge variant={agentStatus.alerts > 0 ? "destructive" : "default"}>
+                <Badge
+                  variant={agentStatus.alerts > 0 ? 'destructive' : 'default'}
+                >
                   {agentStatus.alerts}
                 </Badge>
               </div>
@@ -376,17 +486,22 @@ export default function HomePage() {
                   <Clock className="h-4 w-4 text-sky-300" />
                   <span className="text-sm">Última Actualización</span>
                 </div>
-                <span className="text-sm text-slate-300/75">{agentStatus.lastUpdate}</span>
+                <span className="text-sm text-slate-300/75">
+                  {agentStatus.lastUpdate}
+                </span>
               </div>
 
               <div className="rounded-full border border-white/15 bg-white/10 p-1">
                 <div
                   className="h-2 rounded-full bg-gradient-to-r from-emerald-400 to-sky-400"
-                  style={{ width: `${(agentStatus.active / agentStatus.total) * 100}%` }}
+                  style={{
+                    width: `${(agentStatus.active / agentStatus.total) * 100}%`,
+                  }}
                 />
               </div>
               <p className="text-xs text-center text-slate-300/75">
-                {((agentStatus.active / agentStatus.total) * 100).toFixed(1)}% Operacional
+                {((agentStatus.active / agentStatus.total) * 100).toFixed(1)}%
+                Operacional
               </p>
             </CardContent>
           </Card>
@@ -402,28 +517,47 @@ export default function HomePage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-              {[{
-                title: 'Frontend ✅',
-                description: 'Next.js 15 funcionando',
-                accent: 'from-emerald-500/20 via-emerald-400/15 to-sky-500/20',
-              }, {
-                title: 'APIs ✅',
-                description: 'Servicios conectados',
-                accent: 'from-sky-500/20 via-blue-500/15 to-indigo-500/20',
-              }, {
-                title: 'LAV-ADAF ✅',
-                description: 'Puerto 3005 activo',
-                accent: 'from-purple-500/20 via-fuchsia-500/15 to-emerald-500/20',
-              }, {
-                title: 'Monitoreo ⚡',
-                description: 'Métricas en tiempo real',
-                accent: 'from-sky-400/20 via-cyan-500/15 to-emerald-400/20',
-              }].map((item) => (
-                <div key={item.title} className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/7 p-4">
-                  <div className={cn("absolute inset-0 bg-gradient-to-br", item.accent)} />
+              {[
+                {
+                  title: 'Frontend ✅',
+                  description: 'Next.js 15 funcionando',
+                  accent:
+                    'from-emerald-500/20 via-emerald-400/15 to-sky-500/20',
+                },
+                {
+                  title: 'APIs ✅',
+                  description: 'Servicios conectados',
+                  accent: 'from-sky-500/20 via-blue-500/15 to-indigo-500/20',
+                },
+                {
+                  title: 'LAV-ADAF ✅',
+                  description: 'Puerto 3005 activo',
+                  accent:
+                    'from-purple-500/20 via-fuchsia-500/15 to-emerald-500/20',
+                },
+                {
+                  title: 'Monitoreo ⚡',
+                  description: 'Métricas en tiempo real',
+                  accent: 'from-sky-400/20 via-cyan-500/15 to-emerald-400/20',
+                },
+              ].map(item => (
+                <div
+                  key={item.title}
+                  className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/7 p-4"
+                >
+                  <div
+                    className={cn(
+                      'absolute inset-0 bg-gradient-to-br',
+                      item.accent
+                    )}
+                  />
                   <div className="relative">
-                    <h3 className="text-sm font-semibold text-white">{item.title}</h3>
-                    <p className="mt-2 text-xs text-slate-300/80">{item.description}</p>
+                    <h3 className="text-sm font-semibold text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-xs text-slate-300/80">
+                      {item.description}
+                    </p>
                   </div>
                 </div>
               ))}

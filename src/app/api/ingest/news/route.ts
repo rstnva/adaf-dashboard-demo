@@ -6,14 +6,20 @@ function generateNewsHash(item: z.infer<typeof NewsIngestSchema>): string {
 }
 
 // Helper to classify severity based on keywords
-function classifySeverity(item: z.infer<typeof NewsIngestSchema>): { severity: 'low' | 'med' | 'high' } {
+function classifySeverity(item: z.infer<typeof NewsIngestSchema>): {
+  severity: 'low' | 'med' | 'high';
+} {
   const text = `${item.title} ${item.summary || ''}`.toLowerCase();
-  if ([
-    'hack', 'exploit', 'breach', 'depeg', 'halt'
-  ].some(k => text.includes(k))) return { severity: 'high' };
-  if ([
-    'sec', 'cnbv', 'banxico', 'cpi', 'fomc', 'rate', 'etf'
-  ].some(k => text.includes(k))) return { severity: 'med' };
+  if (
+    ['hack', 'exploit', 'breach', 'depeg', 'halt'].some(k => text.includes(k))
+  )
+    return { severity: 'high' };
+  if (
+    ['sec', 'cnbv', 'banxico', 'cpi', 'fomc', 'rate', 'etf'].some(k =>
+      text.includes(k)
+    )
+  )
+    return { severity: 'med' };
   return { severity: 'low' };
 }
 
@@ -32,7 +38,7 @@ const NewsIngestSchema = z.object({
   category: z.string().optional(),
   summary: z.string().optional(),
   tickers: z.array(z.string()).default([]),
-  keywords: z.array(z.string()).default([])
+  keywords: z.array(z.string()).default([]),
 });
 
 function normalizeNews(input: any) {
@@ -41,11 +47,12 @@ function normalizeNews(input: any) {
     title: input.title,
     summary: input.summary || input.description || '',
     url: input.url || input.link || input.feedUrl || '',
-    published_at: input.published_at || input.pubDate || new Date().toISOString(),
+    published_at:
+      input.published_at || input.pubDate || new Date().toISOString(),
     source: input.source || 'Unknown',
     category: input.category || '',
     tickers: input.tickers || [],
-    keywords: input.keywords || []
+    keywords: input.keywords || [],
   };
 }
 
@@ -67,22 +74,32 @@ export const POST = async (request: any) => {
         published_at: body.published_at || now,
         source: body.source || 'RSS',
         tickers: body.tickers || [],
-        keywords: body.keywords || []
+        keywords: body.keywords || [],
       });
       const hash = generateNewsHash(item);
       const extra = classifySeverity(item);
       const severity = extra.severity === 'high' ? 'critical' : extra.severity;
       // Simulate deduplication for RSS single
-      const exists = await prisma.newsData.findUnique({ where: { link: item.url } });
+      const exists = await prisma.newsData.findUnique({
+        where: { link: item.url },
+      });
       if (exists) {
-        return NextResponse.json({ success: false, error: 'already exists', fingerprint: hash, signalId: hash }, { status: 409 });
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'already exists',
+            fingerprint: hash,
+            signalId: hash,
+          },
+          { status: 409 }
+        );
       }
       const signal = {
         ...item,
         success: true,
         signalId: hash,
         fingerprint: hash,
-        severity
+        severity,
       };
       await prisma.newsData.create({
         data: {
@@ -96,15 +113,18 @@ export const POST = async (request: any) => {
         },
       });
       // For RSS single, always return 200 and set top-level fields
-      return NextResponse.json({
-        success: true,
-        signalId: hash,
-        fingerprint: hash,
-        severity,
-        signals: [signal],
-        processed: 1,
-        errors: []
-      }, { status: 200 });
+      return NextResponse.json(
+        {
+          success: true,
+          signalId: hash,
+          fingerprint: hash,
+          severity,
+          signals: [signal],
+          processed: 1,
+          errors: [],
+        },
+        { status: 200 }
+      );
     } else if (Array.isArray(body)) {
       // RSS batch: array de noticias
       let processed = 0;
@@ -119,8 +139,15 @@ export const POST = async (request: any) => {
           const isNew = await redis.setnx(`dedupe:news:${hash}`, '1');
           if (isNew) {
             const extra = classifySeverity(item);
-            const severity = extra.severity === 'high' ? 'critical' : extra.severity;
-            signals.push({ ...item, fingerprint: hash, signalId: hash, severity, success: true });
+            const severity =
+              extra.severity === 'high' ? 'critical' : extra.severity;
+            signals.push({
+              ...item,
+              fingerprint: hash,
+              signalId: hash,
+              severity,
+              success: true,
+            });
             processed++;
           } else {
             errors.push({ error: 'already exists', fingerprint: hash });
@@ -130,7 +157,9 @@ export const POST = async (request: any) => {
         }
       }
       // Always set top-level fields for batch (if any signals)
-      let signalId = null, fingerprint = null, severity = null;
+      let signalId = null,
+        fingerprint = null,
+        severity = null;
       if (signals.length > 0) {
         signalId = signals[0].signalId;
         fingerprint = signals[0].fingerprint;
@@ -139,25 +168,31 @@ export const POST = async (request: any) => {
         signalId = errors[0].fingerprint;
         fingerprint = errors[0].fingerprint;
       }
-      return NextResponse.json({
-        success: signals.length > 0,
-        signalId,
-        fingerprint,
-        severity,
-        signals,
-        processed,
-        errors
-      }, { status: 200 });
+      return NextResponse.json(
+        {
+          success: signals.length > 0,
+          signalId,
+          fingerprint,
+          severity,
+          signals,
+          processed,
+          errors,
+        },
+        { status: 200 }
+      );
     } else {
       // Payload inválido para RSS
-      return NextResponse.json({
-        success: false,
-        signalId: null,
-        fingerprint: null,
-        signals: [],
-        processed: 0,
-        errors: ['Invalid RSS payload']
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          success: false,
+          signalId: null,
+          fingerprint: null,
+          signals: [],
+          processed: 0,
+          errors: ['Invalid RSS payload'],
+        },
+        { status: 400 }
+      );
     }
   }
 
@@ -166,18 +201,26 @@ export const POST = async (request: any) => {
     let processed = 0;
     let signals: any[] = [];
     let errors: any[] = [];
-    const redis = await getSafeRedis();
     for (const entry of body) {
       try {
         const normalized = normalizeNews(entry);
         const item = NewsIngestSchema.parse(normalized);
         const hash = generateNewsHash(item);
         // Use DB for deduplication in batch
-        const exists = await prisma.newsData.findUnique({ where: { link: item.url } });
+        const exists = await prisma.newsData.findUnique({
+          where: { link: item.url },
+        });
         if (!exists) {
           const extra = classifySeverity(item);
-          const severity = extra.severity === 'high' ? 'critical' : extra.severity;
-          signals.push({ ...item, fingerprint: hash, signalId: hash, severity, success: true });
+          const severity =
+            extra.severity === 'high' ? 'critical' : extra.severity;
+          signals.push({
+            ...item,
+            fingerprint: hash,
+            signalId: hash,
+            severity,
+            success: true,
+          });
           processed++;
           await prisma.newsData.create({
             data: {
@@ -198,7 +241,9 @@ export const POST = async (request: any) => {
       }
     }
     // Always set top-level fields for batch (if any signals)
-    let signalId = null, fingerprint = null, severity = null;
+    let signalId = null,
+      fingerprint = null,
+      severity = null;
     if (signals.length > 0) {
       signalId = signals[0].signalId;
       fingerprint = signals[0].fingerprint;
@@ -207,15 +252,18 @@ export const POST = async (request: any) => {
       signalId = errors[0].fingerprint;
       fingerprint = errors[0].fingerprint;
     }
-    return NextResponse.json({
-      success: signals.length > 0,
-      signalId,
-      fingerprint,
-      severity,
-      signals,
-      processed,
-      errors
-    }, { status: 200 });
+    return NextResponse.json(
+      {
+        success: signals.length > 0,
+        signalId,
+        fingerprint,
+        severity,
+        signals,
+        processed,
+        errors,
+      },
+      { status: 200 }
+    );
   }
 
   // Single item
@@ -224,13 +272,32 @@ export const POST = async (request: any) => {
     const normalized = normalizeNews(body);
     item = NewsIngestSchema.parse(normalized);
   } catch (e: any) {
-    return NextResponse.json({ success: false, error: 'validation error', details: e.errors || e, signalId: null, fingerprint: null }, { status: 400 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'validation error',
+        details: e.errors || e,
+        signalId: null,
+        fingerprint: null,
+      },
+      { status: 400 }
+    );
   }
   const hash = generateNewsHash(item);
   // Check for duplicate in DB
-  const exists = await prisma.newsData.findUnique({ where: { link: item.url } });
+  const exists = await prisma.newsData.findUnique({
+    where: { link: item.url },
+  });
   if (exists) {
-    return NextResponse.json({ success: false, error: 'already exists', fingerprint: hash, signalId: hash }, { status: 409 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'already exists',
+        fingerprint: hash,
+        signalId: hash,
+      },
+      { status: 409 }
+    );
   }
   const extra = classifySeverity(item);
   const severity = extra.severity === 'high' ? 'critical' : extra.severity;
@@ -246,5 +313,8 @@ export const POST = async (request: any) => {
     },
   });
   // Always include signalId/fingerprint/severity at top level for single
-  return NextResponse.json({ success: true, signalId: hash, fingerprint: hash, severity, ...item }, { status: 201 });
-}
+  return NextResponse.json(
+    { success: true, signalId: hash, fingerprint: hash, severity, ...item },
+    { status: 201 }
+  );
+};

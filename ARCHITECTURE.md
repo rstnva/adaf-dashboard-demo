@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD025 -->
+
 # Avances recientes (Octubre 2025)
 
 ---
@@ -30,10 +32,12 @@
 **ADAF Dashboard** es un sistema completo de inteligencia financiera que combina análisis de mercados DeFi, gestión de riesgos, y trading algorítmico. El proyecto implementa una arquitectura dual con dos aplicaciones principales corriendo en paralelo.
 
 ### 🎯 **Componentes Principales**
+
 - **ADAF Dashboard Pro** (Puerto 3000) - Dashboard financiero unificado
 - **LAV-ADAF Sistema** (Puerto 3005) - Sistema de 30+ agentes cuantitativos
 
 ### 📊 **Estado Actual del Sistema (Oct 2025)**
+
 - ✅ **NAVEGACIÓN 100% FUNCIONAL**: Todos los enlaces y botones navegan correctamente
 - ✅ **ZERO 404 ERRORS**: Problema de rutas completamente solucionado
 - ✅ **Route Groups Optimizados**: `(dashboard)` correctamente implementado según Next.js
@@ -91,6 +95,7 @@
 ## 🚀 Stack Tecnológico
 
 ### **Frontend & Core**
+
 - **Next.js 15.5.4** - Framework React con App Router
 - **React 19.1.1** - Biblioteca de interfaz de usuario
 - **TypeScript 5.9.2** - Tipado estático
@@ -99,6 +104,7 @@
 - **Zustand 4.5.7** - Gestión de estado global
 
 ### **Backend & APIs**
+
 - **Node.js 20+** - Runtime de JavaScript
 - **Prisma 5.22.0** - ORM y gestión de base de datos
 - **PostgreSQL 15** - Base de datos principal
@@ -106,6 +112,7 @@
 - **IORedis 5.4.1** - Cliente Redis para Node.js
 
 ### **Testing & Quality**
+
 - **Vitest 2.1.8** - Framework de testing
 - **Playwright 1.56.0** - Testing E2E
 - **Testing Library** - Utilities de testing React
@@ -113,6 +120,7 @@
 - **Husky** - Git hooks
 
 ### **DevOps & Deployment**
+
 - **Docker & Docker Compose** - Containerización
 - **Nginx** - Reverse proxy y load balancer
 - **PM2** - Process manager para Node.js
@@ -363,22 +371,24 @@ Metric {
 ```typescript
 // Roles y permisos
 interface UserRole {
-  id: string
-  name: string
-  permissions: Permission[]
+  id: string;
+  name: string;
+  permissions: Permission[];
 }
 
 interface Permission {
-  resource: string    // 'dashboard', 'agents', 'trading'
-  action: string     // 'read', 'write', 'execute'
-  conditions?: Json  // Condiciones adicionales
+  resource: string; // 'dashboard', 'agents', 'trading'
+  action: string; // 'read', 'write', 'execute'
+  conditions?: Json; // Condiciones adicionales
 }
 
 // Implementación en el código
 const RBACProvider = ({ permissions, children }) => {
   // Gestión de permisos basada en contexto
-}
+};
 ```
+
+- **Testing & overrides**: `setMockRbacContext` y `resetMockRbacContext` permiten simular roles/permissions en desarrollo y pruebas (`tests/auth.rbac.test.ts`).
 
 ---
 
@@ -397,29 +407,29 @@ services:
       POSTGRES_DB: adaf_dashboard
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    
+
   # Cache Redis
   redis:
     image: redis:7-alpine
     command: redis-server --appendonly yes
-    
+
   # Aplicación ADAF
   adaf-app:
     build:
       context: .
       dockerfile: Dockerfile.prod
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       - postgres-primary
       - redis
-    
+
   # Reverse Proxy
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
 ```
@@ -462,6 +472,14 @@ export const healthCheck = async () => {
    - Alert frequency
    - User engagement
 
+### **SLO Scorecard Fortune 500 (2025-10-14)**
+
+- **Dashboard Grafana**: `monitoring/grafana/dashboards/adaf-core-slo.json` consolida disponibilidad ≥99.5%, latencia p95 ≤250 ms, consumo de error budget ≤20 %, y freshness de TVL ≤3 min.
+- **Runbook**: `motor-del-dash/documentacion/SLO_RUNBOOK.md` define objetivos, alertas y playbooks de respuesta institucional.
+- **Métricas base**: `/api/metrics` ahora expone `adaf_api_errors_total` y `adaf_api_request_duration_seconds_bucket`, alimentadas vía `incApiRequest()`.
+- **Alertas sugeridas**: Disponibilidad <99.5 % (30d), latencia p95 ≥250 ms (15 min), error budget 24h >20 %, freshness TVL ≥5 min.
+- **Demo UI**: `LintStatusCard` en el dashboard principal refleja el estado de linting con datos mock para recorridos comerciales.
+
 ### **Health Monitoring**
 
 ```typescript
@@ -471,14 +489,19 @@ const HealthMonitor = () => {
     database: 'unknown',
     redis: 'unknown',
     agents: 'unknown',
-    apis: 'unknown'
-  })
-  
+    apis: 'unknown',
+  });
+
   useEffect(() => {
     // Verificación periódica de salud del sistema
-  }, [])
-}
+  }, []);
+};
 ```
+
+### **Health Automation**
+
+- `scripts/health-check.mjs` acepta `--mode`, `--port`, `--force-real` y `--timeout` para validar servicios ADAF y LAV (deep/shallow).
+- `inicio-servidor.sh` ejecuta health checks superficiales y profundos antes de concluir el arranque; fallos abortan con limpieza asistida.
 
 ---
 
@@ -525,12 +548,12 @@ export default defineConfig({
           branches: 80,
           functions: 80,
           lines: 80,
-          statements: 80
-        }
-      }
-    }
-  }
-})
+          statements: 80,
+        },
+      },
+    },
+  },
+});
 ```
 
 ---
@@ -571,7 +594,7 @@ jobs:
       - run: pnpm install
       - run: pnpm test
       - run: pnpm test:e2e
-      
+
   deploy:
     needs: test
     if: github.ref == 'refs/heads/main'

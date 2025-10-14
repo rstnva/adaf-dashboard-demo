@@ -1,5 +1,5 @@
-"use client";
-import { useEffect, useState } from "react";
+'use client';
+import { useEffect, useState } from 'react';
 
 type AlertRow = {
   id: number;
@@ -15,21 +15,25 @@ export default function AlertsLiveList() {
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
-    let es: EventSource | null = null
+    let es: EventSource | null = null;
     try {
-      es = new EventSource("/api/stream/alerts");
-      es.onmessage = (ev) => {
+      es = new EventSource('/api/stream/alerts');
+      es.onmessage = ev => {
         try {
           const j = JSON.parse(ev.data) as AlertRow;
-          setItems((old) => [j, ...old].slice(0, 50));
-        } catch {}
+          setItems(old => [j, ...old].slice(0, 50));
+        } catch (error) {
+          console.warn('Failed to parse alert stream payload', error);
+        }
       };
-      es.onerror = () => setErr("stream error");
+      es.onerror = () => setErr('stream error');
     } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e)
-      setErr(msg || "init error");
+      const msg = e instanceof Error ? e.message : String(e);
+      setErr(msg || 'init error');
     }
-    return () => { es?.close() }
+    return () => {
+      es?.close();
+    };
   }, []);
 
   return (
@@ -40,7 +44,7 @@ export default function AlertsLiveList() {
         <div className="text-sm opacity-70">Esperando nuevas alertas…</div>
       ) : (
         <ul className="space-y-2">
-          {items.map((a) => (
+          {items.map(a => (
             <li key={a.id} className="text-sm">
               <div className="font-medium">
                 {a.title || a.description}

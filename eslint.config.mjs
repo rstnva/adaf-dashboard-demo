@@ -19,6 +19,7 @@ export default [
       "tests/**",
       "scripts/**",
       "performance/**",
+      "ADAF-DASHBOARD-v1.1/**",
     ],
   },
   js.configs.recommended,

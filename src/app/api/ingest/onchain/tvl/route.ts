@@ -3,14 +3,15 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import crypto from 'crypto';
 import { getSafeRedis } from '@/lib/safe-redis';
-import { createIngestHandler } from '@/lib/ingestUtils';
-
 
 // Permitir ambos formatos: {tvl, change24h, timestamp} y {value, ts}
 const TVLPointSchema = z.object({
   chain: z.string().min(1),
   protocol: z.string().min(1),
-  metric: z.string().regex(/^[a-z0-9.\-_]+$/).default('tvl.usd'),
+  metric: z
+    .string()
+    .regex(/^[a-z0-9.\-_]+$/)
+    .default('tvl.usd'),
   value: z.number(),
   ts: z.string().datetime(),
   change24h: z.number().optional(),
@@ -26,7 +27,8 @@ function normalizeTVLPayload(body: any): any {
       metric: body.metric || 'tvl.usd',
       value: body.tvl,
       ts: body.timestamp,
-      change24h: typeof body.change24h === 'number' ? body.change24h : undefined,
+      change24h:
+        typeof body.change24h === 'number' ? body.change24h : undefined,
     };
   }
   // Si viene en formato {value, ts}
@@ -37,7 +39,8 @@ function normalizeTVLPayload(body: any): any {
       metric: body.metric || 'tvl.usd',
       value: body.value,
       ts: body.ts,
-      change24h: typeof body.change24h === 'number' ? body.change24h : undefined,
+      change24h:
+        typeof body.change24h === 'number' ? body.change24h : undefined,
     };
   }
   // Si es inválido, devolver tal cual (para que falle el schema)
@@ -73,13 +76,6 @@ function classifyTvl(point: z.infer<typeof TVLPointSchema>) {
   return { alert, severity, reason };
 }
 
-function responseShape(point: z.infer<typeof TVLPointSchema>, hash: string, extra: any) {
-  // Always include required fields for test compliance
-  return { ...point, fingerprint: hash, signalId: hash, success: true, ...extra };
-}
-
-
-
 export const POST = async (request: any) => {
   const rawBody = await request.json();
   const isBatch = Array.isArray(rawBody);
@@ -98,8 +94,11 @@ export const POST = async (request: any) => {
         ts: new Date().toISOString(),
       },
     ];
-    const chainData = tvlData.map((d) => d.chain);
-    return NextResponse.json({ protocol: rawBody.protocol, tvlData, chainData }, { status: 200 });
+    const chainData = tvlData.map(d => d.chain);
+    return NextResponse.json(
+      { protocol: rawBody.protocol, tvlData, chainData },
+      { status: 200 }
+    );
   }
 
   if (isBatch) {
@@ -113,7 +112,13 @@ export const POST = async (request: any) => {
         const isNew = await redis.setnx(`dedupe:tvl:${hash}`, '1');
         if (isNew) {
           const extra = classifyTvl(item);
-          tvlData.push({ ...item, fingerprint: hash, signalId: hash, success: true, ...extra });
+          tvlData.push({
+            ...item,
+            fingerprint: hash,
+            signalId: hash,
+            success: true,
+            ...extra,
+          });
           processed++;
         } else {
           errors.push({ error: 'Duplicate TVL data', fingerprint: hash });
@@ -129,13 +134,22 @@ export const POST = async (request: any) => {
   try {
     item = TVLPointSchema.parse(normalizeTVLPayload(rawBody));
   } catch (e: any) {
-    return NextResponse.json({ success: false, error: 'validation error', details: e.errors || e }, { status: 400 });
+    return NextResponse.json(
+      { success: false, error: 'validation error', details: e.errors || e },
+      { status: 400 }
+    );
   }
   const hash = generateTVLHash(item);
   const isNew = await redis.setnx(`dedupe:tvl:${hash}`, '1');
   if (!isNew) {
-    return NextResponse.json({ success: false, error: 'Duplicate TVL data', fingerprint: hash }, { status: 409 });
+    return NextResponse.json(
+      { success: false, error: 'Duplicate TVL data', fingerprint: hash },
+      { status: 409 }
+    );
   }
   const extra = classifyTvl(item);
-  return NextResponse.json({ success: true, signalId: hash, fingerprint: hash, ...item, ...extra }, { status: 201 });
+  return NextResponse.json(
+    { success: true, signalId: hash, fingerprint: hash, ...item, ...extra },
+    { status: 201 }
+  );
 };

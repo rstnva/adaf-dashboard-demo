@@ -3,25 +3,37 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { TrendingUp, TrendingDown, DollarSign, Activity, Bot, Target, BarChart3, Zap } from 'lucide-react';
+import {
+  TrendingUp,
+  DollarSign,
+  Activity,
+  Bot,
+  Target,
+  BarChart3,
+  Zap,
+} from 'lucide-react';
 import Link from 'next/link';
 
 // Componente simplificado de KPIs que funciona sin dependencias externas
-export function SimpleKpiStrip({ navUsd, navTs, alertsCount }: { 
-  navUsd: number; 
-  navTs: string | null; 
+export function SimpleKpiStrip({
+  navUsd,
+  navTs,
+  alertsCount,
+}: {
+  navUsd: number;
+  navTs: string | null;
   alertsCount: number;
 }) {
   // Mock data para demostración
   const kpiData = {
     nav: navUsd,
-    pnlDaily: 2847.50,
+    pnlDaily: 2847.5,
     pnlWeekly: 12340.25,
     sharpe: 1.82,
     maxDrawdown: -4.2,
     winRate: 78.5,
     tradesTotal: 156,
-    activeBots: 5
+    activeBots: 5,
   };
 
   return (
@@ -45,7 +57,9 @@ export function SimpleKpiStrip({ navUsd, navTs, alertsCount }: {
               <DollarSign className="h-5 w-5 text-blue-600" />
             </div>
             <div className="text-2xl font-bold text-blue-800">
-              {Intl.NumberFormat('en-US', { notation: 'compact' }).format(kpiData.nav)}
+              {Intl.NumberFormat('en-US', { notation: 'compact' }).format(
+                kpiData.nav
+              )}
             </div>
             <div className="text-sm text-blue-600 font-medium">NAV (USD)</div>
             <div className="text-xs text-muted-foreground mt-1">
@@ -75,7 +89,9 @@ export function SimpleKpiStrip({ navUsd, navTs, alertsCount }: {
             <div className="text-2xl font-bold text-emerald-800">
               +${kpiData.pnlWeekly.toLocaleString()}
             </div>
-            <div className="text-sm text-emerald-600 font-medium">P&L Semanal</div>
+            <div className="text-sm text-emerald-600 font-medium">
+              P&L Semanal
+            </div>
             <div className="text-xs text-muted-foreground mt-1">
               +{((kpiData.pnlWeekly / kpiData.nav) * 100).toFixed(2)}%
             </div>
@@ -89,10 +105,10 @@ export function SimpleKpiStrip({ navUsd, navTs, alertsCount }: {
             <div className="text-2xl font-bold text-purple-800">
               {kpiData.sharpe}
             </div>
-            <div className="text-sm text-purple-600 font-medium">Sharpe Ratio</div>
-            <div className="text-xs text-muted-foreground mt-1">
-              Excelente
+            <div className="text-sm text-purple-600 font-medium">
+              Sharpe Ratio
             </div>
+            <div className="text-xs text-muted-foreground mt-1">Excelente</div>
           </div>
 
           {/* Bots Activos */}
@@ -103,10 +119,10 @@ export function SimpleKpiStrip({ navUsd, navTs, alertsCount }: {
             <div className="text-2xl font-bold text-indigo-800">
               {kpiData.activeBots}/8
             </div>
-            <div className="text-sm text-indigo-600 font-medium">Bots Activos</div>
-            <div className="text-xs text-muted-foreground mt-1">
-              Ejecutando
+            <div className="text-sm text-indigo-600 font-medium">
+              Bots Activos
             </div>
+            <div className="text-xs text-muted-foreground mt-1">Ejecutando</div>
           </div>
 
           {/* Alertas */}
@@ -117,7 +133,9 @@ export function SimpleKpiStrip({ navUsd, navTs, alertsCount }: {
             <div className="text-2xl font-bold text-orange-800">
               {alertsCount}
             </div>
-            <div className="text-sm text-orange-600 font-medium">Alertas (7d)</div>
+            <div className="text-sm text-orange-600 font-medium">
+              Alertas (7d)
+            </div>
             <div className="text-xs text-muted-foreground mt-1">
               Monitoreando
             </div>
@@ -129,15 +147,23 @@ export function SimpleKpiStrip({ navUsd, navTs, alertsCount }: {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-6">
               <div className="text-center">
-                <div className="text-lg font-bold text-green-600">{kpiData.winRate}%</div>
+                <div className="text-lg font-bold text-green-600">
+                  {kpiData.winRate}%
+                </div>
                 <div className="text-xs text-muted-foreground">Win Rate</div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-blue-600">{kpiData.tradesTotal}</div>
-                <div className="text-xs text-muted-foreground">Trades (30d)</div>
+                <div className="text-lg font-bold text-blue-600">
+                  {kpiData.tradesTotal}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  Trades (30d)
+                </div>
               </div>
               <div className="text-center">
-                <div className="text-lg font-bold text-red-600">{kpiData.maxDrawdown}%</div>
+                <div className="text-lg font-bold text-red-600">
+                  {kpiData.maxDrawdown}%
+                </div>
                 <div className="text-xs text-muted-foreground">Max DD</div>
               </div>
             </div>

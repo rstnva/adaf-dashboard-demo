@@ -16,6 +16,7 @@
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "lint:report": "node scripts/generate-lint-report.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
@@ -34,7 +35,8 @@
     "worker:start": "node -r esbuild-register src/lib/agents/worker.ts",
     "redis:start": "redis-server",
     "redis:cli": "redis-cli",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "precommit": "pnpm typecheck && pnpm test --run"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

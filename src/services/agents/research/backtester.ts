@@ -5,11 +5,17 @@
 // position management, and performance calculation into a complete backtesting pipeline
 // ================================================================================================
 
-import { BacktestConfig, BacktestResults, BacktestKpis, EquityPoint, MonthlyPnL, Benchmark } from '@/types/research';
+import {
+  BacktestConfig,
+  BacktestResults,
+  BacktestKpis,
+  EquityPoint,
+  MonthlyPnL,
+} from '@/types/research';
 import { DSLParser, ParsedRule } from './dsl';
 import { MetricsCalculator, TradeExecution, DataQualityUtils } from './metrics';
 import { BenchmarkService, BenchmarkData } from './benchmarks';
-import { PnLSimulator, TradingCosts, PositionSizing, DailyPnL } from './pnl';
+import { PnLSimulator, TradingCosts, PositionSizing } from './pnl';
 
 /**
  * Signal data structure for daily aggregation
@@ -51,7 +57,10 @@ export class BacktestEngine {
       console.log(`📋 Parsed ${parsedRules.length} rules`);
 
       // Generate time grid
-      const timeGrid = this.generateTimeGrid(config.window.from, config.window.to);
+      const timeGrid = this.generateTimeGrid(
+        config.window.from,
+        config.window.to
+      );
       console.log(`📅 Generated ${timeGrid.length} day time grid`);
 
       // Load signal data
@@ -69,11 +78,11 @@ export class BacktestEngine {
       // Initialize simulator
       const costs: TradingCosts = {
         feesBps: config.feesBps || 5,
-        slippageBps: config.slippageBps || 3
+        slippageBps: config.slippageBps || 3,
       };
 
       const sizing: PositionSizing = {
-        notionalPctNAV: config.sizing.notionalPctNAV
+        notionalPctNAV: config.sizing.notionalPctNAV,
       };
 
       const simulator = new PnLSimulator(1.0, costs, sizing);
@@ -84,17 +93,16 @@ export class BacktestEngine {
         signalData,
         benchmarkData,
         parsedRules,
-        simulator
+        simulator,
       };
 
       // Execute backtest simulation
       const results = await this.executeBacktest(context);
-      
+
       const duration = Date.now() - startTime;
       console.log(`✅ Backtest completed in ${duration}ms`);
 
       return results;
-
     } catch (error) {
       const duration = Date.now() - startTime;
       console.error(`❌ Backtest failed after ${duration}ms:`, error);
@@ -137,7 +145,9 @@ export class BacktestEngine {
   /**
    * Parse and validate rules
    */
-  private static parseRules(rules: { expr: string; weight?: number; description?: string }[]): ParsedRule[] {
+  private static parseRules(
+    rules: { expr: string; weight?: number; description?: string }[]
+  ): ParsedRule[] {
     const parsedRules: ParsedRule[] = [];
 
     for (const rule of rules) {
@@ -145,7 +155,9 @@ export class BacktestEngine {
         const parsed = DSLParser.parseRule(rule.expr, rule.weight || 1);
         parsedRules.push(parsed);
       } catch (error) {
-        throw new Error(`Failed to parse rule "${rule.expr}": ${error instanceof Error ? error.message : 'Unknown error'}`);
+        throw new Error(
+          `Failed to parse rule "${rule.expr}": ${error instanceof Error ? error.message : 'Unknown error'}`
+        );
       }
     }
 
@@ -159,7 +171,7 @@ export class BacktestEngine {
     const dates: string[] = [];
     const start = new Date(fromDate);
     const end = new Date(toDate);
-    
+
     let current = new Date(start);
     current.setUTCHours(0, 0, 0, 0); // Normalize to UTC midnight
 
@@ -175,14 +187,17 @@ export class BacktestEngine {
   /**
    * Load and aggregate signal data by day
    */
-  private static async loadSignalData(agents: string[], timeGrid: string[]): Promise<DailySignalData[]> {
+  private static async loadSignalData(
+    agents: string[],
+    timeGrid: string[]
+  ): Promise<DailySignalData[]> {
     const signalData: DailySignalData[] = [];
 
     for (const date of timeGrid) {
       const dayData: DailySignalData = {
         date,
         agentData: {},
-        aggregatedScore: 0
+        aggregatedScore: 0,
       };
 
       // Load signals for each agent for this day
@@ -200,24 +215,32 @@ export class BacktestEngine {
   /**
    * Load signals for a specific agent and day
    */
-  private static async loadAgentSignalsForDay(agentCode: string, date: string): Promise<Record<string, any>> {
+  private static async loadAgentSignalsForDay(
+    agentCode: string,
+    date: string
+  ): Promise<Record<string, any>> {
     // TODO: Replace with actual database query
     // SELECT type, metadata, ts
-    // FROM signals 
-    // WHERE agent_code = $1 
+    // FROM signals
+    // WHERE agent_code = $1
     //   AND DATE(ts) = $2
     // ORDER BY ts DESC
 
     // Mock implementation - in production, query the signals table
-    console.warn(`⚠️ Using mock signal data for ${agentCode} on ${date} - implement database query`);
-    
+    console.warn(
+      `⚠️ Using mock signal data for ${agentCode} on ${date} - implement database query`
+    );
+
     return this.generateMockSignalData(agentCode, date);
   }
 
   /**
    * Generate mock signal data for development
    */
-  private static generateMockSignalData(agentCode: string, date: string): Record<string, any> {
+  private static generateMockSignalData(
+    agentCode: string,
+    _date: string
+  ): Record<string, any> {
     const mockData: Record<string, any> = {};
 
     // Generate realistic signal data based on agent type
@@ -227,8 +250,8 @@ export class BacktestEngine {
           flow: {
             usd: (Math.random() - 0.5) * 200e6, // ±200M flow
             net: (Math.random() - 0.5) * 50e6,
-            '5min': (Math.random() - 0.5) * 10e6
-          }
+            '5min': (Math.random() - 0.5) * 10e6,
+          },
         };
         break;
 
@@ -236,35 +259,35 @@ export class BacktestEngine {
         mockData.tvl = {
           total: 50e9 + Math.random() * 10e9,
           change7d: (Math.random() - 0.5) * 0.2, // ±20% weekly change
-          change1d: (Math.random() - 0.5) * 0.05  // ±5% daily change
+          change1d: (Math.random() - 0.5) * 0.05, // ±5% daily change
         };
         mockData.onchain = {
           active_addresses: 800000 + Math.random() * 200000,
           tx_count: 250000 + Math.random() * 50000,
-          fees_usd: 5e6 + Math.random() * 2e6
+          fees_usd: 5e6 + Math.random() * 2e6,
         };
         break;
 
       case 'DV-1': // Derivatives agent
         mockData.funding = {
           rate: (Math.random() - 0.5) * 0.001, // ±0.1% funding
-          oi: 2e9 + Math.random() * 5e8        // Open interest
+          oi: 2e9 + Math.random() * 5e8, // Open interest
         };
         mockData.gamma = {
-          exposure: (Math.random() - 0.5) * 100e6
+          exposure: (Math.random() - 0.5) * 100e6,
         };
         break;
 
-      case 'NM-1': // News/Market agent  
+      case 'NM-1': // News/Market agent
         mockData.news = {
-          sentiment_score: Math.random() * 2 - 1 // -1 to 1
+          sentiment_score: Math.random() * 2 - 1, // -1 to 1
         };
         mockData.social = {
-          sentiment_score: Math.random() * 2 - 1
+          sentiment_score: Math.random() * 2 - 1,
         };
         mockData.price = {
           close: 45000 + Math.random() * 10000,
-          rsi_14: 30 + Math.random() * 40 // 30-70 RSI range
+          rsi_14: 30 + Math.random() * 40, // 30-70 RSI range
         };
         break;
 
@@ -272,14 +295,14 @@ export class BacktestEngine {
         // Generic agent data
         mockData.generic = {
           signal_strength: Math.random(),
-          confidence: 0.5 + Math.random() * 0.5
+          confidence: 0.5 + Math.random() * 0.5,
         };
     }
 
     // Add some common market data
     mockData.volatility = {
       '1h': 0.01 + Math.random() * 0.03,
-      '24h': 0.02 + Math.random() * 0.04
+      '24h': 0.02 + Math.random() * 0.04,
     };
 
     return mockData;
@@ -288,16 +311,19 @@ export class BacktestEngine {
   /**
    * Execute the main backtest simulation
    */
-  private static async executeBacktest(context: BacktestContext): Promise<BacktestResults> {
-    const { config, signalData, benchmarkData, parsedRules, simulator } = context;
-    
+  private static async executeBacktest(
+    context: BacktestContext
+  ): Promise<BacktestResults> {
+    const { config, signalData, benchmarkData, parsedRules, simulator } =
+      context;
+
     const equityPoints: EquityPoint[] = [];
     const allTrades: TradeExecution[] = [];
     const warnings: string[] = [];
 
     // Align signal and benchmark data
     const alignedData = this.alignData(signalData, benchmarkData);
-    
+
     if (alignedData.length === 0) {
       throw new Error('No aligned data points found for backtest period');
     }
@@ -307,15 +333,17 @@ export class BacktestEngine {
     // Process each day
     for (let i = 0; i < alignedData.length; i++) {
       const { signalDay, benchmarkDay, underlyingReturn } = alignedData[i];
-      
+
       // Evaluate rules and calculate signal score
       const signalScore = this.evaluateRules(parsedRules, signalDay.agentData);
-      
+
       // Apply position smoothing if configured
       let targetScore = signalScore;
       if (config.rebalanceDays && config.rebalanceDays > 1) {
         // Simple smoothing - in production could use more sophisticated methods
-        targetScore = signalScore * 0.7 + (simulator.getCurrentState().position > 0 ? 0.5 : 0) * 0.3;
+        targetScore =
+          signalScore * 0.7 +
+          (simulator.getCurrentState().position > 0 ? 0.5 : 0) * 0.3;
       }
 
       // Simulate day's trading and PnL
@@ -332,52 +360,75 @@ export class BacktestEngine {
         ts: `${signalDay.date}T00:00:00Z`,
         nav: 1.0, // Base NAV
         strat: dayResult.nav,
-        bench: dayResult.benchmark
+        bench: dayResult.benchmark,
       });
 
       // Collect trades
       allTrades.push(...dayResult.trades);
 
       if (i % 50 === 0) {
-        console.log(`📈 Processed ${i + 1}/${alignedData.length} days, NAV: ${dayResult.nav.toFixed(4)}`);
+        console.log(
+          `📈 Processed ${i + 1}/${alignedData.length} days, NAV: ${dayResult.nav.toFixed(4)}`
+        );
       }
     }
 
     // Calculate performance metrics
     const benchmarkReturns = alignedData.map(d => d.benchmarkDay.return);
-    const kpis = MetricsCalculator.calculateKpis(equityPoints, allTrades, benchmarkReturns);
-    
+    const kpis: BacktestKpis = MetricsCalculator.calculateKpis(
+      equityPoints,
+      allTrades,
+      benchmarkReturns
+    );
+
     // Generate monthly PnL breakdown
-    const monthlyPnL = MetricsCalculator.calculateMonthlyPnL(equityPoints);
-    
+    const monthlyPnL: MonthlyPnL[] =
+      MetricsCalculator.calculateMonthlyPnL(equityPoints);
+
     // Data quality validation
-    const expectedDays = Math.ceil((new Date(config.window.to).getTime() - new Date(config.window.from).getTime()) / (24 * 60 * 60 * 1000));
-    const dataWarnings = DataQualityUtils.validateDataQuality(equityPoints, expectedDays);
+    const expectedDays = Math.ceil(
+      (new Date(config.window.to).getTime() -
+        new Date(config.window.from).getTime()) /
+        (24 * 60 * 60 * 1000)
+    );
+    const dataWarnings = DataQualityUtils.validateDataQuality(
+      equityPoints,
+      expectedDays
+    );
     warnings.push(...dataWarnings);
 
     // Add configuration warnings
     if (kpis.trades < 10) {
-      warnings.push(`Low trade count: ${kpis.trades} (consider longer period or looser rules)`);
+      warnings.push(
+        `Low trade count: ${kpis.trades} (consider longer period or looser rules)`
+      );
     }
 
     if (Math.abs(kpis.maxDDPct) > 0.5) {
-      warnings.push(`High maximum drawdown: ${(kpis.maxDDPct * 100).toFixed(1)}% (consider risk management)`);
+      warnings.push(
+        `High maximum drawdown: ${(kpis.maxDDPct * 100).toFixed(1)}% (consider risk management)`
+      );
     }
 
-    console.log(`📊 Final metrics - PnL: ${(kpis.pnlPct * 100).toFixed(2)}%, Sharpe: ${kpis.sharpe.toFixed(2)}, MaxDD: ${(kpis.maxDDPct * 100).toFixed(2)}%`);
+    console.log(
+      `📊 Final metrics - PnL: ${(kpis.pnlPct * 100).toFixed(2)}%, Sharpe: ${kpis.sharpe.toFixed(2)}, MaxDD: ${(kpis.maxDDPct * 100).toFixed(2)}%`
+    );
 
     return {
       kpis,
       equity: equityPoints,
       monthlyPnL,
-      notes: warnings
+      notes: warnings,
     };
   }
 
   /**
    * Align signal data with benchmark data by date
    */
-  private static alignData(signalData: DailySignalData[], benchmarkData: BenchmarkData[]): Array<{
+  private static alignData(
+    signalData: DailySignalData[],
+    benchmarkData: BenchmarkData[]
+  ): Array<{
     signalDay: DailySignalData;
     benchmarkDay: BenchmarkData;
     underlyingReturn: number;
@@ -389,14 +440,14 @@ export class BacktestEngine {
     }> = [];
 
     const benchmarkMap = new Map(benchmarkData.map(d => [d.date, d]));
-    
+
     for (const signalDay of signalData) {
       const benchmarkDay = benchmarkMap.get(signalDay.date);
       if (benchmarkDay) {
         aligned.push({
           signalDay,
           benchmarkDay,
-          underlyingReturn: benchmarkDay.return
+          underlyingReturn: benchmarkDay.return,
         });
       }
     }
@@ -407,17 +458,20 @@ export class BacktestEngine {
   /**
    * Evaluate all rules against agent data and calculate weighted score
    */
-  private static evaluateRules(rules: ParsedRule[], agentData: Record<string, Record<string, any>>): number {
+  private static evaluateRules(
+    rules: ParsedRule[],
+    agentData: Record<string, Record<string, any>>
+  ): number {
     let weightedScore = 0;
     let totalWeight = 0;
 
     for (const rule of rules) {
       // Flatten agent data for rule evaluation
       const flattenedData = this.flattenAgentData(agentData);
-      
+
       // Evaluate rule
       const ruleResult = DSLParser.evalRule(rule, flattenedData);
-      
+
       // Add to weighted score
       if (ruleResult) {
         weightedScore += rule.weight;
@@ -432,10 +486,12 @@ export class BacktestEngine {
   /**
    * Flatten nested agent data for rule evaluation
    */
-  private static flattenAgentData(agentData: Record<string, Record<string, any>>): Record<string, any> {
+  private static flattenAgentData(
+    agentData: Record<string, Record<string, any>>
+  ): Record<string, any> {
     const flattened: Record<string, any> = {};
 
-    for (const [agentCode, data] of Object.entries(agentData)) {
+    for (const [_agentCode, data] of Object.entries(agentData)) {
       this.flattenObject(data, '', flattened);
     }
 
@@ -445,10 +501,14 @@ export class BacktestEngine {
   /**
    * Recursively flatten nested objects
    */
-  private static flattenObject(obj: any, prefix: string, result: Record<string, any>): void {
+  private static flattenObject(
+    obj: any,
+    prefix: string,
+    result: Record<string, any>
+  ): void {
     for (const [key, value] of Object.entries(obj)) {
       const newKey = prefix ? `${prefix}.${key}` : key;
-      
+
       if (value && typeof value === 'object' && !Array.isArray(value)) {
         this.flattenObject(value, newKey, result);
       } else {
@@ -465,11 +525,15 @@ export class BacktestEngine {
 
     // Sanity checks
     if (Math.abs(kpis.pnlPct) > 10) {
-      console.warn(`⚠️ Extremely high return: ${(kpis.pnlPct * 100).toFixed(1)}%`);
+      console.warn(
+        `⚠️ Extremely high return: ${(kpis.pnlPct * 100).toFixed(1)}%`
+      );
     }
 
     if (Math.abs(kpis.maxDDPct) > 0.9) {
-      console.warn(`⚠️ Extremely high drawdown: ${(kpis.maxDDPct * 100).toFixed(1)}%`);
+      console.warn(
+        `⚠️ Extremely high drawdown: ${(kpis.maxDDPct * 100).toFixed(1)}%`
+      );
     }
 
     if (Math.abs(kpis.sharpe) > 10) {

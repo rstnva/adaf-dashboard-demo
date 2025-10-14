@@ -4,8 +4,19 @@
 
 ### Resumen para humanos y agentes
 
+> **Bitácora Git (Octubre 2025)**
+>
+> - `main` (repo raíz) quedó en `871772ed857c87fab3794ba8a6d34b914680a54b` con todos los cambios locales y el puntero actualizado del dashboard LAV-ADAF.
+> - Dentro de `lav-adaf/apps/dashboard` se generó el commit `312c077a0a0686549a51ab96ad54a40704b6c54b`, pero el push fue rechazado porque el token actual no tiene scope `workflow`.
+> - Para publicar ese commit:
+>   1. Ejecuta `gh auth refresh -h github.com -s workflow` (o usa credenciales/SSH con dicho scope).
+>   2. Entra a `lav-adaf/apps/dashboard/` y corre `git pull --rebase` para traer los 12 commits remotos y resolver conflictos si aparecen.
+>   3. Haz `git push origin main` cuando todo esté limpio.
+> - Hasta entonces, cualquier clon deberá correr `git submodule update --init lav-adaf/apps/dashboard` una vez que `312c077` esté publicado.
+> - `git status` está limpio en el repo raíz después del push; solo falta publicar el submódulo.
 
 > Si retomas este proyecto, revisa también `ARCHITECTURE.md` y `MEMORIA_GITHUB_COPILOT.md` para contexto técnico y decisiones clave.
+
 # 🚀 ADAF Dashboard Pro - Sistema Integrado de Inteligencia Financiera
 
 ## ⚡ **INICIO INMEDIATO**
@@ -19,7 +30,11 @@ cd adaf-dashboard-pro
 ./inicio-completo.sh
 ```
 
-**¡YA FUNCIONA!** → http://localhost:3000 🚀
+> **Accesos directos**
+>
+> - **ADAF Dashboard** → http://localhost:3000
+> - **LAV-ADAF Dashboard** → http://localhost:3005
+> - **API Healthcheck** → http://localhost:3000/api/health
 
 ---
 
@@ -27,13 +42,14 @@ cd adaf-dashboard-pro
 
 ### 📚 **Todo lo que necesitas está organizado aquí:**
 
-| 📁 **Carpeta** | 📋 **Contenido** | 🎯 **Para qué es** |
-|---------------|------------------|-------------------|
+| 📁 **Carpeta**                                             | 📋 **Contenido**                   | 🎯 **Para qué es**                      |
+| ---------------------------------------------------------- | ---------------------------------- | --------------------------------------- |
 | 🚀 **[`documentacion/`](./motor-del-dash/documentacion/)** | README completo, guías paso a paso | **Usar el sistema, resolver problemas** |
-| 🏗️ **[`arquitectura/`](./motor-del-dash/arquitectura/)** | Documentación técnica detallada | **Desarrollar, extender, integrar** |
-| 🧠 **[`memoria/`](./motor-del-dash/memoria/)** | Historial de decisiones técnicas | **Entender el por qué de cada cambio** |
+| 🏗️ **[`arquitectura/`](./motor-del-dash/arquitectura/)**   | Documentación técnica detallada    | **Desarrollar, extender, integrar**     |
+| 🧠 **[`memoria/`](./motor-del-dash/memoria/)**             | Historial de decisiones técnicas   | **Entender el por qué de cada cambio**  |
 
 ### 🎯 **Accesos Rápidos:**
+
 - 📚 **[Contexto Unificado](./motor-del-dash/documentacion/CONTEXTO_UNIFICADO.md)** ← Documentación extendida + memorias
 - 📖 **[Guía Completa de Uso](./motor-del-dash/documentacion/README-COMPLETO.md)** ← **¡Empieza aquí!**
 - 🏗️ **[Documentación Técnica](./motor-del-dash/arquitectura/ARCHITECTURE.md)** ← Para desarrolladores
@@ -45,7 +61,7 @@ cd adaf-dashboard-pro
 
 - ✅ **Navegación completa**: Sin errores 404
 - ✅ **850+ tests pasando**: Sistema robusto
-- ✅ **Dual dashboard**: ADAF (3000) + LAV-ADAF (3005) 
+- ✅ **Dual dashboard**: ADAF (3000) + LAV-ADAF (3005)
 - ✅ **Build exitoso**: Zero errores
 - ✅ **Documentación organizada**: Todo en `motor-del-dash/`
 
@@ -54,9 +70,11 @@ cd adaf-dashboard-pro
 ## 🚨 **¿PROBLEMA? → SOLUCIÓN INMEDIATA**
 
 ### 1️⃣ **Leer la guía completa:**
+
 👉 **[motor-del-dash/documentacion/README-COMPLETO.md](./motor-del-dash/documentacion/README-COMPLETO.md)**
 
 ### 2️⃣ **Reset de emergencia:**
+
 ```bash
 # Limpiar todo y empezar de cero
 lsof -t -i:3000,3005 | xargs kill -9
@@ -65,6 +83,7 @@ pnpm install && ./inicio-completo.sh
 ```
 
 ### 3️⃣ **Verificar funcionamiento:**
+
 ```bash
 curl http://localhost:3000/api/health  # ✅ Debe responder OK
 curl http://localhost:3005/            # ✅ Debe responder OK
@@ -75,6 +94,7 @@ curl http://localhost:3005/            # ✅ Debe responder OK
 ## 💡 **¿QUÉ ES ADAF Dashboard Pro?**
 
 **Sistema Fortune 500** de inteligencia financiera:
+
 - 📊 **Dashboard web profesional** (Next.js 15, React 19)
 - 🤖 **30+ agentes cuantitativos** de trading
 - 🎓 **Academy interactiva** con lecciones
@@ -86,11 +106,13 @@ curl http://localhost:3005/            # ✅ Debe responder OK
 ## 🎯 **PRÓXIMOS PASOS**
 
 ### 🚀 **Para usar el sistema:**
+
 1. **Lee**: [`motor-del-dash/documentacion/README-COMPLETO.md`](./motor-del-dash/documentacion/README-COMPLETO.md)
 2. **Ejecuta**: `./inicio-completo.sh`
-3. **Accede**: http://localhost:3000
+3. **Accede** → http://localhost:3000
 
 ### 👨‍💻 **Para desarrollar:**
+
 1. **Estudia**: [`motor-del-dash/arquitectura/ARCHITECTURE.md`](./motor-del-dash/arquitectura/ARCHITECTURE.md)
 2. **Revisa**: [`motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md`](./motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md)
 3. **Desarrolla**: `pnpm dev`
@@ -113,14 +135,15 @@ Puedes levantar todo el entorno de desarrollo (Postgres, Redis, ADAF Dashboard, 
 docker compose -f docker-compose.dev.yml up --build
 ```
 
-- ADAF Dashboard: http://localhost:3000
-- LAV-ADAF Dashboard: http://localhost:3005
-- Base de datos Postgres: localhost:5432 (usuario: adaf_user, pass: adaf_pass)
-- Redis: localhost:6379
+- **ADAF Dashboard** → http://localhost:3000
+- **LAV-ADAF Dashboard** → http://localhost:3005
+- **Base de datos Postgres** → localhost:5432 (usuario: `adaf_user`, pass: `adaf_pass`)
+- **Redis** → localhost:6379
 
 > El código fuente se monta en caliente (hot reload) para desarrollo. Puedes modificar archivos y ver los cambios en tiempo real.
 
 Para detener todo:
+
 ```bash
 docker compose -f docker-compose.dev.yml down
 ```

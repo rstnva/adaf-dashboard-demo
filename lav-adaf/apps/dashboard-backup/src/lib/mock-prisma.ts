@@ -1,3 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // Mock Prisma client for build compatibility
 
 // Fortune 500-grade: Robust Prisma mock for ESM/CJS compatibility
@@ -10,8 +19,8 @@ export interface MockPrismaModel {
   update: (args?: any) => Promise<any>;
   delete: (args?: any) => Promise<any>;
   count: (args?: any) => Promise<number>;
+  deleteMany?: (args?: any) => Promise<any>;
 }
-
 
 const makeMockModel = () => ({
   findMany: async () => [],
@@ -22,17 +31,92 @@ const makeMockModel = () => ({
   count: async () => 0,
 });
 
-// In-memory array for signals
+// In-memory arrays for signals and news data
 const _signals: any[] = [];
+const _newsData: any[] = [];
+let newsCounter = 0;
+
+const newsDataModel: MockPrismaModel = {
+  findMany: async (args?: any) => {
+    if (!args?.where) {
+      return [..._newsData];
+    }
+    return _newsData.filter(entry =>
+      Object.entries(args.where).every(([key, value]) => entry[key] === value)
+    );
+  },
+  findUnique: async (args?: any) => {
+    if (!args?.where) {
+      return null;
+    }
+    return (
+      _newsData.find(entry =>
+        Object.entries(args.where).every(([key, value]) => entry[key] === value)
+      ) ?? null
+    );
+  },
+  create: async (args: any) => {
+    const entry = {
+      id: `news-${++newsCounter}`,
+      ...args?.data,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    _newsData.push(entry);
+    return entry;
+  },
+  update: async (args: any) => {
+    if (!args?.where) {
+      return null;
+    }
+    const index = _newsData.findIndex(entry =>
+      Object.entries(args.where).every(([key, value]) => entry[key] === value)
+    );
+    if (index === -1) {
+      return null;
+    }
+    _newsData[index] = {
+      ..._newsData[index],
+      ...args.data,
+      updatedAt: new Date().toISOString(),
+    };
+    return _newsData[index];
+  },
+  delete: async (args: any) => {
+    if (!args?.where) {
+      return null;
+    }
+    const index = _newsData.findIndex(entry =>
+      Object.entries(args.where).every(([key, value]) => entry[key] === value)
+    );
+    if (index === -1) {
+      return null;
+    }
+    const [removed] = _newsData.splice(index, 1);
+    return removed;
+  },
+  count: async () => _newsData.length,
+  deleteMany: async () => {
+    const count = _newsData.length;
+    _newsData.length = 0;
+    return { count };
+  },
+};
 const signalModel: MockPrismaModel = {
   findMany: async (args?: any) => {
     if (!args || !args.where) return [..._signals];
     // Simple where filter (equality only)
-    return _signals.filter(sig => Object.entries(args.where).every(([k, v]) => sig[k] === v));
+    return _signals.filter(sig =>
+      Object.entries(args.where).every(([k, v]) => sig[k] === v)
+    );
   },
   findUnique: async (args?: any) => {
     if (!args || !args.where) return null;
-    return _signals.find(sig => Object.entries(args.where).every(([k, v]) => sig[k] === v)) || null;
+    return (
+      _signals.find(sig =>
+        Object.entries(args.where).every(([k, v]) => sig[k] === v)
+      ) || null
+    );
   },
   create: async (args: any) => {
     const obj = { id: 'mock-' + (_signals.length + 1), ...args?.data };
@@ -41,14 +125,18 @@ const signalModel: MockPrismaModel = {
   },
   update: async (args: any) => {
     if (!args?.where) return null;
-    const idx = _signals.findIndex(sig => Object.entries(args.where).every(([k, v]) => sig[k] === v));
+    const idx = _signals.findIndex(sig =>
+      Object.entries(args.where).every(([k, v]) => sig[k] === v)
+    );
     if (idx === -1) return null;
     _signals[idx] = { ..._signals[idx], ...args.data };
     return _signals[idx];
   },
   delete: async (args: any) => {
     if (!args?.where) return null;
-    const idx = _signals.findIndex(sig => Object.entries(args.where).every(([k, v]) => sig[k] === v));
+    const idx = _signals.findIndex(sig =>
+      Object.entries(args.where).every(([k, v]) => sig[k] === v)
+    );
     if (idx === -1) return null;
     const [removed] = _signals.splice(idx, 1);
     return removed;
@@ -68,6 +156,7 @@ export class PrismaClient {
   score: MockPrismaModel;
   funding: MockPrismaModel;
   signal: MockPrismaModel;
+  newsData: MockPrismaModel;
 
   constructor() {
     this.alert = makeMockModel();
@@ -81,13 +170,14 @@ export class PrismaClient {
     this.score = makeMockModel();
     this.funding = makeMockModel();
     this.signal = signalModel;
+    this.newsData = newsDataModel;
     console.log('Mock Prisma Client initialized');
   }
 
   $disconnect = async () => {};
   $connect = async () => {};
-  $queryRawUnsafe = async (...args: any[]) => [];
-  $queryRaw = async (...args: any[]) => [];
+  $queryRawUnsafe = async (..._args: any[]) => [];
+  $queryRaw = async (..._args: any[]) => [];
 }
 
 export const Prisma = {

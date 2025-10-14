@@ -11,35 +11,35 @@
 
 export interface LineageEvent {
   id: number;
-  
+
   // Entity Classification
   entity: 'signal' | 'metric' | 'report';
-  refId: string;                    // Logical ID across entity lifecycle
-  
+  refId: string; // Logical ID across entity lifecycle
+
   // Processing Stage
   stage: 'ingest' | 'transform' | 'aggregate' | 'export';
-  
+
   // Temporal Information
-  ts: string;                       // ISO timestamp
-  createdAt: string;                // ISO timestamp
-  
+  ts: string; // ISO timestamp
+  createdAt: string; // ISO timestamp
+
   // Source & Process
-  source: string;                   // Provider/process identifier
-  
+  source: string; // Provider/process identifier
+
   // Data Payload (sanitized)
-  inputs: Record<string, unknown>;  // Input parameters/data
+  inputs: Record<string, unknown>; // Input parameters/data
   outputs: Record<string, unknown>; // Processed output
-  
+
   // Integrity & Security
-  hash: string;                     // SHA256 of logical content
-  notes?: string;                   // Processing notes (max 500 chars)
+  hash: string; // SHA256 of logical content
+  notes?: string; // Processing notes (max 500 chars)
 }
 
 export interface LineageTrace {
   refId: string;
   entity: 'signal' | 'metric' | 'report';
   events: LineageEvent[];
-  
+
   // Computed Properties
   eventCount: number;
   firstEventAt: string;
@@ -63,11 +63,11 @@ export interface IngestInputs {
 }
 
 export interface IngestOutputs {
-  type: string;                     // Signal type: 'tvl', 'price', 'yield', etc.
-  chain?: string;                   // Blockchain identifier
-  value: number | string;           // Raw value
-  timestamp: string;                // Data timestamp
-  currency?: string;                // Value currency
+  type: string; // Signal type: 'tvl', 'price', 'yield', etc.
+  chain?: string; // Blockchain identifier
+  value: number | string; // Raw value
+  timestamp: string; // Data timestamp
+  currency?: string; // Value currency
   metadata?: Record<string, unknown>;
 }
 
@@ -81,18 +81,18 @@ export interface TransformInputs {
 
 export interface TransformOutputs {
   normalizedValue: unknown;
-  confidenceScore?: number;         // 0.0 - 1.0
+  confidenceScore?: number; // 0.0 - 1.0
   validationResults?: string[];
-  canonicalSchema: string;          // Schema version
+  canonicalSchema: string; // Schema version
   transformationApplied?: string[];
 }
 
 // Aggregate Stage
 export interface AggregateInputs {
-  metricKeys?: string[];            // Input metric identifiers
-  window: string;                   // Time window: 'daily', 'monthly', 'quarterly'
-  period: string;                   // Specific period: '2025Q3', '2025-09'
-  aggregationMethod?: string;       // 'sum', 'average', 'weighted', etc.
+  metricKeys?: string[]; // Input metric identifiers
+  window: string; // Time window: 'daily', 'monthly', 'quarterly'
+  period: string; // Specific period: '2025Q3', '2025-09'
+  aggregationMethod?: string; // 'sum', 'average', 'weighted', etc.
   filters?: Record<string, unknown>;
 }
 
@@ -108,7 +108,7 @@ export interface AggregateOutputs {
     in: number;
     out: number;
   };
-  
+
   // PoR
   totalAssetsUsd?: number;
   chains?: Array<{
@@ -117,7 +117,7 @@ export interface AggregateOutputs {
     addrCount: number;
     custodian?: string;
   }>;
-  
+
   // Metadata
   calculationMethod?: string;
   dataQualityScore?: number;
@@ -126,13 +126,13 @@ export interface AggregateOutputs {
 
 // Export Stage
 export interface ExportInputs {
-  kpisHash?: string;                // Hash of KPIs used
-  porHash?: string;                 // Hash of PoR data used
-  summaryHash?: string;             // Hash of summary data
-  template: string;                 // Template identifier
-  actor: string;                    // User/system generating export
-  period?: string;                  // Report period
-  recipients?: string[];            // Delivery targets (sanitized)
+  kpisHash?: string; // Hash of KPIs used
+  porHash?: string; // Hash of PoR data used
+  summaryHash?: string; // Hash of summary data
+  template: string; // Template identifier
+  actor: string; // User/system generating export
+  period?: string; // Report period
+  recipients?: string[]; // Delivery targets (sanitized)
 }
 
 export interface ExportOutputs {
@@ -164,18 +164,18 @@ export interface LineageTraceQuery {
 }
 
 export interface LineageBySignalQuery {
-  id: string;                       // Signal ID
-  includeDownstream?: boolean;      // Include metrics/reports derived from this signal
+  id: string; // Signal ID
+  includeDownstream?: boolean; // Include metrics/reports derived from this signal
 }
 
 export interface LineageSearchQuery {
-  q: string;                        // Search term for provider/hash/source
+  q: string; // Search term for provider/hash/source
   entity?: 'signal' | 'metric' | 'report';
   stage?: 'ingest' | 'transform' | 'aggregate' | 'export';
-  source?: string;                  // Filter by source
-  dateFrom?: string;                // ISO date
-  dateTo?: string;                  // ISO date
-  limit?: number;                   // Default 100
+  source?: string; // Filter by source
+  dateFrom?: string; // ISO date
+  dateTo?: string; // ISO date
+  limit?: number; // Default 100
   offset?: number;
 }
 
@@ -228,8 +228,8 @@ export interface LineageTimelineItemProps {
   event: LineageEvent;
   isFirst?: boolean;
   isLast?: boolean;
-  onCopyHash?: (hash: string) => void;
-  onCopyEvent?: (event: LineageEvent) => void;
+  onCopyHash?: (_hash: string) => void;
+  onCopyEvent?: (_event: LineageEvent) => void;
 }
 
 export interface LineageStageChipProps {
@@ -255,8 +255,8 @@ export interface LineageMetrics {
 export interface LineageHealth {
   status: 'healthy' | 'warning' | 'critical';
   recentEvents: number;
-  integrityScore: number;           // Percentage of events with valid hashes
-  missingStages: string[];          // Stages with no recent events
+  integrityScore: number; // Percentage of events with valid hashes
+  missingStages: string[]; // Stages with no recent events
   issues: string[];
   recommendations: string[];
 }
@@ -266,25 +266,47 @@ export interface LineageHealth {
 // =============================================================================
 
 export class LineageError extends Error {
+  public code:
+    | 'INVALID_ENTITY'
+    | 'MISSING_STAGE'
+    | 'HASH_MISMATCH'
+    | 'SERIALIZATION_ERROR'
+    | 'DATABASE_ERROR';
+  public context?: Record<string, unknown>;
+
   constructor(
     message: string,
-    public code: 'INVALID_ENTITY' | 'MISSING_STAGE' | 'HASH_MISMATCH' | 'SERIALIZATION_ERROR' | 'DATABASE_ERROR',
-    public context?: Record<string, unknown>
+    code:
+      | 'INVALID_ENTITY'
+      | 'MISSING_STAGE'
+      | 'HASH_MISMATCH'
+      | 'SERIALIZATION_ERROR'
+      | 'DATABASE_ERROR',
+    context?: Record<string, unknown>
   ) {
     super(message);
     this.name = 'LineageError';
+    this.code = code;
+    this.context = context;
   }
 }
 
 export class LineageValidationError extends Error {
+  public field: string;
+  public value: unknown;
+  public constraints: string[];
+
   constructor(
     message: string,
-    public field: string,
-    public value: unknown,
-    public constraints: string[]
+    field: string,
+    value: unknown,
+    constraints: string[]
   ) {
     super(message);
     this.name = 'LineageValidationError';
+    this.field = field;
+    this.value = value;
+    this.constraints = constraints;
   }
 }
 
@@ -294,54 +316,71 @@ export class LineageValidationError extends Error {
 
 export interface LineageConfig {
   enabled: boolean;
-  maxInputSizeKb: number;           // Limit input/output size
+  maxInputSizeKb: number; // Limit input/output size
   maxOutputSizeKb: number;
-  retentionDays: number;            // Auto-cleanup old events
-  sanitizeInputs: boolean;          // Remove sensitive data
+  retentionDays: number; // Auto-cleanup old events
+  sanitizeInputs: boolean; // Remove sensitive data
   sanitizeOutputs: boolean;
   hashAlgorithm: 'sha256' | 'sha512';
-  compressionEnabled: boolean;      // Compress large payloads
+  compressionEnabled: boolean; // Compress large payloads
 }
 
 // =============================================================================
 // Function Type Definitions
 // =============================================================================
 
-export type LineageHashFunction = (context: LineageHashContext) => string;
-export type LineageSanitizer = (data: Record<string, unknown>) => Record<string, unknown>;
-export type LineageValidator = (event: Partial<LineageEvent>) => boolean;
+export type LineageHashFunction = (_context: LineageHashContext) => string;
+export type LineageSanitizer = (
+  _data: Record<string, unknown>
+) => Record<string, unknown>;
+export type LineageValidator = (_event: Partial<LineageEvent>) => boolean;
 
 // =============================================================================
 // Constants and Enums
 // =============================================================================
 
 export const LINEAGE_ENTITIES = ['signal', 'metric', 'report'] as const;
-export const LINEAGE_STAGES = ['ingest', 'transform', 'aggregate', 'export'] as const;
+export const LINEAGE_STAGES = [
+  'ingest',
+  'transform',
+  'aggregate',
+  'export',
+] as const;
 
 export const LINEAGE_STAGE_COLORS = {
-  ingest: '#3B82F6',      // Blue
-  transform: '#8B5CF6',   // Purple
-  aggregate: '#F59E0B',   // Orange
-  export: '#10B981'       // Green
+  ingest: '#3B82F6', // Blue
+  transform: '#8B5CF6', // Purple
+  aggregate: '#F59E0B', // Orange
+  export: '#10B981', // Green
 } as const;
 
 export const LINEAGE_STAGE_DESCRIPTIONS = {
   ingest: 'Raw data collection from external sources',
   transform: 'Data normalization and validation',
-  aggregate: 'Metric calculation and KPI aggregation', 
-  export: 'Report generation and delivery'
+  aggregate: 'Metric calculation and KPI aggregation',
+  export: 'Report generation and delivery',
 } as const;
 
 // =============================================================================
 // Type Guards and Validators
 // =============================================================================
 
-export function isValidLineageEntity(entity: unknown): entity is 'signal' | 'metric' | 'report' {
-  return typeof entity === 'string' && ['signal', 'metric', 'report'].includes(entity);
+export function isValidLineageEntity(
+  entity: unknown
+): entity is 'signal' | 'metric' | 'report' {
+  return (
+    typeof entity === 'string' &&
+    ['signal', 'metric', 'report'].includes(entity)
+  );
 }
 
-export function isValidLineageStage(stage: unknown): stage is 'ingest' | 'transform' | 'aggregate' | 'export' {
-  return typeof stage === 'string' && ['ingest', 'transform', 'aggregate', 'export'].includes(stage);
+export function isValidLineageStage(
+  stage: unknown
+): stage is 'ingest' | 'transform' | 'aggregate' | 'export' {
+  return (
+    typeof stage === 'string' &&
+    ['ingest', 'transform', 'aggregate', 'export'].includes(stage)
+  );
 }
 
 export function isValidSHA256Hash(hash: unknown): hash is string {
@@ -352,12 +391,12 @@ export function isValidSHA256Hash(hash: unknown): hash is string {
 // Utility Types for Strict JSON Handling
 // =============================================================================
 
-export type SerializableValue = 
-  | string 
-  | number 
-  | boolean 
-  | null 
-  | SerializableArray 
+export type SerializableValue =
+  | string
+  | number
+  | boolean
+  | null
+  | SerializableArray
   | SerializableObject;
 
 export interface SerializableArray extends Array<SerializableValue> {}

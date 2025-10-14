@@ -168,6 +168,55 @@
   @apply text-xs text-slate-300/70 font-mono;
 }
 
+.vision-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(250, 204, 21, 0.14), transparent 55%),
+    radial-gradient(circle at 85% 12%, rgba(56, 189, 248, 0.18), transparent 58%),
+    radial-gradient(circle at 50% 110%, rgba(244, 114, 182, 0.16), transparent 60%);
+  opacity: 0.85;
+  filter: saturate(110%);
+}
+
+.vision-ambient::after {
+  content: "";
+  position: absolute;
+  inset: 18% 12%;
+  border-radius: 46px;
+  background:
+    radial-gradient(circle at top left, rgba(250, 204, 21, 0.22), transparent 70%),
+    radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.18), transparent 65%);
+  filter: blur(120px);
+  opacity: 0.45;
+}
+
+.vision-page {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 80rem;
+  padding: 4.5rem 1.75rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+  color: hsl(var(--foreground));
+}
+
+.vision-page::before {
+  content: "";
+  position: absolute;
+  inset: -3rem -2rem -2.5rem;
+  border-radius: 48px;
+  background: radial-gradient(circle at top, rgba(255, 241, 173, 0.08), transparent 65%);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: -1;
+}
+
 @media (max-width: 768px) {
   .adaf-grid {
     @apply grid-cols-1 gap-4;
@@ -180,5 +229,10 @@
   .adaf-card-header,
   .adaf-card-content {
     @apply p-4;
+  }
+
+  .vision-page {
+    padding: 3.25rem 1rem 3.5rem;
+    gap: 2rem;
   }
 }

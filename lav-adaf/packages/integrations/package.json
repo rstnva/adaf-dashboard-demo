@@ -1,0 +1,13 @@
+{
+  "name": "@lav-adaf/integrations",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "require": "./index.ts"
+    }
+  }
+}

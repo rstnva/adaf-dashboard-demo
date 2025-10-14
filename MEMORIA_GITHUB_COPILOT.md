@@ -1,4 +1,3 @@
-
 # 🚀 Directiva Fortune 500: Valores y Principios Rectores
 
 **Todos los agentes (AI y humanos) deben operar bajo los máximos estándares Fortune 500, priorizando:**
@@ -17,8 +16,8 @@ Blindar la plataforma en seguridad, automatización y resiliencia institucional,
 
 **Checklist operativo:**
 
-
 1. Seguridad y acceso
+
 - [ ] Revisar y documentar políticas de acceso, roles y manejo de secretos en `.env` y sistemas externos.
 - [ ] Validar segregación de claves y rotación periódica.
 - [ ] Revisar safeRedis y fallback en todos los entornos (dev, CI, prod).
@@ -26,25 +25,31 @@ Blindar la plataforma en seguridad, automatización y resiliencia institucional,
 - [ ] Simular incidente de seguridad y validar plan de respuesta.
 
 2. CI/CD y automatización
+
 - [ ] Integrar validaciones automáticas de lint, typecheck, test y build en cada PR (GitHub Actions).
 - [ ] Añadir escaneo de vulnerabilidades y dependabot.
 - [ ] Automatizar despliegues con rollback seguro y monitoreo post-deploy.
 - [ ] Documentar pipeline y criterios de aceptación para releases.
 
 3. Observabilidad y monitoreo
+
 - [ ] Validar logs críticos y trazabilidad de eventos en producción.
 - [ ] Integrar alertas básicas (health, errores, caídas de servicio).
 
 4. Documentación y cultura
+
 - [ ] Actualizar README y compendio maestro con políticas y flujos de seguridad/CI.
 - [ ] Crear checklist de onboarding para nuevos devs y auditores.
 
 **Criterios de éxito:**
+
 - Todos los puntos del checklist validados y documentados.
 - Build y CI sin errores ni advertencias críticas.
 - Seguridad y acceso auditados, con respuesta a incidentes probada.
 - Documentación y onboarding listos para revisión externa.
+
 ## MEMORIA GITHUB COPILOT — ADAF Dashboard Pro
+
 # Memoria de avances — GitHub Copilot
 
 ## Octubre 2025
@@ -54,42 +59,51 @@ Blindar la plataforma en seguridad, automatización y resiliencia institucional,
 - **Eliminación de archivos obsoletos:** Eliminados tests CJS y duplicados.
 - **Suite verde:** Todos los tests de infraestructura, ingestión y normalización pasan; solo queda un test de performance pendiente de ajuste de umbral.
 - **Patrón de mocks:** Uso de vi.mock y spies, restaurando mocks tras cada test para aislamiento total.
+
 ## POLÍTICAS DE ACCESO, SECRETOS Y ROLES (FORTUNE 500)
 
 ### 1. Principios generales
+
 - Todos los secretos y credenciales deben almacenarse únicamente en archivos `.env` fuera del control de versiones (`.gitignore`).
 - El acceso a los archivos `.env` y sistemas externos (DB, Redis, APIs, NextAuth, JWT, webhooks) está restringido a roles autorizados (devops, lead dev, auditoría).
 - Ningún secreto real debe compartirse por canales inseguros (correo, chat, tickets). Usar vaults o canales cifrados.
 
 ### 2. Manejo de secretos
+
 - Rotar claves y secretos críticos cada 90 días o tras cualquier incidente.
 - Usar valores únicos y robustos en producción (no usar valores de ejemplo ni por defecto).
 - Documentar el proceso de provisión y rotación de secretos en el onboarding y runbook.
 - Validar que los archivos `.env.example` y `.env` no contengan valores productivos ni credenciales reales.
 
 ### 3. Roles y segregación
+
 - Definir roles: `admin` (full), `devops` (infra/CI), `dev` (acceso limitado), `auditor` (solo lectura/config).
 - Solo `admin` y `devops` pueden modificar secretos y credenciales en producción.
 - Mantener registro de cambios y accesos a secretos (bitácora o sistema de auditoría).
 
 **4. Acceso a sistemas externos**
+
 - Limitar el acceso a bases de datos, Redis y APIs externas por IP, usuario y entorno.
 - Usar variables de entorno distintas para cada entorno (`.env.local`, `.env.production`, `.env.staging`).
 - Validar que los webhooks y endpoints de monitoreo estén protegidos y no expongan información sensible.
 
 **5. Respuesta a incidentes**
+
 - Ante cualquier sospecha de filtración, rotar inmediatamente todos los secretos afectados y auditar accesos.
 - Documentar el incidente y las acciones tomadas en la bitácora institucional.
 
 **6. Auditoría y mejora continua**
+
 - Revisar estas políticas cada trimestre y tras cada auditoría o incidente.
 - Mantener checklist de cumplimiento y actualizar onboarding para nuevos integrantes.
+
 ## NAVEGACIÓN Y RUTEO COMPLETAMENTE SOLUCIONADO (2025-10-09)
 
 **Problema identificado y resuelto:**
 El dashboard presentaba errores 404 persistentes al hacer clic en "Abrir Dashboard principal" y enlaces del sidebar. La causa era un malentendido sobre cómo funcionan los Route Groups de Next.js.
 
 **Root Cause Analysis:**
+
 - **❌ Error conceptual**: Se asumía que `src/app/(dashboard)/markets/` generaba la URL `/dashboard/markets`
 - **✅ Realidad Next.js**: Los route groups `(dashboard)` NO afectan la URL pública
 - **✅ Comportamiento real**: `src/app/(dashboard)/markets/` → URL: `/markets`
@@ -97,12 +111,14 @@ El dashboard presentaba errores 404 persistentes al hacer clic en "Abrir Dashboa
 - **✅ Fix aplicado**: Links corregidos a `/markets`, `/academy`, etc.
 
 **Solución implementada:**
+
 1. **NavLeft.tsx**: Corregidas todas las rutas del sidebar de `/dashboard/[section]` a `/[section]`
 2. **page.tsx**: Botón "Abrir Dashboard" corregido de `/dashboard/markets` a `/markets`
 3. **dashboard/page.tsx**: Redirect `/dashboard` → `/dashboard/markets` (para URLs manuales)
 4. **Verificación completa**: Todas las rutas probadas (HTTP 200) ✅
 
 **Estado post-fix:**
+
 - ✅ **Navegación 100% funcional**: Todos los botones y enlaces navegan correctamente
 - ✅ **Zero 404 errors**: Problema completamente eliminado
 - ✅ **URLs visibles**: `/markets`, `/academy`, `/research`, etc. funcionan perfectamente
@@ -114,6 +130,7 @@ El dashboard presentaba errores 404 persistentes al hacer clic en "Abrir Dashboa
 ADAF Dashboard Pro es un sistema institucional de inteligencia financiera, diseñado para operar con estándares Fortune 500: resiliencia, seguridad, trazabilidad, automatización y calidad de ingeniería de clase mundial. El proyecto integra ADAF y LAV en una sola plataforma Next.js, con arquitectura modular, cobertura de pruebas >95%, CI/CD robusto y documentación exhaustiva.
 
 **Avances y logros clave:**
+
 - **✅ NAVEGACIÓN COMPLETAMENTE FUNCIONAL**: Fix crítico de rutas y eliminación total de 404s
 - **✅ Route Groups Next.js correctamente implementados**: `(dashboard)` según estándares oficiales
 - Migración y endurecimiento global de ESLint (flat config, reglas estrictas, 0 errores, warnings solo informativos en legacy/aux).
@@ -127,6 +144,7 @@ ADAF Dashboard Pro es un sistema institucional de inteligencia financiera, dise�
 - Catálogo de agentes, vaults, políticas y métricas alineados al compendio estratégico-operativo.
 
 **Estado actual:**
+
 - **✅ NAVEGACIÓN AL 100%**: Sistema completamente navegable sin errores 404
 - 0 errores y 0 warnings en build y CI.
 - 850+ tests, cobertura >95% en módulos críticos.
@@ -138,16 +156,18 @@ Cada avance y decisión se valida contra criterios Fortune 500: resiliencia, seg
 
 Fecha: 2025-10-08  
 Versión del documento: 0.1 (inicial)  
-Responsable: Copilot (asistente técnico)  
+Responsable: Copilot (asistente técnico)
 
 ---
 
 ## 1) Propósito
+
 Este documento centraliza los avances, decisiones y próximos pasos del proyecto ADAF Dashboard Pro para mantener una trazabilidad clara, tipo "engineering log" con calidad institucional.
 
 ---
 
 ## 2) Resumen ejecutivo (sesión actual)
+
 - Lectura y alineación: README, ARQUITECTURA, cortes ejecutivos revisados.
 - Mapa técnico: inventariada estructura, módulos, dependencias y configuración (Next 15, React 19, TS 5.9, Tailwind, Zustand, TanStack Query, Prisma, Redis).
 - Entorno local: servidor dev en 3000 validado; health API 200; Home entrega HTML.
@@ -163,6 +183,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ---
 
 ## 3) Decisiones (razón y alcance)
+
 - Typecheck scope: limitar a ADAF (excluir LAV y backups) para aislar conflictos inter-app.
 - Lint en build: deshabilitado temporalmente para evitar fricción con `eslint-config-next` (migración a flat config planificada).
 - Redis en build/dev: formalizado `safeRedis()` + soporte de `MOCK_MODE` para eliminar EAI_AGAIN en build/CI y permitir fallback en memoria.
@@ -171,6 +192,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ---
 
 ## 4) Deltas técnicos (cambios efectivos)
+
 - Cache/Redis:
   - Nuevo `src/lib/safe-redis.ts`: wrapper seguro con fallback en memoria y guards (MOCK_MODE / Edge).
   - `src/lib/cache/redis-config.ts`: ahora usa `getSafeRedis`; pub/sub solo si está disponible.
@@ -210,6 +232,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ---
 
 ## 5) Riesgos y mitigaciones
+
 - Lint deshabilitado en build: migrar a ESLint flat y reactivar en CI.
 - Conexión Redis en build: introducir `safeRedis()` y guardas de ejecución (usar `MOCK_MODE=1`).
 - Alineación multi-app: evitar contaminar typecheck/bundles con `lav-adaf/**` y backups.
@@ -217,6 +240,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ---
 
 ## 6) Próximos pasos (corto plazo)
+
 1. Implementar `safeRedis()` y guardas de build para ioredis.
 2. Migrar ESLint a flat config con `eslint-plugin-next` y reactivar lint en CI.
 3. Pulir UI institucional en TopBar/NavLeft y cards clave con tokens; mejorar a11y.
@@ -227,81 +251,96 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ## 10) Plan de siguientes pasos — Calidad Fortune 500 (2025-10-08)
 
 **1. Auditoría y refuerzo de seguridad**
-  - Revisar y endurecer políticas de acceso, segregación de roles y manejo de secretos.
-  - Validar safeRedis, mock/fallback y guardrails en todos los entornos (dev, CI, prod).
-  - Ejecutar pruebas de penetración y análisis de dependencias (SCA/SAST).
+
+- Revisar y endurecer políticas de acceso, segregación de roles y manejo de secretos.
+- Validar safeRedis, mock/fallback y guardrails en todos los entornos (dev, CI, prod).
+- Ejecutar pruebas de penetración y análisis de dependencias (SCA/SAST).
 
 **2. Robustecer CI/CD y automatización**
-  - Integrar validaciones automáticas de lint, typecheck, test y build en cada PR.
-  - Añadir escaneo de vulnerabilidades y dependabot.
-  - Automatizar despliegues con rollback seguro y monitoreo de salud post-deploy.
+
+- Integrar validaciones automáticas de lint, typecheck, test y build en cada PR.
+- Añadir escaneo de vulnerabilidades y dependabot.
+- Automatizar despliegues con rollback seguro y monitoreo de salud post-deploy.
 
 **3. Cobertura de pruebas y calidad de código**
-  - Elevar cobertura a >98% en módulos críticos y legacy.
-  - Añadir tests de integración E2E para flujos clave y APIs.
-  - Revisar y documentar criterios de aceptación y convenciones de código.
+
+- Elevar cobertura a >98% en módulos críticos y legacy.
+- Añadir tests de integración E2E para flujos clave y APIs.
+- Revisar y documentar criterios de aceptación y convenciones de código.
 
 **4. UX/UI y accesibilidad Fortune 500**
-  - Validar a11y AA+ en todos los módulos y flujos.
-  - Realizar user testing institucional y ajustar patrones de interacción.
-  - Documentar y versionar tokens de diseño y componentes UI.
+
+- Validar a11y AA+ en todos los módulos y flujos.
+- Realizar user testing institucional y ajustar patrones de interacción.
+- Documentar y versionar tokens de diseño y componentes UI.
 
 **5. Observabilidad y monitoreo**
-  - Integrar dashboards de métricas (Prometheus/Grafana) y alertas proactivas.
-  - Añadir trazabilidad de logs, auditoría y replay de eventos críticos.
+
+- Integrar dashboards de métricas (Prometheus/Grafana) y alertas proactivas.
+- Añadir trazabilidad de logs, auditoría y replay de eventos críticos.
 
 **6. Documentación y onboarding**
-  - Mantener README, compendio maestro y runbooks actualizados tras cada hito.
-  - Crear guías de onboarding Fortune 500 para nuevos devs y auditores.
+
+- Mantener README, compendio maestro y runbooks actualizados tras cada hito.
+- Crear guías de onboarding Fortune 500 para nuevos devs y auditores.
 
 **7. Roadmap institucional y escalamiento**
-  - Definir hitos trimestrales y OKRs alineados a visión Fortune 500.
-  - Planificar integración de nuevos agentes, vaults y features estratégicos.
-  - Preparar el sistema para auditoría externa y certificación institucional.
+
+- Definir hitos trimestrales y OKRs alineados a visión Fortune 500.
+- Planificar integración de nuevos agentes, vaults y features estratégicos.
+- Preparar el sistema para auditoría externa y certificación institucional.
 
 **8. Cultura de mejora continua**
-  - Revisar y ajustar procesos tras cada release.
-  - Fomentar feedback institucional y sesiones de post-mortem/documentación.
+
+- Revisar y ajustar procesos tras cada release.
+- Fomentar feedback institucional y sesiones de post-mortem/documentación.
 
 ---
 
 ## 7) Bitácora de sesiones
 
- - 2025-10-08 (cierre de ciclo Fortune 500)
-   - Documentación, onboarding, roadmap institucional y política de mejora continua completados y enlazados.
-   - Todos los recursos clave (README, compendio, onboarding, roadmap, mejora continua, runbooks) auditados y accesibles.
-   - Cultura institucional y procesos alineados a estándares Fortune 500.
-   - Próximo: definir nuevo bloque estratégico o priorizar iniciativas de producto/dashboard.
+- 2025-10-14
+  - Tarjeta "ESLint Governance": se añadió tooltip institucional con narrativa Fortune 500 (mock data, ownership de warnings, alineación CI/CD) para reforzar gobernanza de calidad.
+  - PageGuide (guía rápida): animación tipo Apple con deslizamiento progresivo de secciones clave, respetando `prefers-reduced-motion` e incrementando engagement onboarding.
+  - UX demo: mantiene datos mock y deja listo el handoff para conectar pipeline real en próximos sprints.
 
- - 2025-10-08 (simulación de incidente)
-   - Simulación de filtración de secreto crítico (ejemplo: REDIS_URL).
-   - Acción inmediata: rotación del secreto en todos los entornos (.env, vault, CI/CD), invalidación de sesiones y actualización de variables en sistemas externos.
-   - Auditoría: revisión de logs de acceso, verificación de integridad y monitoreo de actividad anómala.
-   - Documentación: registro del incidente, acciones y responsables en la bitácora institucional.
-   - Validación: plan de respuesta ejecutado en <30 minutos, sin impacto en usuarios ni datos.
-   - Resultado: protocolo Fortune 500 validado, equipo preparado para incidentes reales.
-   - Próximo: revisión trimestral y simulacros periódicos.
-  
- - 2025-10-08 (noche)
-   - Endurecimiento global ESLint: reglas `no-unused-vars`, `no-empty`, `no-case-declarations`, `react-hooks/exhaustive-deps` ahora en error para todo `src/`.
-   - Carpetas críticas (`academy`, `dashboard`, `research`, `security`, `ui`) ya cumplían estándar estricto; resto del código sin errores, solo warnings menores.
-   - Lint global: 0 errores, 249 warnings (principalmente en áreas legacy o tipados auxiliares).
-   - Cualquier nuevo código o refactor queda alineado al estándar más alto; CI listo para bloquear errores reales.
-   - Próximo: documentar en README y mantener barrido de warnings en áreas legacy.
+- 2025-10-08 (cierre de ciclo Fortune 500)
+  - Documentación, onboarding, roadmap institucional y política de mejora continua completados y enlazados.
+  - Todos los recursos clave (README, compendio, onboarding, roadmap, mejora continua, runbooks) auditados y accesibles.
+  - Cultura institucional y procesos alineados a estándares Fortune 500.
+  - Próximo: definir nuevo bloque estratégico o priorizar iniciativas de producto/dashboard.
+
+- 2025-10-08 (simulación de incidente)
+  - Simulación de filtración de secreto crítico (ejemplo: REDIS_URL).
+  - Acción inmediata: rotación del secreto en todos los entornos (.env, vault, CI/CD), invalidación de sesiones y actualización de variables en sistemas externos.
+  - Auditoría: revisión de logs de acceso, verificación de integridad y monitoreo de actividad anómala.
+  - Documentación: registro del incidente, acciones y responsables en la bitácora institucional.
+  - Validación: plan de respuesta ejecutado en <30 minutos, sin impacto en usuarios ni datos.
+  - Resultado: protocolo Fortune 500 validado, equipo preparado para incidentes reales.
+  - Próximo: revisión trimestral y simulacros periódicos.
+
+- 2025-10-08 (noche)
+  - Endurecimiento global ESLint: reglas `no-unused-vars`, `no-empty`, `no-case-declarations`, `react-hooks/exhaustive-deps` ahora en error para todo `src/`.
+  - Carpetas críticas (`academy`, `dashboard`, `research`, `security`, `ui`) ya cumplían estándar estricto; resto del código sin errores, solo warnings menores.
+  - Lint global: 0 errores, 249 warnings (principalmente en áreas legacy o tipados auxiliares).
+  - Cualquier nuevo código o refactor queda alineado al estándar más alto; CI listo para bloquear errores reales.
+  - Próximo: documentar en README y mantener barrido de warnings en áreas legacy.
+
 - 2025-10-09 (madrugada)
   - Barrido completo de warnings en rutas API (`src/app/api/health`, `src/app/api/read`), componentes (`src/app/components/dashboard`, `layout`, `ui`), tipos y hooks (`src/app/types`, `src/app/hooks`, `lib`).
   - Todos los archivos críticos y legacy revisados: 0 errores y 0 warnings de lint en build.
   - Build de producción (`pnpm build`) exitoso, sin errores ni advertencias relevantes.
   - Estado final: ESLint estricto global, warnings solo informativos en código experimental (si los hubiera), CI listo para bloquear cualquier regresión.
   - Documentación y README actualizados para reflejar el nuevo estándar de calidad.
-  - 2025-10-08
+
+- 2025-10-08
   - Lectura de documentación clave y alineación de objetivos.
   - Arranque dev en 3000; health 200; Home entrega HTML.
   - Build PASS; typecheck PASS.
   - Fixes: `infra/seed.ts`, `tsconfig.json`, `PnlLine.tsx`, test `ts-nocheck`, `next.config.js` (lint off), `package.json` (eslint cli).
   - Definición de backlog institucional y medidas inmediatas.
 
-  - 2025-10-08 (tarde)
+- 2025-10-08 (tarde)
   - ESLint (flat) en baseline: añadido `eslint-plugin-react-hooks` y configuración pragmática (sin bloquear CI).
   - Eliminadas colisiones de tipos vs componentes (no-redeclare) en Academy (renombres: `QuizModel`, `ChecklistModel`, `LessonQuiz`, `LessonChecklist`, `BadgeModel`).
   - API on-chain TVL: limpieza de regex (quita escape innecesario del punto).
@@ -313,6 +352,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ---
 
 ## 8) Convenciones de actualización
+
 - Formato: mantener secciones y registrar deltas atómicos con fecha.
 - Alcance: sólo decisiones, cambios efectivos y riesgos/mitigaciones.
 - Frecuencia: al finalizar cada bloque de trabajo o hito.
@@ -330,8 +370,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ### Extender mapeo de rutas
 
 1. Edita `src/components/learn/PageGuide.tsx` (ADAF) o `lav-adaf/apps/dashboard/src/components/learn/PageGuide.tsx` (LAV).
-2. Agrega un elemento al arreglo `guides` con la forma:
-  - `{ prefix: string, guide: { title, what, objective, steps: string[], concepts: string[], success, cta?: { label, href } } }`.
+2. Agrega un elemento al arreglo `guides` con la forma `{ prefix: string, guide: { title, what, objective, steps: string[], concepts: string[], success, cta?: { label, href } } }`.
 3. Asegúrate de que `prefix` coincida con el inicio de la ruta (p. ej., `/monitoring`).
 4. Opcional: agrega `cta` para enlazar a Academy u otra vista relevante.
 5. Guarda y recarga; con la preferencia global ON, la guía aparece siempre.
@@ -344,6 +383,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ---
 
 ## 9) Referencias
+
 - `README.md`, `ONBOARDING_FORTUNE500.md`, `ROADMAP_OKRS_2025_2026.md`, `MEJORA_CONTINUA.md`, `ARCHITECTURE.md`, `corte de caja.md`, `corte-de-caja-ejecutivo.md`
 - Configuración: `next.config.js`, `tsconfig.json`, `eslint.config.mjs`, `package.json`
 - UI/Theme: `src/app/globals.css`, `src/theme/tokens.ts`

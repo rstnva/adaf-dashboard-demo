@@ -1,7 +1,8 @@
 // Dashboard Principal - Vista principal accesible desde el layout (dashboard)
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { LintStatusCard } from '@/components/dashboard/LintStatusCard';
 import {
   Activity,
   BarChart3,
@@ -11,9 +12,9 @@ import {
   Shield,
   ShieldCheck,
   SlidersHorizontal,
-  TrendingUp
-} from 'lucide-react'
-import Link from 'next/link'
+  TrendingUp,
+} from 'lucide-react';
+import Link from 'next/link';
 
 export default function DashboardMainPage() {
   return (
@@ -24,7 +25,9 @@ export default function DashboardMainPage() {
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             ADAF Dashboard Pro
           </h1>
-          <p className="text-gray-600 mt-2">Sistema integrado de análisis y monitoreo financiero</p>
+          <p className="text-gray-600 mt-2">
+            Sistema integrado de análisis y monitoreo financiero
+          </p>
         </div>
         <Badge variant="outline" className="text-green-600">
           <Activity className="w-4 h-4 mr-1" />
@@ -118,6 +121,8 @@ export default function DashboardMainPage() {
         </CardContent>
       </Card>
 
+      <LintStatusCard />
+
       {/* Options Panel */}
       <Card>
         <CardHeader>
@@ -125,7 +130,8 @@ export default function DashboardMainPage() {
             <div>
               <CardTitle>Opciones y Configuración</CardTitle>
               <p className="text-sm text-gray-500 mt-1">
-                Panel rápido para ajustar el comportamiento del dashboard al vuelo.
+                Panel rápido para ajustar el comportamiento del dashboard al
+                vuelo.
               </p>
             </div>
             <Badge variant="secondary" className="hidden md:inline-flex">
@@ -142,7 +148,9 @@ export default function DashboardMainPage() {
                   <SlidersHorizontal className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm">Preferencias del Dashboard</h3>
+                  <h3 className="font-semibold text-sm">
+                    Preferencias del Dashboard
+                  </h3>
                   <p className="text-xs text-gray-600">
                     Layout, densidad, idioma y permisos principales.
                   </p>
@@ -159,7 +167,9 @@ export default function DashboardMainPage() {
                   <BellRing className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm">Alertas &amp; Notificaciones</h3>
+                  <h3 className="font-semibold text-sm">
+                    Alertas &amp; Notificaciones
+                  </h3>
                   <p className="text-xs text-gray-600">
                     Ajusta sensibilidad, canales de entrega y escalaciones.
                   </p>
@@ -176,9 +186,12 @@ export default function DashboardMainPage() {
                   <RefreshCw className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm">Actualización de Datos</h3>
+                  <h3 className="font-semibold text-sm">
+                    Actualización de Datos
+                  </h3>
                   <p className="text-xs text-gray-600">
-                    Controla el auto-refresh, health checks y reinicios de agentes.
+                    Controla el auto-refresh, health checks y reinicios de
+                    agentes.
                   </p>
                 </div>
               </div>
@@ -193,9 +206,12 @@ export default function DashboardMainPage() {
                   <ShieldCheck className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm">Credenciales &amp; Integraciones</h3>
+                  <h3 className="font-semibold text-sm">
+                    Credenciales &amp; Integraciones
+                  </h3>
                   <p className="text-xs text-gray-600">
-                    Administra llaves, proveedores externos y políticas de acceso.
+                    Administra llaves, proveedores externos y políticas de
+                    acceso.
                   </p>
                 </div>
               </div>
@@ -207,5 +223,5 @@ export default function DashboardMainPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

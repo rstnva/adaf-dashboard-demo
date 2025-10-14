@@ -1,0 +1,215 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "adaf-core-slo",
+    "title": "ADAF Core · SLO Scorecard",
+    "description": "Service level objectives for ADAF Dashboard APIs and agents",
+    "tags": ["adaf", "slo", "fortune500"],
+    "timezone": "browser",
+    "refresh": "1m",
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "type": "row",
+        "title": "Customer Promise",
+        "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }
+      },
+      {
+        "id": 2,
+        "type": "stat",
+        "title": "Availability (rolling 30d)",
+        "description": "SLO Target ≥ 99.5%",
+        "gridPos": { "h": 4, "w": 6, "x": 0, "y": 1 },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "(1 - (sum(increase(adaf_api_errors_total{status=~\"5..\"}[30d])) / sum(increase(adaf_api_requests_total[30d])))) * 100"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "decimals": 2,
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                { "color": "red", "value": 0 },
+                { "color": "yellow", "value": 99.5 },
+                { "color": "green", "value": 99.9 }
+              ]
+            }
+          }
+        },
+        "options": {
+          "reduceOptions": { "calcs": ["lastNotNull"] },
+          "orientation": "auto",
+          "colorMode": "background"
+        }
+      },
+      {
+        "id": 3,
+        "type": "stat",
+        "title": "Latency p95 (5m)",
+        "description": "SLO Target ≤ 250ms",
+        "gridPos": { "h": 4, "w": 6, "x": 6, "y": 1 },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "histogram_quantile(0.95, rate(adaf_api_request_duration_seconds_bucket[5m]))"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "decimals": 3,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "green", "value": 0 },
+                { "color": "yellow", "value": 0.25 },
+                { "color": "red", "value": 0.4 }
+              ]
+            }
+          }
+        },
+        "options": {
+          "reduceOptions": { "calcs": ["lastNotNull"] },
+          "orientation": "auto",
+          "colorMode": "background"
+        }
+      },
+      {
+        "id": 4,
+        "type": "stat",
+        "title": "Error Budget Burn (24h)",
+        "description": "SLO Target ≤ 20%",
+        "gridPos": { "h": 4, "w": 6, "x": 12, "y": 1 },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "(sum(increase(adaf_api_errors_total{status=~\"4..|5..\"}[24h])) / sum(increase(adaf_api_requests_total[24h]))) * 100"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "decimals": 2,
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                { "color": "green", "value": 0 },
+                { "color": "yellow", "value": 15 },
+                { "color": "red", "value": 20 }
+              ]
+            }
+          }
+        },
+        "options": {
+          "reduceOptions": { "calcs": ["lastNotNull"] },
+          "orientation": "auto",
+          "colorMode": "background"
+        }
+      },
+      {
+        "id": 5,
+        "type": "stat",
+        "title": "Data Freshness (TVL)",
+        "description": "SLO Target ≤ 3 min",
+        "gridPos": { "h": 4, "w": 6, "x": 18, "y": 1 },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "avg(adaf_dqp_last_freshness_minutes{source=\"tvl\"})"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "m",
+            "decimals": 1,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "green", "value": 0 },
+                { "color": "yellow", "value": 3 },
+                { "color": "red", "value": 5 }
+              ]
+            }
+          }
+        },
+        "options": {
+          "reduceOptions": { "calcs": ["lastNotNull"] },
+          "orientation": "auto",
+          "colorMode": "background"
+        }
+      },
+      {
+        "id": 6,
+        "type": "row",
+        "title": "Golden Signals",
+        "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 }
+      },
+      {
+        "id": 7,
+        "type": "timeseries",
+        "title": "Request Volume vs Errors",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "sum(rate(adaf_api_requests_total[5m]))",
+            "legendFormat": "Requests"
+          },
+          {
+            "refId": "B",
+            "expr": "sum(rate(adaf_api_errors_total{status=~\"4..|5..\"}[5m]))",
+            "legendFormat": "Errors"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": { "unit": "reqps" }
+        }
+      },
+      {
+        "id": 8,
+        "type": "timeseries",
+        "title": "Latency Distribution",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
+        "targets": [
+          {
+            "refId": "A",
+            "expr": "histogram_quantile(0.50, rate(adaf_api_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "p50"
+          },
+          {
+            "refId": "B",
+            "expr": "histogram_quantile(0.95, rate(adaf_api_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "p95"
+          },
+          {
+            "refId": "C",
+            "expr": "histogram_quantile(0.99, rate(adaf_api_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "p99"
+          }
+        ]
+      }
+    ],
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    }
+  },
+  "overwrite": true
+}

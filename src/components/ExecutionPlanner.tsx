@@ -1,17 +1,29 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { AlertTriangle, CheckCircle, Clock, FileText, Upload } from 'lucide-react';
+import {
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+  FileText,
+  Upload,
+} from 'lucide-react';
 import { ExecutionPlan, PlanStatus } from '@/types/execution-plan';
 
 interface ExecutionPlannerProps {
   oppId: string;
-  onPlanChange?: (plan: ExecutionPlan | null) => void;
+  onPlanChange?: (_plan: ExecutionPlan | null) => void;
 }
 
 interface PlanData {
@@ -57,7 +69,10 @@ const statusIcons: Record<PlanStatus, React.ReactNode> = {
   closed: <FileText className="w-4 h-4" />,
 };
 
-export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlannerProps) {
+export default function ExecutionPlanner({
+  oppId,
+  onPlanChange,
+}: ExecutionPlannerProps) {
   const [planData, setPlanData] = useState<PlanData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -70,11 +85,11 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
         setLoading(true);
         const response = await fetch(`/api/read/opx/plan?oppId=${oppId}`);
         const data = await response.json();
-        
+
         if (!response.ok) {
           throw new Error(data.error || 'Failed to load plan data');
         }
-        
+
         setPlanData(data);
         onPlanChange?.(data.plan);
       } catch (err) {
@@ -95,7 +110,7 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
       const response = await fetch('/api/read/opx/plan/task', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ oppId, taskId })
+        body: JSON.stringify({ oppId, taskId }),
       });
 
       if (response.ok) {
@@ -113,7 +128,7 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
       const response = await fetch('/api/read/opx/plan/status', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ oppId, status: newStatus })
+        body: JSON.stringify({ oppId, status: newStatus }),
       });
 
       if (response.ok) {
@@ -151,8 +166,11 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
   if (!planData) return null;
 
   const { plan, opp, limits, metrics } = planData;
-  const checklistCompletion = plan ? 
-    (plan.checklist.filter(task => task.done).length / plan.checklist.length * 100) : 0;
+  const checklistCompletion = plan
+    ? (plan.checklist.filter(task => task.done).length /
+        plan.checklist.length) *
+      100
+    : 0;
 
   return (
     <div className="space-y-6">
@@ -162,11 +180,16 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="text-xl">{opp.title}</CardTitle>
-              <CardDescription className="mt-1">{opp.description}</CardDescription>
+              <CardDescription className="mt-1">
+                {opp.description}
+              </CardDescription>
             </div>
             <div className="flex items-center gap-2">
               {plan && (
-                <Badge className={statusColors[plan.status]} variant="secondary">
+                <Badge
+                  className={statusColors[plan.status]}
+                  variant="secondary"
+                >
                   <span className="flex items-center gap-1">
                     {statusIcons[plan.status]}
                     {plan.status.toUpperCase()}
@@ -190,7 +213,9 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
       {!plan ? (
         <Card>
           <CardContent className="p-6 text-center">
-            <p className="text-gray-500 mb-4">No execution plan exists for this opportunity.</p>
+            <p className="text-gray-500 mb-4">
+              No execution plan exists for this opportunity.
+            </p>
             <Button onClick={() => handleStatusChange('draft')}>
               Create Execution Plan
             </Button>
@@ -215,7 +240,15 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {(['draft', 'ready', 'live', 'paused', 'closed'] as PlanStatus[]).map(status => (
+                    {(
+                      [
+                        'draft',
+                        'ready',
+                        'live',
+                        'paused',
+                        'closed',
+                      ] as PlanStatus[]
+                    ).map(status => (
                       <Button
                         key={status}
                         variant={plan.status === status ? 'default' : 'outline'}
@@ -224,7 +257,9 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
                         onClick={() => handleStatusChange(status)}
                       >
                         {statusIcons[status]}
-                        <span className="ml-2">{status.charAt(0).toUpperCase() + status.slice(1)}</span>
+                        <span className="ml-2">
+                          {status.charAt(0).toUpperCase() + status.slice(1)}
+                        </span>
                       </Button>
                     ))}
                   </div>
@@ -239,12 +274,15 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
                 <CardContent>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span>{plan.checklist.filter(t => t.done).length} / {plan.checklist.length} completed</span>
+                      <span>
+                        {plan.checklist.filter(t => t.done).length} /{' '}
+                        {plan.checklist.length} completed
+                      </span>
                       <span>{Math.round(checklistCompletion)}%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div 
-                        className="bg-blue-600 h-2 rounded-full" 
+                      <div
+                        className="bg-blue-600 h-2 rounded-full"
                         style={{ width: `${checklistCompletion}%` }}
                       ></div>
                     </div>
@@ -266,20 +304,40 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
                   <div className="space-y-1 text-xs">
                     <div className="flex justify-between">
                       <span>LTV:</span>
-                      <span className={metrics.ltv > limits.ltv ? 'text-red-600' : 'text-green-600'}>
-                        {(metrics.ltv * 100).toFixed(1)}% / {(limits.ltv * 100).toFixed(0)}%
+                      <span
+                        className={
+                          metrics.ltv > limits.ltv
+                            ? 'text-red-600'
+                            : 'text-green-600'
+                        }
+                      >
+                        {(metrics.ltv * 100).toFixed(1)}% /{' '}
+                        {(limits.ltv * 100).toFixed(0)}%
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span>Health Factor:</span>
-                      <span className={metrics.hf < limits.hf ? 'text-red-600' : 'text-green-600'}>
+                      <span
+                        className={
+                          metrics.hf < limits.hf
+                            ? 'text-red-600'
+                            : 'text-green-600'
+                        }
+                      >
                         {metrics.hf.toFixed(2)} / {limits.hf.toFixed(1)}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span>Real Yield:</span>
-                      <span className={metrics.realyield < limits.realyield ? 'text-red-600' : 'text-green-600'}>
-                        {(metrics.realyield * 100).toFixed(1)}% / {(limits.realyield * 100).toFixed(0)}%
+                      <span
+                        className={
+                          metrics.realyield < limits.realyield
+                            ? 'text-red-600'
+                            : 'text-green-600'
+                        }
+                      >
+                        {(metrics.realyield * 100).toFixed(1)}% /{' '}
+                        {(limits.realyield * 100).toFixed(0)}%
                       </span>
                     </div>
                   </div>
@@ -292,36 +350,51 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
             <Card>
               <CardHeader>
                 <CardTitle>Position Sizing</CardTitle>
-                <CardDescription>Configure trade sizing and risk parameters</CardDescription>
+                <CardDescription>
+                  Configure trade sizing and risk parameters
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1">Notional % NAV</label>
-                    <Input 
-                      type="number" 
-                      defaultValue={plan.sizing.notionalPctNAV} 
-                      disabled 
+                    <label className="block text-sm font-medium mb-1">
+                      Notional % NAV
+                    </label>
+                    <Input
+                      type="number"
+                      defaultValue={plan.sizing.notionalPctNAV}
+                      disabled
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Max Slippage %</label>
-                    <Input 
-                      type="number" 
-                      defaultValue={plan.risk.maxSlippagePct} 
-                      disabled 
+                    <label className="block text-sm font-medium mb-1">
+                      Max Slippage %
+                    </label>
+                    <Input
+                      type="number"
+                      defaultValue={plan.risk.maxSlippagePct}
+                      disabled
                     />
                   </div>
                 </div>
-                
+
                 {plan.sizing.legs && (
                   <div>
-                    <label className="block text-sm font-medium mb-1">Trade Legs</label>
+                    <label className="block text-sm font-medium mb-1">
+                      Trade Legs
+                    </label>
                     <div className="mt-2 space-y-2">
                       {plan.sizing.legs.map((leg, idx) => (
-                        <div key={idx} className="flex gap-2 p-2 border rounded text-sm">
+                        <div
+                          key={idx}
+                          className="flex gap-2 p-2 border rounded text-sm"
+                        >
                           <span className="font-mono">{leg.market}</span>
-                          <Badge variant={leg.side === 'BUY' ? 'default' : 'destructive'}>
+                          <Badge
+                            variant={
+                              leg.side === 'BUY' ? 'default' : 'destructive'
+                            }
+                          >
                             {leg.side}
                           </Badge>
                           <span>Qty: {leg.qty}</span>
@@ -340,13 +413,17 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
               <CardHeader>
                 <CardTitle>Execution Checklist</CardTitle>
                 <CardDescription>
-                  {plan.checklist.filter(t => t.done).length} of {plan.checklist.length} tasks completed
+                  {plan.checklist.filter(t => t.done).length} of{' '}
+                  {plan.checklist.length} tasks completed
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {plan.checklist.map((task) => (
-                    <div key={task.id} className="flex items-center space-x-3 p-2 border rounded">
+                  {plan.checklist.map(task => (
+                    <div
+                      key={task.id}
+                      className="flex items-center space-x-3 p-2 border rounded"
+                    >
                       <input
                         type="checkbox"
                         checked={task.done}
@@ -354,7 +431,11 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
                         className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                       />
                       <div className="flex-1">
-                        <span className={task.done ? 'line-through text-gray-500' : ''}>
+                        <span
+                          className={
+                            task.done ? 'line-through text-gray-500' : ''
+                          }
+                        >
                           {task.title}
                         </span>
                         <div className="text-xs text-gray-500">
@@ -372,7 +453,9 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
             <Card>
               <CardHeader>
                 <CardTitle>Role Handoffs</CardTitle>
-                <CardDescription>Coordination between trading, ops, legal, and RI teams</CardDescription>
+                <CardDescription>
+                  Coordination between trading, ops, legal, and RI teams
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
@@ -381,7 +464,9 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
                       <div className="flex items-center gap-2 mb-2">
                         <Badge>{handoff.role}</Badge>
                         {handoff.owner && (
-                          <span className="text-sm text-gray-600">Owner: {handoff.owner}</span>
+                          <span className="text-sm text-gray-600">
+                            Owner: {handoff.owner}
+                          </span>
                         )}
                       </div>
                       {handoff.note && (
@@ -398,16 +483,21 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
             <Card>
               <CardHeader>
                 <CardTitle>Evidence & Artifacts</CardTitle>
-                <CardDescription>Charts, calculations, approvals, and documentation</CardDescription>
+                <CardDescription>
+                  Charts, calculations, approvals, and documentation
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   {plan.artifacts.map((artifact, idx) => (
-                    <div key={idx} className="flex items-center gap-3 p-2 border rounded">
+                    <div
+                      key={idx}
+                      className="flex items-center gap-3 p-2 border rounded"
+                    >
                       <Badge variant="outline">{artifact.kind}</Badge>
-                      <a 
-                        href={artifact.url} 
-                        target="_blank" 
+                      <a
+                        href={artifact.url}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 text-blue-600 hover:underline"
                       >
@@ -418,7 +508,7 @@ export default function ExecutionPlanner({ oppId, onPlanChange }: ExecutionPlann
                       </span>
                     </div>
                   ))}
-                  
+
                   <Button variant="outline" size="sm" className="w-full">
                     <Upload className="w-4 h-4 mr-2" />
                     Add Artifact

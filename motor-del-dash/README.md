@@ -9,16 +9,20 @@ Esta carpeta contiene **TODA la documentación core** del sistema ADAF Dashboard
 ## 📚 **ESTRUCTURA ORGANIZADA**
 
 ### 🚀 **[documentacion/](./documentacion/)** - Guías de Usuario
+
 - **`README-COMPLETO.md`** - Guía completa paso a paso (375 líneas optimizadas)
 - Inicio rápido, recuperación de emergencia, troubleshooting
 - **Para**: Usuarios, administradores, instalación y uso
 
-### 🏗️ **[arquitectura/](./arquitectura/)** - Documentación Técnica  
+### 🏗️ **[arquitectura/](./arquitectura/)** - Documentación Técnica
+
 - **`ARCHITECTURE.md`** - Arquitectura técnica detallada
 - Stack tecnológico, APIs, integrations, deployment
 - **Para**: Desarrolladores, DevOps, arquitectos
+- **LAV-ADAF (3005)** → consulta también [`../lav-adaf/docs/architecture.md`](../lav-adaf/docs/architecture.md) para la nueva plataforma multi-agente y router IA.
 
 ### 🧠 **[memoria/](./memoria/)** - Historial de Decisiones
+
 - **`MEMORIA_GITHUB_COPILOT.md`** - Registro completo de cambios técnicos
 - Decisiones de diseño, evolución del sistema, aprendizajes
 - **Para**: Contexto histórico, decisiones futuras, onboarding
@@ -28,22 +32,29 @@ Esta carpeta contiene **TODA la documentación core** del sistema ADAF Dashboard
 ## 🚀 **ACCESO RÁPIDO**
 
 ### 📖 **¿Quieres usar el sistema?**
+
 👉 **[documentacion/README-COMPLETO.md](./documentacion/README-COMPLETO.md)**
+
 - 🚀 Inicio rápido en 30 segundos
 - 🚨 Recuperación de emergencia
 - ⚡ Comandos de diagnóstico
 - 🔧 Troubleshooting completo
 - 📚 Contexto histórico y memorias centralizadas en [`documentacion/CONTEXTO_UNIFICADO.md`](./documentacion/CONTEXTO_UNIFICADO.md)
 
-### 👨‍💻 **¿Quieres desarrollar?** 
+### 👨‍💻 **¿Quieres desarrollar?**
+
 👉 **[arquitectura/ARCHITECTURE.md](./arquitectura/ARCHITECTURE.md)**
+
 - 🏗️ Arquitectura del sistema
 - 📋 Stack tecnológico completo
 - 🔌 APIs y endpoints
 - 🐳 Docker y deployment
+- 🤖 **Multi-agente LAV (puerto 3005)**: [`../lav-adaf/docs/architecture.md`](../lav-adaf/docs/architecture.md) y [`../lav-adaf/docs/runbook-demo.md`](../lav-adaf/docs/runbook-demo.md)
 
 ### 🧠 **¿Quieres entender decisiones técnicas?**
+
 👉 **[memoria/MEMORIA_GITHUB_COPILOT.md](./memoria/MEMORIA_GITHUB_COPILOT.md)**
+
 - 📝 Historial de cambios
 - 🎯 Decisiones de diseño
 - 📈 Evolución del sistema
@@ -54,6 +65,7 @@ Esta carpeta contiene **TODA la documentación core** del sistema ADAF Dashboard
 ## 💡 **¿Por qué "Motor del Dash"?**
 
 Esta organización sigue **estándares Fortune 500**:
+
 - ✅ **Separación clara** de responsabilidades documentales
 - ✅ **Fácil navegación** por tipo de necesidad
 - ✅ **Escalabilidad** para equipos grandes
@@ -65,16 +77,19 @@ Esta organización sigue **estándares Fortune 500**:
 ## 🎯 **PRINCIPIOS DE ORGANIZACIÓN**
 
 ### 📋 **Por Audiencia:**
+
 - **Usuarios** → `documentacion/`
-- **Desarrolladores** → `arquitectura/`  
+- **Desarrolladores** → `arquitectura/`
 - **Contexto histórico** → `memoria/`
 
 ### 📋 **Por Propósito:**
+
 - **¿Cómo usar?** → Documentación
 - **¿Cómo funciona?** → Arquitectura
 - **¿Por qué así?** → Memoria
 
 ### 📋 **Por Urgencia:**
+
 - **Problemas inmediatos** → Documentación (sección emergencia)
 - **Desarrollo** → Arquitectura (APIs, stack)
 - **Contexto** → Memoria (decisiones pasadas)
@@ -84,16 +99,19 @@ Esta organización sigue **estándares Fortune 500**:
 ## 🏆 **VENTAJAS DE ESTA ORGANIZACIÓN**
 
 ### ✅ **Para Nuevos Desarrolladores:**
+
 - Onboarding guiado por carpetas
 - Documentación progresiva (uso → desarrollo → contexto)
 - Acceso directo a lo que necesitan
 
 ### ✅ **Para Mantenimiento:**
+
 - Actualizaciones focalizadas por tipo
 - Sin redundancia entre documentos
 - Versionado claro por responsabilidad
 
 ### ✅ **Para Escalabilidad:**
+
 - Estructura preparada para crecer
 - Nuevas guías se ubican fácilmente
 - Separación de concerns documentales
@@ -103,10 +121,12 @@ Esta organización sigue **estándares Fortune 500**:
 ## 🔗 **ENLACES RÁPIDOS AL SISTEMA**
 
 ### 🌐 **URLs Principales:**
+
 - **Dashboard ADAF**: http://localhost:3000
 - **Sistema LAV-ADAF**: http://localhost:3005
 
 ### ⚡ **Comandos de Inicio:**
+
 ```bash
 # Inicio completo del sistema
 ./inicio-completo.sh
@@ -116,6 +136,7 @@ pnpm dev
 ```
 
 ### 🚨 **Emergencias:**
+
 ```bash
 # Reset completo
 lsof -t -i:3000,3005 | xargs kill -9

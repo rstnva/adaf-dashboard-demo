@@ -1,8 +1,11 @@
+<!-- markdownlint-disable -->
+
 # 📚 Contexto Unificado ADAF Dashboard Pro
 
 > Este documento concentra las memorias, cortes de caja, runbooks, SLOs y guías clave del proyecto para que cualquier persona, agente o sistema pueda recuperar el contexto completo desde un solo lugar.
 
 ## Índice rápido
+
 - [ADAF Compendio Maestro v2.0](#doc-adaf-compendio-maestro-v2-0)
 - [ADAF Compendio Maestro v1.5 Dominio Total (TXT)](#doc-adaf-compendio-maestro-v1-5-dominio-total-txt)
 - [Memoria GitHub Copilot](#doc-memoria-github-copilot)
@@ -51,17 +54,22 @@
 - [Runbook - Research Backtest Fail](#doc-runbook-research-backtest-fail)
 - [Postmortem - 2025-09-30 High API Error Rate](#doc-postmortem-2025-09-30-high-api-error-rate)
 - [Terraform Infrastructure Overview](#doc-terraform-infrastructure-overview)
-<a id="doc-adaf-compendio-maestro-v2-0"></a>
+  <a id="doc-adaf-compendio-maestro-v2-0"></a>
+
 ## ADAF Compendio Maestro v2.0
+
 > Fuente original: `ADAF_COMPENDIO_MAESTRO_v2_0.md`
 
 ### ADAF COMPENDIO MAESTRO v2.0 — DOMINIO TOTAL + IMPLEMENTACIÓN
+
 Fecha de compendio: 2025-10-08
 
 ---
 
 #### 1. Propósito y Alcance
+
 Este compendio fusiona la visión estratégica, operativa y técnica de ADAF/LAV, integrando:
+
 - Whitepaper y manifiesto institucional
 - Runbook operativo y know-how
 - Catálogo de agentes y prompts
@@ -74,6 +82,7 @@ Incluye TODO lo relevante del compendio v1.5 y v1.4, más los avances, hardening
 ---
 
 #### 2. Proclama y Visión
+
 Seremos EL FONDO MÁS RENTABLE DEL MUNDO. ADAF/LAV integra moats irreplicables: blockspace privado, fábrica de alfa 2.0, vaults LAV tranches, eficiencia de capital unificada, desks de eventos y volatilidad, y poder de gobernanza medido. La cobertura multi-chain se expande (Solana + IBC/Cosmos) con puentes vigilados.
 
 - **Flywheel ADAF:** (A) BTC/ETH productivo (B) RWA/Estables (C) DeFi Alpha (D) Gobernanza/Infra
@@ -83,22 +92,27 @@ Seremos EL FONDO MÁS RENTABLE DEL MUNDO. ADAF/LAV integra moats irreplicables: 
 ---
 
 #### 3. Núcleo Estratégico y Operativo
+
 ##### 3.1 Agentes (catálogo incremental)
+
 - **Alfa/Estrategia:** Volatility Engine, Greeks Hedger, Dispersion Trader, StatArb Reactor, Event Alpha, Whale Mirror, Dealflow Scout+, Governance Broker, Capacity Manager, Capital Allocator (Bandit/RL), RWA Steward
 - **Ejecución/Acceso:** Executioner, Prime Broker Hub, Settlement Agent, Slippage Forecaster, Blockspace Desk, Solana Executor, IBC/Cosmos Executor
 - **Riesgo/Seguridad:** Risk Warden, Counterparty Sentinel+, Stablecoin Monitor, AVS/Restaking Monitor, Oracle Risk Orchestrator, Compliance Scribe, Cover Manager+, Forta Watcher, Security Aegis, Bridge Sentinel+, Chaos Drillmaster
 
 ##### 3.2 Vaults LAV (Tranches)
+
 - Senior: RWA y PT (tasa fija)
 - Mezz: carry mixto (PT-YT/Basis)
 - Equity: estrategias de alfa (vol/dispersion/stat-arb/event)
 
 ##### 3.3 Eficiencia de Capital
+
 - Unified Margin Engine, Funding/Borrow Router, Post-Trade TCA
 
 ---
 
 #### 4. Métricas y KPIs “Campeón del Mundo”
+
 - Sharpe ≥ 2.5 / Sortino ≥ 4.0 a 24m; MDD ≤ −10%; ≥98% días verdes
 - Slippage −35% vs baseline; capacity +50M USD/tramo sin degradar alfa
 - Cobertura ≥ 75% TVL elegible; RTO < 30 min; 0 incidentes críticos
@@ -107,6 +121,7 @@ Seremos EL FONDO MÁS RENTABLE DEL MUNDO. ADAF/LAV integra moats irreplicables: 
 ---
 
 #### 5. Orden de Batalla (Sprints 0→120 días)
+
 1. Flow & Blockspace: Prime/Settlement + MEV-protect + Blockspace Desk
 2. Vol Desk Pro: surface/dispersion + Greeks Hedger
 3. Alpha Factory 2.0: feature store, backtests, entity graph, mempool
@@ -117,6 +132,7 @@ Seremos EL FONDO MÁS RENTABLE DEL MUNDO. ADAF/LAV integra moats irreplicables: 
 ---
 
 #### 6. Políticas y Guardrails
+
 - Órdenes: MEV-protect, RFQ/OTC, cancel/replace >0.8%
 - Colateral: no rehypothecation, bóvedas segregadas
 - Oráculos: consenso multi-fuente, outliers, fallback
@@ -126,6 +142,7 @@ Seremos EL FONDO MÁS RENTABLE DEL MUNDO. ADAF/LAV integra moats irreplicables: 
 ---
 
 #### 7. Implementación Real y Estado Actual (2025-10-08)
+
 - **Infraestructura:** Next.js 15, React 19, TS 5.9, Tailwind, Zustand, TanStack Query, Prisma, Redis
 - **Calidad:** ESLint flat config, reglas endurecidas globalmente, 0 errores, warnings solo informativos en legacy/aux
 - **Build:** `pnpm build` exitoso, sin advertencias relevantes
@@ -137,26 +154,31 @@ Seremos EL FONDO MÁS RENTABLE DEL MUNDO. ADAF/LAV integra moats irreplicables: 
 ---
 
 #### 8. Plantillas, Prompts y Runbook
+
 - Prompts Copilot por agente (Blockspace Desk, Unified Margin, Entity Graph/Whale, Oracle Orchestrator, Chaos Drillmaster, Governance Broker)
 - Runbook de lanzamiento, checklists de Go/No-Go, cartas LPs, propuestas DAO, reporte diario
 
 ---
 
 #### 9. Anexos y Trazabilidad
+
 - Se preservan íntegros los anexos históricos: v1.5, v1.4, v1.2, v1.1, fundacional
 - Referencias: README.md, ARCHITECTURE.md, MEMORIA_GITHUB_COPILOT.md, scripts, configs
 
 ---
 
 #### 10. Juramento y Cierre
+
 Servir hasta el último bit, preservar la llama del Reino y proteger el tesoro real con razón y honor. Este compendio es el plano inmediato y la bitácora viva de ADAF/LAV.
 
 ---
 
-*Generado por GitHub Copilot, fusión de compendio maestro y estado real del proyecto a 2025-10-08.*
+_Generado por GitHub Copilot, fusión de compendio maestro y estado real del proyecto a 2025-10-08._
 
 <a id="doc-adaf-compendio-maestro-v1-5-dominio-total-txt"></a>
+
 ## ADAF Compendio Maestro v1.5 Dominio Total (TXT)
+
 > Fuente original: `ADAF_COMPENDIO_MAESTRO_v1_5_DOMINIO_TOTAL_2025-10-08.txt`
 
 ```text
@@ -376,7 +398,7 @@ RIESGO / CUMPLIMIENTO / SEGURIDAD
 
 III) PLATAFORMAS (LISTA MAESTRA POR CATEGORÍA)
 --------------------------------------------------------------------------------
-Custodia/Claves: Fireblocks (MPC), Safe (multisig), HW wallets. 
+Custodia/Claves: Fireblocks (MPC), Safe (multisig), HW wallets.
 Prime/OTC/Settlement: categoría prime y clear-loop-like (adapters/mocks).
 Execution CEX/Perps/Options: CEX institucionales; Deribit/Aevo/Lyra.
 Execution DeFi/routers: CoW Swap, Odos, 1inch; MEV-protect (Flashbots/MEV-Share/CoW hooks).
@@ -578,7 +600,7 @@ OPERACIÓN
 
 Plataformas Adicionales (categorías; ejemplos)
 --------------------------------------------------------------------------------
-Prime/OTC/Settlement: prime brokers institucionales; off-exchange settlement (p.ej., ClearLoop-like). 
+Prime/OTC/Settlement: prime brokers institucionales; off-exchange settlement (p.ej., ClearLoop-like).
 Block/Options RFQ: mesas/portales de bloques para opciones/futuros (p.ej., Paradigm-like).
 Market Data/Alt-Data: Kaiko, Amberdata, Coin Metrics, CryptoQuant; para TradFi: Bloomberg/Refinitiv.
 MEV/Protección de orden: Flashbots Protect/MEV-Share/MEV Blocker; CoW hooks.
@@ -1242,9 +1264,10 @@ FIN — PROMPT DE REINICIO ADAF v0.1
 ```
 
 <a id="doc-memoria-github-copilot"></a>
-## Memoria GitHub Copilot
-> Fuente original: `MEMORIA_GITHUB_COPILOT.md`
 
+## Memoria GitHub Copilot
+
+> Fuente original: `MEMORIA_GITHUB_COPILOT.md`
 
 ### 🚀 Directiva Fortune 500: Valores y Principios Rectores
 
@@ -1264,8 +1287,8 @@ Blindar la plataforma en seguridad, automatización y resiliencia institucional,
 
 **Checklist operativo:**
 
-
 1. Seguridad y acceso
+
 - [ ] Revisar y documentar políticas de acceso, roles y manejo de secretos en `.env` y sistemas externos.
 - [ ] Validar segregación de claves y rotación periódica.
 - [ ] Revisar safeRedis y fallback en todos los entornos (dev, CI, prod).
@@ -1273,25 +1296,31 @@ Blindar la plataforma en seguridad, automatización y resiliencia institucional,
 - [ ] Simular incidente de seguridad y validar plan de respuesta.
 
 2. CI/CD y automatización
+
 - [ ] Integrar validaciones automáticas de lint, typecheck, test y build en cada PR (GitHub Actions).
 - [ ] Añadir escaneo de vulnerabilidades y dependabot.
 - [ ] Automatizar despliegues con rollback seguro y monitoreo post-deploy.
 - [ ] Documentar pipeline y criterios de aceptación para releases.
 
 3. Observabilidad y monitoreo
+
 - [ ] Validar logs críticos y trazabilidad de eventos en producción.
 - [ ] Integrar alertas básicas (health, errores, caídas de servicio).
 
 4. Documentación y cultura
+
 - [ ] Actualizar README y compendio maestro con políticas y flujos de seguridad/CI.
 - [ ] Crear checklist de onboarding para nuevos devs y auditores.
 
 **Criterios de éxito:**
+
 - Todos los puntos del checklist validados y documentados.
 - Build y CI sin errores ni advertencias críticas.
 - Seguridad y acceso auditados, con respuesta a incidentes probada.
 - Documentación y onboarding listos para revisión externa.
+
 #### MEMORIA GITHUB COPILOT — ADAF Dashboard Pro
+
 ### Memoria de avances — GitHub Copilot
 
 #### Octubre 2025
@@ -1301,42 +1330,51 @@ Blindar la plataforma en seguridad, automatización y resiliencia institucional,
 - **Eliminación de archivos obsoletos:** Eliminados tests CJS y duplicados.
 - **Suite verde:** Todos los tests de infraestructura, ingestión y normalización pasan; solo queda un test de performance pendiente de ajuste de umbral.
 - **Patrón de mocks:** Uso de vi.mock y spies, restaurando mocks tras cada test para aislamiento total.
+
 #### POLÍTICAS DE ACCESO, SECRETOS Y ROLES (FORTUNE 500)
 
 ##### 1. Principios generales
+
 - Todos los secretos y credenciales deben almacenarse únicamente en archivos `.env` fuera del control de versiones (`.gitignore`).
 - El acceso a los archivos `.env` y sistemas externos (DB, Redis, APIs, NextAuth, JWT, webhooks) está restringido a roles autorizados (devops, lead dev, auditoría).
 - Ningún secreto real debe compartirse por canales inseguros (correo, chat, tickets). Usar vaults o canales cifrados.
 
 ##### 2. Manejo de secretos
+
 - Rotar claves y secretos críticos cada 90 días o tras cualquier incidente.
 - Usar valores únicos y robustos en producción (no usar valores de ejemplo ni por defecto).
 - Documentar el proceso de provisión y rotación de secretos en el onboarding y runbook.
 - Validar que los archivos `.env.example` y `.env` no contengan valores productivos ni credenciales reales.
 
 ##### 3. Roles y segregación
+
 - Definir roles: `admin` (full), `devops` (infra/CI), `dev` (acceso limitado), `auditor` (solo lectura/config).
 - Solo `admin` y `devops` pueden modificar secretos y credenciales en producción.
 - Mantener registro de cambios y accesos a secretos (bitácora o sistema de auditoría).
 
 **4. Acceso a sistemas externos**
+
 - Limitar el acceso a bases de datos, Redis y APIs externas por IP, usuario y entorno.
 - Usar variables de entorno distintas para cada entorno (`.env.local`, `.env.production`, `.env.staging`).
 - Validar que los webhooks y endpoints de monitoreo estén protegidos y no expongan información sensible.
 
 **5. Respuesta a incidentes**
+
 - Ante cualquier sospecha de filtración, rotar inmediatamente todos los secretos afectados y auditar accesos.
 - Documentar el incidente y las acciones tomadas en la bitácora institucional.
 
 **6. Auditoría y mejora continua**
+
 - Revisar estas políticas cada trimestre y tras cada auditoría o incidente.
 - Mantener checklist de cumplimiento y actualizar onboarding para nuevos integrantes.
+
 #### NAVEGACIÓN Y RUTEO COMPLETAMENTE SOLUCIONADO (2025-10-09)
 
 **Problema identificado y resuelto:**
 El dashboard presentaba errores 404 persistentes al hacer clic en "Abrir Dashboard principal" y enlaces del sidebar. La causa era un malentendido sobre cómo funcionan los Route Groups de Next.js.
 
 **Root Cause Analysis:**
+
 - **❌ Error conceptual**: Se asumía que `src/app/(dashboard)/markets/` generaba la URL `/dashboard/markets`
 - **✅ Realidad Next.js**: Los route groups `(dashboard)` NO afectan la URL pública
 - **✅ Comportamiento real**: `src/app/(dashboard)/markets/` → URL: `/markets`
@@ -1344,12 +1382,14 @@ El dashboard presentaba errores 404 persistentes al hacer clic en "Abrir Dashboa
 - **✅ Fix aplicado**: Links corregidos a `/markets`, `/academy`, etc.
 
 **Solución implementada:**
+
 1. **NavLeft.tsx**: Corregidas todas las rutas del sidebar de `/dashboard/[section]` a `/[section]`
 2. **page.tsx**: Botón "Abrir Dashboard" corregido de `/dashboard/markets` a `/markets`
 3. **dashboard/page.tsx**: Redirect `/dashboard` → `/dashboard/markets` (para URLs manuales)
 4. **Verificación completa**: Todas las rutas probadas (HTTP 200) ✅
 
 **Estado post-fix:**
+
 - ✅ **Navegación 100% funcional**: Todos los botones y enlaces navegan correctamente
 - ✅ **Zero 404 errors**: Problema completamente eliminado
 - ✅ **URLs visibles**: `/markets`, `/academy`, `/research`, etc. funcionan perfectamente
@@ -1361,6 +1401,7 @@ El dashboard presentaba errores 404 persistentes al hacer clic en "Abrir Dashboa
 ADAF Dashboard Pro es un sistema institucional de inteligencia financiera, diseñado para operar con estándares Fortune 500: resiliencia, seguridad, trazabilidad, automatización y calidad de ingeniería de clase mundial. El proyecto integra ADAF y LAV en una sola plataforma Next.js, con arquitectura modular, cobertura de pruebas >95%, CI/CD robusto y documentación exhaustiva.
 
 **Avances y logros clave:**
+
 - **✅ NAVEGACIÓN COMPLETAMENTE FUNCIONAL**: Fix crítico de rutas y eliminación total de 404s
 - **✅ Route Groups Next.js correctamente implementados**: `(dashboard)` según estándares oficiales
 - Migración y endurecimiento global de ESLint (flat config, reglas estrictas, 0 errores, warnings solo informativos en legacy/aux).
@@ -1374,6 +1415,7 @@ ADAF Dashboard Pro es un sistema institucional de inteligencia financiera, dise�
 - Catálogo de agentes, vaults, políticas y métricas alineados al compendio estratégico-operativo.
 
 **Estado actual:**
+
 - **✅ NAVEGACIÓN AL 100%**: Sistema completamente navegable sin errores 404
 - 0 errores y 0 warnings en build y CI.
 - 850+ tests, cobertura >95% en módulos críticos.
@@ -1385,16 +1427,18 @@ Cada avance y decisión se valida contra criterios Fortune 500: resiliencia, seg
 
 Fecha: 2025-10-08  
 Versión del documento: 0.1 (inicial)  
-Responsable: Copilot (asistente técnico)  
+Responsable: Copilot (asistente técnico)
 
 ---
 
 #### 1) Propósito
+
 Este documento centraliza los avances, decisiones y próximos pasos del proyecto ADAF Dashboard Pro para mantener una trazabilidad clara, tipo "engineering log" con calidad institucional.
 
 ---
 
 #### 2) Resumen ejecutivo (sesión actual)
+
 - Lectura y alineación: README, ARQUITECTURA, cortes ejecutivos revisados.
 - Mapa técnico: inventariada estructura, módulos, dependencias y configuración (Next 15, React 19, TS 5.9, Tailwind, Zustand, TanStack Query, Prisma, Redis).
 - Entorno local: servidor dev en 3000 validado; health API 200; Home entrega HTML.
@@ -1410,6 +1454,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ---
 
 #### 3) Decisiones (razón y alcance)
+
 - Typecheck scope: limitar a ADAF (excluir LAV y backups) para aislar conflictos inter-app.
 - Lint en build: deshabilitado temporalmente para evitar fricción con `eslint-config-next` (migración a flat config planificada).
 - Redis en build/dev: formalizado `safeRedis()` + soporte de `MOCK_MODE` para eliminar EAI_AGAIN en build/CI y permitir fallback en memoria.
@@ -1418,6 +1463,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ---
 
 #### 4) Deltas técnicos (cambios efectivos)
+
 - Cache/Redis:
   - Nuevo `src/lib/safe-redis.ts`: wrapper seguro con fallback en memoria y guards (MOCK_MODE / Edge).
   - `src/lib/cache/redis-config.ts`: ahora usa `getSafeRedis`; pub/sub solo si está disponible.
@@ -1457,6 +1503,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ---
 
 #### 5) Riesgos y mitigaciones
+
 - Lint deshabilitado en build: migrar a ESLint flat y reactivar en CI.
 - Conexión Redis en build: introducir `safeRedis()` y guardas de ejecución (usar `MOCK_MODE=1`).
 - Alineación multi-app: evitar contaminar typecheck/bundles con `lav-adaf/**` y backups.
@@ -1464,6 +1511,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ---
 
 #### 6) Próximos pasos (corto plazo)
+
 1. Implementar `safeRedis()` y guardas de build para ioredis.
 2. Migrar ESLint a flat config con `eslint-plugin-next` y reactivar lint en CI.
 3. Pulir UI institucional en TopBar/NavLeft y cards clave con tokens; mejorar a11y.
@@ -1474,67 +1522,75 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 #### 10) Plan de siguientes pasos — Calidad Fortune 500 (2025-10-08)
 
 **1. Auditoría y refuerzo de seguridad**
-  - Revisar y endurecer políticas de acceso, segregación de roles y manejo de secretos.
-  - Validar safeRedis, mock/fallback y guardrails en todos los entornos (dev, CI, prod).
-  - Ejecutar pruebas de penetración y análisis de dependencias (SCA/SAST).
+
+- Revisar y endurecer políticas de acceso, segregación de roles y manejo de secretos.
+- Validar safeRedis, mock/fallback y guardrails en todos los entornos (dev, CI, prod).
+- Ejecutar pruebas de penetración y análisis de dependencias (SCA/SAST).
 
 **2. Robustecer CI/CD y automatización**
-  - Integrar validaciones automáticas de lint, typecheck, test y build en cada PR.
-  - Añadir escaneo de vulnerabilidades y dependabot.
-  - Automatizar despliegues con rollback seguro y monitoreo de salud post-deploy.
+
+- Integrar validaciones automáticas de lint, typecheck, test y build en cada PR.
+- Añadir escaneo de vulnerabilidades y dependabot.
+- Automatizar despliegues con rollback seguro y monitoreo de salud post-deploy.
 
 **3. Cobertura de pruebas y calidad de código**
-  - Elevar cobertura a >98% en módulos críticos y legacy.
-  - Añadir tests de integración E2E para flujos clave y APIs.
-  - Revisar y documentar criterios de aceptación y convenciones de código.
+
+- Elevar cobertura a >98% en módulos críticos y legacy.
+- Añadir tests de integración E2E para flujos clave y APIs.
+- Revisar y documentar criterios de aceptación y convenciones de código.
 
 **4. UX/UI y accesibilidad Fortune 500**
-  - Validar a11y AA+ en todos los módulos y flujos.
-  - Realizar user testing institucional y ajustar patrones de interacción.
-  - Documentar y versionar tokens de diseño y componentes UI.
+
+- Validar a11y AA+ en todos los módulos y flujos.
+- Realizar user testing institucional y ajustar patrones de interacción.
+- Documentar y versionar tokens de diseño y componentes UI.
 
 **5. Observabilidad y monitoreo**
-  - Integrar dashboards de métricas (Prometheus/Grafana) y alertas proactivas.
-  - Añadir trazabilidad de logs, auditoría y replay de eventos críticos.
+
+- Integrar dashboards de métricas (Prometheus/Grafana) y alertas proactivas.
+- Añadir trazabilidad de logs, auditoría y replay de eventos críticos.
 
 **6. Documentación y onboarding**
-  - Mantener README, compendio maestro y runbooks actualizados tras cada hito.
-  - Crear guías de onboarding Fortune 500 para nuevos devs y auditores.
+
+- Mantener README, compendio maestro y runbooks actualizados tras cada hito.
+- Crear guías de onboarding Fortune 500 para nuevos devs y auditores.
 
 **7. Roadmap institucional y escalamiento**
-  - Definir hitos trimestrales y OKRs alineados a visión Fortune 500.
-  - Planificar integración de nuevos agentes, vaults y features estratégicos.
-  - Preparar el sistema para auditoría externa y certificación institucional.
+
+- Definir hitos trimestrales y OKRs alineados a visión Fortune 500.
+- Planificar integración de nuevos agentes, vaults y features estratégicos.
+- Preparar el sistema para auditoría externa y certificación institucional.
 
 **8. Cultura de mejora continua**
-  - Revisar y ajustar procesos tras cada release.
-  - Fomentar feedback institucional y sesiones de post-mortem/documentación.
+
+- Revisar y ajustar procesos tras cada release.
+- Fomentar feedback institucional y sesiones de post-mortem/documentación.
 
 ---
 
 #### 7) Bitácora de sesiones
 
- - 2025-10-08 (cierre de ciclo Fortune 500)
-   - Documentación, onboarding, roadmap institucional y política de mejora continua completados y enlazados.
-   - Todos los recursos clave (README, compendio, onboarding, roadmap, mejora continua, runbooks) auditados y accesibles.
-   - Cultura institucional y procesos alineados a estándares Fortune 500.
-   - Próximo: definir nuevo bloque estratégico o priorizar iniciativas de producto/dashboard.
+- 2025-10-08 (cierre de ciclo Fortune 500)
+  - Documentación, onboarding, roadmap institucional y política de mejora continua completados y enlazados.
+  - Todos los recursos clave (README, compendio, onboarding, roadmap, mejora continua, runbooks) auditados y accesibles.
+  - Cultura institucional y procesos alineados a estándares Fortune 500.
+  - Próximo: definir nuevo bloque estratégico o priorizar iniciativas de producto/dashboard.
 
- - 2025-10-08 (simulación de incidente)
-   - Simulación de filtración de secreto crítico (ejemplo: REDIS_URL).
-   - Acción inmediata: rotación del secreto en todos los entornos (.env, vault, CI/CD), invalidación de sesiones y actualización de variables en sistemas externos.
-   - Auditoría: revisión de logs de acceso, verificación de integridad y monitoreo de actividad anómala.
-   - Documentación: registro del incidente, acciones y responsables en la bitácora institucional.
-   - Validación: plan de respuesta ejecutado en <30 minutos, sin impacto en usuarios ni datos.
-   - Resultado: protocolo Fortune 500 validado, equipo preparado para incidentes reales.
-   - Próximo: revisión trimestral y simulacros periódicos.
-  
- - 2025-10-08 (noche)
-   - Endurecimiento global ESLint: reglas `no-unused-vars`, `no-empty`, `no-case-declarations`, `react-hooks/exhaustive-deps` ahora en error para todo `src/`.
-   - Carpetas críticas (`academy`, `dashboard`, `research`, `security`, `ui`) ya cumplían estándar estricto; resto del código sin errores, solo warnings menores.
-   - Lint global: 0 errores, 249 warnings (principalmente en áreas legacy o tipados auxiliares).
-   - Cualquier nuevo código o refactor queda alineado al estándar más alto; CI listo para bloquear errores reales.
-   - Próximo: documentar en README y mantener barrido de warnings en áreas legacy.
+- 2025-10-08 (simulación de incidente)
+  - Simulación de filtración de secreto crítico (ejemplo: REDIS_URL).
+  - Acción inmediata: rotación del secreto en todos los entornos (.env, vault, CI/CD), invalidación de sesiones y actualización de variables en sistemas externos.
+  - Auditoría: revisión de logs de acceso, verificación de integridad y monitoreo de actividad anómala.
+  - Documentación: registro del incidente, acciones y responsables en la bitácora institucional.
+  - Validación: plan de respuesta ejecutado en <30 minutos, sin impacto en usuarios ni datos.
+  - Resultado: protocolo Fortune 500 validado, equipo preparado para incidentes reales.
+  - Próximo: revisión trimestral y simulacros periódicos.
+
+- 2025-10-08 (noche)
+  - Endurecimiento global ESLint: reglas `no-unused-vars`, `no-empty`, `no-case-declarations`, `react-hooks/exhaustive-deps` ahora en error para todo `src/`.
+  - Carpetas críticas (`academy`, `dashboard`, `research`, `security`, `ui`) ya cumplían estándar estricto; resto del código sin errores, solo warnings menores.
+  - Lint global: 0 errores, 249 warnings (principalmente en áreas legacy o tipados auxiliares).
+  - Cualquier nuevo código o refactor queda alineado al estándar más alto; CI listo para bloquear errores reales.
+  - Próximo: documentar en README y mantener barrido de warnings en áreas legacy.
 - 2025-10-09 (madrugada)
   - Barrido completo de warnings en rutas API (`src/app/api/health`, `src/app/api/read`), componentes (`src/app/components/dashboard`, `layout`, `ui`), tipos y hooks (`src/app/types`, `src/app/hooks`, `lib`).
   - Todos los archivos críticos y legacy revisados: 0 errores y 0 warnings de lint en build.
@@ -1557,9 +1613,15 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
   - Resultado de lint: 0 errores / 261 warnings (la mayoría `no-unused-vars` y `react-hooks/exhaustive-deps` informativos para endurecer por módulos).
   - Próximos ajustes dirigidos: corregir dependencias de hooks en `HealthMonitor`, `SecurityMonitoringDashboard`, `useAutoReactEngine`; reducir vacíos `catch {}` con comentarios; barrido de `no-unused-vars` por carpetas.
 
+- 2025-10-14
+  - Refactor del endpoint `lav-adaf/apps/dashboard/src/app/api/ingest/onchain/tvl/route.ts` con esquemas Zod, normalización de payloads y deduplicación determinística compatible con Redis real o fallback in-memory.
+  - Ajuste del `eslint.config.mjs` para excluir el snapshot legado `ADAF-DASHBOARD-v1.1/**`, eliminando falsos positivos en lint y conservando el repositorio fuente libre de errores.
+  - Ejecución de `pnpm lint` para validar el estado verde global tras los cambios y documentar la verificación como control Fortune 500.
+
 ---
 
 #### 8) Convenciones de actualización
+
 - Formato: mantener secciones y registrar deltas atómicos con fecha.
 - Alcance: sólo decisiones, cambios efectivos y riesgos/mitigaciones.
 - Frecuencia: al finalizar cada bloque de trabajo o hito.
@@ -1578,7 +1640,9 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 
 1. Edita `src/components/learn/PageGuide.tsx` (ADAF) o `lav-adaf/apps/dashboard/src/components/learn/PageGuide.tsx` (LAV).
 2. Agrega un elemento al arreglo `guides` con la forma:
-  - `{ prefix: string, guide: { title, what, objective, steps: string[], concepts: string[], success, cta?: { label, href } } }`.
+
+- `{ prefix: string, guide: { title, what, objective, steps: string[], concepts: string[], success, cta?: { label, href } } }`.
+
 3. Asegúrate de que `prefix` coincida con el inicio de la ruta (p. ej., `/monitoring`).
 4. Opcional: agrega `cta` para enlazar a Academy u otra vista relevante.
 5. Guarda y recarga; con la preferencia global ON, la guía aparece siempre.
@@ -1591,31 +1655,38 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 ---
 
 #### 9) Referencias
+
 - `README.md`, `ONBOARDING_FORTUNE500.md`, `ROADMAP_OKRS_2025_2026.md`, `MEJORA_CONTINUA.md`, `ARCHITECTURE.md`, `corte de caja.md`, `corte-de-caja-ejecutivo.md`
 - Configuración: `next.config.js`, `tsconfig.json`, `eslint.config.mjs`, `package.json`
 - UI/Theme: `src/app/globals.css`, `src/theme/tokens.ts`
 
 <a id="doc-memoria-de-avances-9-oct-2025"></a>
+
 ## Memoria de Avances - 9 Oct 2025
+
 > Fuente original: `MEMORIA_AVANCES_OCT_2025.md`
 
 ### Memoria de Avances - Sesión del 9 de Octubre 2025
 
 #### 🎯 Resumen Ejecutivo
+
 Durante esta sesión se resolvieron múltiples problemas críticos del sistema ADAF Dashboard Pro, logrando un estado 100% funcional con navegación correcta y componentes estables.
 
 #### ✅ Problemas Identificados y Resueltos
 
 ##### 1. 🔧 Error de Navegación Dashboard (404)
+
 **Problema**: Al hacer clic en "Abrir Dashboard" desde la página principal, se generaba una solicitud a `/dashboard/main` que devolvía 404.
 
 **Causa Raíz Identificada**:
+
 - Conflicto de rutas entre dos directorios de dashboard:
   - `src/app/dashboard/page.tsx` (ruta directa)
   - `src/app/(dashboard)/page.tsx` (layout group)
 - Next.js tenía confusión entre estas dos rutas compitiendo por el mismo path `/dashboard`
 
 **Solución Implementada**:
+
 1. Identificación del conflicto mediante debugging sistemático
 2. Creación de dashboards de prueba para aislar el problema
 3. Respaldo del dashboard original problemático a `page-original.tsx`
@@ -1625,13 +1696,16 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 **Resultado**: ✅ Navegación `/dashboard` funciona correctamente sin errores 404
 
 ##### 2. 🛠️ Error Runtime HealthMonitor
+
 **Problema**: `Cannot read properties of undefined (reading 'call')` en el componente HealthMonitor
 
 **Causa Raíz Identificada**:
+
 - Múltiples exportaciones default en el mismo archivo
 - Conflictos de importación/exportación causando problemas de runtime
 
 **Solución Implementada**:
+
 1. Creación de componente completamente nuevo `SystemHealthMonitor.tsx`
 2. Refactorización completa de la lógica de monitoreo
 3. Actualización de importaciones en `layout.tsx`
@@ -1640,28 +1714,33 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 **Resultado**: ✅ Sistema de monitoreo de salud funcional sin errores
 
 ##### 3. 🟢 Integración Correcta de HealthMonitor en Layout Global
+
 **Problema**: El health monitor causaba errores de runtime al insertarse antes del provider de React Query, por desajuste de contexto client-side/server-side.
 
 **Solución Implementada**:
+
 - Se movió el componente `<SystemHealthMonitor />` DENTRO del `<Providers>`, asegurando que todo el contexto de hooks y React Query esté disponible.
 - Se validó que todas las rutas (`/`, `/dashboard`, `/monitoring`, `/api/health`) respondan 200 OK y el health monitor funcione sin errores.
-- Se documentó la lección: *"Todos los componentes client-side que dependan de providers deben ir dentro del provider, nunca antes, para evitar hydration errors en Next.js App Router."*
+- Se documentó la lección: _"Todos los componentes client-side que dependan de providers deben ir dentro del provider, nunca antes, para evitar hydration errors en Next.js App Router."_
 
 **Resultado**: ✅ Health monitor 100% funcional, sin errores de runtime, integrado globalmente.
 
 #### 🚀 Mejoras Técnicas Implementadas
 
 ##### Arquitectura de Dashboard
+
 - **Ruta Principal**: `/dashboard` ahora responde correctamente (200 OK)
 - **Ruta Inexistente**: `/dashboard/main` correctamente devuelve 404
 - **Navegación Limpia**: Sin solicitudes erróneas automáticas
 
 ##### Sistema de Monitoreo
+
 - **Componente Robusto**: `SystemHealthMonitor` con manejo de errores mejorado
 - **Polling Inteligente**: Verificación cada 10 segundos con throttling de alertas
 - **UI Mejorada**: Banner de alertas más descriptivo y funcional
 
 ##### Debugging y Calidad
+
 - **Cache Management**: Múltiples limpiezas de cache de Next.js
 - **Aislamiento de Problemas**: Creación de componentes de prueba
 - **Verificación Sistemática**: Testing de rutas y componentes por separado
@@ -1669,6 +1748,7 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 #### 📊 Estado Final del Sistema
 
 ##### ✅ Funcionalidades Verificadas
+
 - **Página Principal**: http://localhost:3000 → 200 OK
 - **Dashboard**: http://localhost:3000/dashboard → 200 OK
 - **Navegación**: Botón "Abrir Dashboard" funciona correctamente
@@ -1676,17 +1756,19 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 - **API Health**: /api/health responde correctamente
 
 ##### 🎯 Rutas del Sistema
+
 ```
 ✅ /                    → Página principal (200 OK)
-✅ /dashboard           → Dashboard funcional (200 OK)  
+✅ /dashboard           → Dashboard funcional (200 OK)
 ✅ /dashboard/main      → Correctamente 404 (ruta no existe)
 ✅ /api/health          → API de salud activa (200 OK)
 ```
 
 ##### 🔧 Componentes Clave
+
 ```
 ✅ SystemHealthMonitor  → Monitoreo activo sin errores
-✅ ChunkRecovery        → Recuperación de chunks funcional  
+✅ ChunkRecovery        → Recuperación de chunks funcional
 ✅ Dashboard Layout     → Navegación corregida
 ✅ API Endpoints        → Todos respondiendo correctamente
 ```
@@ -1694,9 +1776,11 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 #### 🚀 **RESTAURACIÓN COMPLETA EXITOSA - FASE 2**
 
 ##### 4. 🎯 Dashboard Completamente Restaurado (Segunda Fase)
+
 **Problema**: Dashboard funcionaba pero con versión simplificada, faltaba navegación completa y todas las funcionalidades.
 
 **Análisis Profundo Realizado**:
+
 1. **Identificación del Layout Incorrecto**: Dashboard usaba layout simplificado sin `NavLeft` ni `TopBar`
 2. **Detección de Rutas Faltantes**: Múltiples páginas devolvían 404 (markets, research, reports, etc.)
 3. **Diagnóstico de Arquitectura**: Conflicto entre estructura `src/app/dashboard/` vs `src/app/(dashboard)/`
@@ -1705,27 +1789,31 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 **Solución Integral Implementada**:
 
 ###### Fase 1: Activación del Layout Completo
+
 - **Reemplazo del Dashboard**: Sustituido contenido simplificado por layout profesional completo
 - **Integración de NavLeft**: Navegación lateral con 10+ rutas principales
 - **Integración de TopBar**: Barra superior con controles y navegación
 - **Layout Responsivo**: Implementación completa del sistema de layout con sidebar
 
 ###### Fase 2: Creación de Layout Jerárquico
+
 - **Layout Dashboard**: Creado `/dashboard/layout.tsx` con estructura completa:
   ```tsx
   - QueryProvider + HotkeyProvider + SpotlightProvider
-  - NavLeft (navegación lateral)  
+  - NavLeft (navegación lateral)
   - TopBar (barra superior)
   - NavigationGuard + PageGuide
   ```
 
 ###### Fase 3: Resolución de Conflictos de Rutas
+
 - **Eliminación de Duplicados**: Detectados y eliminados archivos duplicados causando errores 500
 - **Error**: "You cannot have two parallel pages that resolve to the same path"
 - **Solución**: Eliminación sistemática de páginas duplicadas en directorio raíz
 - **Limpieza de Cache**: Eliminación completa de `.next` y restart del servidor
 
 ###### Fase 4: Verificación Completa
+
 - **Testing Sistemático**: Validación de todas las rutas principales
 - **Cache Management**: Restart completo del sistema para eliminar conflictos
 - **Pruebas de Integración**: Verificación de navegación completa
@@ -1734,20 +1822,21 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 
 ##### ✅ **Estado Final - Todas las Rutas Operativas**
 
-| Ruta | Estado | Descripción |
-|------|---------|-------------|
-| 🎯 `/dashboard` | ✅ 200 | Dashboard principal con layout completo |
-| 📈 `/markets` | ✅ 200 | Análisis de mercados y ETFs |
-| 🔬 `/research` | ✅ 200 | Investigación cuantitativa |
-| 🎓 `/academy` | ✅ 200 | Sistema de aprendizaje |
-| 📄 `/reports` | ✅ 200 | Reportes y entregables |
-| 📰 `/news` | ✅ 200 | News sentinel y regulación |
-| ⛓️ `/onchain` | ✅ 200 | Análisis on-chain y TVL |
-| 📊 `/derivatives` | ✅ 200 | Funding rates y derivados |
-| ⚙️ `/control` | ✅ 200 | Controles y compliance |
-| 🛡️ `/dqp` | ✅ 200 | Data Quality & Governance |
+| Ruta              | Estado | Descripción                             |
+| ----------------- | ------ | --------------------------------------- |
+| 🎯 `/dashboard`   | ✅ 200 | Dashboard principal con layout completo |
+| 📈 `/markets`     | ✅ 200 | Análisis de mercados y ETFs             |
+| 🔬 `/research`    | ✅ 200 | Investigación cuantitativa              |
+| 🎓 `/academy`     | ✅ 200 | Sistema de aprendizaje                  |
+| 📄 `/reports`     | ✅ 200 | Reportes y entregables                  |
+| 📰 `/news`        | ✅ 200 | News sentinel y regulación              |
+| ⛓️ `/onchain`     | ✅ 200 | Análisis on-chain y TVL                 |
+| 📊 `/derivatives` | ✅ 200 | Funding rates y derivados               |
+| ⚙️ `/control`     | ✅ 200 | Controles y compliance                  |
+| 🛡️ `/dqp`         | ✅ 200 | Data Quality & Governance               |
 
 ##### 🎯 Características Restauradas
+
 - ✅ **Navegación Lateral Completa**: `NavLeft` con todos los enlaces funcionales
 - ✅ **Barra Superior**: `TopBar` con controles y navegación
 - ✅ **Layout Responsivo**: Sidebar colapsible y diseño adaptativo
@@ -1758,12 +1847,14 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 #### 🎯 Próximos Pasos Completados
 
 ##### ✅ Restauración Completa del Dashboard - FINALIZADA
+
 1. ✅ **Análisis del Dashboard Original**: Identificado uso de layout simplificado
 2. ✅ **Identificación de Componente Problemático**: Resuelto conflicto de rutas duplicadas
 3. ✅ **Restauración Gradual**: Implementado layout completo y todas las páginas
 4. ✅ **Funcionalidad Completa**: Sistema completamente operativo con navegación profesional
 
 ##### Optimizaciones Adicionales
+
 1. **Performance**: Optimizar carga de componentes pesados
 2. **Cache Strategy**: Implementar estrategia de cache más robusta
 3. **Error Handling**: Mejorar manejo de errores globales
@@ -1772,32 +1863,38 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 #### 📝 Lecciones Aprendidas
 
 ##### Debugging de Next.js
+
 - **Cache Persistence**: Next.js mantiene cache agresivo que requiere limpieza manual
 - **Route Conflicts**: Múltiples rutas para el mismo path causan comportamientos impredecibles
 - **Component Loading**: Problemas de exportación pueden causar errores runtime sutiles
 
 ##### Desarrollo Sistemático
+
 - **Aislamiento**: Crear componentes de prueba acelera la identificación de problemas
 - **Verificación Incremental**: Probar cada cambio por separado evita regresiones
 - **Backup Strategy**: Mantener respaldos permite rollback rápido cuando es necesario
 
 ##### Integración de Componentes en Layout
+
 - **Orden de Componentes**: El orden de los componentes en el layout es crítico; los componentes que dependen de providers deben ir dentro de estos.
 - **Errores de Hidratación**: Colocar componentes client-side antes de los providers puede causar errores de hidratación en Next.js.
 
 #### 🏆 Impacto en el Negocio
 
 ##### Experiencia de Usuario
+
 - **Navegación Fluida**: Sin errores 404 frustrantes
 - **Confiabilidad**: Sistema estable y predecible
 - **Monitoreo Proactivo**: Alertas inmediatas en caso de problemas
 
 ##### Calidad del Código
+
 - **Arquitectura Limpia**: Eliminación de conflictos de rutas
 - **Componentes Robustos**: HealthMonitor refactorizado para estabilidad
 - **Debugging Mejorado**: Mejor visibilidad de problemas del sistema
 
 ##### Preparación para Producción
+
 - **Estabilidad**: Sistema robusto para entornos Fortune 500
 - **Escalabilidad**: Base sólida para futuras expansiones
 - **Mantenibilidad**: Código más limpio y predecible
@@ -1805,22 +1902,26 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 #### 🔄 Actualización Final - Desactivación Temporal HealthMonitor
 
 ##### 4. 🚨 Desactivación Temporal de HealthMonitor
+
 **Problema**: A pesar de las múltiples soluciones implementadas, el HealthMonitor seguía causando problemas intermitentes durante el desarrollo.
 
 **Decisión Técnica**:
+
 - Se desactivó temporalmente el componente comentándolo en `layout.tsx`
 - Cambio: `<SystemHealthMonitor />` → `{/* <SystemHealthMonitor /> */}`
 - Esta es una medida provisional para permitir continuar el desarrollo sin interrupciones
 
 **Justificación**:
+
 - El componente ya había sido refactorizado múltiples veces
-- Los problemas persistían a pesar de las correcciones implementadas  
+- Los problemas persistían a pesar de las correcciones implementadas
 - La prioridad es mantener el dashboard principal funcionando
 - Se puede reactivar más adelante con una nueva arquitectura
 
 **Resultado**: ✅ Sistema completamente estable sin el health monitor activo
 
 ##### Estado Técnico Final
+
 ```
 ✅ /                    → Página principal funcional
 ✅ /dashboard           → Dashboard operativo
@@ -1830,6 +1931,7 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 ```
 
 ##### Próximas Acciones Recomendadas
+
 1. **Reimplementar HealthMonitor**: Crear nueva versión desde cero con arquitectura más simple
 2. **Testing Exhaustivo**: Probar todas las rutas y funcionalidades sin el monitor
 3. **Documentar Limitaciones**: Actualizar README con el estado actual del monitoreo
@@ -1840,22 +1942,22 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 #### 📝 Estado de Documentación - Actualización Post-Análisis
 
 ##### 🔍 Inconsistencias Identificadas y Corregidas
+
 1. **README actualizado**: Añadida información sobre estructura dual del proyecto
-2. **Arquitectura actualizada**: Reflejado el estado actual con HealthMonitor desactivado  
+2. **Arquitectura actualizada**: Reflejado el estado actual con HealthMonitor desactivado
 3. **Estructura dual documentada**: Explicada la diferencia entre `src/` y `ADAF-ok/`
 4. **Estado real del dashboard**: Documentado que está en versión simplificada
 
 ##### 📋 Próximas Tareas Recomendadas
-1. **Restaurar Dashboard Original**: 
+
+1. **Restaurar Dashboard Original**:
    - Analizar `dashboard/page-original.tsx` (403 líneas)
    - Identificar componente que causaba error `/dashboard/main`
    - Restauración gradual componente por componente
-   
-2. **Reimplementar HealthMonitor**: 
+2. **Reimplementar HealthMonitor**:
    - Crear nueva versión desde cero
    - Arquitectura más simple sin dependencias problemáticas
    - Testing exhaustivo antes de activar
-   
 3. **Consolidar Estructura**:
    - Decidir si mantener estructura dual o unificar
    - Migrar mejoras de ADAF-ok a src/ si aplica
@@ -1874,7 +1976,9 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 **Resultado Final**: 🚀 Sistema listo para producción con navegación completa
 
 <a id="doc-resumen-intermedio"></a>
+
 ## Resumen Intermedio
+
 > Fuente original: `resumenintermedio.md`
 
 ### ADAF Dashboard Pro - Resumen de Implementación
@@ -1890,6 +1994,7 @@ Durante esta sesión se resolvieron múltiples problemas críticos del sistema A
 ADAF Dashboard Pro es una plataforma de gestión financiera avanzada que hemos transformado completamente siguiendo el modelo de diseño SoSoValue. El objetivo principal es crear una interfaz donde **"el usuario 'huela' el mercado en 10 segundos, profundice en 1 clic y opere en 2 clics"**.
 
 ##### 🎯 Filosofía del Producto
+
 - **10 segundos**: Vista panorámica inmediata del estado del mercado y portfolio
 - **1 clic**: Acceso directo a análisis detallados y métricas específicas
 - **2 clics**: Ejecución de operaciones y toma de decisiones
@@ -1899,6 +2004,7 @@ ADAF Dashboard Pro es una plataforma de gestión financiera avanzada que hemos t
 #### 🏗️ Arquitectura Técnica Implementada
 
 ##### **Stack Tecnológico**
+
 - **Frontend**: Next.js 15.5.4 con TypeScript
 - **Estado Global**: Zustand con persistencia localStorage
 - **Estilización**: Tailwind CSS con sistema de diseño ADAF
@@ -1906,6 +2012,7 @@ ADAF Dashboard Pro es una plataforma de gestión financiera avanzada que hemos t
 - **Gestión de Datos**: Preparado para TanStack Query (próxima fase)
 
 ##### **Estructura del Proyecto**
+
 ```
 src/
 ├── app/
@@ -1928,6 +2035,7 @@ src/
 #### 🎨 Sistema de Diseño SoSoValue
 
 ##### **Layout Principal - 7 Zonas**
+
 Implementamos un diseño en cuadrícula de 7 filas que permite visualización jerárquica de información:
 
 1. **Zona Hero** - KPIs críticos del portfolio
@@ -1939,6 +2047,7 @@ Implementamos un diseño en cuadrícula de 7 filas que permite visualización je
 7. **Zona Research** - Acciones rápidas de investigación
 
 ##### **Sistema de Colores y Estados**
+
 ```css
 /* Colores de Estado */
 .success: verde (#22c55e) - Operaciones exitosas, métricas positivas
@@ -1957,28 +2066,31 @@ Implementamos un diseño en cuadrícula de 7 filas que permite visualización je
 #### 🧩 Componentes Implementados
 
 ##### **1. Gestión de Estado Global (Zustand)**
+
 ```typescript
 // /src/store/ui.ts
 interface UIState {
-  selectedAssets: string[];     // ['BTC', 'ETH'] - Activos seleccionados
-  range: '1D' | '7D' | '30D';  // Rango temporal para consultas
-  currency: 'USD' | 'MXN';     // Moneda de visualización
-  timezone: string;            // Zona horaria del usuario
-  sidebarCollapsed: boolean;   // Estado de navegación lateral
+  selectedAssets: string[]; // ['BTC', 'ETH'] - Activos seleccionados
+  range: '1D' | '7D' | '30D'; // Rango temporal para consultas
+  currency: 'USD' | 'MXN'; // Moneda de visualización
+  timezone: string; // Zona horaria del usuario
+  sidebarCollapsed: boolean; // Estado de navegación lateral
 }
 ```
 
 ##### **2. Navegación y Layout**
 
 ###### **TopBar Component** (`/src/components/layout/TopBar.tsx`)
+
 - **Selectores Globales**: Activos, rango temporal, moneda, zona horaria
 - **Búsqueda Universal**: Campo de búsqueda con autocompletado
-- **Acciones Rápidas**: 
+- **Acciones Rápidas**:
   - "Run Worker Once" - Ejecutar procesamiento único
   - "Generate One-Pager" - Generar reporte ejecutivo
 - **Indicadores**: Notificaciones (🔔), configuración (⚙️)
 
 ###### **NavLeft Component** (`/src/components/layout/NavLeft.tsx`)
+
 - **12 Secciones Principales**:
   - 🏠 Home - Dashboard principal
   - 📊 Markets - Análisis de mercados
@@ -1996,32 +2108,38 @@ interface UIState {
 ##### **3. Dashboard Cards Especializados**
 
 ###### **KpiStrip** - Métricas de Portfolio
+
 - **NAV**: Valor neto de activos con variación porcentual
 - **P&L**: Ganancia/pérdida realizada y no realizada
 - **Sharpe Ratio**: Métrica de rendimiento ajustada por riesgo
 - **Max Drawdown**: Máxima pérdida histórica
 
 ###### **EtfAutoswitchCard** - Flujos ETF Inteligentes
+
 - **Flujos Netos**: Entradas/salidas de capital por ETF
 - **Autoswitch Logic**: Algoritmo de rebalanceo automático
 - **Performance Comparison**: BTC vs ETH vs índices tradicionales
 
 ###### **FundingSnapshotCard** - Tasas de Financiamiento
+
 - **Multi-Exchange**: Binance, OKX, Bybit tasas en tiempo real
 - **Spread Analysis**: Oportunidades de arbitraje
 - **Historical Trends**: Tendencias de 7D/30D
 
 ###### **TvlHeatmapCard** - Mapa de Calor TVL
+
 - **Protocol TVL**: Total Value Locked por protocolo DeFi
 - **Change Indicators**: Cambios 7D/30D con codificación por colores
 - **Risk Assessment**: Análisis de concentración de liquidez
 
 ###### **AlertsLiveCard** - Alertas en Tiempo Real
+
 - **SSE Integration**: Server-Sent Events para actualizaciones live
 - **Severity Levels**: SEV1-SEV4 con códigos de color
 - **Acknowledgment System**: Sistema de confirmación de alertas
 
 ###### **OpxTopScores** - Oportunidades Top
+
 - **Scoring Algorithm**: Puntuación 0-100 basada en múltiples factores
 - **Risk Assessment**: Evaluación de riesgo por oportunidad
 - **Execution Ready**: Enlaces directos a ejecución
@@ -2029,6 +2147,7 @@ interface UIState {
 ##### **4. Sistema de Componentes UI**
 
 ###### **Biblioteca Base** (`/src/components/ui/`)
+
 - **Button**: Variantes (default, outline, ghost) y tamaños (sm, md, lg)
 - **Badge**: Indicadores de estado con colores semánticos
 - **Card**: Contenedores estructurados con header/content/footer
@@ -2039,6 +2158,7 @@ interface UIState {
 #### 📊 Métricas y KPIs del Sistema
 
 ##### **Performance Metrics**
+
 - **Tiempo de Carga**: < 2 segundos para vista completa del dashboard
 - **Responsividad**: Soporte completo para desktop, tablet, móvil
 - **Actualización de Datos**: Intervalos configurables por tipo de dato
@@ -2047,6 +2167,7 @@ interface UIState {
   - Alerts/DQP: Tiempo real
 
 ##### **User Experience Metrics**
+
 - **Time to Insight**: 10 segundos para comprensión del mercado
 - **Click Depth**: Máximo 2 clics para cualquier acción
 - **Navigation Speed**: Transiciones < 300ms entre secciones
@@ -2056,17 +2177,20 @@ interface UIState {
 #### 🔄 Estado Actual y Próximos Pasos
 
 ##### ✅ **Completado (Fase 1)**
+
 1. **Arquitectura Base**: Sistema de estado, navegación, layout
 2. **UI Components**: 12 componentes dashboard + biblioteca UI
 3. **Diseño SoSoValue**: Grid 7-zonas, sistema de colores, interacciones
 4. **Integración Next.js**: Compilación exitosa, servidor funcional
 
 ##### 🚧 **En Progreso (Fase 2)**
+
 - **TanStack Query Integration**: Reemplazar datos mock con APIs reales
 - **Cache Strategies**: Implementar estrategias por tipo de dato
 - **Asset-Aware Queries**: Queries que respetan selección global de activos
 
 ##### 📅 **Planificado (Fase 3)**
+
 - **Route Pages**: Páginas dedicadas para cada sección principal
 - **Telemetry**: Tracking de interacciones y métricas de rendimiento
 - **Advanced Features**: Filtros avanzados, exportación, colaboración
@@ -2076,16 +2200,19 @@ interface UIState {
 #### 🎯 Impacto y Valor del Proyecto
 
 ##### **Para Usuarios Finales**
+
 - **Eficiencia**: Reducción del 70% en tiempo de análisis de mercado
 - **Precisión**: Vista unificada elimina inconsistencias de datos
 - **Velocidad**: Acceso inmediato a información crítica para trading
 
 ##### **Para el Negocio**
+
 - **Escalabilidad**: Arquitectura modular permite crecimiento sostenible
 - **Mantenibilidad**: Código TypeScript bien estructurado y documentado
 - **Flexibilidad**: Sistema de componentes reutilizables para nuevas funcionalidades
 
 ##### **Ventaja Competitiva**
+
 - **User Experience**: Interfaz superior siguiendo mejores prácticas UX/UI
 - **Performance**: Optimizaciones técnicas para experiencia fluida
 - **Integración**: Preparado para conectar con cualquier fuente de datos financiera
@@ -2095,6 +2222,7 @@ interface UIState {
 #### 🔧 Aspectos Técnicos Avanzados
 
 ##### **Gestión de Estado Predictiva**
+
 ```typescript
 // El store Zustand incluye helpers para queries asset-aware
 const { getAssetParams, getFormattedAsOf } = useUIStore();
@@ -2102,11 +2230,13 @@ const { getAssetParams, getFormattedAsOf } = useUIStore();
 ```
 
 ##### **Sistema de Cache Inteligente**
+
 - **Stale-While-Revalidate**: Datos actuales mientras se actualizan en background
 - **Asset Invalidation**: Cache se invalida automáticamente al cambiar activos
 - **Error Boundaries**: Manejo graceful de errores de red/API
 
 ##### **Responsive Design System**
+
 - **Mobile-First**: Diseño que escala desde móvil hasta desktop
 - **Breakpoints**: sm(640px), md(768px), lg(1024px), xl(1280px)
 - **Component Adaptability**: Componentes se adaptan automáticamente al viewport
@@ -2116,12 +2246,14 @@ const { getAssetParams, getFormattedAsOf } = useUIStore();
 #### 📈 Métricas de Éxito del Proyecto
 
 ##### **Desarrollo**
+
 - ✅ **100%** de componentes principales implementados
 - ✅ **0 errores** de TypeScript en compilación
 - ✅ **< 1s** tiempo de compilación incremental
 - ✅ **12 componentes** dashboard completamente funcionales
 
 ##### **Calidad de Código**
+
 - ✅ **Arquitectura modular** con separación clara de responsabilidades
 - ✅ **TypeScript strict** para máxima seguridad de tipos
 - ✅ **Componentes reutilizables** con props bien definidos
@@ -2131,7 +2263,7 @@ const { getAssetParams, getFormattedAsOf } = useUIStore();
 
 #### 🚀 Conclusión
 
-ADAF Dashboard Pro representa una transformación completa hacia una interfaz de clase mundial que competirá directamente con plataformas como Bloomberg Terminal, TradingView Pro, y otras soluciones enterprise. 
+ADAF Dashboard Pro representa una transformación completa hacia una interfaz de clase mundial que competirá directamente con plataformas como Bloomberg Terminal, TradingView Pro, y otras soluciones enterprise.
 
 La implementación actual proporciona una base sólida que cumple con los estándares más exigentes de la industria financiera, tanto en términos de funcionalidad como de experiencia de usuario.
 
@@ -2139,12 +2271,14 @@ La implementación actual proporciona una base sólida que cumple con los están
 
 ---
 
-*Documento generado el 30 de Septiembre, 2025*  
-*Proyecto: ADAF Dashboard Pro v2.0*  
-*Estado: Fase 1 Completada - Lista para Fase 2*
+_Documento generado el 30 de Septiembre, 2025_  
+_Proyecto: ADAF Dashboard Pro v2.0_  
+_Estado: Fase 1 Completada - Lista para Fase 2_
 
 <a id="doc-corte-de-caja"></a>
+
 ## Corte de Caja
+
 > Fuente original: `corte de caja.md`
 
 ### Corte de caja — ADAF Dashboard
@@ -2227,16 +2361,16 @@ Estado general: Listo para producción con observaciones (compilación local fal
   - Acción sugerida: ejecutar con `-x` para traza, revisar `set -euo pipefail`, validar `ENV`/secrets requeridos y precondiciones (contenedores encendidos, credenciales S3).
 
 - `npm run build` — Exit Code: 1
-  - Posibles causas habituales: 
+  - Posibles causas habituales:
     - Dependencias no instaladas (falta `node_modules`) o desalineadas con lock (hay `pnpm-lock.yaml`, pero se usó `npm`).
-    - Tipado TS o imports quebrados (Next 15 + React 19 pueden exigir ajustes). 
+    - Tipado TS o imports quebrados (Next 15 + React 19 pueden exigir ajustes).
     - Variables `process.env.*` requeridas en build time no definidas.
   - Acciones sugeridas (local):
-    1) Usar el gestor consistente con el lockfile:
+    1. Usar el gestor consistente con el lockfile:
        - Con pnpm: `pnpm install` → `pnpm build`
        - O con npm: `npm install` (generará package-lock) → `npm run typecheck` → `npm run build`
-    2) Capturar errores: ejecutar `npm run typecheck` primero para reducir ruido del build.
-    3) Verificar variables de entorno de build (`NEXT_PUBLIC_*`, claves externas, etc.).
+    2. Capturar errores: ejecutar `npm run typecheck` primero para reducir ruido del build.
+    3. Verificar variables de entorno de build (`NEXT_PUBLIC_*`, claves externas, etc.).
 
 ---
 
@@ -2250,17 +2384,17 @@ Estado general: Listo para producción con observaciones (compilación local fal
 
 #### 8) Próximos pasos (accionables)
 
-1) Build pipeline
+1. Build pipeline
    - Alinear gestor de paquetes (usar `pnpm` por `pnpm-lock.yaml`).
    - Ejecutar `pnpm build` y capturar errores; corregir tipado/imports/env.
    - Añadir job de `typecheck` en CI y regla de rechazo en PR.
-2) Recovery/DR
+2. Recovery/DR
    - Ejecutar `scripts/recovery.sh -x` en entorno con variables/secrets; documentar prerequisitos en el script.
    - Ensayar PITR con `pitr-restore.sh` contra un snapshot reciente.
-3) Seguridad/Operación
+3. Seguridad/Operación
    - Conectar alertas de Grafana a canal On-Call.
    - Programar `chaos.sh` mensual (GameDay) y rotación de secretos trimestral.
-4) Entorno productivo
+4. Entorno productivo
    - Ingresar dominio, TLS gestionado, WAF/CDN (si aplica) y límites de cuota.
 
 ---
@@ -2285,7 +2419,9 @@ Estado general: Listo para producción con observaciones (compilación local fal
 Cierre: El sistema quedó endurecido y listo para producción. Falta estabilizar el build local y validar el flujo de recuperación en el entorno actual para declarar “green” total del pipeline.
 
 <a id="doc-corte-de-caja-ejecutivo"></a>
+
 ## Corte de Caja Ejecutivo
+
 > Fuente original: `corte-de-caja-ejecutivo.md`
 
 ### 📊 ADAF Dashboard Pro - Corte de Caja Ejecutivo
@@ -2301,8 +2437,9 @@ Cierre: El sistema quedó endurecido y listo para producción. Falta estabilizar
 ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra múltiples módulos especializados en un dashboard unificado. El proyecto ha evolucionado desde una arquitectura distribuida hacia una plataforma consolidada que compite directamente con Bloomberg Terminal y TradingView Pro.
 
 ##### **Números Clave del Proyecto**
+
 - ✅ **41,267 líneas** de código TypeScript
-- ✅ **95 componentes React** implementados  
+- ✅ **95 componentes React** implementados
 - ✅ **72 rutas API** funcionales
 - ✅ **12 módulos** principales integrados
 - ✅ **100% TypeScript** - Zero JavaScript legacy
@@ -2313,20 +2450,24 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 #### 📦 **Inventario Completo de Módulos**
 
 ##### **1. 🏠 Dashboard Core (SoSoValue)**
+
 **Estado:** ✅ **COMPLETADO AL 100%**
+
 - **Descripción:** Interface principal con diseño 7-zonas inspirado en SoSoValue
 - **Componentes:** 12 dashboard cards especializados
 - **Arquitectura:** Zustand + TanStack Query ready
 - **Archivos Clave:**
   - `/src/app/(dashboard)/layout.tsx` - Shell principal
-  - `/src/app/(dashboard)/page.tsx` - Home dashboard 
+  - `/src/app/(dashboard)/page.tsx` - Home dashboard
   - `/src/components/dashboard/` - 11 componentes especializados
   - `/src/store/ui.ts` - Estado global
 
 **Impacto:** Interface que permite "oler el mercado en 10s, profundizar en 1 clic, operar en 2"
 
 ##### **2. 🔍 Research & Backtesting Engine**
+
 **Estado:** ✅ **COMPLETADO AL 90%**
+
 - **Descripción:** Motor de investigación y backtesting de estrategias
 - **Capacidades:** DSL propio, backtesting automático, promoción a OP-X
 - **Archivos Clave:**
@@ -2338,7 +2479,9 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 **Impacto:** Permite diseñar, probar y deployar estrategias algorítmicas
 
 ##### **3. 🎯 OP-X Opportunities Engine**
+
 **Estado:** ✅ **COMPLETADO AL 95%**
+
 - **Descripción:** Motor de detección y ejecución de oportunidades
 - **Capacidades:** Scoring automático, execution planning, risk controls
 - **Archivos Clave:**
@@ -2350,7 +2493,9 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 **Impacto:** Automatiza identificación y ejecución de trades rentables
 
 ##### **4. 📊 Reportería Institucional (Módulo F)**
+
 **Estado:** ✅ **COMPLETADO AL 100%**
+
 - **Descripción:** Generación automatizada de reportes PDF institucionales
 - **Capacidades:** One-pagers, quarterly reports, compliance tracking
 - **Archivos Clave:**
@@ -2362,7 +2507,9 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 **Impacto:** Reportería automática para compliance y stakeholders
 
 ##### **5. 🏥 DQP - Data Quality & Processing**
+
 **Estado:** ✅ **COMPLETADO AL 100%**
+
 - **Descripción:** Monitoreo de calidad de datos y pipelines ETL
 - **Capacidades:** Health checks, incident tracking, freshness monitoring
 - **Archivos Clave:**
@@ -2373,7 +2520,9 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 **Impacto:** Garantiza integridad y confiabilidad de todos los datos
 
 ##### **6. 🛡️ Risk & Compliance**
+
 **Estado:** ✅ **COMPLETADO AL 95%**
+
 - **Descripción:** Sistema de gestión de riesgo y cumplimiento regulatorio
 - **Capacidades:** VaR calculation, drawdown monitoring, compliance checklists
 - **Archivos Clave:**
@@ -2385,7 +2534,9 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 **Impacto:** Protege el capital y asegura cumplimiento regulatorio
 
 ##### **7. 📈 Market Data & Analytics**
+
 **Estado:** ✅ **COMPLETADO AL 85%**
+
 - **Descripción:** Integración y análisis de datos de mercado en tiempo real
 - **Capacidades:** ETF flows, funding rates, on-chain analytics, TVL tracking
 - **Archivos Clave:**
@@ -2397,7 +2548,9 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 **Impacto:** Base de datos unificada para toma de decisiones
 
 ##### **8. 🚨 Alerting & Monitoring**
+
 **Estado:** ✅ **COMPLETADO AL 90%**
+
 - **Descripción:** Sistema de alertas inteligentes y monitoreo operacional
 - **Capacidades:** Real-time alerts, SSE streaming, Prometheus metrics
 - **Archivos Clave:**
@@ -2409,7 +2562,9 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 **Impacto:** Monitoreo 24/7 con respuesta automática a incidentes
 
 ##### **9. 🧬 Data Lineage & Traceability**
+
 **Estado:** ✅ **COMPLETADO AL 80%**
+
 - **Descripción:** Trazabilidad completa de datos y transformaciones
 - **Capacidades:** Signal tracking, dependency mapping, audit trails
 - **Archivos Clave:**
@@ -2420,7 +2575,9 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 **Impacto:** Transparencia total en origen y transformación de datos
 
 ##### **10. 🎓 Academy & Learning**
+
 **Estado:** ✅ **COMPLETADO AL 70%**
+
 - **Descripción:** Sistema de educación y certificación financiera
 - **Capacidades:** Interactive lessons, quizzes, progress tracking
 - **Archivos Clave:**
@@ -2431,7 +2588,9 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 **Impacto:** Capacitación continua del equipo en estrategias financieras
 
 ##### **11. 🔐 Security & Access Control**
+
 **Estado:** ✅ **COMPLETADO AL 85%**
+
 - **Descripción:** Sistema de seguridad y control de acceso
 - **Capacidades:** CSP monitoring, key management, RBAC
 - **Archivos Clave:**
@@ -2442,7 +2601,9 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 **Impacto:** Protección enterprise-grade de datos financieros sensibles
 
 ##### **12. 🔧 Operations & Infrastructure**
+
 **Estado:** ✅ **COMPLETADO AL 90%**
+
 - **Descripción:** Operaciones automatizadas y gestión de infraestructura
 - **Capacidades:** Health checks, retention policies, system validation
 - **Archivos Clave:**
@@ -2458,6 +2619,7 @@ ADAF Dashboard Pro es un **sistema financiero de clase enterprise** que integra 
 #### 📈 **Métricas de Progreso Global**
 
 ##### **Desarrollo Completado**
+
 ```
 Dashboard Core (SoSoValue):     ████████████████████ 100%
 Research & Backtesting:         ████████████████████ 90%
@@ -2476,6 +2638,7 @@ PROGRESO TOTAL:                 ████████████████
 ```
 
 ##### **Estadísticas Técnicas**
+
 - **Cobertura de Funcionalidades:** 89.2% implementado
 - **APIs Funcionales:** 72/80 endpoints (90%)
 - **Componentes UI:** 95/105 componentes (90.5%)
@@ -2487,18 +2650,21 @@ PROGRESO TOTAL:                 ████████████████
 #### 🎯 **Análisis de Valor por Módulo**
 
 ##### **Alto Valor Estratégico (Diferenciadores Clave)**
+
 1. **Dashboard SoSoValue** - Interface revolucionaria que redefine UX financiera
 2. **OP-X Engine** - Automatización completa del ciclo de oportunidades
 3. **Research Engine** - Backtesting y desarrollo de estrategias de clase institucional
 4. **DQP System** - Confiabilidad de datos enterprise-grade
 
 ##### **Alto Valor Operacional (Eficiencia)**
+
 1. **Reportería Institucional** - Automatización de compliance
 2. **Alerting System** - Monitoreo proactivo 24/7
 3. **Risk Management** - Protección automática de capital
 4. **Operations Suite** - Infraestructura auto-gestionada
 
 ##### **Alto Valor Competitivo (Ventaja de Mercado)**
+
 1. **Data Lineage** - Transparencia total (único en el mercado)
 2. **Academy System** - Capacitación integrada
 3. **Security Suite** - Protección financiera avanzada
@@ -2509,18 +2675,21 @@ PROGRESO TOTAL:                 ████████████████
 #### 🚀 **Estado de Readiness por Módulo**
 
 ##### **Production Ready (Deployable Hoy)**
+
 - ✅ Dashboard Core
-- ✅ Reportería Institucional  
+- ✅ Reportería Institucional
 - ✅ DQP System
 - ✅ Risk & Compliance (core)
 
 ##### **Pre-Production (1-2 semanas)**
+
 - 🟡 OP-X Engine (tuning final)
 - 🟡 Research Engine (testing avanzado)
 - 🟡 Alerting System (stress testing)
 - 🟡 Operations Suite (monitoring fino)
 
 ##### **Development (2-4 semanas)**
+
 - 🟠 Market Analytics (integraciones finales)
 - 🟠 Security Suite (penetration testing)
 - 🟠 Data Lineage (performance optimization)
@@ -2531,12 +2700,14 @@ PROGRESO TOTAL:                 ████████████████
 #### 💼 **Impacto del Negocio**
 
 ##### **Métricas de Eficiencia**
+
 - **Reducción de Tiempo de Análisis:** 75% (de 20 min → 5 min)
 - **Automatización de Reportes:** 90% (manual → automático)
 - **Detección de Oportunidades:** 85% improvement (velocidad)
 - **Reducción de Riesgos:** 60% (controles automatizados)
 
 ##### **ROI Proyectado**
+
 - **Desarrollo Investment:** ~$800K equivalent
 - **Operational Savings:** ~$2.1M anual
 - **Revenue Enhancement:** ~$5.3M potencial (mejores trades)
@@ -2544,6 +2715,7 @@ PROGRESO TOTAL:                 ████████████████
 - **ROI Total:** **1,150%** en primer año
 
 ##### **Ventaja Competitiva**
+
 - **Time to Market:** 6 meses adelante de competencia
 - **Feature Completeness:** 89% vs ~45% mercado
 - **Integration Depth:** Único sistema unificado
@@ -2554,12 +2726,14 @@ PROGRESO TOTAL:                 ████████████████
 #### 🔮 **Roadmap de Finalización**
 
 ##### **Octubre 2025 - Sprint Final**
+
 - **Semana 1:** Completar integraciones Market Analytics
 - **Semana 2:** Stress testing OP-X Engine
-- **Semana 3:** Security hardening y penetration testing  
+- **Semana 3:** Security hardening y penetration testing
 - **Semana 4:** Academy content completion + final testing
 
 ##### **Noviembre 2025 - Production Deployment**
+
 - **Semana 1:** Staging deployment + user acceptance testing
 - **Semana 2:** Production rollout + monitoring setup
 - **Semana 3:** User training + adoption support
@@ -2572,6 +2746,7 @@ PROGRESO TOTAL:                 ████████████████
 #### 🏆 **Conclusiones Ejecutivas**
 
 ##### **Fortalezas Clave**
+
 1. **Arquitectura Sólida:** TypeScript + Next.js enterprise-grade
 2. **Integración Profunda:** 12 módulos trabajando como uno solo
 3. **UX Revolucionaria:** SoSoValue design que redefine interfaces financieras
@@ -2579,6 +2754,7 @@ PROGRESO TOTAL:                 ████████████████
 5. **Calidad Enterprise:** 0 errores, documentación completa, testing exhaustivo
 
 ##### **Diferenciadores Únicos**
+
 1. **Dashboard Unificado:** Única plataforma que integra research + trading + compliance
 2. **Data Lineage:** Trazabilidad completa (inexistente en competencia)
 3. **OP-X Automation:** Ciclo completo automático de oportunidades
@@ -2586,32 +2762,37 @@ PROGRESO TOTAL:                 ████████████████
 5. **Academy Integrado:** Aprendizaje continuo dentro del workflow
 
 ##### **Valor de Mercado**
+
 ADAF Dashboard Pro se posiciona como **el primer sistema financiero truly integrated** que combina:
+
 - **Intelligence** (Research + Analytics)
-- **Execution** (OP-X + Risk Management)  
+- **Execution** (OP-X + Risk Management)
 - **Compliance** (Reporting + Audit)
 - **Operations** (Monitoring + Automation)
 
 En un solo dashboard que rivaliza y supera a Bloomberg Terminal en UX y funcionalidad integrada.
 
 ##### **Recomendación Estratégica**
+
 **ACELERAR** el completion al 100% para capitalizar la ventana competitiva y posicionarse como líder en financial intelligence platforms antes de Q1 2026.
 
 ---
 
 **Status Final:** 🎯 **89.2% COMPLETADO** - Proyecto en excelente estado para finalización en Q4 2025
 
-*Documento generado automáticamente el 30 de Septiembre, 2025*
+_Documento generado automáticamente el 30 de Septiembre, 2025_
 
 ---
 
 #### 📊 INFORME TÉCNICO ACTUALIZADO (OCT 2025)
 
 ESTADO GENERAL
+
 - Dashboard funcional, drag & drop operativo, localización español mexicano completa.
 - Arquitectura moderna: Next.js 15, TypeScript, Tailwind, Prisma, Redis, PostgreSQL.
 
 FUNCIONALIDAD CLAVE
+
 - Drag & drop de todos los mini dashboards (KPI, DQP health, alertas, research, etc.) con persistencia localStorage.
 - Localización profesional: toda la UI en español MX, términos financieros en inglés (yield, guardrails, slippage, etc.).
 - 11+ componentes dashboard arrastrables, integración completa.
@@ -2622,19 +2803,21 @@ FUNCIONALIDAD CLAVE
 
 ESTRUCTURA PRINCIPAL
 src/
-  contexts/DashboardLayoutContext.tsx   # Estado y lógica drag & drop
-  components/dashboard/                 # Todos los cuadros arrastrables
-  lib/db.ts, auth/, metrics.ts          # Servicios core
-  app/api/                              # 40+ endpoints funcionales
-  components/ui/                        # Sistema de diseño y utilidades
+contexts/DashboardLayoutContext.tsx # Estado y lógica drag & drop
+components/dashboard/ # Todos los cuadros arrastrables
+lib/db.ts, auth/, metrics.ts # Servicios core
+app/api/ # 40+ endpoints funcionales
+components/ui/ # Sistema de diseño y utilidades
 
 ERRORES RESTANTES (NO BLOQUEANTES)
+
 - 13 errores TS menores (principalmente en APIs de Academy usando db.query() en vez de db.$queryRaw()).
 - Algunos parámetros incorrectos en funciones de métricas.
 - Tipos menores en logger.
 - No afectan la funcionalidad principal ni la experiencia de usuario.
 
 CAPACIDADES ACTUALES
+
 - Dashboard 100% reorganizable por el usuario.
 - Localización avanzada.
 - Research y backtesting con snapshots.
@@ -2643,6 +2826,7 @@ CAPACIDADES ACTUALES
 - Academia: lecciones, quizzes, tracking de progreso.
 
 SUGERENCIAS DE SIGUIENTE ITERACIÓN
+
 1. Corregir los 13 errores TS menores en APIs de Academy.
 2. Mejorar testing automatizado y cobertura.
 3. Refinar mobile/responsive.
@@ -2650,13 +2834,16 @@ SUGERENCIAS DE SIGUIENTE ITERACIÓN
 5. Integrar monitoreo de performance avanzado.
 
 ESTADO FINAL
+
 - Sistema estable, funcional, listo para producción y para iteraciones avanzadas.
 - Arquitectura escalable, UX moderna, observabilidad y métricas listas.
 
 ---
 
 <a id="doc-readme-backup-2025-10-09"></a>
+
 ## README Backup 2025-10-09
+
 > Fuente original: `README_BACKUP_20251009_191503.md`
 
 ### 🚀 ADAF Dashboard Pro - Sistema Integrado de Inteligencia Financiera
@@ -2679,8 +2866,9 @@ cd adaf-dashboard-pro
 #### 🎯 **¿Qué es ADAF Dashboard Pro?**
 
 Sistema **Fortune 500** de inteligencia financiera con:
+
 - **📊 Dashboard Web Profesional** (Next.js 15, React 19, TypeScript)
-- **🤖 30+ Agentes Cuantitativos** de trading algorítmico 
+- **🤖 30+ Agentes Cuantitativos** de trading algorítmico
 - **🎓 Academy de Aprendizaje** con lecciones interactivas
 - **📈 Analytics de Mercados** (ETFs, DeFi, derivados)
 - **🛡️ Seguridad Enterprise** y compliance institucional
@@ -2691,18 +2879,21 @@ Sistema **Fortune 500** de inteligencia financiera con:
 #### 🏆 **ESTADO: 100% OPERATIVO** ✅
 
 ##### ✅ **NAVEGACIÓN COMPLETAMENTE FUNCIONAL**
+
 - **Todos los enlaces funcionan**: Sin errores 404
 - **Rutas operativas**: `/markets`, `/academy`, `/research`, `/reports`, `/news`, `/derivatives`, etc.
 - **Navegación lateral**: Sidebar completo con 10 secciones
 - **Botones principales**: "Abrir Dashboard" y accesos rápidos funcionando
 
 ##### ✅ **SISTEMA DUAL INTEGRADO**
+
 - **Puerto 3000**: ADAF Dashboard Pro (principal)
 - **Puerto 3005**: LAV-ADAF Sistema (agentes cuantitativos)
 - **Navegación integrada**: Acceso directo entre ambos sistemas
 - **Logs organizados**: Separados por servicio para debugging
 
 ##### ✅ **TESTING Y CALIDAD**
+
 - **850+ tests ejecutándose**: Todos pasando correctamente
 - **Cobertura >95%**: En módulos críticos
 - **ESLint + TypeScript**: Zero errores, configuración estricta
@@ -2715,6 +2906,7 @@ Sistema **Fortune 500** de inteligencia financiera con:
 ##### 🚨 **Si algo no funciona, sigue estos pasos:**
 
 ###### 1️⃣ **Limpiar y Resetear**
+
 ```bash
 # Limpiar puertos ocupados
 lsof -t -i:3000,3005 | xargs kill -9
@@ -2728,6 +2920,7 @@ pnpm install
 ```
 
 ###### 2️⃣ **Verificar Dependencias**
+
 ```bash
 # Instalar todo desde cero
 pnpm install
@@ -2740,6 +2933,7 @@ pnpm build
 ```
 
 ###### 3️⃣ **Iniciar Paso a Paso**
+
 ```bash
 # Verificar que el server inicia
 pnpm dev
@@ -2750,6 +2944,7 @@ pnpm install && pnpm dev
 ```
 
 ###### 4️⃣ **Verificar Funcionamiento**
+
 ```bash
 # Probar endpoints principales
 curl http://localhost:3000/api/health
@@ -2758,11 +2953,12 @@ curl http://localhost:3005/
 ```
 
 ##### 🔧 **Comandos de Diagnóstico**
+
 ```bash
 # Ver estado de puertos
 lsof -i :3000,3005
 
-# Ver logs del sistema  
+# Ver logs del sistema
 tail -f adaf-dashboard.log
 tail -f lav-adaf-dashboard.log
 
@@ -2771,8 +2967,9 @@ ps aux | grep node
 ```
 
 ##### 📋 **Checklist de Verificación**
+
 - [ ] ✅ Puerto 3000 libre y accesible
-- [ ] ✅ Puerto 3005 libre y accesible  
+- [ ] ✅ Puerto 3005 libre y accesible
 - [ ] ✅ `pnpm install` ejecutado sin errores
 - [ ] ✅ `pnpm build` exitoso
 - [ ] ✅ Navegación funciona (sin 404s)
@@ -2784,6 +2981,7 @@ ps aux | grep node
 #### 📋 **COMPONENTES DEL SISTEMA**
 
 ##### 🖥️ **Dashboard Principal** (Puerto 3000)
+
 - **Academy**: Sistema de aprendizaje con lecciones y quizzes
 - **Markets**: Análisis de mercados, ETFs, funding rates
 - **Research**: Herramientas de investigación cuantitativa
@@ -2795,6 +2993,7 @@ ps aux | grep node
 - **DQP**: Data Quality & Governance
 
 ##### 🤖 **Sistema LAV-ADAF** (Puerto 3005)
+
 - **30+ Agentes Cuantitativos**: Trading algorítmico especializado
 - **Market Sentinel**: Señales de mercado en tiempo real
 - **Risk Warden**: Gestión de riesgos y VaR
@@ -2803,6 +3002,7 @@ ps aux | grep node
 - **Security Aegis**: Seguridad y compliance
 
 ##### 🔌 **APIs REST** (19+ Endpoints)
+
 ```bash
 # Health y métricas
 GET /api/health              # Estado del sistema
@@ -2827,19 +3027,22 @@ POST /api/research/execute  # Ejecutar backtest
 #### 💻 **STACK TECNOLÓGICO**
 
 ##### Frontend
+
 - **Next.js 15** - Framework React con App Router
-- **React 19** - Biblioteca de interfaz de usuario  
+- **React 19** - Biblioteca de interfaz de usuario
 - **TypeScript 5.9** - Tipado estático
 - **Tailwind CSS** - Framework de estilos
 - **shadcn/ui** - Componentes UI profesionales
 
-##### Backend  
+##### Backend
+
 - **Node.js 20+** - Runtime de JavaScript
 - **Prisma** - ORM y gestión de base de datos
 - **PostgreSQL** - Base de datos principal
 - **Redis** - Cache y cola de mensajes
 
 ##### Testing & Quality
+
 - **Vitest** - Framework de testing (850+ tests)
 - **Playwright** - Testing End-to-End
 - **ESLint + TypeScript** - Linting estricto
@@ -2862,7 +3065,7 @@ adaf-dashboard-pro/
 │   ├── components/             # Componentes React
 │   └── lib/                    # Utilidades y servicios
 │
-├── 🤖 lav-adaf/                # SISTEMA DE AGENTES  
+├── 🤖 lav-adaf/                # SISTEMA DE AGENTES
 │   ├── apps/dashboard/         # Dashboard agentes (Puerto 3005)
 │   └── apps/[30+ agentes]/     # Microservicios especializados
 │
@@ -2882,23 +3085,27 @@ adaf-dashboard-pro/
 #### 🎯 **CARACTERÍSTICAS PRINCIPALES**
 
 ##### 📊 **Dashboard Financiero**
+
 - Analytics de mercados DeFi y ETFs
-- Sistema de reportes institucionales  
+- Sistema de reportes institucionales
 - Gestión de riesgos avanzada
 - Herramientas de investigación cuantitativa
 
 ##### 🎓 **Academy de Aprendizaje**
+
 - Lecciones interactivas de finanzas
 - Sistema de evaluación y progress tracking
 - Ejercicios prácticos con verificación automática
 
 ##### 🤖 **Sistema de Agentes IA**
+
 - 30+ agentes especializados en trading
 - Análisis de mercado en tiempo real
 - Ejecución automática de estrategias
 - Gestión de riesgos inteligente
 
 ##### 🛡️ **Seguridad Enterprise**
+
 - Autenticación robusta y encryption
 - Compliance con estándares Fortune 500
 - Auditoría completa de acciones
@@ -2909,21 +3116,25 @@ adaf-dashboard-pro/
 #### 🔗 **LINKS IMPORTANTES**
 
 ##### 📚 **Documentación Completa**
+
 - [**ARCHITECTURE.md**](./ARCHITECTURE.md) - Documentación técnica detallada
 - [**MEMORIA_GITHUB_COPILOT.md**](./MEMORIA_GITHUB_COPILOT.md) - Historial de cambios y decisiones técnicas
 - [**Roadmap & OKRs**](./ROADMAP_OKRS_2025_2026.md) - Planificación institucional
 - [**Onboarding Fortune 500**](./ONBOARDING_FORTUNE500.md) - Guía de incorporación
 
 ##### 🌐 **URLs de Acceso**
+
 - **Dashboard Principal**: http://localhost:3000
-- **Sistema LAV-ADAF**: http://localhost:3005  
+- **Sistema LAV-ADAF**: http://localhost:3005
 - **Health Check**: http://localhost:3000/api/health
 - **Métricas**: http://localhost:3000/api/metrics
 
 ##### 🚨 **Soporte de Emergencia**
+
 Si tienes problemas:
+
 1. Revisa la sección **"RECUPERACIÓN DE EMERGENCIA"** arriba
-2. Consulta los logs: `tail -f adaf-dashboard.log`  
+2. Consulta los logs: `tail -f adaf-dashboard.log`
 3. Verifica la documentación técnica en `ARCHITECTURE.md`
 4. Revisa el historial en `MEMORIA_GITHUB_COPILOT.md`
 
@@ -2932,6 +3143,7 @@ Si tienes problemas:
 #### 🏆 **PROYECTO COMPLETAMENTE FUNCIONAL**
 
 ##### ✅ **Estado Octubre 2025**
+
 - **Navegación 100% operativa**: Todos los enlaces funcionan sin 404s
 - **850+ tests pasando**: Sistema robusto y estable
 - **Dual dashboard integrado**: ADAF (3000) + LAV-ADAF (3005)
@@ -2939,13 +3151,15 @@ Si tienes problemas:
 - **Documentación completa**: Guías de recuperación y arquitectura
 
 ##### 🎯 **Listo Para**
+
 - ✅ Desarrollo continuo
-- ✅ Despliegue en producción  
+- ✅ Despliegue en producción
 - ✅ Testing automatizado
 - ✅ Integración continua
 - ✅ Uso por equipos Fortune 500
 
 ##### 📞 **¿Necesitas Ayuda?**
+
 1. **Problemas técnicos**: Consulta "RECUPERACIÓN DE EMERGENCIA" arriba
 2. **Arquitectura**: Lee `ARCHITECTURE.md`
 3. **Historial**: Revisa `MEMORIA_GITHUB_COPILOT.md`
@@ -2958,6 +3172,7 @@ Si tienes problemas:
 #### 📋 **COMANDOS ÚTILES DE MANTENIMIENTO**
 
 ##### 🔍 **Verificación de Sistema**
+
 ```bash
 # Verificar estado de puertos
 lsof -i :3000,3005
@@ -2968,11 +3183,12 @@ curl http://localhost:3000/api/health
 # Health check completo
 curl "http://localhost:3000/api/health?deep=1"
 
-# Ver procesos Node activos  
+# Ver procesos Node activos
 ps aux | grep node
 ```
 
 ##### 🧹 **Limpieza y Reset**
+
 ```bash
 # Limpiar puertos ocupados
 pnpm dev:reset
@@ -2988,6 +3204,7 @@ pnpm prisma generate
 ```
 
 ##### 📊 **Testing y Build**
+
 ```bash
 # Ejecutar todos los tests
 pnpm test
@@ -2995,7 +3212,7 @@ pnpm test
 # Build de producción
 pnpm build
 
-# Verificar tipos TypeScript  
+# Verificar tipos TypeScript
 pnpm typecheck
 
 # Linting y formato
@@ -3003,11 +3220,12 @@ pnpm lint && pnpm format
 ```
 
 ##### 🎯 **Comandos Frecuentes**
+
 ```bash
 # Inicio rápido completo
 ./inicio-completo.sh
 
-# Solo ADAF Dashboard  
+# Solo ADAF Dashboard
 pnpm dev
 
 # Ver logs en tiempo real
@@ -3022,21 +3240,26 @@ pkill -f "next dev"
 **¡Con esta guía cualquier humano o AI puede rehacer el proyecto completo en minutos!** 💪
 
 <a id="doc-readme-wallstreet-pulse"></a>
+
 ## README WallStreet Pulse
+
 > Fuente original: `README_WALLSTREET_PULSE.md`
 
 ### Wall Street Pulse (WSP) · ADAF Billions Dashboard
 
 #### Resumen
+
 Módulo institucional con feeds ETF, tasas, índices, calendario y motor Auto-React. Score WSPS, señales, métricas, RBAC, i18n y tests.
 
 #### Inputs y adaptadores
+
 - ETF Flows: Farside/SoSoValue
 - Rates/DXY: FRED/comercial
 - Indices: mercado
 - Calendar: económico/earnings
 
 #### Fórmula WSPS
+
 - Inputs normalizados 0–1
 - Pesos: ETF_BTC 0.25, ETF_ETH 0.10, VIX 0.20, DXY 0.15, 2s10s 0.10, SPX/NDX 0.20
 - Score = Σ (peso × valor_normalizado) × 100
@@ -3045,6 +3268,7 @@ Módulo institucional con feeds ETF, tasas, índices, calendario y motor Auto-Re
 - Color: ≥66 verde, 33–65 amarillo, <33 rojo
 
 #### Normalización (v1.3.1)
+
 - VIX/DXY: z-score con estadísticas streaming Welford persistidas en Redis
   - Keys: `wsp:norm:vix:stats`, `wsp:norm:dxy:stats` { mean, m2, count } TTL 24h
   - Fallbacks: VIX mean=18 std=6; DXY mean=100 std=4; clamp z∈[-2.5, +2.5]
@@ -3054,31 +3278,36 @@ Módulo institucional con feeds ETF, tasas, índices, calendario y motor Auto-Re
 - El endpoint `/api/wsp/wsps` reporta `normalization.source: 'redis'|'fallback'`.
 
 #### Reglas Auto-React
+
 - Flush-Rebound, Basis Clean, Reduce Leverage, Rotate→RWA
 - Señales con rationale, sizing, guardrails
 
 #### Endpoints API
+
 - GET /api/wsp/etf?asset=BTC|ETH&window=1d|5d|mtd
 - GET /api/wsp/ratesfx
 - GET /api/wsp/indices
 - GET /api/wsp/calendar?window=7d
 - GET /api/wsp/wsps
 - POST /api/wsp/events/cooldown { kind } → fija cooldown 30m cross-instancia
-- GET  /api/wsp/events/cooldown?kind=… → { active, ttl }
+- GET /api/wsp/events/cooldown?kind=… → { active, ttl }
 - GET /api/wsp/events
 
 Todas las rutas agregan `X-WSP-Data: stale` si sirvieron datos en modo contingencia (stale-if-error/ETag).
 
 #### Métricas
+
 - Shim JSON: GET /api/metrics/wsp
 - Prometheus: GET /api/metrics/wsp con `Accept: text/plain`
 - Contadores etiquetados (route/adapter/status) e histogramas de latencia
 - Gauge `wsp_wsps_score`
 
 #### Límites
+
 - Guardrails ADAF, rate limits, cache Redis, ETag, circuit breaker
 
 #### Configuración
+
 - Flags/env sugeridos:
   - NEXT_PUBLIC_FF_WSP_ENABLED=true
   - NEXT_PUBLIC_FF_WSP_AUTOREACT=true
@@ -3086,24 +3315,30 @@ Todas las rutas agregan `X-WSP-Data: stale` si sirvieron datos en modo contingen
   - WSP_RATES_API_URL, WSP_INDICES_API_URL, WSP_CALENDAR_API_URL
 
 #### Snapshot
+
 - Botón desde banner, integra con ResearchPanel
 
 #### Testing
+
 - Unit: scoring (EMA + histeresis + persistencia), reglas (cooldown/stale), adaptadores (200/304/500, ETag, stale)
 - API: rate-limit (429), header X-WSP-Data
 - E2E: grid dnd-kit persistente, gating RBAC, banner con ≥2 señales mockeadas
 - Cobertura objetivo WSP ≥75%
 
 ##### Cómo probar local
+
 - Typecheck WSP aislado: pnpm tsc -p tsconfig.build.wsp.json
-- Unit tests WSP: pnpm vitest run tests/wsp.*.test.ts
+- Unit tests WSP: pnpm vitest run tests/wsp.\*.test.ts
 - E2E (si aplica): pnpm playwright test e2e/wsp.spec.ts
 
 #### DoD
+
 - Vista operativa, widgets drag & drop, score, señal mock, métricas, i18n, RBAC, tests, README
 
 <a id="doc-architecture"></a>
+
 ## Architecture
+
 > Fuente original: `ARCHITECTURE.md`
 
 ### Avances recientes (Octubre 2025)
@@ -3138,10 +3373,12 @@ Todas las rutas agregan `X-WSP-Data: stale` si sirvieron datos en modo contingen
 **ADAF Dashboard** es un sistema completo de inteligencia financiera que combina análisis de mercados DeFi, gestión de riesgos, y trading algorítmico. El proyecto implementa una arquitectura dual con dos aplicaciones principales corriendo en paralelo.
 
 ##### 🎯 **Componentes Principales**
+
 - **ADAF Dashboard Pro** (Puerto 3000) - Dashboard financiero unificado
 - **LAV-ADAF Sistema** (Puerto 3005) - Sistema de 30+ agentes cuantitativos
 
 ##### 📊 **Estado Actual del Sistema (Oct 2025)**
+
 - ✅ **NAVEGACIÓN 100% FUNCIONAL**: Todos los enlaces y botones navegan correctamente
 - ✅ **ZERO 404 ERRORS**: Problema de rutas completamente solucionado
 - ✅ **Route Groups Optimizados**: `(dashboard)` correctamente implementado según Next.js
@@ -3199,6 +3436,7 @@ Todas las rutas agregan `X-WSP-Data: stale` si sirvieron datos en modo contingen
 #### 🚀 Stack Tecnológico
 
 ##### **Frontend & Core**
+
 - **Next.js 15.5.4** - Framework React con App Router
 - **React 19.1.1** - Biblioteca de interfaz de usuario
 - **TypeScript 5.9.2** - Tipado estático
@@ -3207,6 +3445,7 @@ Todas las rutas agregan `X-WSP-Data: stale` si sirvieron datos en modo contingen
 - **Zustand 4.5.7** - Gestión de estado global
 
 ##### **Backend & APIs**
+
 - **Node.js 20+** - Runtime de JavaScript
 - **Prisma 5.22.0** - ORM y gestión de base de datos
 - **PostgreSQL 15** - Base de datos principal
@@ -3214,6 +3453,7 @@ Todas las rutas agregan `X-WSP-Data: stale` si sirvieron datos en modo contingen
 - **IORedis 5.4.1** - Cliente Redis para Node.js
 
 ##### **Testing & Quality**
+
 - **Vitest 2.1.8** - Framework de testing
 - **Playwright 1.56.0** - Testing E2E
 - **Testing Library** - Utilities de testing React
@@ -3221,6 +3461,7 @@ Todas las rutas agregan `X-WSP-Data: stale` si sirvieron datos en modo contingen
 - **Husky** - Git hooks
 
 ##### **DevOps & Deployment**
+
 - **Docker & Docker Compose** - Containerización
 - **Nginx** - Reverse proxy y load balancer
 - **PM2** - Process manager para Node.js
@@ -3471,21 +3712,21 @@ Metric {
 ```typescript
 // Roles y permisos
 interface UserRole {
-  id: string
-  name: string
-  permissions: Permission[]
+  id: string;
+  name: string;
+  permissions: Permission[];
 }
 
 interface Permission {
-  resource: string    // 'dashboard', 'agents', 'trading'
-  action: string     // 'read', 'write', 'execute'
-  conditions?: Json  // Condiciones adicionales
+  resource: string; // 'dashboard', 'agents', 'trading'
+  action: string; // 'read', 'write', 'execute'
+  conditions?: Json; // Condiciones adicionales
 }
 
 // Implementación en el código
 const RBACProvider = ({ permissions, children }) => {
   // Gestión de permisos basada en contexto
-}
+};
 ```
 
 ---
@@ -3505,29 +3746,29 @@ services:
       POSTGRES_DB: adaf_dashboard
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    
+
   # Cache Redis
   redis:
     image: redis:7-alpine
     command: redis-server --appendonly yes
-    
+
   # Aplicación ADAF
   adaf-app:
     build:
       context: .
       dockerfile: Dockerfile.prod
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       - postgres-primary
       - redis
-    
+
   # Reverse Proxy
   nginx:
     image: nginx:alpine
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
 ```
@@ -3579,13 +3820,13 @@ const HealthMonitor = () => {
     database: 'unknown',
     redis: 'unknown',
     agents: 'unknown',
-    apis: 'unknown'
-  })
-  
+    apis: 'unknown',
+  });
+
   useEffect(() => {
     // Verificación periódica de salud del sistema
-  }, [])
-}
+  }, []);
+};
 ```
 
 ---
@@ -3633,12 +3874,12 @@ export default defineConfig({
           branches: 80,
           functions: 80,
           lines: 80,
-          statements: 80
-        }
-      }
-    }
-  }
-})
+          statements: 80,
+        },
+      },
+    },
+  },
+});
 ```
 
 ---
@@ -3679,7 +3920,7 @@ jobs:
       - run: pnpm install
       - run: pnpm test
       - run: pnpm test:e2e
-      
+
   deploy:
     needs: test
     if: github.ref == 'refs/heads/main'
@@ -3754,7 +3995,9 @@ pnpm health:deep
 ##### Documento de Arquitectura v1.0 - Actualizado: Octubre 2025
 
 <a id="doc-copilot-context"></a>
+
 ## Copilot Context
+
 > Fuente original: `COPILOT_CONTEXT.md`
 
 ### Contexto de Copilot
@@ -3762,7 +4005,7 @@ pnpm health:deep
 #### Objetivo inmediato
 
 - Mantener dashboard estable (Next 14 + TS + shadcn/Tailwind).
-- Seguir patrón actual: /api/* en Next, Prisma, raw SQL si el modelo no está en Prisma.
+- Seguir patrón actual: /api/\* en Next, Prisma, raw SQL si el modelo no está en Prisma.
 - Respetar guardrails: slippage≤0.5, LTV≤0.35, HF≥1.6, RealYield≥0.6.
 - Mantener worker tick accesible por POST /api/agents/process, Prometheus en /api/metrics.
 
@@ -3780,7 +4023,9 @@ pnpm health:deep
 - No introducir ‘any’ sin necesidad.
 
 <a id="doc-analisis-de-fallos-de-tests"></a>
+
 ## Análisis de Fallos de Tests
+
 > Fuente original: `ANALISIS_FALLOS_TESTS.md`
 
 ### PLAN DE CORRECCIÓN DE TESTS FALLANDO
@@ -3788,16 +4033,20 @@ pnpm health:deep
 #### 🎯 PROBLEMAS IDENTIFICADOS Y SOLUCIONES
 
 ##### **1. PROBLEMA PRISMA LAV/ADAF (Crítico - 40 tests)**
+
 **Síntoma**: `@prisma/client did not initialize yet. Please run "prisma generate"`
-**Solución**: 
+**Solución**:
+
 ```bash
 cd /home/parallels/Desktop/adaf-dashboard-pro/lav-adaf
 pnpm prisma generate
 ```
 
 ##### **2. DEPENDENCIA FALTANTE (3 tests)**
+
 **Síntoma**: `Failed to resolve import "html-to-image"`
 **Solución**:
+
 ```bash
 cd /home/parallels/Desktop/adaf-dashboard-pro
 pnpm add html-to-image
@@ -3806,33 +4055,37 @@ pnpm add html-to-image
 ```
 
 ##### **3. CONFIGURACIÓN REACT LAV/ADAF (38 tests)**
+
 **Síntoma**: `ReferenceError: React is not defined`
 **Solución**: Agregar configuración de React en vitest.config.ts de LAV/ADAF
+
 ```typescript
 // lav-adaf/apps/dashboard/vitest.config.ts
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts']
-  }
-})
+    setupFiles: ['./src/test/setup.ts'],
+  },
+});
 ```
 
 ##### **4. CONFLICTO PLAYWRIGHT**
+
 **Síntoma**: `Playwright Test did not expect test.describe()`
 **Solución**: Excluir tests E2E de Vitest
+
 ```typescript
 // vitest.config.ts
 export default defineConfig({
   test: {
-    exclude: ['**/e2e/**', '**/node_modules/**']
-  }
-})
+    exclude: ['**/e2e/**', '**/node_modules/**'],
+  },
+});
 ```
 
 ---
@@ -3877,14 +4130,16 @@ pnpm test
 #### **✅ PRIORIDAD DE CORRECCIÓN:**
 
 1. **ALTA**: Problema Prisma (40 tests) - Crítico para LAV/ADAF
-2. **MEDIA**: React config (38 tests) - Afecta tests de componentes  
+2. **MEDIA**: React config (38 tests) - Afecta tests de componentes
 3. **BAJA**: html-to-image (3 tests) - Funcionalidad no crítica
 4. **BAJA**: Playwright conflict (1 test) - Test E2E específico
 
 La mayoría de fallos son de **configuración e infraestructura**, no de **lógica de negocio**.
 
 <a id="doc-lineage-ui-testing"></a>
+
 ## Lineage UI Testing
+
 > Fuente original: `LINEAGE_UI_TESTING.md`
 
 ### Módulo H — Lineage UI Testing Guide
@@ -3894,11 +4149,13 @@ Este documento describe cómo probar manualmente la funcionalidad de lineage en 
 #### Prerrequisitos
 
 1. **Servidor ejecutándose**: Asegúrate de que el servidor Next.js esté corriendo:
+
    ```bash
    pnpm dev
    ```
 
 2. **Feature flag habilitado**: Verifica que la variable de entorno esté configurada:
+
    ```bash
    export NEXT_PUBLIC_FEATURE_LINEAGE=true
    ```
@@ -3912,12 +4169,14 @@ Este documento describe cómo probar manualmente la funcionalidad de lineage en 
 **Ubicación**: `/reports` → pestaña "History & Delivery"
 
 **Pasos**:
+
 1. Navega a la página de reportes
 2. Ve a la pestaña "History & Delivery"
 3. Busca el botón "📊 Lineage" en cada fila de reporte
 4. Haz clic en "Lineage" para cualquier reporte
 
 **Resultados esperados**:
+
 - ✅ Se abre el LineageDrawer desde el lado derecho
 - ✅ Header muestra "Lineage • report • [ID]"
 - ✅ Timeline vertical con eventos ordenados por fecha
@@ -3933,11 +4192,13 @@ Este documento describe cómo probar manualmente la funcionalidad de lineage en 
 **Ubicación**: `/alerts`
 
 **Pasos**:
+
 1. Navega a la página de alertas
 2. Busca alertas que tengan el botón "📊 Lineage"
 3. Haz clic en "Lineage" para una alerta con signal ID
 
 **Resultados esperados**:
+
 - ✅ Se abre LineageDrawer con entity='signal'
 - ✅ Muestra el lineage de la señal asociada a la alerta
 - ✅ Timeline con eventos de ingesta y transformación
@@ -3948,6 +4209,7 @@ Este documento describe cómo probar manualmente la funcionalidad de lineage en 
 **Ubicación**: Integrado en otros componentes
 
 **Funcionalidad**:
+
 - ✅ Muestra hash truncado (ej: "hash: abcd...1234")
 - ✅ Tooltip con hash completo al hacer hover
 - ✅ Botón de copiar funcional
@@ -3958,24 +4220,28 @@ Este documento describe cómo probar manualmente la funcionalidad de lineage en 
 **Features del LineageDrawer**:
 
 ###### 4.1 Navigation & Accessibility
+
 - ✅ **Focus trap**: Tab navega solo dentro del drawer
 - ✅ **ESC key**: Cierra el drawer
 - ✅ **ARIA labels**: Screen readers pueden navegar
 - ✅ **Responsive**: Se adapta a móvil/desktop
 
 ###### 4.2 Timeline Display
+
 - ✅ **Orden cronológico**: Eventos ordenados por timestamp ASC
 - ✅ **Stage chips**: Colores e iconos consistentes
 - ✅ **Línea de tiempo**: Línea vertical conecta eventos
 - ✅ **Timestamps**: Formato local legible
 
 ###### 4.3 Data Interaction
+
 - ✅ **Hash copying**: Click para copiar hash completo
 - ✅ **Toast feedback**: Confirmación visual de copia
 - ✅ **JSON expansion**: Acordeones para inputs/outputs
 - ✅ **Pretty JSON**: Formato indentado y legible
 
 ###### 4.4 States & Error Handling
+
 - ✅ **Loading skeleton**: 3-4 elementos placeholder
 - ✅ **Empty state**: Mensaje cuando no hay eventos
 - ✅ **Error state**: Banner con botón retry
@@ -3986,11 +4252,13 @@ Este documento describe cómo probar manualmente la funcionalidad de lineage en 
 **Métricas de rendimiento**:
 
 ###### 5.1 Load Times
+
 - ✅ **Drawer open**: < 300ms
 - ✅ **Data fetch**: < 1000ms para traces
 - ✅ **Search**: < 1500ms para búsquedas complejas
 
 ###### 5.2 Memory Usage
+
 - ✅ **Memory leaks**: No aumenta memoria al abrir/cerrar drawer
 - ✅ **Event listeners**: Se limpian correctamente
 - ✅ **React warnings**: No warnings en console
@@ -3998,18 +4266,21 @@ Este documento describe cómo probar manualmente la funcionalidad de lineage en 
 ##### 6. Cross-browser Testing
 
 **Browsers soportados**:
+
 - ✅ **Chrome**: 90+ (clipboard API nativo)
 - ✅ **Firefox**: 88+ (clipboard API)
 - ✅ **Safari**: 14+ (clipboard API)
 - ✅ **Edge**: 90+ (clipboard API)
 
 **Fallbacks**:
+
 - ✅ **Clipboard fallback**: execCommand para browsers antiguos
 - ✅ **Toast fallback**: div simple si no hay toast library
 
 #### 🔧 Debugging Tips
 
 ##### Console Logs
+
 Revisa estos mensajes en DevTools:
 
 ```javascript
@@ -4024,6 +4295,7 @@ Hash copiado al portapapeles
 ```
 
 ##### Network Tab
+
 Verifica estas llamadas:
 
 ```
@@ -4033,6 +4305,7 @@ POST /api/metrics/lineage/view (fire-and-forget)
 ```
 
 ##### React DevTools
+
 - **Component tree**: LineageDrawer renderiza correctamente
 - **Props**: entity, refId, open se pasan correctamente
 - **State**: drawer state se maneja bien
@@ -4041,21 +4314,25 @@ POST /api/metrics/lineage/view (fire-and-forget)
 #### 🐛 Common Issues
 
 ##### 1. Drawer no abre
+
 - ✅ **Feature flag**: Verifica `NEXT_PUBLIC_FEATURE_LINEAGE=true`
 - ✅ **Button click**: Verifica que el handler se ejecuta
 - ✅ **State update**: Revisa que `setLineageDrawer` se llama
 
 ##### 2. No data displayed
+
 - ✅ **API response**: Verifica que APIs devuelven datos mock
 - ✅ **Entity/refId**: Confirma que parámetros son válidos
 - ✅ **Network errors**: Revisa Network tab para errores
 
 ##### 3. Copy not working
+
 - ✅ **HTTPS required**: Clipboard API requiere HTTPS o localhost
 - ✅ **Permissions**: Browser puede bloquear clipboard access
 - ✅ **Fallback**: Debería usar execCommand si clipboard no disponible
 
 ##### 4. Performance issues
+
 - ✅ **Large datasets**: APIs tienen límites de paginación
 - ✅ **Memory leaks**: useEffect cleanup functions
 - ✅ **Rerender loops**: Dependencies en useEffect
@@ -4065,24 +4342,28 @@ POST /api/metrics/lineage/view (fire-and-forget)
 Para considerar el testing completo:
 
 ##### UI Integration
+
 - [ ] ReportsHistory tiene botón Lineage funcional
 - [ ] AlertsTable tiene botón Lineage para signals
 - [ ] HashBadge muestra y copia hashes correctamente
 - [ ] Drawer se abre desde múltiples puntos de entrada
 
-##### User Experience  
+##### User Experience
+
 - [ ] Navigation fluida (tab, ESC, click outside)
 - [ ] Loading states informativos
 - [ ] Error handling graceful
 - [ ] Mobile responsive
 
 ##### Data Display
-- [ ] Timeline ordenado cronológicamente  
+
+- [ ] Timeline ordenado cronológicamente
 - [ ] JSON formateado legible
 - [ ] Hash copying funcional con feedback
 - [ ] Stage chips coloreados correctamente
 
 ##### Performance
+
 - [ ] Load times < 1000ms
 - [ ] No memory leaks
 - [ ] No console errors
@@ -4095,30 +4376,35 @@ Para considerar el testing completo:
 Marca cada item durante el testing:
 
 **Basic Functionality**
+
 - [ ] Drawer opens from Reports page
 - [ ] Drawer opens from Alerts page
 - [ ] Hash badges display correctly
 - [ ] Copy buttons work with toast feedback
 
 **Data Display**
+
 - [ ] Timeline shows events in chronological order
 - [ ] Stage chips have correct colors and icons
 - [ ] JSON expansion shows formatted data
 - [ ] Empty state shows when no events
 
-**Interaction**  
+**Interaction**
+
 - [ ] ESC key closes drawer
 - [ ] Click outside closes drawer
 - [ ] Tab navigation stays within drawer
 - [ ] Hash copying works in all browsers tested
 
 **Error Handling**
+
 - [ ] Network errors show retry button
 - [ ] Invalid data shows error message
 - [ ] Loading states show skeleton UI
 - [ ] Graceful degradation for old browsers
 
 **Performance**
+
 - [ ] Drawer opens in < 300ms
 - [ ] Data loads in < 1000ms
 - [ ] No memory usage increase after use
@@ -4127,12 +4413,15 @@ Marca cada item durante el testing:
 ¡Testing completado! 🎉
 
 <a id="doc-mejora-continua"></a>
+
 ## Mejora Continua
+
 > Fuente original: `MEJORA_CONTINUA.md`
 
 ### Cultura de Mejora Continua — ADAF Dashboard Pro
 
 #### Principios
+
 - Cada release es una oportunidad para aprender y mejorar.
 - El feedback institucional es sistemático y documentado.
 - Los post-mortem son obligatorios para todo incidente SEV1/SEV2 y recomendados para SEV3/SEV4.
@@ -4151,6 +4440,7 @@ Marca cada item durante el testing:
 ---
 
 #### Herramientas y Recursos
+
 - Plantilla de post-mortem: `docs/runbooks/templates/POSTMORTEM.md`
 - Runbooks operativos: `docs/runbooks/`
 - Bitácora institucional: `MEMORIA_GITHUB_COPILOT.md`
@@ -4160,6 +4450,7 @@ Marca cada item durante el testing:
 ---
 
 #### Compromiso institucional
+
 - Todos los integrantes participan en feedback y mejora continua.
 - Los procesos y la cultura se revisan trimestralmente.
 - La mejora continua es parte del estándar Fortune 500.
@@ -4168,7 +4459,9 @@ Marca cada item durante el testing:
 **Fecha:** 2025-10-08
 
 <a id="doc-modulo-f-summary"></a>
+
 ## Módulo F Summary
+
 > Fuente original: `MODULO_F_SUMMARY.md`
 
 ### Módulo F — Reportería Institucional
@@ -4177,31 +4470,35 @@ Marca cada item durante el testing:
 
 **Estado:** ✅ **COMPLETO**  
 **Implementación:** 100% funcional con pruebas exitosas  
-**Tecnologías:** TypeScript, Next.js, Playwright, React  
+**Tecnologías:** TypeScript, Next.js, Playwright, React
 
 #### 🎯 Objetivos Cumplidos
 
 ##### ✅ KPIs Institucionales
+
 - **IRR** (Internal Rate of Return)
 - **TVPI** (Total Value / Paid-In)
-- **MoIC** (Multiple on Invested Capital)  
+- **MoIC** (Multiple on Invested Capital)
 - **DPI** (Distributions / Paid-In)
 - **RVPI** (Residual Value / Paid-In)
 - **NAV** y flujos de efectivo
 
 ##### ✅ Proof of Reserves (PoR)
+
 - Verificación multi-blockchain
 - Integración con custodiantes institucionales
 - Auditoría de direcciones y balances
 - Totales consolidados por cadena
 
 ##### ✅ Generación de PDFs Institucionales
+
 - **One-Pager** (1-2 páginas): Resumen ejecutivo
 - **Quarterly** (3-6 páginas): Análisis integral trimestral
 - Plantillas HTML profesionales
 - Branding institucional ADAF
 
 ##### ✅ Audit Trail y Compliance
+
 - Logging detallado de generación
 - Métricas Prometheus integradas
 - Trazabilidad completa por actor
@@ -4218,7 +4515,7 @@ src/
 ├── app/api/
 │   ├── read/report/
 │   │   ├── kpis/route.ts        # GET KPIs por período
-│   │   ├── por/route.ts         # GET Proof of Reserves  
+│   │   ├── por/route.ts         # GET Proof of Reserves
 │   │   └── summary/route.ts     # GET Series temporales NAV/flows
 │   └── generate/report/
 │       ├── onepager/route.ts    # POST Generar One-Pager PDF
@@ -4231,41 +4528,47 @@ src/
 #### 🔌 API Endpoints
 
 ##### Lectura de Datos
+
 ```http
 GET /api/read/report/kpis?period=q
-GET /api/read/report/por  
+GET /api/read/report/por
 GET /api/read/report/summary?range=90
 ```
 
 ##### Generación de PDFs
+
 ```http
 POST /api/generate/report/onepager
 POST /api/generate/report/quarterly
 ```
 
 **Request Body:**
+
 ```json
 {
   "actor": "admin@adaf.com",
-  "notes": "Q3 2025 institutional review", 
-  "quarter": "2025Q3"  // Solo para quarterly
+  "notes": "Q3 2025 institutional review",
+  "quarter": "2025Q3" // Solo para quarterly
 }
 ```
 
 #### 🧪 Pruebas Realizadas
 
 ##### ✅ Endpoints de Lectura
+
 - **KPIs**: Retorna métricas con fallbacks seguros
-- **PoR**: 3+ blockchains con custodiantes verificados  
+- **PoR**: 3+ blockchains con custodiantes verificados
 - **Summary**: Series temporales de 90 días con datos sintéticos
 
 ##### ✅ Generación de PDFs
+
 - **OnePager**: 69KB, 1 página, generación en ~1.3s
 - **Quarterly**: 103KB, 4 páginas, generación en ~0.8s
 - **Formato**: PDFs válidos v1.4 con Playwright
 - **Audit**: Logs completos con métricas por actor
 
 ##### ✅ UI Component
+
 - **ReportsPanel**: Interfaz completa React
 - **KPIs Cards**: Visualización de métricas clave
 - **PoR Table**: Tabla detallada por blockchain
@@ -4275,6 +4578,7 @@ POST /api/generate/report/quarterly
 #### 🛡️ Validación y Seguridad
 
 ##### Validación de Datos
+
 ```typescript
 // IRR clamping para evitar outliers
 clampIrr(irr: number): number // [-200%, +200%]
@@ -4288,12 +4592,13 @@ getValidatedPor(por: Partial<ReportPor>): ReportPor
 ```
 
 ##### Audit Trail
+
 ```json
 {
   "action": "generate_quarterly_pdf",
   "actor": "admin@adaf.com",
   "timestamp": "2025-09-29T22:09:15Z",
-  "report_type": "quarterly", 
+  "report_type": "quarterly",
   "quarter": "2025Q3",
   "file_size_bytes": 102793,
   "success": true
@@ -4303,13 +4608,15 @@ getValidatedPor(por: Partial<ReportPor>): ReportPor
 #### 💼 Casos de Uso Institucionales
 
 ##### 1. **Monthly Board Reports**
+
 ```bash
 curl -X POST /api/generate/report/onepager \
   -H "Content-Type: application/json" \
   -d '{"actor":"board@adaf.com","notes":"Monthly performance for board review"}'
 ```
 
-##### 2. **Quarterly Investor Updates**  
+##### 2. **Quarterly Investor Updates**
+
 ```bash
 curl -X POST /api/generate/report/quarterly \
   -H "Content-Type: application/json" \
@@ -4317,6 +4624,7 @@ curl -X POST /api/generate/report/quarterly \
 ```
 
 ##### 3. **Regulatory Compliance**
+
 - Proof of Reserves verificable on-chain
 - GIPS-compliant performance calculations
 - Audit trail para compliance officers
@@ -4327,7 +4635,7 @@ curl -X POST /api/generate/report/quarterly \
 **Página de Reportes:** `http://localhost:3005/reports`
 
 - **KPIs Dashboard**: 5 métricas principales en cards
-- **Cash Flows**: Visualización de inflows/outflows  
+- **Cash Flows**: Visualización de inflows/outflows
 - **PoR Table**: Desglose por blockchain y custodiano
 - **PDF Generation**: Formulario con validación en tiempo real
 - **Status Management**: Alertas y progress indicators
@@ -4335,6 +4643,7 @@ curl -X POST /api/generate/report/quarterly \
 #### 🚀 Próximos Pasos (Opcionales)
 
 ##### Mejoras Futuras
+
 1. **Gráficos Interactivos**: Integrar Chart.js para NAV/flows
 2. **Scheduling**: Cron jobs para reportes automáticos
 3. **Email Integration**: Envío automático a stakeholders
@@ -4342,6 +4651,7 @@ curl -X POST /api/generate/report/quarterly \
 5. **Custom Branding**: Personalización por cliente institucional
 
 ##### Integración con Módulos Existentes
+
 - **Módulo C (Positions)**: KPIs calculados desde positions reales
 - **Módulo D (Opportunities)**: PoR desde oportunidades ejecutadas
 - **Módulo E (OP-X)**: Flujos desde órdenes ejecutadas
@@ -4351,7 +4661,7 @@ curl -X POST /api/generate/report/quarterly \
 **Módulo F** está **100% implementado** y **probado exitosamente**:
 
 - ✅ **7 componentes** desarrollados
-- ✅ **5 endpoints** API funcionales  
+- ✅ **5 endpoints** API funcionales
 - ✅ **2 tipos** de reportes PDF institucionales
 - ✅ **1 UI component** completo con React
 - ✅ **Audit trail** y compliance integrados
@@ -4363,7 +4673,9 @@ curl -X POST /api/generate/report/quarterly \
 **Status:** 🎉 **MÓDULO F COMPLETADO EXITOSAMENTE**
 
 <a id="doc-onboarding-fortune-500"></a>
+
 ## Onboarding Fortune 500
+
 > Fuente original: `ONBOARDING_FORTUNE500.md`
 
 ### Onboarding Fortune 500 — ADAF Dashboard Pro
@@ -4373,6 +4685,7 @@ Bienvenido/a al equipo ADAF Dashboard Pro. Este onboarding te guiará paso a pas
 ---
 
 #### 1. Documentación clave
+
 - [README.md](../README.md): visión general e inicio rápido del sistema.
 - [Documentación Completa](../motor-del-dash/README.md): toda la documentación organizada profesionalmente.
 - [Guía Completa de Uso](../motor-del-dash/documentacion/README-COMPLETO.md): guías paso a paso, instalación y operación.
@@ -4383,27 +4696,32 @@ Bienvenido/a al equipo ADAF Dashboard Pro. Este onboarding te guiará paso a pas
 - [SECURITY_README.md](../SECURITY_README.md): políticas de seguridad, manejo de secretos y roles.
 
 #### 2. Acceso y seguridad
+
 - Solicita acceso a los repositorios y sistemas (GitHub, CI/CD, vaults, bases de datos, Redis) solo por canales seguros.
 - Nunca compartas secretos por correo/chat. Usa vaults o canales cifrados.
 - Revisa y firma el checklist de acceso y roles.
 - Lee y comprende el protocolo de respuesta a incidentes (ver runbooks y bitácora).
 
 #### 3. Instalación y entorno local
+
 - Sigue el README para instalar dependencias y levantar el entorno local.
 - Usa los scripts automatizados (`inicio-completo.sh`, `inicio-dashboard.sh`) para evitar errores manuales.
 - Verifica que los tests y el linting pasen localmente antes de cualquier PR.
 
 #### 4. Estándares de calidad y CI/CD
+
 - Todo el código debe pasar ESLint (flat config, reglas estrictas) y tests (>95% cobertura).
 - Las PRs deben incluir descripción clara, checklist de QA y referencia a la bitácora si aplica.
 - Consulta la bitácora para convenciones, migraciones y decisiones técnicas.
 
 #### 5. Operación y respuesta a incidentes
+
 - Ante cualquier alerta, sigue el runbook correspondiente (docs/runbooks/).
 - Si ocurre un incidente, documenta en la bitácora y usa la plantilla de post-mortem.
 - Participa en simulacros y revisiones periódicas de seguridad.
 
 #### 6. Auditoría y mejora continua
+
 - Todo cambio relevante debe quedar documentado en la bitácora institucional.
 - Participa en sesiones de feedback, post-mortem y mejora continua.
 - Consulta el roadmap y los OKRs para alinear tu trabajo a la visión institucional.
@@ -4416,7 +4734,9 @@ Responsable onboarding: Copilot (asistente técnico)
 Fecha: 2025-10-08
 
 <a id="doc-pack2-implementation"></a>
+
 ## Pack2 Implementation
+
 > Fuente original: `PACK2_IMPLEMENTATION.md`
 
 ### Pack 2 — PERFORMANCE TUNING Implementation Guide
@@ -4429,32 +4749,36 @@ Pack 2 delivers comprehensive performance optimization for ADAF Dashboard, targe
 
 ##### ✅ Completed Components
 
-| Component | Status | Impact | Files |
-|-----------|--------|--------|-------|
-| **SQL Performance Indexes** | ✅ Complete | 60-80% query speed improvement | `perf/sql/performance_indexes.sql` |
-| **Redis Caching System** | ✅ Complete | 70-90% response time reduction | `src/lib/cache/redis-config.ts`, `cache-service.ts` |
-| **Client-Side Caching** | ✅ Complete | Instant repeat page loads | `src/lib/cache/client-cache.ts` |
-| **Performance Testing Suite** | ✅ Complete | Automated regression detection | `performance/k6/load-test.js` |
-| **Monitoring & Alerting** | ✅ Complete | Real-time performance visibility | `monitoring/performance-monitoring-config.yaml` |
+| Component                     | Status      | Impact                           | Files                                               |
+| ----------------------------- | ----------- | -------------------------------- | --------------------------------------------------- |
+| **SQL Performance Indexes**   | ✅ Complete | 60-80% query speed improvement   | `perf/sql/performance_indexes.sql`                  |
+| **Redis Caching System**      | ✅ Complete | 70-90% response time reduction   | `src/lib/cache/redis-config.ts`, `cache-service.ts` |
+| **Client-Side Caching**       | ✅ Complete | Instant repeat page loads        | `src/lib/cache/client-cache.ts`                     |
+| **Performance Testing Suite** | ✅ Complete | Automated regression detection   | `performance/k6/load-test.js`                       |
+| **Monitoring & Alerting**     | ✅ Complete | Real-time performance visibility | `monitoring/performance-monitoring-config.yaml`     |
 
 #### 🎯 Performance Improvements Achieved
 
 ##### Database Optimization
+
 - **Query Performance**: 60-80% faster query execution through specialized indexes
 - **Index Coverage**: 25+ strategic indexes for all major query patterns
 - **Maintenance**: Automated index maintenance and statistics updates
 
 ##### Caching Architecture
+
 - **Cache Hit Rates**: Target 85%+ for frequently accessed data
 - **Response Times**: 70-90% reduction in API response times
 - **Storage Strategy**: Multi-layer caching (Redis + Browser storage)
 
 ##### Performance Testing
+
 - **Test Coverage**: Load, stress, spike, and endurance testing
 - **Business Metrics**: Strategy calculation time, market data lag tracking
 - **Automation**: Scheduled regression testing with alerts
 
 ##### Monitoring Enhancement
+
 - **Metrics**: 50+ custom performance metrics
 - **Dashboards**: Comprehensive Grafana performance dashboard
 - **Alerting**: Multi-tier performance degradation alerts
@@ -4530,9 +4854,9 @@ psql $DATABASE_URL -f perf/sql/performance_indexes.sql
 
 # Verify index creation
 psql $DATABASE_URL -c "
-SELECT schemaname, tablename, indexname, indexdef 
-FROM pg_indexes 
-WHERE indexname LIKE 'idx_%' 
+SELECT schemaname, tablename, indexname, indexdef
+FROM pg_indexes
+WHERE indexname LIKE 'idx_%'
 ORDER BY tablename, indexname;
 "
 ```
@@ -4619,6 +4943,7 @@ k6 run --stages '1m:0,2m:200,1m:0' performance/k6/load-test.js
 ##### Business Scenario Testing
 
 The test suite simulates realistic user workflows:
+
 - User authentication and dashboard access
 - Strategy data retrieval and calculations
 - Portfolio operations and reporting
@@ -4628,6 +4953,7 @@ The test suite simulates realistic user workflows:
 ##### Performance Thresholds
 
 Automated validation against performance targets:
+
 - **API Response Time**: p95 < 500ms, p99 < 1s
 - **Database Queries**: p95 < 100ms, p99 < 500ms
 - **Cache Operations**: p95 < 10ms, p99 < 50ms
@@ -4656,6 +4982,7 @@ redis-cli -u $REDIS_URL FLUSHEXPIRED
 ##### Performance Optimization Automation
 
 The monitoring system includes automated optimization:
+
 - **Query Optimization**: Automatic detection and recommendations for slow queries
 - **Index Recommendations**: Analysis of query patterns for new index suggestions
 - **Cache Optimization**: Automatic TTL adjustment based on access patterns
@@ -4666,25 +4993,27 @@ The monitoring system includes automated optimization:
 ##### Common Performance Issues
 
 ###### Slow Database Queries
+
 ```bash
 # Check slow queries
 psql $DATABASE_URL -c "
-SELECT query, mean_time, calls, total_time 
-FROM pg_stat_statements 
-ORDER BY mean_time DESC 
+SELECT query, mean_time, calls, total_time
+FROM pg_stat_statements
+ORDER BY mean_time DESC
 LIMIT 10;
 "
 
 # Check index usage
 psql $DATABASE_URL -c "
 SELECT schemaname, tablename, attname, n_distinct, correlation
-FROM pg_stats 
+FROM pg_stats
 WHERE tablename IN ('strategies', 'portfolio_data', 'market_data')
 ORDER BY tablename, attname;
 "
 ```
 
 ###### Cache Performance Issues
+
 ```bash
 # Check Redis performance
 redis-cli -u $REDIS_URL INFO stats
@@ -4697,6 +5026,7 @@ redis-cli -u $REDIS_URL INFO memory
 ```
 
 ###### High Response Times
+
 ```bash
 # Check application metrics
 curl -s http://localhost:3000/api/metrics | grep -E "(response_time|duration)"
@@ -4711,6 +5041,7 @@ npm run build:analyze
 ##### Performance Regression Detection
 
 The monitoring system automatically detects performance regressions:
+
 - **Response Time Increases**: > 20% increase compared to 7-day average
 - **Cache Hit Rate Drops**: > 10% decrease in hit rates
 - **Error Rate Increases**: Any increase above baseline + 2 standard deviations
@@ -4720,13 +5051,13 @@ The monitoring system automatically detects performance regressions:
 
 ##### Baseline vs. Optimized Performance
 
-| Metric | Before Pack 2 | After Pack 2 | Improvement |
-|--------|---------------|--------------|-------------|
-| API Response Time (p95) | 800ms | 200ms | 75% faster |
-| Database Query Time (p95) | 150ms | 30ms | 80% faster |
-| Cache Hit Rate | 0% | 85%+ | New capability |
-| Page Load Time | 3.2s | 0.8s | 75% faster |
-| Throughput (RPS) | 50 | 200+ | 4x increase |
+| Metric                    | Before Pack 2 | After Pack 2 | Improvement    |
+| ------------------------- | ------------- | ------------ | -------------- |
+| API Response Time (p95)   | 800ms         | 200ms        | 75% faster     |
+| Database Query Time (p95) | 150ms         | 30ms         | 80% faster     |
+| Cache Hit Rate            | 0%            | 85%+         | New capability |
+| Page Load Time            | 3.2s          | 0.8s         | 75% faster     |
+| Throughput (RPS)          | 50            | 200+         | 4x increase    |
 
 ##### Business Impact
 
@@ -4754,6 +5085,7 @@ The monitoring system automatically detects performance regressions:
 #### 📋 Post-Deployment Checklist
 
 ##### Immediate Validation (0-2 hours)
+
 - [ ] All database indexes created successfully
 - [ ] Redis cache connectivity verified
 - [ ] Application builds and starts without errors
@@ -4762,6 +5094,7 @@ The monitoring system automatically detects performance regressions:
 - [ ] Grafana dashboard loads correctly
 
 ##### Short-term Monitoring (2-24 hours)
+
 - [ ] Cache hit rates reaching target levels (>80%)
 - [ ] API response times improved by >50%
 - [ ] No increase in error rates
@@ -4769,6 +5102,7 @@ The monitoring system automatically detects performance regressions:
 - [ ] Resource utilization stable or decreased
 
 ##### Long-term Validation (1-7 days)
+
 - [ ] Performance baselines established
 - [ ] Alert thresholds validated
 - [ ] No performance regressions detected
@@ -4802,10 +5136,12 @@ The monitoring system automatically detects performance regressions:
 
 **Pack 2 Performance Tuning - Successfully Implemented** ✅
 
-*Comprehensive performance optimization delivering 75% faster response times, 4x throughput capacity, and proactive performance monitoring for ADAF Dashboard production environment.*
+_Comprehensive performance optimization delivering 75% faster response times, 4x throughput capacity, and proactive performance monitoring for ADAF Dashboard production environment._
 
 <a id="doc-pitch"></a>
+
 ## Pitch
+
 > Fuente original: `pitch.md`
 
 ### ADAF Dashboard — Pitch
@@ -4813,20 +5149,24 @@ The monitoring system automatically detects performance regressions:
 ADAF es tu torre de control financiera: convierte datos dispersos en decisiones claras con latencias bajas, alta disponibilidad y cero downtime en despliegues. En minutos tienes paneles ejecutivos, alertas inteligentes y trazabilidad completa. Diseñado para escalar, seguro por defecto y listo para producción desde el día uno.
 
 #### 🌐 Visión
+
 ADAF (Advanced Digital Asset Framework) es la plataforma que convierte el caos de datos financieros en decisiones accionables. Nuestro dashboard unifica inteligencia de mercado, monitoreo en tiempo real y automatización operativa en una experiencia robusta, segura y lista para escalar a nivel empresarial.
 
 #### 🚀 Propuesta de valor
+
 - Decisiones más rápidas y con menos riesgo: datos consolidados, trazabilidad total y señales accionables.
 - Operación continua: arquitectura tolerante a fallos, despliegues sin downtime, backups verificados.
 - Tiempo a valor reducido: integraciones listas, paneles preconfigurados y workflows reutilizables.
 
 #### 💎 ¿Qué nos hace únicos?
+
 - Infraestructura “enterprise-grade” desde el día uno: HA (DB/Cache), observabilidad 360°, seguridad y DR documentado.
 - Despliegue Blue-Green con canary: lanza nuevas versiones sin interrupciones y con rollback automático.
 - Telemetría nativa: métricas, logs y trazas para cada interacción del usuario y cada flujo de datos.
 - Modularidad: estrategias, fuentes de datos y componentes plug-and-play.
 
 #### 📊 Métricas objetivo (SLO/SLI)
+
 - Disponibilidad del servicio: 99.9% mensual (SLO) con RPO ≤ 15 min y RTO ≤ 30 min.
 - Despliegues: 0 downtime; rollback < 60 s ante error.
 - Performance de dashboard: p95 < 450 ms, error rate < 1%.
@@ -4834,6 +5174,7 @@ ADAF (Advanced Digital Asset Framework) es la plataforma que convierte el caos d
 - Observabilidad: 100% endpoints críticos con métricas/health/tracing.
 
 #### 🧠 Capacidades del Dashboard
+
 - Panel unificado de mercado: TVL, liquidez, volatilidad, correlaciones, señales.
 - Estrategias configurables: backtesting liviano, experimentos y toggles en tiempo real.
 - Alertas inteligentes: umbrales, tendencias y anomalías.
@@ -4841,16 +5182,19 @@ ADAF (Advanced Digital Asset Framework) es la plataforma que convierte el caos d
 - Integración ágil: APIs, conectores, webhooks y SDKs futuros.
 
 #### 🔐 Seguridad y confiabilidad
+
 - Contenedores no-root, FS de solo lectura, capabilities mínimas.
 - Gestión de secretos con rotación; cifrado en tránsito y en backups.
 - Chaos testing y runbooks listos para incidentes.
 
 #### 🧩 Integraciones y ecosistema
+
 - Datos on-chain/off-chain (extensible).
 - Redis para bajas latencias; PostgreSQL HA para consistencia.
 - Prometheus + Grafana + Jaeger para observabilidad profunda.
 
 #### 🗺️ Roadmap de expansión
+
 - 30 días
   - Catálogo de estrategias predefinidas por vertical (DeFi, RWA, LSTs).
   - Paneles ejecutivos (C‑suite) con KPIs y exportables.
@@ -4869,23 +5213,28 @@ ADAF (Advanced Digital Asset Framework) es la plataforma que convierte el caos d
   - Certificaciones (SOC2 readiness) y auditorías externas.
 
 #### 🏁 Casos de uso
+
 - Asset managers: monitoreo de estrategias, señales y cumplimiento.
 - Exchanges/Fintech: inteligencia operativa, incident response y SRE financiero.
 - Tesorerías Web3: riesgo de liquidez, exposición y salud del protocolo.
 
 #### 🧭 Tracción técnica
+
 - Orquestación de producción (compose) con HA, blue-green y observabilidad integrada.
 - DR con PITR y caos automatizado; documentación operativa completa.
 - Pipelines y health checks listos para CI/CD.
 
 #### 🎯 Llamado a la acción
+
 Solicita un canary hoy y mide el impacto en tus ciclos de decisión y postura de riesgo. ADAF no es sólo un dashboard: es tu centro de mando financiero.
 
 —
 Contacto: equipo@adaf.example
 
 <a id="doc-pr-checklist-wsp"></a>
+
 ## PR Checklist WSP
+
 > Fuente original: `PR_CHECKLIST_WSP.md`
 
 ### PR Checklist: Wall Street Pulse (WSP)
@@ -4907,7 +5256,9 @@ Contacto: equipo@adaf.example
 - [ ] README_WALLSTREET_PULSE.md updated with usage and env vars
 
 <a id="doc-release-notes"></a>
+
 ## Release Notes
+
 > Fuente original: `RELEASE_NOTES.md`
 
 ### v0.2.0 Release Notes
@@ -4959,10 +5310,12 @@ Contacto: equipo@adaf.example
 ##### Notes
 
 - CI workflow added for Node 20 + pnpm to install, typecheck, test, lint, and build.
-- .gitignore/.dockerignore tuned to avoid committing env files or large artifacts (e.g., *.tgz).
+- .gitignore/.dockerignore tuned to avoid committing env files or large artifacts (e.g., \*.tgz).
 
 <a id="doc-release-notes-summer-v1"></a>
+
 ## Release Notes Summer v1
+
 > Fuente original: `RELEASE_NOTES_SUMMER_V1.md`
 
 ### 🚀 feat(wsp): Summer.fi v1.0 — FF+RBAC+canary 10→50→100
@@ -4973,22 +5326,25 @@ Contacto: equipo@adaf.example
 **Deployment:** Canary Release (10% → 50% → 100%)  
 **Status:** ✅ **SUCCESSFUL**  
 **Tests:** 80/80 passing  
-**Performance:** All SLO targets met  
+**Performance:** All SLO targets met
 
 #### 🎯 What's New
 
 ##### Draggable Summer.fi Widgets
+
 - **`SummerLazyVaultsWidget`**: Yield farming opportunities with APY display
-- **`SummerMultiplyWidget`**: Leverage/multiply positions with feature badges  
+- **`SummerMultiplyWidget`**: Leverage/multiply positions with feature badges
 - **Lane:** "On-chain Yield & Leverage" in WSP dashboard
 - **Deep Links:** Direct navigation to Summer.fi platform with tracking
 
 ##### Feature Flag & RBAC
+
 - **Feature Flag:** `NEXT_PUBLIC_FF_SUMMER_ENABLED` (production-ready)
 - **RBAC Permission:** `feature:summer` (admin, research, exec roles)
 - **Non-disruptive:** Hidden for users without permission
 
-##### Monitoring & Observability  
+##### Monitoring & Observability
+
 - **Grafana Dashboard:** Real-time metrics and performance tracking
 - **Prometheus Alerts:** Latency, error rates, RBAC monitoring
 - **SLO Compliance:** 99.9% availability, p95 <450ms, <1% errors
@@ -4998,7 +5354,7 @@ Contacto: equipo@adaf.example
 ```bash
 ✅ Unit Tests:        33/33 passing - Widget logic, RBAC, i18n
 ✅ API Tests:         17/17 passing - Endpoints, security, metrics
-✅ E2E Tests:         11/11 passing - Complete user journeys  
+✅ E2E Tests:         11/11 passing - Complete user journeys
 ✅ Performance Tests: 12/12 passing - Latency, memory, load testing
 ✅ Migration Tests:    7/7  passing - Layout migration safety
 
@@ -5008,14 +5364,16 @@ Total: 80/80 tests passing (100% success rate)
 #### 📊 Canary Release Results
 
 ##### Phase Execution Timeline
-| Phase | Traffic | Duration | p95 Latency | Error Rate | Status |
-|-------|---------|----------|-------------|------------|--------|
-| 10%   | Shard A | 30s      | 236-276ms  | 0.22-0.39% | ✅ SUCCESS |
-| 50%   | A+B     | 30s      | 240-345ms  | 0.15-0.36% | ✅ SUCCESS |
-| 100%  | All     | 30s      | 236-320ms  | 0.09-0.28% | ✅ SUCCESS |
+
+| Phase | Traffic | Duration | p95 Latency | Error Rate | Status     |
+| ----- | ------- | -------- | ----------- | ---------- | ---------- |
+| 10%   | Shard A | 30s      | 236-276ms   | 0.22-0.39% | ✅ SUCCESS |
+| 50%   | A+B     | 30s      | 240-345ms   | 0.15-0.36% | ✅ SUCCESS |
+| 100%  | All     | 30s      | 236-320ms   | 0.09-0.28% | ✅ SUCCESS |
 
 ##### SLO Compliance ✅
-- **Latency p95:** All phases <350ms (target: <450ms) 
+
+- **Latency p95:** All phases <350ms (target: <450ms)
 - **Error Rate:** All phases <0.4% (target: <1%)
 - **Availability:** 100% uptime during rollout
 - **RBAC Accuracy:** 0 false denials detected
@@ -5023,31 +5381,35 @@ Total: 80/80 tests passing (100% success rate)
 #### 🔧 Infrastructure & Configuration
 
 ##### Environment Setup
+
 ```bash
 # Staging (ENABLED)
 NEXT_PUBLIC_FF_SUMMER_ENABLED=true
 
-# Production (Canary controlled) 
+# Production (Canary controlled)
 NEXT_PUBLIC_FF_SUMMER_ENABLED=false → true (via canary script)
 ```
 
 ##### RBAC Configuration
+
 - **Roles with Access:** admin, research, exec
-- **Permission:** `feature:summer` 
+- **Permission:** `feature:summer`
 - **Enforcement:** API-level + UI-level validation
 
 ##### Layout Migration
+
 - **Type:** Idempotent, non-disruptive
 - **Target:** Existing users get widgets added automatically
 - **Preservation:** All user customizations maintained
 
-#### 📈 Evidence & Documentation  
+#### 📈 Evidence & Documentation
 
 ##### Generated Evidence
+
 ```
 evidence/
 ├── summer-fi-phase-10-metrics.json   # 10% phase metrics
-├── summer-fi-phase-50-metrics.json   # 50% phase metrics  
+├── summer-fi-phase-50-metrics.json   # 50% phase metrics
 ├── summer-fi-phase-100-metrics.json  # 100% phase metrics
 ├── summer-fi-phase-10-dashboard.txt  # Dashboard screenshots
 ├── summer-fi-phase-50-dashboard.txt  # Dashboard screenshots
@@ -5055,19 +5417,22 @@ evidence/
 ```
 
 ##### Operations Documentation
+
 - **Operations Manual:** `docs/OPERATIONS.md` - Complete runbook
-- **SLO Documentation:** `docs/SUMMER_SLOS.md` - Service level objectives  
+- **SLO Documentation:** `docs/SUMMER_SLOS.md` - Service level objectives
 - **Monitoring Setup:** `monitoring/` - Grafana + Prometheus configs
 - **Infrastructure:** `infra/terraform/` - AWS deployment modules
 
 #### 🚨 Rollback Procedures
 
 ##### Automatic Rollback Triggers
+
 - p95 latency > 450ms for 5+ minutes
-- 5xx error rate > 1% for 3+ minutes  
+- 5xx error rate > 1% for 3+ minutes
 - Canary errors 2x higher than stable
 
 ##### Manual Rollback
+
 ```bash
 # Emergency rollback command
 ./scripts/canary-release.sh rollback
@@ -5079,12 +5444,14 @@ kubectl set env deployment/adaf-web NEXT_PUBLIC_FF_SUMMER_ENABLED=false
 #### 🔍 Post-Release Checklist
 
 ##### Immediate (Next 24h)
+
 - [x] ✅ Monitor Grafana dashboards for any anomalies
 - [x] ✅ Validate all smoke tests pass in production
-- [x] ✅ Confirm zero regression in core WSP metrics  
+- [x] ✅ Confirm zero regression in core WSP metrics
 - [ ] 📋 Update status page with Summer.fi availability
 
 ##### Short-term (Next Week)
+
 - [ ] 📊 Collect user engagement and click-through analytics
 - [ ] 🔍 Review performance trends and optimize if needed
 - [ ] 📝 Schedule post-release retrospective meeting
@@ -5093,12 +5460,14 @@ kubectl set env deployment/adaf-web NEXT_PUBLIC_FF_SUMMER_ENABLED=false
 #### 🎯 Business Impact
 
 ##### Technical Metrics
+
 - **Zero Downtime:** Seamless canary deployment
 - **Performance:** API latency well within SLO targets
-- **Quality:** 100% test coverage with comprehensive validation  
+- **Quality:** 100% test coverage with comprehensive validation
 - **Security:** Proper RBAC enforcement, no permission bypasses
 
-##### User Experience  
+##### User Experience
+
 - **Discoverability:** New widgets visible in familiar WSP layout
 - **Functionality:** Deep-link integration drives traffic to Summer.fi
 - **Permissions:** Proper access control respects user roles
@@ -5107,12 +5476,14 @@ kubectl set env deployment/adaf-web NEXT_PUBLIC_FF_SUMMER_ENABLED=false
 #### 🔮 Next Steps
 
 ##### Feature Enhancement Opportunities
+
 1. **Usage Analytics:** Track widget engagement patterns
 2. **A/B Testing:** Optimize widget positioning and content
 3. **API Integration:** Real-time Summer.fi data vs static mock data
 4. **Additional Widgets:** Expand Summer.fi product coverage
 
-##### Technical Debt & Improvements  
+##### Technical Debt & Improvements
+
 1. **Performance Optimization:** Further reduce API response times
 2. **Test Stability:** Address flaky performance test thresholds
 3. **Monitoring Enhancement:** Add user journey tracking
@@ -5123,14 +5494,16 @@ kubectl set env deployment/adaf-web NEXT_PUBLIC_FF_SUMMER_ENABLED=false
 #### 📋 Reviewer Notes
 
 ##### Code Review Focus Areas
-- [ ] **Security:** Validate RBAC implementation and API endpoint protection  
+
+- [ ] **Security:** Validate RBAC implementation and API endpoint protection
 - [ ] **Performance:** Review API response times and widget rendering efficiency
 - [ ] **Testing:** Confirm comprehensive test coverage and edge cases
 - [ ] **Documentation:** Ensure operations manual covers all scenarios
 
 ##### Deployment Validation
+
 - [ ] **Staging:** Verify all functionality works with `NEXT_PUBLIC_FF_SUMMER_ENABLED=true`
-- [ ] **Canary Script:** Test rollback procedures in staging environment  
+- [ ] **Canary Script:** Test rollback procedures in staging environment
 - [ ] **Monitoring:** Confirm Grafana dashboards and Prometheus alerts active
 - [ ] **RBAC:** Validate permission enforcement with test user accounts
 
@@ -5140,10 +5513,10 @@ kubectl set env deployment/adaf-web NEXT_PUBLIC_FF_SUMMER_ENABLED=false
 
 - [x] **Feature Complete:** All Summer.fi integration requirements delivered
 - [x] **Test Coverage:** 80/80 tests passing (100% success rate)
-- [x] **Performance:** SLO targets met during canary deployment  
+- [x] **Performance:** SLO targets met during canary deployment
 - [x] **Security:** RBAC properly implemented and validated
 - [x] **Monitoring:** Comprehensive observability and alerting in place
-- [x] **Documentation:** Complete operations manual and runbooks  
+- [x] **Documentation:** Complete operations manual and runbooks
 - [x] **Rollback Ready:** Emergency procedures tested and documented
 
 **Ready for production deployment with confidence!** 🚀
@@ -5158,7 +5531,9 @@ kubectl set env deployment/adaf-web NEXT_PUBLIC_FF_SUMMER_ENABLED=false
 **Target Deployment:** Production (feature flag controlled)
 
 <a id="doc-reporte-de-tests"></a>
+
 ## Reporte de Tests
+
 > Fuente original: `REPORTE_TESTS.md`
 
 ### REPORTE COMPLETO DE TESTS - ADAF Dashboard Pro
@@ -5174,23 +5549,27 @@ El ADAF Dashboard Pro ha sido probado exitosamente con un **90%+ de funcionalida
 #### 📊 RESULTADOS DETALLADOS DE TESTS
 
 ##### 1. Sistema Principal ADAF Dashboard
+
 - **Tests Ejecutados**: 441 tests totales
 - **Resultado**: 398 TESTS PASADOS ✅
 - **Fallos**: 1 test (límite de memoria: 74MB vs 50MB permitidos) ⚠️
 - **Rate de Éxito**: 90.2%
 
 ##### 2. Módulo Wall Street Pulse (WSP)
+
 - **Tests Ejecutados**: 116 tests
 - **Resultado**: 100% ÉXITO ✅
 - **Tiempo**: 534ms
 - **Estado**: Completamente operativo
 
 ##### 3. Módulos de Seguridad
+
 - **Tests de Security**: 23/23 PASADOS ✅
 - **Mock Integration**: 11/11 PASADOS ✅
 - **API Security**: Totalmente validado ✅
 
 ##### 4. Sistema LAV/ADAF
+
 - **Estructura**: 30+ microservicios implementados ✅
 - **Gateway**: Configurado (requiere inicio de servicios)
 - **Agentes**: Market Sentinel, Risk Warden, Executioner, etc. ⚠️
@@ -5237,21 +5616,25 @@ El ADAF Dashboard Pro ha sido probado exitosamente con un **90%+ de funcionalida
 #### 🚀 MÓDULOS VALIDADOS
 
 ##### 📈 Trading & Finance
+
 - **Wall Street Pulse**: 100% operativo
 - **LAV/ADAF Agents**: Arquitectura completa
 - **Risk Management**: Tests pasados
 
 ##### 🎓 Educación & Academia
+
 - **Learning Management**: ✅
 - **Quiz System**: ✅
 - **Progress Tracking**: ✅
 
 ##### 🔒 Seguridad & Compliance
+
 - **Authentication**: ✅
 - **API Security**: ✅
 - **Data Protection**: ✅
 
 ##### 📊 Analytics & Monitoring
+
 - **Performance Metrics**: ✅
 - **Health Checks**: ✅
 - **Error Tracking**: ✅
@@ -5261,16 +5644,19 @@ El ADAF Dashboard Pro ha sido probado exitosamente con un **90%+ de funcionalida
 #### 🎯 RECOMENDACIONES
 
 ##### Inmediatas (Esta semana)
+
 1. **Optimizar memoria**: Reducir uso de 74MB a <50MB
 2. **Activar LAV/ADAF**: Ejecutar `docker compose up` en lav-adaf/
 3. **Tests integración**: Validar comunicación entre sistemas
 
 ##### Mediano plazo (2-4 semanas)
+
 1. **Monitoring avanzado**: Implementar alertas automáticas
 2. **Performance tuning**: Optimización de queries y componentes
 3. **CI/CD pipeline**: Automatizar tests en cada deploy
 
 ##### Largo plazo (1-3 meses)
+
 1. **Escalabilidad**: Preparar para mayor carga de usuarios
 2. **Features avanzadas**: ML integration completa
 3. **Mobile optimization**: PWA y responsive improvements
@@ -5280,6 +5666,7 @@ El ADAF Dashboard Pro ha sido probado exitosamente con un **90%+ de funcionalida
 #### 📋 CHECKLIST DE PRODUCCIÓN
 
 ##### ✅ Listo para Producción
+
 - [x] Sistema principal funcional
 - [x] APIs documentadas y probadas
 - [x] Seguridad implementada
@@ -5288,6 +5675,7 @@ El ADAF Dashboard Pro ha sido probado exitosamente con un **90%+ de funcionalida
 - [x] Documentación completa
 
 ##### ⏳ Pre-Producción (Recomendado)
+
 - [ ] Optimización de memoria (test failing)
 - [ ] Activación completa LAV/ADAF
 - [ ] Load testing
@@ -5301,7 +5689,7 @@ El ADAF Dashboard Pro ha sido probado exitosamente con un **90%+ de funcionalida
 
 - ✅ **Robustez**: 90%+ tests pasados
 - ✅ **Escalabilidad**: Arquitectura de microservicios
-- ✅ **Seguridad**: Todos los tests de security pasados  
+- ✅ **Seguridad**: Todos los tests de security pasados
 - ✅ **Performance**: Tiempo de respuesta excelente
 - ✅ **Mantenibilidad**: Código bien estructurado
 
@@ -5309,17 +5697,20 @@ El ADAF Dashboard Pro ha sido probado exitosamente con un **90%+ de funcionalida
 
 ---
 
-*Reporte generado el: $(date)*  
-*Sistema probado: ADAF Dashboard Pro v2024*  
-*Entorno: Ubuntu Linux con Node.js 20+*
+_Reporte generado el: $(date)_  
+_Sistema probado: ADAF Dashboard Pro v2024_  
+_Entorno: Ubuntu Linux con Node.js 20+_
 
 <a id="doc-roadmap-okrs-2025-2026"></a>
+
 ## Roadmap OKRs 2025-2026
+
 > Fuente original: `ROADMAP_OKRS_2025_2026.md`
 
 ### Roadmap Institucional y OKRs — ADAF Dashboard Pro (2025-2026)
 
 #### Visión
+
 Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resiliencia, seguridad, automatización, trazabilidad y excelencia técnica.
 
 ---
@@ -5327,23 +5718,27 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
 #### Hitos Trimestrales (Q4 2025 — Q3 2026)
 
 ##### Q4 2025
+
 - Auditoría externa de seguridad y cumplimiento
 - Integración de nuevos agentes cuantitativos (LAV/ADAF)
 - Despliegue de dashboards de observabilidad (Prometheus/Grafana)
 - Onboarding institucional con guías y simulacros
 
 ##### Q1 2026
+
 - Certificación SOC2/ISO27001 (preparación y auditoría)
 - Integración de vaults y gestión avanzada de secretos
 - Expansión de cobertura de pruebas (>98%)
 - Automatización de despliegues con rollback y monitoreo post-deploy
 
 ##### Q2 2026
+
 - Incorporación de nuevos features estratégicos (DeFi, ML, compliance)
 - Refuerzo de cultura de mejora continua y post-mortem
 - Integración de feedback institucional y sesiones de revisión
 
 ##### Q3 2026
+
 - Escalamiento multi-institucional y soporte a nuevos clientes
 - Certificación institucional y roadmap de expansión
 
@@ -5352,6 +5747,7 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
 #### OKRs Institucionales (2025-2026)
 
 ##### Objetivos
+
 1. Seguridad y compliance Fortune 500
 2. Excelencia operativa y automatización CI/CD
 3. Observabilidad y monitoreo proactivo
@@ -5359,6 +5755,7 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
 5. Innovación y escalabilidad
 
 ##### Resultados Clave (KR)
+
 - 100% de incidentes documentados y resueltos en <30 min
 - Auditoría externa y certificación completadas
 - Cobertura de pruebas >98% en módulos críticos
@@ -5373,19 +5770,23 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
 **Fecha:** 2025-10-08
 
 <a id="doc-runbook"></a>
+
 ## Runbook
+
 > Fuente original: `RUNBOOK.md`
 
 ### ADAF Dashboard Production Runbooks
-*Version 2.0 - Security Hardened Production Environment*
+
+_Version 2.0 - Security Hardened Production Environment_
 
 #### 🚨 Emergency Contacts & Escalation
 
 **Primary On-Call:** DevOps Team  
 **Secondary:** Lead Developer  
-**Emergency Escalation:** CTO  
+**Emergency Escalation:** CTO
 
 **Monitoring Dashboards:**
+
 - Grafana: http://localhost:3001 (Wall Street Pulse Dashboard)
 - Prometheus: http://localhost:9090
 - Jaeger Tracing: http://localhost:16686
@@ -5397,30 +5798,34 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
 ##### **Incident 1: Database Primary Down**
 
 **Symptoms:**
+
 - Health check `/api/health/db` returns 503
 - Application shows database connection errors
 - Prometheus alert: `PostgreSQL Primary Down`
 
 **Immediate Actions (< 5 minutes):**
+
 1. **Promote Standby to Primary**
+
    ```bash
    # Connect to standby container
    docker exec -it adaf_postgres_standby bash
-   
+
    # Promote to primary
    touch /tmp/postgresql.trigger
-   
+
    # Verify promotion
    psql -U adaf_user -d adaf_dashboard -c "SELECT pg_is_in_recovery();"
    # Should return 'f' (false)
    ```
 
 2. **Update Application Configuration**
+
    ```bash
    # Update docker-compose.prod.yml
    # Change DATABASE_URL to point to standby (port 5433)
    # Or update NGINX to route DB traffic
-   
+
    # Restart app instances
    docker-compose -f docker-compose.prod.yml restart app-blue app-green
    ```
@@ -5432,11 +5837,13 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
    ```
 
 **Root Cause Analysis:**
+
 - Check original primary logs: `docker logs adaf_postgres_primary`
 - Review system resources: disk space, memory, CPU
 - Check for corruption: `VACUUM`, `REINDEX` operations
 
 **Recovery Steps:**
+
 1. Fix underlying issue on original primary
 2. Rebuild as new standby from current primary
 3. Re-establish replication
@@ -5447,12 +5854,15 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
 ##### **Incident 2: Redis Complete Failure**
 
 **Symptoms:**
+
 - Sessions lost, users logged out
 - Cache misses at 100%
 - Application slower but functional
 
 **Immediate Actions (< 10 minutes):**
+
 1. **Switch to Redis Replica**
+
    ```bash
    # Promote replica to primary
    docker exec -it adaf_redis_replica redis-cli
@@ -5461,6 +5871,7 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
    ```
 
 2. **Update Application Config**
+
    ```bash
    # Update REDIS_URL to point to replica (port 6380)
    docker-compose -f docker-compose.prod.yml restart app-blue app-green
@@ -5472,6 +5883,7 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
    - Session storage fallback to database
 
 **Recovery:**
+
 1. Investigate primary Redis failure
 2. Restore from AOF/RDB backup if needed
 3. Re-establish primary-replica setup
@@ -5481,21 +5893,25 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
 ##### **Incident 3: Application High Error Rate (>1%)**
 
 **Symptoms:**
+
 - Grafana alert: "High Error Rate"
 - 5xx responses increasing
 - User complaints about functionality
 
 **Immediate Actions (< 3 minutes):**
+
 1. **Blue-Green Rollback**
+
    ```bash
    ./scripts/deploy-bluegreen.sh rollback
    ```
 
 2. **Traffic Analysis**
+
    ```bash
    # Check NGINX error logs
    docker logs adaf_nginx | tail -100
-   
+
    # Check application logs
    docker logs adaf_app_blue | grep ERROR | tail -50
    ```
@@ -5509,12 +5925,15 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
 ##### **Incident 4: Complete Site Down**
 
 **Symptoms:**
+
 - NGINX health check failing
 - All services unresponsive
 - Load balancer reporting all instances down
 
 **Immediate Actions (< 2 minutes):**
+
 1. **System Status Check**
+
    ```bash
    docker-compose -f docker-compose.prod.yml ps
    docker system df
@@ -5522,10 +5941,11 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
    ```
 
 2. **Emergency Restart**
+
    ```bash
    # If resources available, restart all services
    docker-compose -f docker-compose.prod.yml restart
-   
+
    # If resource issues, restart selectively
    docker-compose -f docker-compose.prod.yml up -d postgres-primary redis-primary app-blue nginx
    ```
@@ -5543,12 +5963,14 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
 ##### **Planned Database Maintenance**
 
 **Pre-maintenance Checklist:**
+
 - [ ] Backup verification completed
 - [ ] Standby replication lag < 5 seconds
 - [ ] Maintenance window announced
 - [ ] Rollback plan confirmed
 
 **Maintenance Steps:**
+
 1. Enable maintenance mode
 2. Promote standby to primary
 3. Perform maintenance on original primary
@@ -5559,6 +5981,7 @@ Consolidar ADAF Dashboard Pro como plataforma institucional Fortune 500: resilie
 ##### **Application Deployment**
 
 **Blue-Green Deployment:**
+
 ```bash
 # Standard deployment
 ./scripts/deploy-bluegreen.sh deploy v2.1.0
@@ -5571,6 +5994,7 @@ watch 'curl -s http://localhost/api/health/app | jq .status'
 ```
 
 **Canary Deployment Monitoring:**
+
 - Watch error rates during each canary stage
 - Monitor response times (p95 < 450ms)
 - Check Wall Street Pulse data freshness
@@ -5582,34 +6006,38 @@ watch 'curl -s http://localhost/api/health/app | jq .status'
 ##### **Key Metrics to Watch:**
 
 **Application Performance:**
+
 - Response time p95 < 450ms
 - Error rate < 1%
 - Wall Street Pulse data freshness < 5 minutes
 
 **Infrastructure Health:**
+
 - Database replication lag < 10 seconds
 - Redis memory usage < 80%
 - Disk usage < 85%
 
 **Security Indicators:**
+
 - Failed authentication attempts
 - Rate limiting triggers
 - Unusual traffic patterns
 
 ##### **Alert Escalation Matrix:**
 
-| Alert Level | Response Time | Action |
-|------------|---------------|---------|
-| **P0 - Critical** | 5 minutes | Page on-call, auto-rollback |
-| **P1 - High** | 15 minutes | Notify on-call, investigate |
-| **P2 - Medium** | 1 hour | Create ticket, schedule fix |
-| **P3 - Low** | 24 hours | Log for weekly review |
+| Alert Level       | Response Time | Action                      |
+| ----------------- | ------------- | --------------------------- |
+| **P0 - Critical** | 5 minutes     | Page on-call, auto-rollback |
+| **P1 - High**     | 15 minutes    | Notify on-call, investigate |
+| **P2 - Medium**   | 1 hour        | Create ticket, schedule fix |
+| **P3 - Low**      | 24 hours      | Log for weekly review       |
 
 ---
 
 #### 🧪 Testing & Validation
 
 ##### **Health Check Commands:**
+
 ```bash
 # Application health
 curl -f http://localhost/api/health/app
@@ -5617,7 +6045,7 @@ curl -f http://localhost/api/health/app
 # Database health
 curl -f http://localhost/api/health/db
 
-# Redis health  
+# Redis health
 curl -f http://localhost/api/health/redis
 
 # Full system check
@@ -5625,6 +6053,7 @@ curl -f http://localhost/api/health && echo "All systems operational"
 ```
 
 ##### **Performance Validation:**
+
 ```bash
 # Response time test
 time curl -s http://localhost/api/read/wsp/etf-flows | jq .
@@ -5643,6 +6072,7 @@ docker exec adaf_postgres_primary psql -U adaf_user -d adaf_dashboard -c "SELECT
 ##### **Incident Communication:**
 
 **Initial Alert:**
+
 > 🚨 **INCIDENT DETECTED**  
 > **Service:** ADAF Dashboard  
 > **Severity:** [P0/P1/P2]  
@@ -5651,6 +6081,7 @@ docker exec adaf_postgres_primary psql -U adaf_user -d adaf_dashboard -c "SELECT
 > **ETA:** [Estimated time to resolution]
 
 **Progress Update:**
+
 > 📋 **INCIDENT UPDATE**  
 > **Service:** ADAF Dashboard  
 > **Status:** [In Progress/Resolved]  
@@ -5658,6 +6089,7 @@ docker exec adaf_postgres_primary psql -U adaf_user -d adaf_dashboard -c "SELECT
 > **Next Steps:** [What's being done next]
 
 **Resolution Notice:**
+
 > ✅ **INCIDENT RESOLVED**  
 > **Service:** ADAF Dashboard  
 > **Duration:** [Total incident time]  
@@ -5669,6 +6101,7 @@ docker exec adaf_postgres_primary psql -U adaf_user -d adaf_dashboard -c "SELECT
 #### 🔄 Recovery Procedures
 
 ##### **Point-in-Time Recovery (PITR):**
+
 ```bash
 # Stop application to prevent new writes
 docker-compose -f docker-compose.prod.yml stop app-blue app-green
@@ -5684,6 +6117,7 @@ docker-compose -f docker-compose.prod.yml start app-blue app-green
 ```
 
 ##### **Full System Recovery:**
+
 ```bash
 # Complete system rebuild from backups
 ./scripts/disaster-recovery.sh
@@ -5706,18 +6140,21 @@ docker-compose -f docker-compose.prod.yml start app-blue app-green
 #### 📝 Post-Incident Actions
 
 **Immediate (< 24 hours):**
+
 1. Document incident timeline
 2. Identify root cause
 3. Implement immediate fixes
 4. Update monitoring/alerting
 
 **Short-term (< 1 week):**
+
 1. Conduct blameless post-mortem
 2. Update runbooks
 3. Implement prevention measures
 4. Test recovery procedures
 
 **Long-term (< 1 month):**
+
 1. Architectural improvements
 2. Enhanced monitoring
 3. Training updates
@@ -5725,10 +6162,12 @@ docker-compose -f docker-compose.prod.yml start app-blue app-green
 
 ---
 
-*This runbook should be reviewed and updated quarterly. Last updated: October 2025*
+_This runbook should be reviewed and updated quarterly. Last updated: October 2025_
 
 <a id="doc-security-architecture"></a>
+
 ## Security Architecture
+
 > Fuente original: `SECURITY_ARCHITECTURE.md`
 
 ### 🎯 ADAF DASHBOARD - ENTERPRISE SECURITY ARCHITECTURE
@@ -5738,6 +6177,7 @@ docker-compose -f docker-compose.prod.yml start app-blue app-green
 **The ADAF Dashboard has been transformed into an ENTERPRISE-GRADE SECURITY FORTRESS** with multiple layers of advanced protection. This is not just a financial dashboard - it's now a **SHOWCASE OF SECURITY EXCELLENCE** that demonstrates cutting-edge cybersecurity capabilities.
 
 ##### 🏆 SECURITY ACHIEVEMENTS
+
 - **Zero Trust Architecture** implemented with JWT validation and behavioral analysis
 - **Machine Learning Threat Detection** with 94.2% accuracy across 4 ML models
 - **Automated Incident Response** with sub-3-second response times
@@ -5800,6 +6240,7 @@ docker-compose -f docker-compose.prod.yml start app-blue app-green
   - Automated model retraining
 
 **Code Highlight:**
+
 ```typescript
 // Example: Advanced ML threat analysis
 const mlAnalysis = await threatIntelligenceEngine.analyzeThreatWithML({
@@ -5807,7 +6248,7 @@ const mlAnalysis = await threatIntelligenceEngine.analyzeThreatWithML({
   path: request.path,
   method: request.method,
   headers: request.headers,
-  timestamp: Date.now()
+  timestamp: Date.now(),
 });
 
 // Result: Comprehensive threat assessment with confidence scores
@@ -5832,6 +6273,7 @@ const mlAnalysis = await threatIntelligenceEngine.analyzeThreatWithML({
   - **Chain of custody maintenance**
 
 **Code Highlight:**
+
 ```typescript
 // Example: Instant automated response
 await incidentResponseOrchestrator.executeIncidentResponse({
@@ -5867,11 +6309,12 @@ await incidentResponseOrchestrator.executeIncidentResponse({
   - **SOC2** operational security
 
 **Code Highlight:**
+
 ```typescript
 // Example: Real-time compliance monitoring
 const complianceResult = await securityOrchestrator.validateFullCompliance({
   frameworks: ['SOX', 'PCI-DSS', 'GDPR'],
-  scope: 'production_environment'
+  scope: 'production_environment',
 });
 // Auto-generates compliance reports and alerts on violations
 ```
@@ -5898,6 +6341,7 @@ const complianceResult = await securityOrchestrator.validateFullCompliance({
   - **Evidence collection** - Gathers attack methodology intel
 
 **Code Highlight:**
+
 ```typescript
 // Example: Honeypot activation
 const honeypotResult = await honeypotOrchestrator.activateAllHoneypots();
@@ -5953,16 +6397,17 @@ const honeypotResult = await honeypotOrchestrator.activateAllHoneypots();
 
 ##### Key Performance Indicators:
 
-| Metric | Target | Achieved | Status |
-|--------|--------|----------|---------|
-| **Threat Detection Accuracy** | >90% | 94.2% | ✅ Exceeded |
-| **False Positive Rate** | <5% | 2.1% | ✅ Exceeded |
-| **Mean Response Time** | <5sec | 2.3sec | ✅ Exceeded |
-| **Auto-Containment Rate** | >95% | 98.7% | ✅ Exceeded |
-| **System Uptime** | >99% | 99.8% | ✅ Achieved |
-| **Compliance Coverage** | 100% | 100% | ✅ Full Compliance |
+| Metric                        | Target | Achieved | Status             |
+| ----------------------------- | ------ | -------- | ------------------ |
+| **Threat Detection Accuracy** | >90%   | 94.2%    | ✅ Exceeded        |
+| **False Positive Rate**       | <5%    | 2.1%     | ✅ Exceeded        |
+| **Mean Response Time**        | <5sec  | 2.3sec   | ✅ Exceeded        |
+| **Auto-Containment Rate**     | >95%   | 98.7%    | ✅ Exceeded        |
+| **System Uptime**             | >99%   | 99.8%    | ✅ Achieved        |
+| **Compliance Coverage**       | 100%   | 100%     | ✅ Full Compliance |
 
 ##### Security Achievements:
+
 - **🎯 Zero successful attacks** in testing
 - **⚡ Sub-3 second** automated response times
 - **🧠 4 active ML models** with continuous learning
@@ -5992,17 +6437,18 @@ const honeypotResult = await honeypotOrchestrator.activateAllHoneypots();
 
 #### 🎯 NARRATIVE FOR YOUR PORTFOLIO
 
-*"I transformed a financial dashboard into an **enterprise-grade security fortress** that showcases advanced cybersecurity capabilities. The system implements **machine learning threat detection** with 94.2% accuracy, **automated incident response** with sub-3 second reaction times, and **deception technology** that actively hunts attackers.*
+_"I transformed a financial dashboard into an **enterprise-grade security fortress** that showcases advanced cybersecurity capabilities. The system implements **machine learning threat detection** with 94.2% accuracy, **automated incident response** with sub-3 second reaction times, and **deception technology** that actively hunts attackers._
 
-*The architecture includes **Zero Trust security**, **field-level encryption**, **compliance automation** across 5 major frameworks, and a **real-time security command center** for executive monitoring. This demonstrates my ability to architect and implement **Fortune 500-level security** solutions that combine cutting-edge technology with practical business requirements.*
+_The architecture includes **Zero Trust security**, **field-level encryption**, **compliance automation** across 5 major frameworks, and a **real-time security command center** for executive monitoring. This demonstrates my ability to architect and implement **Fortune 500-level security** solutions that combine cutting-edge technology with practical business requirements._
 
-*The result is a system that doesn't just detect threats - it **predicts, prevents, and contains** them automatically while maintaining **full regulatory compliance** and providing **executive-level visibility** into security posture and business risk."*
+_The result is a system that doesn't just detect threats - it **predicts, prevents, and contains** them automatically while maintaining **full regulatory compliance** and providing **executive-level visibility** into security posture and business risk."_
 
 ---
 
 #### 🔧 TECHNICAL IMPLEMENTATION DETAILS
 
 ##### Technology Stack:
+
 - **Frontend:** React 19.1.1, TypeScript, Tailwind CSS
 - **Backend:** Node.js, Next.js 15.1.3
 - **Database:** Redis (security data), PostgreSQL (application data)
@@ -6012,6 +6458,7 @@ const honeypotResult = await honeypotOrchestrator.activateAllHoneypots();
 - **Compliance:** Automated audit engines
 
 ##### Deployment Architecture:
+
 - **Production Environment:** Docker containers
 - **High Availability:** Redis cluster, PostgreSQL HA
 - **Load Balancing:** Blue-Green deployment
@@ -6030,14 +6477,16 @@ const honeypotResult = await honeypotOrchestrator.activateAllHoneypots();
 ✅ **Zero Trust Architecture** implementation  
 ✅ **Compliance Automation** across major frameworks  
 ✅ **Executive Security Dashboard** for business leadership  
-✅ **Real-time Monitoring** and threat intelligence  
+✅ **Real-time Monitoring** and threat intelligence
 
 This transforms your ADAF Dashboard from a simple financial tool into a **CYBERSECURITY MASTERPIECE** that showcases enterprise-grade security architecture and implementation capabilities.
 
 **Perfect for executive presentations, technical interviews, and demonstrating advanced cybersecurity expertise!** 🚀🔒
 
 <a id="doc-security-readme"></a>
+
 ## Security README
+
 > Fuente original: `SECURITY_README.md`
 
 ### ADAF Dashboard Production Hardening v2.0 - SECURITY README
@@ -6047,13 +6496,14 @@ This transforms your ADAF Dashboard from a simple financial tool into a **CYBERS
 **Environment:** Production  
 **Security Level:** Hardened  
 **Compliance:** SOC2, ISO27001 Ready  
-**Last Updated:** October 2025  
+**Last Updated:** October 2025
 
 ---
 
 #### 🛡️ Security Features Implemented
 
 ##### **Container Security**
+
 - ✅ **Non-root users** in all containers (node:node, postgres:postgres, redis:redis, nginx:nginx)
 - ✅ **Read-only filesystems** with specific tmpfs mounts for necessary write operations
 - ✅ **Dropped capabilities** (ALL) with minimal required capabilities added back
@@ -6062,6 +6512,7 @@ This transforms your ADAF Dashboard from a simple financial tool into a **CYBERS
 - ✅ **Security contexts** with seccomp and AppArmor profiles
 
 ##### **Network Security**
+
 - ✅ **TLS 1.2+ enforcement** with modern cipher suites
 - ✅ **HSTS headers** with 1-year max-age and subdomain inclusion
 - ✅ **Content Security Policy** (CSP) preventing XSS attacks
@@ -6070,6 +6521,7 @@ This transforms your ADAF Dashboard from a simple financial tool into a **CYBERS
 - ✅ **NGINX security headers** (X-Frame-Options, X-Content-Type-Options, etc.)
 
 ##### **Data Protection**
+
 - ✅ **Docker Secrets** for all sensitive data (passwords, keys, certificates)
 - ✅ **Encrypted backups** with WAL-G and S3 server-side encryption
 - ✅ **Database encryption** at rest and in transit
@@ -6077,6 +6529,7 @@ This transforms your ADAF Dashboard from a simple financial tool into a **CYBERS
 - ✅ **Minimum privilege** access patterns
 
 ##### **Infrastructure Hardening**
+
 - ✅ **High Availability** PostgreSQL with streaming replication
 - ✅ **Redis persistence** with AOF and RDB backups
 - ✅ **Blue-Green deployment** with automated rollback on failure
@@ -6088,6 +6541,7 @@ This transforms your ADAF Dashboard from a simple financial tool into a **CYBERS
 #### 🔑 Secrets Management
 
 ##### **Created Secrets:**
+
 ```
 postgres_password              - PostgreSQL main user password
 postgres_replication_password  - PostgreSQL replication user password
@@ -6100,11 +6554,13 @@ redis_password                - Redis authentication password
 ```
 
 ##### **Secret Rotation Schedule:**
+
 - **Quarterly (90 days):** Application secrets, database passwords
 - **Annually (365 days):** AWS credentials, SSL certificates
 - **On-demand:** Emergency rotation for compromised secrets
 
 ##### **Rotation Commands:**
+
 ```bash
 # Automated quarterly rotation
 ./scripts/rotate-secrets.sh
@@ -6121,12 +6577,14 @@ docker secret ls | grep adaf
 #### 🚀 Deployment Security
 
 ##### **Blue-Green Deployment Process:**
+
 1. **Build verification** - Security scan, dependency check
 2. **Canary deployment** - 10% → 25% → 50% → 75% → 100%
 3. **Health gates** - Automatic rollback on failure
 4. **Security validation** - Runtime security checks
 
 ##### **Pre-deployment Checklist:**
+
 - [ ] Security scan passed (no critical/high vulnerabilities)
 - [ ] Dependencies updated and audited
 - [ ] Secrets rotation completed if due
@@ -6135,6 +6593,7 @@ docker secret ls | grep adaf
 - [ ] Runbook updated with any changes
 
 ##### **Post-deployment Verification:**
+
 - [ ] All health checks passing
 - [ ] Error rates < 1%
 - [ ] Response times p95 < 450ms
@@ -6147,6 +6606,7 @@ docker secret ls | grep adaf
 #### 📊 Security Monitoring
 
 ##### **Key Security Metrics:**
+
 - Failed authentication attempts per hour
 - Rate limiting activation count
 - SSL/TLS handshake failures
@@ -6155,6 +6615,7 @@ docker secret ls | grep adaf
 - Container escape attempts
 
 ##### **Security Alerts:**
+
 ```yaml
 # High Priority (P0)
 - Multiple failed auth attempts (>10/min)
@@ -6162,7 +6623,7 @@ docker secret ls | grep adaf
 - SSL certificate expiration (<30 days)
 - Unusual admin endpoint access
 
-# Medium Priority (P1) 
+# Medium Priority (P1)
 - High rate limiting activation
 - Suspicious user agents
 - Unusual geographic access patterns
@@ -6170,6 +6631,7 @@ docker secret ls | grep adaf
 ```
 
 ##### **Security Dashboards:**
+
 - **Grafana Security Panel:** http://localhost:3001/d/security
 - **WAF Logs:** NGINX access logs with security events
 - **Container Security:** Runtime security monitoring
@@ -6179,6 +6641,7 @@ docker secret ls | grep adaf
 #### 🔍 Compliance & Auditing
 
 ##### **Audit Log Locations:**
+
 ```
 Application Logs:    /app/logs/access.log (JSON format)
 Database Logs:       PostgreSQL query logs with user tracking
@@ -6188,12 +6651,14 @@ Backup Logs:         WAL-G backup and restore operations
 ```
 
 ##### **Audit Trail Retention:**
+
 - **Application logs:** 90 days local, 1 year archived
 - **Security logs:** 1 year local, 7 years archived
 - **Access logs:** 180 days with user correlation
 - **Backup logs:** 2 years for compliance
 
 ##### **Compliance Controls:**
+
 - **Access Control:** Role-based with minimal privileges
 - **Data Encryption:** AES-256 at rest, TLS 1.2+ in transit
 - **Backup Security:** Encrypted, tested, geographically distributed
@@ -6205,6 +6670,7 @@ Backup Logs:         WAL-G backup and restore operations
 #### 🎯 Security Testing
 
 ##### **Automated Security Tests:**
+
 ```bash
 # Container security scan
 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
@@ -6216,11 +6682,12 @@ nmap -sV -sC localhost
 # SSL/TLS configuration test
 testssl.sh https://localhost
 
-# Application security test  
+# Application security test
 ./scripts/security-test.sh
 ```
 
 ##### **Penetration Testing Schedule:**
+
 - **Monthly:** Automated vulnerability scans
 - **Quarterly:** Internal penetration testing
 - **Annually:** External security audit
@@ -6231,20 +6698,23 @@ testssl.sh https://localhost
 #### 🆘 Security Incident Response
 
 ##### **Incident Severity Levels:**
+
 - **P0 Critical:** Active breach, data compromise, system down
 - **P1 High:** Potential breach, security control failure
 - **P2 Medium:** Vulnerability identified, suspicious activity
 - **P3 Low:** Policy violation, minor configuration issue
 
 ##### **Response Procedures:**
+
 1. **Immediate containment** (< 15 minutes)
-2. **Impact assessment** (< 30 minutes)  
+2. **Impact assessment** (< 30 minutes)
 3. **Evidence collection** (< 1 hour)
 4. **System restoration** (< 2 hours)
 5. **Root cause analysis** (< 24 hours)
 6. **Security improvements** (< 1 week)
 
 ##### **Emergency Contacts:**
+
 - **Security Team:** security@adaf.com
 - **DevOps On-call:** +1-xxx-xxx-xxxx
 - **Legal/Compliance:** compliance@adaf.com
@@ -6255,18 +6725,21 @@ testssl.sh https://localhost
 #### 🔧 Security Maintenance
 
 ##### **Weekly Tasks:**
+
 - [ ] Review security logs for anomalies
 - [ ] Update security patches
 - [ ] Verify backup integrity
 - [ ] Check SSL certificate status
 
 ##### **Monthly Tasks:**
+
 - [ ] Run vulnerability scans
 - [ ] Review user access permissions
 - [ ] Test incident response procedures
 - [ ] Update security documentation
 
 ##### **Quarterly Tasks:**
+
 - [ ] Rotate secrets and passwords
 - [ ] Conduct penetration testing
 - [ ] Review security policies
@@ -6277,12 +6750,14 @@ testssl.sh https://localhost
 #### 📞 Security Contacts & Resources
 
 ##### **Internal Contacts:**
+
 - **CISO:** [Name, Email, Phone]
-- **Security Engineer:** [Name, Email, Phone]  
+- **Security Engineer:** [Name, Email, Phone]
 - **DevOps Lead:** [Name, Email, Phone]
 - **Compliance Officer:** [Name, Email, Phone]
 
 ##### **External Resources:**
+
 - **Cloud Security:** AWS/Azure Security Center
 - **Vulnerability Database:** CVE, NVD
 - **Threat Intelligence:** [Vendor/Service]
@@ -6293,13 +6768,15 @@ testssl.sh https://localhost
 #### 📋 Security Checklist (Go-Live)
 
 ##### **Infrastructure Security:**
+
 - [ ] All containers running as non-root
-- [ ] Read-only filesystems implemented  
+- [ ] Read-only filesystems implemented
 - [ ] Network policies configured
 - [ ] Secrets properly managed
 - [ ] Backups encrypted and tested
 
 ##### **Application Security:**
+
 - [ ] Input validation implemented
 - [ ] Authentication/authorization working
 - [ ] Security headers configured
@@ -6307,6 +6784,7 @@ testssl.sh https://localhost
 - [ ] Error handling secure
 
 ##### **Operational Security:**
+
 - [ ] Monitoring and alerting configured
 - [ ] Incident response procedures documented
 - [ ] Staff security training completed
@@ -6325,13 +6803,15 @@ testssl.sh https://localhost
 
 ---
 
-*This security documentation must be reviewed and updated with each release. For security concerns or questions, contact the Security Team immediately.*
+_This security documentation must be reviewed and updated with each release. For security concerns or questions, contact the Security Team immediately._
 
 **Document Classification:** Internal Use Only  
 **Next Review Date:** January 2026
 
 <a id="doc-sprints-2025-10-10"></a>
+
 ## Sprints 2025-10-10
+
 > Fuente original: `SPRINTS_2025-10-10.md`
 
 ### Sprints ADAF Dashboard Pro - 2025-10-10
@@ -6341,6 +6821,7 @@ Este archivo documenta los sprints funcionales para activar y validar el dashboa
 ---
 
 #### Sprint 1: Núcleo y navegación
+
 - [ ] Validar carga, navegación y layout general
 - [ ] Probar login/logout y flujos de usuario básico (si aplica)
 - [ ] Verificar que los datos mock aparecen en los paneles principales (News, Markets, Academy)
@@ -6381,6 +6862,7 @@ Este archivo documenta los sprints funcionales para activar y validar el dashboa
 > Validación realizada el 2025-10-10. Sprint 1 completado: todas las secciones principales funcionan con mock data y sin errores críticos.
 
 #### Sprint 2: Ingesta y visualización de datos
+
 - [ ] Probar endpoints de ingesta (news, signals, TVL, etc.) con mock data
 - [ ] Validar que los datos nuevos se reflejan en el dashboard
 - [ ] Revisar deduplicación y persistencia
@@ -6399,6 +6881,7 @@ Este archivo documenta los sprints funcionales para activar y validar el dashboa
 > Validación realizada el 2025-10-10. Listo para avanzar a Sprint 3.
 
 #### Sprint 3: Funcionalidad avanzada
+
 - [ ] Activar y probar módulos avanzados: Reports, OnChain, Derivatives, DQP, Lineage
 - [ ] Validar filtros, búsquedas, exportaciones y acciones de usuario
 - [ ] Probar integración con agentes (LAV-ADAF) y flujos automáticos
@@ -6416,6 +6899,7 @@ Este archivo documenta los sprints funcionales para activar y validar el dashboa
 > Validación realizada el 2025-10-10. Listo para avanzar a Sprint 4 (calidad, errores y demo).
 
 #### Sprint 4: Calidad, errores y demo
+
 - [ ] Ejecutar todos los tests y corregir fallos
 - [ ] Revisar logs, estados de error y mensajes al usuario
 - [ ] Preparar scripts de demo y documentación para inversionistas
@@ -6436,7 +6920,9 @@ Este archivo documenta los sprints funcionales para activar y validar el dashboa
 > Consultar y actualizar este archivo en cada sesión para mantener el contexto y el avance.
 
 <a id="doc-task-reglas"></a>
+
 ## Task Reglas
+
 > Fuente original: `TASK_REGLAS.md`
 
 ### Sección 3 — Reglas (DSL) + Guardrails + Read-Models + UI
@@ -6455,7 +6941,9 @@ Objetivo: habilitar gobierno operativo:
 Resultados: panel /control operativo, reglas versionadas, auditoría completa y datos en vivo.
 
 <a id="doc-test-report"></a>
+
 ## Test Report
+
 > Fuente original: `TEST_REPORT.md`
 
 ### 🧪 ADAF DASHBOARD - COMPREHENSIVE TEST REPORT
@@ -6469,48 +6957,53 @@ Resultados: panel /control operativo, reglas versionadas, auditoría completa y 
 #### 📊 **TEST RESULTS OVERVIEW**
 
 ##### ✅ **CORE FUNCTIONALITY TESTS**
+
 - **Basic System Tests**: `2/2 PASSED` ✅
-- **WSP (WallStreet Pulse) Tests**: `116/116 PASSED` ✅  
+- **WSP (WallStreet Pulse) Tests**: `116/116 PASSED` ✅
 - **Security Architecture Tests**: `23/23 PASSED` ✅
 - **Total Passing Tests**: **141 Tests**
 
 ##### 🛡️ **SECURITY COMPONENT VALIDATION**
 
-| Security Component | Tests | Status | Coverage |
-|-------------------|-------|--------|----------|
-| **🧠 Threat Intelligence Engine** | 3/3 | ✅ PASS | ML Models, Accuracy, Detection |
-| **⚡ Incident Response System** | 3/3 | ✅ PASS | Response Time, Playbooks, Containment |
-| **🔒 Advanced Security Suite** | 3/3 | ✅ PASS | Encryption, Compliance, Key Rotation |
-| **🕷️ Honeypot Network** | 3/3 | ✅ PASS | Deployment, Detection, Canary Tokens |
-| **🎯 Security Command Center** | 3/3 | ✅ PASS | Health Monitoring, Correlation, Reports |
-| **📊 Security Metrics & KPIs** | 2/2 | ✅ PASS | Detection Accuracy, Performance Tracking |
-| **🔄 Integration Tests** | 2/2 | ✅ PASS | Component Integration, High-Volume Events |
-| **🚀 Performance Benchmarks** | 1/1 | ✅ PASS | Enterprise Requirements Met |
-| **🛡️ Security Edge Cases** | 3/3 | ✅ PASS | Unknown Attacks, Maintenance, Redundancy |
+| Security Component                | Tests | Status  | Coverage                                  |
+| --------------------------------- | ----- | ------- | ----------------------------------------- |
+| **🧠 Threat Intelligence Engine** | 3/3   | ✅ PASS | ML Models, Accuracy, Detection            |
+| **⚡ Incident Response System**   | 3/3   | ✅ PASS | Response Time, Playbooks, Containment     |
+| **🔒 Advanced Security Suite**    | 3/3   | ✅ PASS | Encryption, Compliance, Key Rotation      |
+| **🕷️ Honeypot Network**           | 3/3   | ✅ PASS | Deployment, Detection, Canary Tokens      |
+| **🎯 Security Command Center**    | 3/3   | ✅ PASS | Health Monitoring, Correlation, Reports   |
+| **📊 Security Metrics & KPIs**    | 2/2   | ✅ PASS | Detection Accuracy, Performance Tracking  |
+| **🔄 Integration Tests**          | 2/2   | ✅ PASS | Component Integration, High-Volume Events |
+| **🚀 Performance Benchmarks**     | 1/1   | ✅ PASS | Enterprise Requirements Met               |
+| **🛡️ Security Edge Cases**        | 3/3   | ✅ PASS | Unknown Attacks, Maintenance, Redundancy  |
 
 ---
 
 #### 🏆 **SECURITY PERFORMANCE METRICS**
 
 ##### **Machine Learning Threat Detection**
+
 - ✅ **94.2% Detection Accuracy** (Target: >90%)
-- ✅ **2.1% False Positive Rate** (Target: <5%)  
+- ✅ **2.1% False Positive Rate** (Target: <5%)
 - ✅ **4 ML Models Active** (DDoS, Credential Stuffing, Data Exfiltration, Zero-Day)
 - ✅ **Continuous Learning Enabled**
 
 ##### **Incident Response Performance**
+
 - ✅ **2.3 Second Response Time** (Target: <5 seconds)
 - ✅ **98.7% Auto-Containment Rate** (Target: >95%)
 - ✅ **4 Response Playbooks** (All threat types covered)
 - ✅ **Forensics Collection Automated**
 
 ##### **Security Infrastructure**
+
 - ✅ **24 Active Honeypots** (100% Deployment Success)
 - ✅ **AES-256 Encryption** (Field-level protection)
 - ✅ **100% Compliance** (SOX, PCI-DSS, GDPR, ISO27001, SOC2)
 - ✅ **99.8% System Uptime** (Target: >99%)
 
 ##### **Enterprise Requirements**
+
 - ✅ **Sub-3 Second Response** (Enterprise benchmark met)
 - ✅ **10,000+ Events/Minute Throughput** (High-volume capable)
 - ✅ **<512MB Memory Usage** (Resource efficient)
@@ -6523,28 +7016,32 @@ Resultados: panel /control operativo, reglas versionadas, auditoría completa y 
 Our comprehensive **116 WSP tests** validate:
 
 ##### **Data Adapters & Integration** (36 tests)
+
 - ✅ Calendar adapter functionality
-- ✅ Circuit breaker patterns  
+- ✅ Circuit breaker patterns
 - ✅ Edge case handling
 - ✅ ETF data processing
 - ✅ Market indices integration
 - ✅ Rates & FX data handling
 
-##### **API & Performance** (25 tests)  
+##### **API & Performance** (25 tests)
+
 - ✅ Rate limiting mechanisms
 - ✅ API route validation
 - ✅ ETag caching systems
 - ✅ Feature flag management
 
 ##### **Metrics & Monitoring** (31 tests)
+
 - ✅ Core metrics calculation
 - ✅ Monitoring systems
 - ✅ Performance branches
 - ✅ Final metric validation
 
 ##### **Data Processing** (24 tests)
+
 - ✅ Normalization algorithms
-- ✅ Scoring mechanisms  
+- ✅ Scoring mechanisms
 - ✅ I18N (internationalization)
 - ✅ Data validation schemas
 
@@ -6553,14 +7050,16 @@ Our comprehensive **116 WSP tests** validate:
 #### 🚨 **INTEGRATION TESTS NOTES**
 
 ##### **Redis-Dependent Tests**
+
 - **Status**: Expected failures due to Redis connectivity
 - **Tests Affected**: `news.ingestion.test.ts`, `tvl.ingestion.test.ts`
 - **Reason**: Integration tests require Redis database connection
 - **Production Impact**: ✅ None - These validate real database integration
 
 ##### **Why This is GOOD**:
+
 1. **Authentic Testing**: Our tests actually connect to real databases
-2. **Production Readiness**: Integration tests validate end-to-end functionality  
+2. **Production Readiness**: Integration tests validate end-to-end functionality
 3. **Security Validation**: Tests confirm security systems work with real data stores
 4. **Enterprise Standards**: Real-world testing demonstrates production readiness
 
@@ -6569,19 +7068,22 @@ Our comprehensive **116 WSP tests** validate:
 #### 🎯 **TEST COVERAGE ANALYSIS**
 
 ##### **Security Architecture Coverage**: 100%
+
 - 🧠 **Threat Intelligence**: ML models, behavioral analysis, predictive modeling
-- ⚡ **Incident Response**: Automated playbooks, forensics, containment  
+- ⚡ **Incident Response**: Automated playbooks, forensics, containment
 - 🔒 **Advanced Security**: Encryption, compliance, key management
 - 🕷️ **Honeypots**: Deception technology, attacker trapping, counter-intelligence
 - 🎯 **Command Center**: Monitoring, correlation, executive reporting
 
 ##### **Functional Coverage**: 100%
+
 - 📊 **Data Processing**: WSP adapters, normalization, validation
 - 🌐 **API Layer**: Rate limiting, caching, routing
 - 📈 **Metrics**: KPI calculation, monitoring, performance tracking
 - 🔄 **Integration**: Cross-system communication, data flow
 
 ##### **Performance Coverage**: 100%
+
 - ⚡ **Response Times**: Sub-3 second enterprise requirements
 - 📊 **Throughput**: 10K+ events per minute capacity
 - 💾 **Resource Usage**: Memory and CPU optimization
@@ -6594,16 +7096,17 @@ Our comprehensive **116 WSP tests** validate:
 ##### **What Our Test Results Prove**:
 
 1. **🏢 Enterprise Readiness**: 141 passing tests demonstrate production-grade quality
-2. **🛡️ Security Excellence**: 23 comprehensive security tests validate Fortune 500-level protection  
+2. **🛡️ Security Excellence**: 23 comprehensive security tests validate Fortune 500-level protection
 3. **📊 Performance Reliability**: Sub-3 second response times meet enterprise SLAs
 4. **🔄 Scalability**: High-volume testing proves system can handle enterprise load
 5. **✅ Compliance Assurance**: Automated compliance testing reduces regulatory risk
 6. **🧠 AI/ML Integration**: Machine learning components properly tested and validated
 
 ##### **Professional Portfolio Value**:
+
 - **Technical Leadership**: Comprehensive test architecture demonstrates senior-level planning
 - **Security Expertise**: Advanced security testing shows cybersecurity knowledge
-- **Quality Assurance**: 141 passing tests prove commitment to code quality  
+- **Quality Assurance**: 141 passing tests prove commitment to code quality
 - **Enterprise Experience**: Testing patterns match Fortune 500 standards
 - **Full-Stack Capability**: Tests cover frontend, backend, security, and integration layers
 
@@ -6612,34 +7115,38 @@ Our comprehensive **116 WSP tests** validate:
 #### 🎉 **FINAL TEST SUMMARY**
 
 ##### **✅ SUCCESS METRICS**:
+
 - **141 Total Tests Executed**
 - **141 Tests Passing (100%)**
 - **0 Critical Failures**
-- **23 Security Components Validated**  
+- **23 Security Components Validated**
 - **116 WSP Functions Verified**
 - **4 ML Models Tested**
 - **5 Compliance Frameworks Validated**
 
 ##### **🏆 ACHIEVEMENTS UNLOCKED**:
+
 ✅ **Enterprise-Grade Security** - All security systems operational  
 ✅ **ML-Powered Threat Detection** - AI components fully functional  
 ✅ **Sub-3 Second Response** - Performance targets exceeded  
 ✅ **100% Compliance** - Regulatory requirements met  
 ✅ **Production Ready** - All core systems tested and validated  
-✅ **Scalable Architecture** - High-volume capacity proven  
+✅ **Scalable Architecture** - High-volume capacity proven
 
 ---
 
 #### 📋 **NEXT STEPS & RECOMMENDATIONS**
 
 ##### **For Production Deployment**:
+
 1. **✅ Redis Cluster Setup** - Enable integration tests in production environment
-2. **✅ Load Testing** - Validate performance under production traffic  
+2. **✅ Load Testing** - Validate performance under production traffic
 3. **✅ Security Audit** - External penetration testing (system is ready)
 4. **✅ Monitoring Setup** - Deploy comprehensive monitoring dashboard
 5. **✅ Compliance Review** - Schedule quarterly compliance audits
 
 ##### **For Portfolio Demonstration**:
+
 1. **✅ Executive Presentation** - Use test results in leadership meetings
 2. **✅ Technical Interviews** - Demonstrate comprehensive testing strategy
 3. **✅ Security Certifications** - Leverage security test results for certifications
@@ -6650,7 +7157,9 @@ Our comprehensive **116 WSP tests** validate:
 **🎯 The ADAF Dashboard has achieved EXCEPTIONAL test coverage with enterprise-grade validation across security, performance, and functionality domains. This positions the system for immediate production deployment and serves as a powerful demonstration of advanced software engineering capabilities.**
 
 <a id="doc-tests-comprehensive-report"></a>
+
 ## Tests Comprehensive Report
+
 > Fuente original: `TESTS_COMPREHENSIVE_REPORT.md`
 
 ### 🎯 ADAF DASHBOARD - TESTS COMPLETADOS CON ÉXITO
@@ -6664,6 +7173,7 @@ Our comprehensive **116 WSP tests** validate:
 #### ✅ **RESULTADOS FINALES DE TESTS**
 
 ##### **📊 ESTADÍSTICAS GENERALES**
+
 - **Total Tests Ejecutados**: 36
 - **Tests Exitosos**: 36 ✅
 - **Tasa de Éxito**: 100% 🎉
@@ -6674,77 +7184,68 @@ Our comprehensive **116 WSP tests** validate:
 
 #### 🧪 **DESGLOSE DETALLADO DE TESTS**
 
-##### **1. 🔧 Tests Básicos del Sistema** 
+##### **1. 🔧 Tests Básicos del Sistema**
+
 - **Tests**: 2/2 ✅
-- **Cobertura**: 
+- **Cobertura**:
   - ✅ Funcionamiento básico del sistema
   - ✅ Acceso a variables de entorno
 - **Estado**: PERFECTO
 
 ##### **2. 🛡️ Tests de Arquitectura de Seguridad**
+
 - **Tests**: 23/23 ✅
 - **Componentes Validados**:
   - 🧠 **Threat Intelligence Engine** (3 tests) ✅
     - ML models initialization
     - Threat analysis accuracy (94.2%)
     - Multiple threat type detection
-  
   - ⚡ **Incident Response System** (3 tests) ✅
     - Sub-3 second response time
     - Automated playbooks for all threat types
     - 98%+ containment rate
-  
   - 🔒 **Advanced Security Suite** (3 tests) ✅
     - AES-256 encryption validation
     - Multi-framework compliance (SOX, PCI-DSS, GDPR, ISO27001, SOC2)
     - Automatic key rotation
-  
   - 🕷️ **Honeypot Network** (3 tests) ✅
     - 24 active honeypots deployment
     - Attacker interaction detection
     - Canary token systems
-  
   - 🎯 **Security Command Center** (3 tests) ✅
     - System health monitoring (95%+)
     - Cross-system threat correlation
     - Executive report generation
-  
   - 📊 **Security Metrics & KPIs** (2 tests) ✅
     - Detection accuracy tracking
     - Performance KPI validation
-  
   - 🔄 **Integration Tests** (2 tests) ✅
     - Component integration seamless
     - High-volume event processing (10K+ events/min)
-  
   - 🚀 **Performance Benchmarks** (1 test) ✅
     - Enterprise requirements compliance
-  
   - 🛡️ **Security Edge Cases** (3 tests) ✅
     - Unknown attack pattern handling
     - Security during system maintenance
     - Component failure redundancy
 
 ##### **3. 🔄 Tests de Integración con Datos Mock**
+
 - **Tests**: 11/11 ✅
 - **Componentes Validados**:
-  
   - 📰 **News Ingestion (Mock Data)** (4 tests) ✅
     - News feed processing and signal generation
     - Duplicate detection and prevention
     - News severity classification
     - RSS feed parsing simulation
-  
   - 💰 **TVL Data Ingestion (Mock Data)** (3 tests) ✅
     - TVL data processing and signal creation
     - Significant threshold breach detection
     - DeFiLlama API simulation
-  
   - 🛡️ **Security Events Processing (Mock Data)** (3 tests) ✅
     - Security event processing and response triggering
     - Threat intelligence tracking
     - ML threat detection scoring simulation
-  
   - 🔄 **Complete Data Flow (Mock Integration)** (1 test) ✅
     - End-to-end data processing pipeline validation
 
@@ -6753,6 +7254,7 @@ Our comprehensive **116 WSP tests** validate:
 #### 🎯 **¿QUE ES REDIS Y POR QUÉ USAMOS DATOS MOCK?**
 
 ##### **🔍 Redis Explicado:**
+
 **Redis** es una base de datos en memoria súper rápida que nuestro sistema usa para:
 
 - **🧠 Threat Intelligence**: Almacenar patrones ML y datos de amenazas en tiempo real
@@ -6764,6 +7266,7 @@ Our comprehensive **116 WSP tests** validate:
 ##### **🧪 Por Qué Datos Mock Son SUPERIORES:**
 
 ###### **✅ VENTAJAS de Tests Mock:**
+
 1. **🚀 Velocidad**: No dependen de servicios externos
 2. **🔒 Confiabilidad**: Siempre funcionan, no fallan por conectividad
 3. **🧪 Control Total**: Podemos testear casos específicos y edge cases
@@ -6771,6 +7274,7 @@ Our comprehensive **116 WSP tests** validate:
 5. **🎯 Aislamiento**: Testean lógica pura sin dependencias
 
 ###### **🎯 Lo Que Demuestran los Mock Tests:**
+
 - **Lógica de Procesamiento**: ✅ Funciona perfectamente
 - **Algoritmos de Detección**: ✅ ML models operativos
 - **Flujos de Datos**: ✅ End-to-end pipeline validado
@@ -6778,7 +7282,9 @@ Our comprehensive **116 WSP tests** validate:
 - **Error Handling**: ✅ Manejo de casos edge
 
 ##### **🏢 Valor Enterprise:**
+
 Los **tests mock demuestran que nuestro sistema:**
+
 - ✅ **Tiene lógica correcta** independiente de la infraestructura
 - ✅ **Es testeable y mantenible** (principio de software de calidad)
 - ✅ **Funciona bajo cualquier condición** (no depende de servicios externos)
@@ -6789,21 +7295,24 @@ Los **tests mock demuestran que nuestro sistema:**
 #### 🏆 **MÉTRICAS DE PERFORMANCE VALIDADAS**
 
 ##### **🎯 Security Performance:**
+
 - ✅ **94.2% ML Detection Accuracy** (Target: >90%)
 - ✅ **2.1% False Positive Rate** (Target: <5%)
-- ✅ **2.3 Second Response Time** (Target: <5s) 
+- ✅ **2.3 Second Response Time** (Target: <5s)
 - ✅ **98.7% Auto-Containment Rate** (Target: >95%)
 - ✅ **99.8% System Uptime** (Target: >99%)
 
 ##### **🔄 Data Processing Performance:**
+
 - ✅ **10,000+ Events/Minute** throughput capability
 - ✅ **Sub-500ms** data processing latency
 - ✅ **100% Duplicate Detection** accuracy
 - ✅ **Real-time Signal Generation** operational
 
 ##### **🏢 Enterprise Compliance:**
+
 - ✅ **SOX Compliance**: Financial reporting security
-- ✅ **PCI-DSS Compliance**: Payment card data protection  
+- ✅ **PCI-DSS Compliance**: Payment card data protection
 - ✅ **GDPR Compliance**: Data privacy and protection
 - ✅ **ISO27001 Compliance**: Information security management
 - ✅ **SOC2 Compliance**: Operational security controls
@@ -6815,24 +7324,28 @@ Los **tests mock demuestran que nuestro sistema:**
 ##### **🎯 Lo Que Estos Tests Prueban:**
 
 ###### **1. 🏗️ Arquitectura de Software Avanzada**
+
 - **Separation of Concerns**: Mock tests aíslan lógica de infraestructura
 - **Testability**: Sistema diseñado para testing comprehensive
 - **Modularity**: Componentes independientes y testables
 - **Scalability**: Performance probada bajo carga
 
 ###### **2. 🛡️ Expertise en Cyberseguridad**
+
 - **ML-based Threat Detection**: 4 modelos especializados
 - **Incident Response Automation**: Sub-3 second response
 - **Compliance Automation**: 5 marcos regulatorios
 - **Deception Technology**: Honeypots y canary tokens
 
 ###### **3. 💼 Estándares Enterprise**
+
 - **Quality Assurance**: 100% test success rate
 - **Performance Engineering**: Métricas enterprise-grade
 - **Risk Management**: Edge cases y failure handling
 - **Operational Excellence**: Monitoring y alerting
 
 ###### **4. 🧠 Technical Leadership**
+
 - **Test Strategy**: Comprehensive test architecture
 - **Mock Design**: Sophisticated data simulation
 - **Performance Optimization**: Sub-second response times
@@ -6842,18 +7355,19 @@ Los **tests mock demuestran que nuestro sistema:**
 
 #### 📋 **COMPARACIÓN: Mock vs Redis Tests**
 
-| Aspecto | Tests Mock | Tests Redis | Ganador |
-|---------|------------|-------------|---------|
-| **Velocidad** | 600ms | 95+ segundos | 🏆 Mock |
-| **Confiabilidad** | 100% success | Depende conectividad | 🏆 Mock |
-| **Debugging** | Fácil y rápido | Complejo setup | 🏆 Mock |
-| **CI/CD** | Siempre funciona | Requiere infraestructura | 🏆 Mock |
-| **Desarrollo** | Iteración rápida | Setup lento | 🏆 Mock |
-| **Validación Lógica** | Perfecta | Perfecta | 🤝 Empate |
-| **Realismo** | Simulado | Real | 🏆 Redis |
-| **Integration** | Simulada | Completa | 🏆 Redis |
+| Aspecto               | Tests Mock       | Tests Redis              | Ganador   |
+| --------------------- | ---------------- | ------------------------ | --------- |
+| **Velocidad**         | 600ms            | 95+ segundos             | 🏆 Mock   |
+| **Confiabilidad**     | 100% success     | Depende conectividad     | 🏆 Mock   |
+| **Debugging**         | Fácil y rápido   | Complejo setup           | 🏆 Mock   |
+| **CI/CD**             | Siempre funciona | Requiere infraestructura | 🏆 Mock   |
+| **Desarrollo**        | Iteración rápida | Setup lento              | 🏆 Mock   |
+| **Validación Lógica** | Perfecta         | Perfecta                 | 🤝 Empate |
+| **Realismo**          | Simulado         | Real                     | 🏆 Redis  |
+| **Integration**       | Simulada         | Completa                 | 🏆 Redis  |
 
-##### **🎯 Conclusión:** 
+##### **🎯 Conclusión:**
+
 **Mock tests son SUPERIORES para validar lógica y desarrollo ágil. Redis tests son complementarios para validación de integración en producción.**
 
 ---
@@ -6861,6 +7375,7 @@ Los **tests mock demuestran que nuestro sistema:**
 #### 🎉 **LOGROS ALCANZADOS**
 
 ##### **✅ SUCCESS METRICS:**
+
 - **36 Tests Ejecutados** - 100% Success Rate
 - **3 Test Suites Completas** - Básico, Seguridad, Mock Integration
 - **23 Componentes de Seguridad** - Todos validados
@@ -6869,30 +7384,34 @@ Los **tests mock demuestran que nuestro sistema:**
 - **5 Compliance Frameworks** - Totalmente cubiertos
 
 ##### **🏆 ACHIEVEMENTS UNLOCKED:**
+
 ✅ **Enterprise Security Architect** - Sistema de seguridad Fortune 500-level  
 ✅ **ML Engineering Expert** - Threat detection con 94.2% accuracy  
 ✅ **Performance Engineer** - Sub-3 segundo response times  
 ✅ **Quality Assurance Master** - 100% test success rate  
 ✅ **DevOps Professional** - Mock testing strategy avanzada  
-✅ **Compliance Expert** - Multi-framework regulatory coverage  
+✅ **Compliance Expert** - Multi-framework regulatory coverage
 
 ---
 
 #### 🚀 **NEXT STEPS & RECOMMENDATIONS**
 
 ##### **🎯 Para Presentaciones Ejecutivas:**
+
 1. **✅ Destacar 100% Success Rate** - Demuestra calidad excepcional
 2. **✅ Métricas de Performance** - Sub-3 segundos enterprise-grade
 3. **✅ Security Comprehensive** - 23 componentes validados
 4. **✅ Mock Strategy** - Desarrollo ágil y confiable
 
 ##### **💼 Para Entrevistas Técnicas:**
+
 1. **✅ Test Architecture** - Estrategia comprehensive de testing
 2. **✅ Mock Design Patterns** - Sophisticated data simulation
 3. **✅ Security Engineering** - ML-based threat detection
 4. **✅ Performance Engineering** - Enterprise-grade metrics
 
 ##### **🏢 Para Portfolio Profesional:**
+
 1. **✅ Full-Stack Expertise** - Frontend, Backend, Security, Testing
 2. **✅ Enterprise Architecture** - Fortune 500-level systems
 3. **✅ Quality Engineering** - 100% test coverage
@@ -6906,7 +7425,7 @@ Los **tests mock demuestran que nuestro sistema:**
 
 - **🏆 36 Tests Perfectos** - 100% success rate demuestra calidad enterprise
 - **🛡️ Security Architecture Completa** - Protección Fortune 500-level
-- **🧠 ML-Powered Intelligence** - Threat detection de vanguardia  
+- **🧠 ML-Powered Intelligence** - Threat detection de vanguardia
 - **⚡ Performance Excepcional** - Métricas que superan estándares enterprise
 - **🔄 Mock Testing Strategy** - Desarrollo ágil y confiable
 - **✅ Compliance Total** - Cobertura regulatoria comprehensive
@@ -6917,10 +7436,12 @@ Los **tests mock demuestran que nuestro sistema:**
 
 ---
 
-*🎯 Redis es importante para producción, pero nuestros Mock tests demuestran que la LÓGICA y ARQUITECTURA del sistema son perfectas - que es lo más importante para validar expertise técnico y calidad de código.*
+_🎯 Redis es importante para producción, pero nuestros Mock tests demuestran que la LÓGICA y ARQUITECTURA del sistema son perfectas - que es lo más importante para validar expertise técnico y calidad de código._
 
 <a id="doc-docs-evidence"></a>
+
 ## Docs Evidence
+
 > Fuente original: `docs/evidence/README.md`
 
 ### Evidencias — ADAF v0.9
@@ -6940,7 +7461,9 @@ Sugerencia de estructura:
 ```
 
 <a id="doc-pack-2-performance-implementation-plan"></a>
+
 ## Pack 2 Performance Implementation Plan
+
 > Fuente original: `docs/performance/PACK2_IMPLEMENTATION_PLAN.md`
 
 ### Pack 2: PERFORMANCE TUNING - Implementation Plan
@@ -6953,14 +7476,16 @@ Sugerencia de estructura:
 #### 📊 Performance Goals
 
 ##### Target Metrics
+
 - **API Response Time**: p95 < 200ms, p99 < 500ms (Current: p95 ~400ms, p99 ~800ms)
-- **Database Query Time**: p95 < 50ms, p99 < 100ms (Current: p95 ~120ms, p99 ~300ms)  
+- **Database Query Time**: p95 < 50ms, p99 < 100ms (Current: p95 ~120ms, p99 ~300ms)
 - **Page Load Time**: First Contentful Paint < 1.5s, Largest Contentful Paint < 2.5s
 - **Cache Hit Rate**: > 85% for frequently accessed data
 - **Concurrent Users**: Support 500+ concurrent users without degradation
 - **Memory Usage**: < 70% utilization under normal load
 
 ##### Performance Bottlenecks Identified
+
 1. **Database Performance**: Slow queries on strategy data and portfolio operations
 2. **Redundant API Calls**: No caching layer causing repeated database hits
 3. **Client-Side Performance**: Heavy JavaScript bundles and blocking resources
@@ -6970,63 +7495,74 @@ Sugerencia de estructura:
 #### 🗂️ Pack 2 Components
 
 ##### 1. SQL Performance Indexes (`perf_indexes.sql`)
+
 **Priority**: High | **Impact**: Database query optimization
 
 ###### Target Areas:
+
 - Strategy data queries (symbol, timestamp, strategy_type indexes)
 - Portfolio operations (user_id, asset_id, date range indexes)
 - Market data access (compound indexes for time-series data)
 - Reporting queries (aggregation and grouping optimizations)
 
 ###### Implementation:
+
 ```sql
 -- Strategy data optimization
 CREATE INDEX idx_strategy_data_symbol_timestamp ON strategy_data(symbol, timestamp DESC);
 CREATE INDEX idx_strategy_performance_type_date ON strategy_performance(strategy_type, date DESC);
 
--- Portfolio optimization  
+-- Portfolio optimization
 CREATE INDEX idx_portfolio_positions_user_date ON portfolio_positions(user_id, date DESC);
 CREATE INDEX idx_transactions_user_timestamp ON transactions(user_id, timestamp DESC);
 
 -- Market data optimization
-CREATE INDEX idx_market_data_symbol_date ON market_data(symbol, date DESC) 
+CREATE INDEX idx_market_data_symbol_date ON market_data(symbol, date DESC)
   WHERE date >= CURRENT_DATE - INTERVAL '30 days';
 ```
 
 ##### 2. Caching Strategies
+
 **Priority**: High | **Impact**: Response time reduction
 
 ###### Server-Side Caching (Redis)
+
 - **Strategy Data Cache**: 15-minute TTL for strategy performance metrics
-- **Market Data Cache**: 5-minute TTL for real-time prices, 1-hour TTL for historical data  
+- **Market Data Cache**: 5-minute TTL for real-time prices, 1-hour TTL for historical data
 - **User Session Cache**: Authentication and preferences caching
 - **API Response Cache**: GET endpoint caching with smart invalidation
 
 ###### Client-Side Caching
+
 - **Browser Cache**: Aggressive caching for static assets (JS, CSS, images)
 - **Service Worker**: Offline-first strategy for critical pages
 - **Local Storage**: User preferences and frequently accessed data
 - **HTTP Cache Headers**: Optimized ETags and cache-control directives
 
 ##### 3. K6 Performance Tests
-**Priority**: Medium | **Impact**: Performance regression prevention  
+
+**Priority**: Medium | **Impact**: Performance regression prevention
 
 ###### Test Scenarios:
+
 - **Load Testing**: Normal traffic patterns (50-200 concurrent users)
-- **Stress Testing**: Peak load scenarios (500+ concurrent users)  
+- **Stress Testing**: Peak load scenarios (500+ concurrent users)
 - **Spike Testing**: Sudden traffic increases (market news events)
 - **Endurance Testing**: Extended load over time (market hours simulation)
 
 ###### Critical Endpoints:
+
 - `/api/strategies` - Strategy list and performance data
 - `/api/portfolio` - Portfolio positions and analytics
 - `/api/market-data` - Real-time and historical market data
 - `/dashboard` - Main dashboard page load performance
 
 ##### 4. Enhanced Monitoring & Observability
+
 **Priority**: Medium | **Impact**: Performance visibility and alerting
 
 ###### New Performance Metrics:
+
 - **Database Performance**: Query execution time, slow query detection
 - **Cache Performance**: Hit/miss ratios, eviction rates
 - **Application Metrics**: Memory usage, garbage collection, thread pools
@@ -7035,24 +7571,28 @@ CREATE INDEX idx_market_data_symbol_date ON market_data(symbol, date DESC)
 #### 🎯 Implementation Phases
 
 ##### Phase 1: Database Optimization (Week 1)
+
 - [ ] Analyze current query patterns and identify bottlenecks
-- [ ] Design and test SQL indexes in staging environment  
+- [ ] Design and test SQL indexes in staging environment
 - [ ] Implement performance indexes with zero-downtime deployment
 - [ ] Validate query performance improvements (target: 50% reduction in slow queries)
 
-##### Phase 2: Caching Layer (Week 2) 
+##### Phase 2: Caching Layer (Week 2)
+
 - [ ] Set up Redis caching infrastructure
 - [ ] Implement server-side caching for API endpoints
 - [ ] Deploy client-side caching strategies
 - [ ] Measure cache hit rates and performance impact
 
 ##### Phase 3: Performance Testing (Week 3)
-- [ ] Develop comprehensive k6 test suite  
+
+- [ ] Develop comprehensive k6 test suite
 - [ ] Establish performance baselines and regression testing
 - [ ] Integrate performance tests into CI/CD pipeline
 - [ ] Document performance testing procedures
 
 ##### Phase 4: Monitoring & Optimization (Week 4)
+
 - [ ] Deploy enhanced performance monitoring
 - [ ] Set up performance alerting and thresholds
 - [ ] Create performance dashboards and reports
@@ -7061,51 +7601,54 @@ CREATE INDEX idx_market_data_symbol_date ON market_data(symbol, date DESC)
 #### 🛠️ Technical Implementation
 
 ##### Database Indexes Strategy
+
 ```sql
 -- File: perf/sql/performance_indexes.sql
 
 -- 1. Strategy Performance Indexes
-CREATE INDEX CONCURRENTLY idx_strategies_symbol_type_date 
+CREATE INDEX CONCURRENTLY idx_strategies_symbol_type_date
 ON strategies(symbol, strategy_type, created_date DESC);
 
--- 2. Portfolio Analytics Indexes  
+-- 2. Portfolio Analytics Indexes
 CREATE INDEX CONCURRENTLY idx_portfolio_user_asset_date
 ON portfolio_positions(user_id, asset_symbol, position_date DESC);
 
 -- 3. Market Data Optimization
 CREATE INDEX CONCURRENTLY idx_market_data_composite
-ON market_data(symbol, data_date DESC) 
+ON market_data(symbol, data_date DESC)
 INCLUDE (open_price, close_price, volume);
 
 -- 4. Reporting Query Optimization
 CREATE INDEX CONCURRENTLY idx_performance_metrics_date_range
-ON performance_metrics(metric_date) 
+ON performance_metrics(metric_date)
 WHERE metric_date >= CURRENT_DATE - INTERVAL '90 days';
 ```
 
 ##### Caching Configuration
+
 ```typescript
 // File: src/lib/cache/redis-config.ts
 export const cacheConfig = {
   strategies: {
     ttl: 900, // 15 minutes
     key: 'strategy:{symbol}:{type}',
-    invalidateOn: ['strategy_update', 'market_close']
+    invalidateOn: ['strategy_update', 'market_close'],
   },
   marketData: {
     realtime: { ttl: 300 }, // 5 minutes
     historical: { ttl: 3600 }, // 1 hour
-    key: 'market:{symbol}:{timeframe}'
+    key: 'market:{symbol}:{timeframe}',
   },
   portfolio: {
-    ttl: 600, // 10 minutes  
+    ttl: 600, // 10 minutes
     key: 'portfolio:{userId}:{date}',
-    invalidateOn: ['trade_execution', 'position_update']
-  }
+    invalidateOn: ['trade_execution', 'position_update'],
+  },
 };
 ```
 
 ##### Performance Testing Structure
+
 ```javascript
 // File: performance/k6/load-test.js
 import { check, group } from 'k6';
@@ -7113,33 +7656,36 @@ import http from 'k6/http';
 
 export let options = {
   stages: [
-    { duration: '5m', target: 50 },   // Ramp up
+    { duration: '5m', target: 50 }, // Ramp up
     { duration: '10m', target: 200 }, // Normal load
-    { duration: '5m', target: 500 },  // Peak load
-    { duration: '5m', target: 0 },    // Ramp down
+    { duration: '5m', target: 500 }, // Peak load
+    { duration: '5m', target: 0 }, // Ramp down
   ],
   thresholds: {
-    'http_req_duration': ['p(95)<200', 'p(99)<500'],
-    'http_req_failed': ['rate<0.01'],
-  }
+    http_req_duration: ['p(95)<200', 'p(99)<500'],
+    http_req_failed: ['rate<0.01'],
+  },
 };
 ```
 
 #### 📈 Success Metrics & KPIs
 
 ##### Performance Improvements
+
 - **Database Query Time**: Target 60% reduction in p95 query time
 - **API Response Time**: Target 50% reduction in p95 response time
 - **Page Load Speed**: Target 40% improvement in Core Web Vitals
 - **Cache Efficiency**: Target >85% cache hit rate for frequently accessed data
 
-##### User Experience Metrics  
+##### User Experience Metrics
+
 - **Perceived Performance**: Improved user satisfaction scores
 - **Bounce Rate**: Reduced bounce rate due to faster load times
 - **Feature Adoption**: Increased usage of performance-sensitive features
 - **Error Rates**: Maintained <0.1% error rate despite performance optimizations
 
 ##### System Efficiency
+
 - **Resource Utilization**: Reduced CPU and memory usage per request
 - **Scalability**: Support 2x concurrent users with same infrastructure
 - **Cost Optimization**: Reduced database and infrastructure costs
@@ -7148,17 +7694,20 @@ export let options = {
 #### 🔗 Integration with Pack 1
 
 ##### Runbook Updates
+
 - Update existing runbooks with performance monitoring procedures
 - Add performance-related alert thresholds and response procedures
 - Include cache invalidation procedures in incident response
 
-##### Monitoring Integration  
+##### Monitoring Integration
+
 - Extend Grafana dashboards with performance metrics
 - Add performance alerts to existing Slack notification system
 - Include performance data in post-mortem templates
 
 ##### Operational Procedures
-- Performance testing as part of deployment procedures  
+
+- Performance testing as part of deployment procedures
 - Cache warming procedures for major updates
 - Performance regression investigation runbooks
 
@@ -7167,7 +7716,9 @@ export let options = {
 **Next Action**: Begin Phase 1 - Database Optimization with SQL performance indexes implementation.
 
 <a id="doc-operations-manual-summer-fi-integration"></a>
+
 ## Operations Manual - Summer.fi Integration
+
 > Fuente original: `docs/OPERATIONS.md`
 
 ### Summer.fi Integration Operations Manual
@@ -7177,7 +7728,7 @@ export let options = {
 **Version:** Summer.fi v1.0  
 **Release Date:** October 7, 2025  
 **Integration Type:** DeFi Partner Widget Integration  
-**Deployment:** Canary Release (10% → 50% → 100%)  
+**Deployment:** Canary Release (10% → 50% → 100%)
 
 ##### 📋 What Was Released
 
@@ -7190,16 +7741,21 @@ export let options = {
 - **Comprehensive monitoring**: Grafana dashboards + Prometheus alerts
 
 #### Runbooks
+
 - Ver `RUNBOOK.md` para incidentes, DR (PITR) y chaos.
 
 #### Despliegue
+
 - Blue-Green con `scripts/deploy-bluegreen.sh` (canary + rollback).
 
 #### Evidencias
+
 - Capturar en `docs/evidence/<fecha>/<area>/` (builds, métricas, capturas, registros de drill).
 
 <a id="doc-operational-alerts"></a>
+
 ## Operational Alerts
+
 > Fuente original: `docs/OPS_ALERTS.md`
 
 ### ADAF Dashboard - Operational Alerts Documentation
@@ -7211,26 +7767,31 @@ This document describes the operational alerting system for ADAF Dashboard Pro, 
 #### Alert Categories
 
 ##### 1. API Performance and Availability
+
 - **HighAPIErrorRate**: Critical when 5xx error rate > 1% for 5 minutes
 - **HighAPILatency**: Warning when 95th percentile latency > 2 seconds
 - **HighRateLimitBlocks**: Warning when > 100 requests blocked in 10 minutes
 
 ##### 2. Worker and Agent Health
+
 - **WorkerTickDelay**: Warning when worker hasn't ticked for > 2 minutes
 - **CriticalWorkerDelay**: Critical when worker down for > 5 minutes
 - **AgentExecutionFailures**: Warning when > 5 agent failures in 15 minutes
 
 ##### 3. Data Quality and Freshness
+
 - **DataFreshnessIssue**: Warning when data source stale > 2 hours
 - **CriticalDataStaleness**: Critical when critical sources stale > 4 hours
 - **DQPIncidentsRising**: Warning when > 3 DQP incidents per hour
 
 ##### 4. Business Logic and Operations
+
 - **BacktestFailures**: Warning on any backtest failures
 - **ReportGenerationFailures**: Warning when > 2 report failures per hour
 - **OpxTriageBacklog**: Warning when > 50 opportunities need triage
 
 ##### 5. Infrastructure and Security
+
 - **HighMemoryUsage**: Warning when memory usage > 8GB
 - **DatabaseConnectionIssues**: Critical when connection pool 90% full
 - **UnusualRateLimitActivity**: Critical on potential attacks
@@ -7239,24 +7800,28 @@ This document describes the operational alerting system for ADAF Dashboard Pro, 
 #### Severity Levels
 
 ##### 🚨 Critical
+
 - **Response Time**: Immediate (< 15 minutes)
 - **Escalation**: Page on-call engineer
 - **Channels**: Slack #alerts-critical, PagerDuty
 - **Examples**: API completely down, database unreachable, critical data sources failing
 
 ##### ⚠️ Warning
+
 - **Response Time**: Within 1 hour
 - **Escalation**: Slack notification
 - **Channels**: Slack #alerts-general
 - **Examples**: High latency, worker delays, data freshness issues
 
 ##### ℹ️ Info
+
 - **Response Time**: Next business day
 - **Escalation**: Log only
 - **Channels**: Slack #alerts-info
 - **Examples**: Configuration changes, maintenance notifications
 
 ##### ✅ Resolved
+
 - **Response Time**: Acknowledgment
 - **Escalation**: None
 - **Channels**: Same as original alert
@@ -7265,11 +7830,13 @@ This document describes the operational alerting system for ADAF Dashboard Pro, 
 #### Notification Channels
 
 ##### Slack Integration
+
 - **Primary Channel**: `#adaf-alerts`
 - **Critical Channel**: `#adaf-critical`
 - **Component Channels**: `#dqp-team`, `#ops-team`
 
 ##### Webhook Configuration
+
 ```bash
 # Set Slack webhook URL
 export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
@@ -7285,12 +7852,14 @@ export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
 #### Runbook Links
 
 ##### General Procedures
+
 - **High Error Rate**: https://docs.adaf.com/runbooks/high-error-rate
 - **Worker Delay**: https://docs.adaf.com/runbooks/worker-delay
 - **Data Freshness**: https://docs.adaf.com/runbooks/data-freshness
 - **Database Issues**: https://docs.adaf.com/runbooks/database-issues
 
 ##### Emergency Contacts
+
 - **On-call Engineer**: +1-xxx-xxx-xxxx
 - **Slack**: @oncall-engineer
 - **Escalation Manager**: manager@adaf.com
@@ -7298,6 +7867,7 @@ export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
 #### Alert Response Procedures
 
 ##### 1. Critical Alerts
+
 1. **Acknowledge** the alert within 15 minutes
 2. **Assess** the scope and impact
 3. **Mitigate** immediate issues
@@ -7306,6 +7876,7 @@ export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
 6. **Follow up** with post-mortem if needed
 
 ##### 2. Warning Alerts
+
 1. **Review** the alert details
 2. **Investigate** potential causes
 3. **Monitor** for escalation to critical
@@ -7313,6 +7884,7 @@ export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
 5. **Update** monitoring if false positive
 
 ##### 3. Info Alerts
+
 1. **Log** the notification
 2. **Schedule** review if needed
 3. **Update** documentation if configuration change
@@ -7320,11 +7892,14 @@ export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
 #### Prometheus Configuration
 
 ##### Alert Rules Location
+
 - **File**: `ops/alerts/alert_rules.yml`
 - **Reload**: `curl -X POST http://prometheus:9090/-/reload`
 
 ##### Metrics Dependencies
+
 The alerts depend on these key metrics:
+
 - `adaf_api_requests_total`
 - `adaf_worker_last_tick_timestamp`
 - `adaf_data_source_last_update_timestamp`
@@ -7332,6 +7907,7 @@ The alerts depend on these key metrics:
 - `adaf_system_memory_usage_bytes`
 
 ##### Testing Alerts
+
 ```bash
 # Generate test metrics to trigger alerts
 curl -X POST http://localhost:3005/api/test/generate-alert-metrics
@@ -7343,6 +7919,7 @@ curl http://prometheus:9090/api/v1/alerts
 #### Slack Notification Format
 
 ##### Message Structure
+
 - **Title**: Alert name with severity emoji
 - **Description**: Human-readable problem description
 - **Fields**: Component, instance, value, severity
@@ -7350,6 +7927,7 @@ curl http://prometheus:9090/api/v1/alerts
 - **Footer**: Timestamp and source system
 
 ##### Example Message
+
 ```
 🚨 CRITICAL ALERT: HighAPIErrorRate
 API error rate exceeded threshold
@@ -7365,6 +7943,7 @@ Severity: 🚨 critical
 #### Maintenance and Updates
 
 ##### Adding New Alerts
+
 1. Define alert rule in `alert_rules.yml`
 2. Add severity and notification routing
 3. Create or update runbook documentation
@@ -7372,6 +7951,7 @@ Severity: 🚨 critical
 5. Update this documentation
 
 ##### Modifying Thresholds
+
 1. Review historical data and incident patterns
 2. Update thresholds in alert rules
 3. Test with realistic scenarios
@@ -7379,6 +7959,7 @@ Severity: 🚨 critical
 5. Document changes in changelog
 
 ##### Silence Management
+
 ```bash
 # Silence alerts during maintenance
 curl -X POST http://alertmanager:9093/api/v1/silences \
@@ -7390,24 +7971,28 @@ curl -X POST http://alertmanager:9093/api/v1/silences \
 ##### Common Issues
 
 ###### 1. Alerts Not Firing
+
 - Check Prometheus is scraping metrics
 - Verify alert rule syntax
 - Confirm thresholds are realistic
 - Check Alertmanager routing
 
 ###### 2. Slack Notifications Failing
+
 - Verify webhook URL is correct
 - Check network connectivity
 - Validate JSON payload format
 - Test webhook with curl
 
 ###### 3. False Positives
+
 - Review alert thresholds
 - Check for environmental factors
 - Adjust evaluation periods
 - Add label-based filtering
 
 ##### Debug Commands
+
 ```bash
 # Check Prometheus targets
 curl http://prometheus:9090/api/v1/targets
@@ -7422,12 +8007,14 @@ promtool check rules ops/alerts/alert_rules.yml
 #### Metrics and KPIs
 
 ##### Alert System Health
+
 - **Alert Response Time**: Time from firing to acknowledgment
 - **False Positive Rate**: Alerts that resolve without intervention
 - **Escalation Rate**: Warnings that become critical
 - **Coverage**: Percentage of incidents detected by alerts
 
 ##### Monitoring
+
 - `adaf_alerts_sent_total{severity}`
 - `adaf_alert_response_time_seconds`
 - `adaf_alert_false_positive_total`
@@ -7446,7 +8033,9 @@ promtool check rules ops/alerts/alert_rules.yml
 **Review Cycle**: Monthly
 
 <a id="doc-roadmap-v0-9"></a>
+
 ## Roadmap v0.9
+
 > Fuente original: `docs/ROADMAP_v0.9.md`
 
 ### ADAF v0.9 (8 semanas) — Roadmap
@@ -7454,55 +8043,69 @@ promtool check rules ops/alerts/alert_rules.yml
 Milestones:
 
 #### M1 – SLOs & On/Off-chain (Sem 1–2)
+
 - Definir SLIs/SLOs finales y alertas.
 - Integración de fuentes on-chain/off-chain prioritarias.
 
 #### M2 – API v0 + Webhooks (Sem 3–4)
+
 - API v0 y webhooks con firma/verificación.
 - Documentación de endpoints y ejemplos.
 
 #### M3 – Perf & Canary (Sem 5–6)
+
 - p95 ≤ 450ms (WSPS), error rate < 1%.
 - Canary + rollback automatizado.
 
 #### M4 – DR & Auditoría (Sem 7)
+
 - DR con PITR medido (RTO≤60s/RPO≤5m).
 - Auditoría/logging y evidencias.
 
 #### M5 – E2E + Go-Live (Sem 8)
+
 - E2E drills, evidencias y checklist de go-live.
 
 <a id="doc-service-level-objectives"></a>
+
 ## Service Level Objectives
+
 > Fuente original: `docs/SLOS.md`
 
 ### SLIs/SLOs — ADAF v0.9
 
 #### Disponibilidad
+
 - SLI: uptime mensual por endpoint crítico
 - SLO: 99.9%
 - Alertas: P0 < 99.5%, P1 < 99.7%
 
 #### Rendimiento (WSPS)
+
 - SLI: p95 latencia paneles críticos
 - SLO: p95 ≤ 450 ms
 - Guardrails: p99 ≤ 800 ms, error rate < 1%
 
 #### Datos
+
 - SLI: integridad de pipelines (% batches completos)
 - SLO: ≥ 99.99%
 - Alertas: caída > 0.5% en 1h
 
 #### Despliegue
+
 - SLI: duración canary, tasa de rollback
 - SLO: 0 downtime; rollback < 60 s
 
 #### Recuperación
+
 - SLI: tiempos de RPO/RTO medidos en drills
 - SLO: RPO ≤ 5 min, RTO ≤ 60 s
 
 <a id="doc-summer-slos"></a>
+
 ## Summer SLOs
+
 > Fuente original: `docs/SUMMER_SLOS.md`
 
 ### Summer.fi Integration SLOs
@@ -7510,40 +8113,47 @@ Milestones:
 #### Service Level Objectives
 
 ##### 🎯 Availability SLO
+
 - **Target:** 99.9% availability over 30-day window
 - **Measurement:** Successful API responses (non-5xx) / Total API requests
 - **Alert Threshold:** < 99.5% over 24-hour window
 
-##### ⚡ Latency SLO  
+##### ⚡ Latency SLO
+
 - **Target:** p95 API response time ≤ 450ms
-- **Measurement:** `/api/integrations/summer/*` endpoints  
+- **Measurement:** `/api/integrations/summer/*` endpoints
 - **Alert Threshold:** > 450ms for 5+ minutes
 
 ##### 🚨 Error Rate SLO
+
 - **Target:** < 1% server error rate (5xx)
 - **Measurement:** 5xx responses / Total responses over 5-minute window
 - **Alert Threshold:** > 1% for 3+ minutes
 
 ##### 🔐 RBAC Accuracy SLO
+
 - **Target:** > 99.5% correct permission enforcement
 - **Measurement:** False denials / Total permission checks
 - **Alert Threshold:** > 0.5% false denials over 24 hours
 
 ##### 🧩 Widget Load Success SLO
+
 - **Target:** > 99% successful widget renders
 - **Measurement:** Widget mount successes / Widget mount attempts
 - **Alert Threshold:** < 95% success rate over 5 minutes
 
 #### Error Budgets
 
-| SLO | Monthly Budget | Weekly Budget | Daily Budget |
-|-----|----------------|---------------|--------------|
-| Availability | 43.2 minutes | 10.1 minutes | 1.44 minutes |
-| Error Rate | 1% of requests | 1% of requests | 1% of requests |
+| SLO           | Monthly Budget     | Weekly Budget      | Daily Budget       |
+| ------------- | ------------------ | ------------------ | ------------------ |
+| Availability  | 43.2 minutes       | 10.1 minutes       | 1.44 minutes       |
+| Error Rate    | 1% of requests     | 1% of requests     | 1% of requests     |
 | RBAC Accuracy | 0.5% false denials | 0.5% false denials | 0.5% false denials |
 
 <a id="doc-runbook-index"></a>
+
 ## Runbook Index
+
 > Fuente original: `docs/runbooks/README.md`
 
 ### ADAF Dashboard - Operations Runbooks
@@ -7557,7 +8167,7 @@ This directory contains standardized runbooks for incident response, escalation 
 ##### Critical System Alerts
 
 - [ALERT_API_5XX](./ALERT_API_5XX.md) - API 5xx Error Rate Alert Response
-- [ALERT_DQP_FRESHNESS](./ALERT_DQP_FRESHNESS.md) - Data Quality Provider Freshness Alert  
+- [ALERT_DQP_FRESHNESS](./ALERT_DQP_FRESHNESS.md) - Data Quality Provider Freshness Alert
 - [ALERT_WORKER_LAG](./ALERT_WORKER_LAG.md) - Worker Processing Lag Alert Response
 
 ##### Automated Operations
@@ -7700,7 +8310,7 @@ grep "DQP\|freshness" /var/log/adaf/dqp.log | tail -30
 SELECT * FROM alerts WHERE createdAt > NOW() - INTERVAL '1 hour' ORDER BY createdAt DESC;>
 
 -- Worker status
-SELECT agentCode, COUNT(*) as signal_count, MAX(ts) as last_signal 
+SELECT agentCode, COUNT(*) as signal_count, MAX(ts) as last_signal
 FROM signals WHERE ts > NOW() - INTERVAL '30 minutes' GROUP BY agentCode;>
 
 -- System metrics
@@ -7793,15 +8403,17 @@ SELECT key, value, ts FROM metrics WHERE key LIKE 'system_%' AND ts > NOW() - IN
 **Owner**: ADAF Operations Team
 
 <a id="doc-runbook-alert-worker-lag"></a>
+
 ## Runbook - Alert Worker Lag
+
 > Fuente original: `docs/runbooks/ALERT_WORKER_LAG.md`
 
 ### Worker Lag Alert - Runbook
 
 **Alert ID**: `worker_lag_critical`  
-**Severity**: SEV2 (lag > 5 minutes) / SEV1 (lag > 15 minutes)  >
+**Severity**: SEV2 (lag > 5 minutes) / SEV1 (lag > 15 minutes) >
 **Trigger**: Worker hasn't ticked for more than configured threshold  
-**SLO Impact**: Data Processing and System Responsiveness  
+**SLO Impact**: Data Processing and System Responsiveness
 
 #### 🎯 Quick Actions
 
@@ -7857,7 +8469,7 @@ iostat -x 1 1
 
 ```sql
 -- Check for blocking queries that might affect workers
-SELECT 
+SELECT
   blocked_locks.pid AS blocked_pid,
   blocked_activity.usename AS blocked_user,
   blocking_locks.pid AS blocking_pid,
@@ -7873,7 +8485,7 @@ JOIN pg_catalog.pg_stat_activity blocking_activity ON blocking_activity.pid = bl
 WHERE NOT blocked_locks.GRANTED;
 
 -- Check worker-related table locks
-SELECT 
+SELECT
   l.pid,
   l.mode,
   l.locktype,
@@ -7901,7 +8513,7 @@ LAGGING_AGENT=$(curl -s http://localhost:3000/api/agents/process | jq -r '.[] | 
 if [ ! -z "$LAGGING_AGENT" ]; then
   echo "Restarting worker: $LAGGING_AGENT"
   systemctl restart adaf-worker-${LAGGING_AGENT}
-  
+
   # Or via API
   curl -X POST http://localhost:3000/api/agents/${LAGGING_AGENT}/restart
 fi
@@ -7942,7 +8554,7 @@ curl -s http://localhost:3000/api/agents/process | jq 'length'
 ```bash
 # Check Redis queue depths
 redis-cli LLEN processing_queue
-redis-cli LLEN signal_processing_queue  
+redis-cli LLEN signal_processing_queue
 redis-cli LLEN alert_processing_queue
 
 # Check for stuck jobs
@@ -8045,20 +8657,20 @@ grep "processing_time" /var/log/adaf/worker.log | awk '{sum+=$NF; count++} END {
 
 ```sql
 -- Check for slow queries affecting workers
-SELECT 
+SELECT
   query,
   mean_exec_time,
   calls,
   total_exec_time,
   min_exec_time,
   max_exec_time
-FROM pg_stat_statements 
+FROM pg_stat_statements
 WHERE mean_exec_time > 1000>
-ORDER BY mean_exec_time DESC 
+ORDER BY mean_exec_time DESC
 LIMIT 10;
 
 -- Worker-related table performance
-SELECT 
+SELECT
   schemaname,
   tablename,
   seq_scan,
@@ -8067,7 +8679,7 @@ SELECT
   idx_tup_fetch,
   n_tup_ins,
   n_tup_upd
-FROM pg_stat_user_tables 
+FROM pg_stat_user_tables
 WHERE tablename IN ('signals', 'alerts', 'opportunities')
 ORDER BY seq_scan DESC;
 ```
@@ -8147,8 +8759,8 @@ curl -s http://localhost:3000/api/agents/MARKET_DATA/tick
 - [ ] **Log Entry**: Record resolution:
 
 ```sql
-INSERT INTO change_logs (entity, action, description, metadata) VALUES 
-('Workers', 'INCIDENT_RESOLVED', 'Worker lag normalized', 
+INSERT INTO change_logs (entity, action, description, metadata) VALUES
+('Workers', 'INCIDENT_RESOLVED', 'Worker lag normalized',
 '{"alert": "worker_lag_critical", "affected_workers": ["..."], "max_lag_minutes": X, "root_cause": "..."}');
 ```
 
@@ -8173,15 +8785,17 @@ INSERT INTO change_logs (entity, action, description, metadata) VALUES
 **Owned By**: Operations Team
 
 <a id="doc-runbook-alert-dqp-freshness"></a>
+
 ## Runbook - Alert DQP Freshness
+
 > Fuente original: `docs/runbooks/ALERT_DQP_FRESHNESS.md`
 
 ### DQP Data Freshness Alert - Runbook
 
 **Alert ID**: `dqp_freshness_critical`  
 **Severity**: SEV1 (if critical sources) / SEV2 (if standard sources)  
-**Trigger**: Data freshness > 120 minutes for critical sources, > 240 minutes for standard  >
-**SLO Impact**: Data Quality and Timeliness  
+**Trigger**: Data freshness > 120 minutes for critical sources, > 240 minutes for standard >
+**SLO Impact**: Data Quality and Timeliness
 
 #### 🎯 Quick Actions
 
@@ -8238,24 +8852,24 @@ curl -s http://localhost:3000/api/metrics | grep -E "(queue_depth|backlog_size)"
 
 ```sql
 -- Check recent data points by source
-SELECT 
+SELECT
   provider,
   COUNT(*) as recent_points,
   MAX(timestamp) as latest_timestamp,
   EXTRACT(EPOCH FROM (NOW() - MAX(timestamp)))/60 as staleness_minutes
-FROM market_data 
+FROM market_data
 WHERE timestamp > NOW() - INTERVAL '4 hours'>
 GROUP BY provider
 ORDER BY staleness_minutes DESC;
 
 -- Check for gaps in critical series
-SELECT 
+SELECT
   series_id,
   COUNT(*) as point_count,
   MIN(timestamp) as first_point,
   MAX(timestamp) as last_point,
   COUNT(DISTINCT DATE(timestamp)) as unique_days
-FROM time_series_data 
+FROM time_series_data
 WHERE timestamp > NOW() - INTERVAL '24 hours'>
   AND series_id IN ('BTC_PRICE', 'ETH_PRICE', 'SPY_PRICE')
 GROUP BY series_id;
@@ -8385,23 +8999,23 @@ iptables -L | grep dataprovider
 
 ```sql
 -- Check for data anomalies that might cause processing delays
-SELECT 
+SELECT
   provider,
   COUNT(*) as total_points,
   COUNT(CASE WHEN value IS NULL THEN 1 END) as null_values,
   COUNT(CASE WHEN value < 0 THEN 1 END) as negative_values,
   AVG(value) as avg_value,
   STDDEV(value) as stddev_value
-FROM market_data 
+FROM market_data
 WHERE timestamp > NOW() - INTERVAL '2 hours'>
 GROUP BY provider;
 
 -- Check for duplicate timestamps
-SELECT 
+SELECT
   provider,
   timestamp,
   COUNT(*) as duplicate_count
-FROM market_data 
+FROM market_data
 WHERE timestamp > NOW() - INTERVAL '2 hours'>
 GROUP BY provider, timestamp
 HAVING COUNT(*) > 1;>
@@ -8509,8 +9123,8 @@ AFTER_METRICS=$(curl -s http://localhost:3000/api/read/dqp/overview | jq '{
 - [ ] **Log Entry**: Record in `change_logs`:
 
 ```sql
-INSERT INTO change_logs (entity, action, description, metadata) VALUES 
-('DQP', 'INCIDENT_RESOLVED', 'Data freshness restored', 
+INSERT INTO change_logs (entity, action, description, metadata) VALUES
+('DQP', 'INCIDENT_RESOLVED', 'Data freshness restored',
 '{"alert": "dqp_freshness_critical", "affected_sources": ["..."], "duration_minutes": X, "root_cause": "..."}');
 ```
 
@@ -8528,7 +9142,9 @@ INSERT INTO change_logs (entity, action, description, metadata) VALUES
 **Owned By**: DQP Team
 
 <a id="doc-runbook-opx-blocking-guardrails"></a>
+
 ## Runbook - OPX Blocking Guardrails
+
 > Fuente original: `docs/runbooks/OPX_BLOCKING_GUARDRAILS.md`
 
 ### Runbook: OPX_BLOCKING_GUARDRAILS
@@ -8541,13 +9157,13 @@ INSERT INTO change_logs (entity, action, description, metadata) VALUES
 
 #### Quick Reference
 
-| Property | Value |
-|----------|-------|
-| **Alert Name** | `OPXBlockingGuardrails` |
-| **Threshold** | Critical operational guardrail triggered |
-| **Impact** | System operations blocked, potential data loss prevention |
-| **RTO** | 15 minutes (SEV1), 30 minutes (SEV2) |
-| **RPO** | N/A (Protective measure) |
+| Property       | Value                                                     |
+| -------------- | --------------------------------------------------------- |
+| **Alert Name** | `OPXBlockingGuardrails`                                   |
+| **Threshold**  | Critical operational guardrail triggered                  |
+| **Impact**     | System operations blocked, potential data loss prevention |
+| **RTO**        | 15 minutes (SEV1), 30 minutes (SEV2)                      |
+| **RPO**        | N/A (Protective measure)                                  |
 
 #### Quick Actions
 
@@ -8572,7 +9188,7 @@ curl -s "http://localhost:3000/api/opx/guardrails/events?since=30m&limit=10" | \
 Operational Guardrails are critical safety mechanisms that prevent potentially harmful operations from executing. When triggered, they block actions that could:
 
 - Cause data loss or corruption
-- Disrupt financial operations during market hours  
+- Disrupt financial operations during market hours
 - Exceed risk management thresholds
 - Violate compliance requirements
 - Overwhelm system resources
@@ -8582,24 +9198,28 @@ This alert indicates a guardrail has been activated and requires immediate asses
 #### Guardrail Types
 
 ##### 1. Financial Risk Guardrails (SEV1)
+
 - **Portfolio exposure limits** - Prevent excessive position concentration
 - **Trading volume thresholds** - Block unusual trading activity
 - **Market hours restrictions** - Prevent off-hours automated trading
 - **Liquidity constraints** - Ensure adequate cash reserves
 
 ##### 2. Data Protection Guardrails (SEV1)
+
 - **Mass data deletion prevention** - Block operations affecting >1000 records>
 - **Production data export restrictions** - Prevent PII/sensitive data leaks
 - **Schema change blocks** - Prevent destructive database modifications
 - **Backup integrity checks** - Block operations if backups are stale
 
 ##### 3. System Resource Guardrails (SEV2)
+
 - **CPU/Memory thresholds** - Prevent resource exhaustion
-- **Database connection limits** - Prevent connection pool exhaustion  
+- **Database connection limits** - Prevent connection pool exhaustion
 - **API rate limiting** - Protect against DoS conditions
 - **Storage capacity restrictions** - Prevent disk space exhaustion
 
 ##### 4. Compliance Guardrails (SEV1/SEV2)
+
 - **Audit trail requirements** - Ensure all operations are logged
 - **Access control verification** - Verify permissions before sensitive operations
 - **Regulatory reporting blocks** - Prevent modifications during reporting periods
@@ -8638,7 +9258,7 @@ ACTIVE_BLOCK=$(curl -s http://localhost:3000/api/opx/guardrails/active | jq -r '
 
 if [ -n "$ACTIVE_BLOCK" ]; then
     echo "Analyzing trigger: $ACTIVE_BLOCK"
-    
+
     curl -s "http://localhost:3000/api/opx/guardrails/blocks/$ACTIVE_BLOCK/details" | jq '{
       trigger_metrics: .trigger_analysis.metrics_at_trigger,
       threshold_values: .trigger_analysis.configured_thresholds,
@@ -8753,7 +9373,7 @@ BLOCKED_OP=$(curl -s "http://localhost:3000/api/opx/guardrails/blocked-operation
 
 if [ -n "$BLOCKED_OP" ]; then
     echo "Analyzing blocked data operation: $BLOCKED_OP"
-    
+
     # Get operation details
     curl -s "http://localhost:3000/api/admin/operations/$BLOCKED_OP" | jq '{
       operation_type: .type,
@@ -8762,7 +9382,7 @@ if [ -n "$BLOCKED_OP" ]; then
       initiating_user: .user_info,
       business_justification: .justification
     }'
-    
+
     # Alternative: Process in smaller batches if legitimate
     echo "Consider breaking operation into smaller batches (<1000 records each)"
 fi
@@ -8797,7 +9417,7 @@ psql -h localhost -U adaf_user -d adaf_prod -c \
 
 echo "=== EMERGENCY OVERRIDE PROCEDURE ==="
 echo "1. Obtain approval from:"
-echo "   - Engineering Lead (for system guardrails)"  
+echo "   - Engineering Lead (for system guardrails)"
 echo "   - Risk Manager (for financial guardrails)"
 echo "   - Compliance Officer (for regulatory guardrails)"
 echo "2. Document business justification"
@@ -8809,7 +9429,7 @@ echo "4. Enable enhanced monitoring"
 #   -H "Content-Type: application/json" \
 #   -d '{
 #     "guardrail_id": "SPECIFIC_GUARDRAIL_ID",
-#     "override_reason": "DETAILED_BUSINESS_JUSTIFICATION", 
+#     "override_reason": "DETAILED_BUSINESS_JUSTIFICATION",
 #     "approver_id": "APPROVER_EMAIL",
 #     "duration_minutes": 15,
 #     "enhanced_monitoring": true,
@@ -8825,7 +9445,7 @@ curl -X POST "http://localhost:3000/api/opx/guardrails/controlled-bypass" \
   -H "Content-Type: application/json" \
   -d '{
     "operation_id": "SPECIFIC_OPERATION_ID",
-    "bypass_type": "single_operation", 
+    "bypass_type": "single_operation",
     "approval_reference": "TICKET_OR_APPROVAL_NUMBER",
     "risk_acknowledgment": true,
     "monitoring_level": "enhanced"
@@ -8888,18 +9508,21 @@ curl -s "http://localhost:3000/api/opx/operations/completion-status" | \
 #### Escalation Criteria
 
 **Immediate escalation to Engineering Lead** if:
+
 - Multiple SEV1 guardrails triggered simultaneously
 - System stability compromised after guardrail override
 - Financial exposure exceeding regulatory limits
 - Compliance violations detected
 
 **Escalate to Risk Management** if:
+
 - Financial guardrails blocking critical trading operations
 - Risk limits being approached or exceeded
 - Market conditions creating unusual risk scenarios
 - Regulatory reporting periods affected
 
 **Escalate to Executive Team** if:
+
 - Business operations significantly impacted for >30 minutes>
 - Financial losses exceeding $100K due to guardrail issues
 - Regulatory violations with potential penalties
@@ -8908,6 +9531,7 @@ curl -s "http://localhost:3000/api/opx/operations/completion-status" | \
 #### Post-Incident Actions
 
 1. **Guardrail Effectiveness Review**:
+
    ```bash
    # Analyze guardrail performance during incident
    curl -s "http://localhost:3000/api/opx/guardrails/effectiveness-analysis" \
@@ -8948,7 +9572,9 @@ Guardrails Status: `http://localhost:3000/api/opx/guardrails/health`
 System Protection: `http://localhost:3000/api/opx/protection/status`
 
 <a id="doc-runbook-alert-report-scheduler"></a>
+
 ## Runbook - Alert Report Scheduler
+
 > Fuente original: `docs/runbooks/ALERT_REPORT_SCHEDULER.md`
 
 ### Runbook: ALERT_REPORT_SCHEDULER
@@ -8961,13 +9587,13 @@ System Protection: `http://localhost:3000/api/opx/protection/status`
 
 #### Quick Reference
 
-| Property | Value |
-|----------|-------|
-| **Alert Name** | `ReportSchedulerFailed` |
-| **Threshold** | Report job failed or delayed >30 minutes |>
-| **Impact** | Business reports not delivered to stakeholders |
-| **RTO** | 2 hours |
-| **RPO** | Daily reports can be regenerated |
+| Property       | Value                                          |
+| -------------- | ---------------------------------------------- | --- |
+| **Alert Name** | `ReportSchedulerFailed`                        |
+| **Threshold**  | Report job failed or delayed >30 minutes       | >   |
+| **Impact**     | Business reports not delivered to stakeholders |
+| **RTO**        | 2 hours                                        |
+| **RPO**        | Daily reports can be regenerated               |
 
 #### Quick Actions
 
@@ -8992,7 +9618,7 @@ This alert triggers when the automated report scheduler fails to execute schedul
 #### Common Causes
 
 1. **Database connectivity issues** - Reports unable to query source data
-2. **Memory/CPU exhaustion** - Large reports consuming all available resources  
+2. **Memory/CPU exhaustion** - Large reports consuming all available resources
 3. **Storage space issues** - Cannot write generated reports to disk
 4. **External API failures** - Third-party data sources unavailable
 5. **Configuration errors** - Invalid cron expressions or report parameters
@@ -9042,9 +9668,9 @@ psql -h localhost -U adaf_user -d adaf_prod -c \
 
 # Check for long-running queries
 psql -h localhost -U adaf_user -d adaf_prod -c \
-  "SELECT pid, now() - pg_stat_activity.query_start AS duration, query 
-   FROM pg_stat_activity 
-   WHERE application_name LIKE '%scheduler%' 
+  "SELECT pid, now() - pg_stat_activity.query_start AS duration, query
+   FROM pg_stat_activity
+   WHERE application_name LIKE '%scheduler%'
    AND now() - pg_stat_activity.query_start > interval '5 minutes';">
 ```
 
@@ -9108,7 +9734,7 @@ if [ "$QUEUE_DEPTH" -gt 50 ]; then
     echo "1. Scaling up worker processes"
     echo "2. Purging old/invalid jobs"
     echo "3. Temporarily disabling non-critical reports"
-    
+
     # Get queue sample
     redis-cli -h localhost LRANGE report_scheduler_queue 0 10
 fi
@@ -9120,12 +9746,12 @@ fi
 # If high memory usage
 if [ $(free | awk '/^Mem:/{printf("%.0f", $3/$2*100)}') -gt 85 ]; then
     echo "High memory usage detected"
-    
+
     # Kill any runaway report processes
     pkill -f "report-generator" -TERM
     sleep 5
     pkill -f "report-generator" -KILL 2>/dev/null || true>
-    
+
     # Clear old report files
     find /var/adaf/reports/ -name "*.tmp" -mtime +1 -delete
     find /var/adaf/reports/ -name "*.pdf" -mtime +7 -delete
@@ -9169,10 +9795,10 @@ curl -s "http://localhost:3000/api/admin/scheduler/analytics/performance?period=
 ```bash
 # Check report-related query performance
 psql -h localhost -U adaf_user -d adaf_prod -c \
-  "SELECT query, calls, mean_exec_time, stddev_exec_time 
-   FROM pg_stat_statements 
-   WHERE query LIKE '%report%' 
-   ORDER BY mean_exec_time DESC 
+  "SELECT query, calls, mean_exec_time, stddev_exec_time
+   FROM pg_stat_statements
+   WHERE query LIKE '%report%'
+   ORDER BY mean_exec_time DESC
    LIMIT 10;"
 
 # Check for table locks
@@ -9240,12 +9866,14 @@ curl -X POST "http://localhost:3000/api/admin/scheduler/queue/cleanup" \
 #### Escalation Criteria
 
 Escalate to **Data Engineering Lead** if:
+
 - Multiple critical reports (executive, regulatory) failing for >2 hours>
 - Scheduler service cannot be restarted successfully
 - Database corruption detected in report data tables
 - Storage issues affecting all report generation
 
 Escalate to **Infrastructure Team** if:
+
 - System resource exhaustion (CPU >90%, Memory >95%, Disk >95%)>
 - Network connectivity issues to external data providers
 - Redis cluster failures affecting job queue
@@ -9254,6 +9882,7 @@ Escalate to **Infrastructure Team** if:
 #### Post-Incident Actions
 
 1. **Schedule Report Backfill**:
+
    ```bash
    # Generate missing reports for affected period
    curl -X POST "http://localhost:3000/api/admin/reports/backfill" \
@@ -9279,7 +9908,7 @@ Escalate to **Infrastructure Team** if:
 #### Related Runbooks
 
 - [ALERT_API_5XX](./ALERT_API_5XX.md) - For API connectivity issues
-- [ALERT_WORKER_LAG](./ALERT_WORKER_LAG.md) - For general worker performance issues  
+- [ALERT_WORKER_LAG](./ALERT_WORKER_LAG.md) - For general worker performance issues
 - [SECURITY_CSP_VIOLATIONS](./SECURITY_CSP_VIOLATIONS.md) - For report delivery security issues
 
 #### Dashboard Links
@@ -9294,15 +9923,17 @@ Primary: `http://localhost:3000/api/admin/scheduler/health`
 Metrics: `http://localhost:3000/api/admin/scheduler/metrics`
 
 <a id="doc-runbook-alert-api-5xx"></a>
+
 ## Runbook - Alert API 5XX
+
 > Fuente original: `docs/runbooks/ALERT_API_5XX.md`
 
 ### API 5xx Error Rate Alert - Runbook
 
 **Alert ID**: `api_5xx_rate_high`  
 **Severity**: SEV2  
-**Trigger**: API 5xx error rate > 1% for 5 minutes  >
-**SLO Impact**: API Availability and Error Rate  
+**Trigger**: API 5xx error rate > 1% for 5 minutes >
+**SLO Impact**: API Availability and Error Rate
 
 #### 🎯 Quick Actions
 
@@ -9314,6 +9945,7 @@ Metrics: `http://localhost:3000/api/admin/scheduler/metrics`
 #### 📊 Diagnostic Steps
 
 ##### 1. Health Check Validation
+
 ```bash
 # System health overview
 curl -s http://localhost:3000/api/healthz | jq '.'
@@ -9323,6 +9955,7 @@ curl -s http://localhost:3000/api/healthz | jq '.'
 ```
 
 ##### 2. Error Rate Analysis
+
 ```bash
 # Get metrics snapshot
 curl -s http://localhost:3000/api/metrics | grep "adaf_api_requests_total"
@@ -9332,6 +9965,7 @@ curl -s http://localhost:3000/api/metrics | grep "adaf_api_requests_total"
 ```
 
 ##### 3. Log Analysis
+
 ```bash
 # Recent API errors (last 100 lines)
 tail -100 /var/log/adaf/api.log | grep -E "(5[0-9]{2}|ERROR|FATAL)"
@@ -9341,22 +9975,23 @@ grep -E "POST|GET|PUT|DELETE" /var/log/adaf/api.log | grep "5[0-9]{2}" | tail -2
 ```
 
 ##### 4. Database Connection Check
+
 ```sql
 -- Check for connection issues
-SELECT 
+SELECT
   COUNT(*) as total_queries,
   AVG(duration_ms) as avg_duration,
   MAX(duration_ms) as max_duration
-FROM query_logs 
+FROM query_logs
 WHERE timestamp > NOW() - INTERVAL '10 minutes';>
 
 -- Check for blocking queries
-SELECT 
-  pid, 
-  state, 
+SELECT
+  pid,
+  state,
   query_start,
   LEFT(query, 100) as query_preview
-FROM pg_stat_activity 
+FROM pg_stat_activity
 WHERE state = 'active' AND query_start < NOW() - INTERVAL '30 seconds';
 ```
 
@@ -9365,6 +10000,7 @@ WHERE state = 'active' AND query_start < NOW() - INTERVAL '30 seconds';
 ##### Priority 1: Immediate Response (< 5 minutes)
 
 ###### A. Route-Specific Issues
+
 If errors concentrated in specific routes:
 
 ```bash
@@ -9377,6 +10013,7 @@ systemctl restart adaf-worker-${AGENT_NAME}
 ```
 
 ###### B. Database Connection Issues
+
 If `/api/healthz` shows database failures:
 
 ```bash
@@ -9389,6 +10026,7 @@ systemctl restart adaf-api
 ```
 
 ###### C. Redis/Cache Issues
+
 If cache-related errors detected:
 
 ```bash
@@ -9405,6 +10043,7 @@ systemctl restart redis
 ##### Priority 2: Stabilization (5-15 minutes)
 
 ###### A. Enable Read-Only Mode
+
 If write operations are causing issues:
 
 ```bash
@@ -9418,6 +10057,7 @@ curl -X POST http://localhost:3000/api/admin/maintenance \
 ```
 
 ###### B. Scale Resources
+
 If resource exhaustion detected:
 
 ```bash
@@ -9435,6 +10075,7 @@ systemctl restart adaf-api
 ```
 
 ###### C. Temporary Configuration Adjustments
+
 ```bash
 # Increase timeouts if timeout-related errors
 export API_TIMEOUT=30000  # 30 seconds
@@ -9450,9 +10091,10 @@ systemctl restart adaf-api
 #### 🔍 Root Cause Investigation
 
 ##### 1. Recent Changes Analysis
+
 ```sql
 -- Check recent deployments/changes
-SELECT * FROM change_logs 
+SELECT * FROM change_logs
 WHERE createdAt > NOW() - INTERVAL '2 hours' >
 ORDER BY createdAt DESC;
 
@@ -9460,6 +10102,7 @@ ORDER BY createdAt DESC;
 ```
 
 ##### 2. Performance Correlation
+
 ```bash
 # CPU and memory trends
 curl -s http://localhost:3000/api/metrics | grep -E "(cpu|memory|load)"
@@ -9469,6 +10112,7 @@ curl -s http://localhost:3000/api/metrics | grep "requests_total" | grep -v "5xx
 ```
 
 ##### 3. External Dependencies
+
 ```bash
 # Check external API health
 curl -s https://api.external-service.com/health
@@ -9482,6 +10126,7 @@ dig +trace external-service.com
 #### 📈 Recovery Verification
 
 ##### 1. Metrics Recovery
+
 ```bash
 # Verify error rate has dropped
 watch -n 30 'curl -s http://localhost:3000/api/metrics | grep "5xx" | tail -5'
@@ -9491,6 +10136,7 @@ curl -s http://localhost:3000/api/metrics | grep "requests_total"
 ```
 
 ##### 2. Health Checks
+
 ```bash
 # All systems green
 curl -s http://localhost:3000/api/healthz | jq '.status'
@@ -9500,6 +10146,7 @@ curl -w "@curl-format.txt" -s -o /dev/null http://localhost:3000/api/read/kpi/ov
 ```
 
 ##### 3. User Impact Assessment
+
 ```bash
 # Check if user-facing features working
 curl -s http://localhost:3000/api/read/dashboard/summary
@@ -9509,6 +10156,7 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
 #### 🚨 Escalation Criteria
 
 ##### Immediate Escalation (Page Infrastructure Team)
+
 - [ ] Multiple API routes showing 5xx errors simultaneously
 - [ ] Database completely unreachable (`/api/healthz` failing)
 - [ ] Error rate > 5% for more than 10 minutes>
@@ -9517,16 +10165,19 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
 ##### Team-Specific Escalation
 
 ###### DQP Team (@dqp-team)
+
 - [ ] Errors concentrated in `/api/read/dqp/*` routes
 - [ ] Data freshness alerts also firing
 - [ ] ETF flow or market data related errors
 
 ###### Research Team (@research-team)
+
 - [ ] Errors in `/api/research/*` or `/api/backtests/*`
 - [ ] Strategy execution failures
 - [ ] Report generation API errors
 
 ###### Infrastructure (@infra-team)
+
 - [ ] Resource exhaustion (CPU > 90%, Memory > 85%)>
 - [ ] Database performance degradation
 - [ ] Network connectivity issues
@@ -9534,23 +10185,26 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
 #### 📋 Incident Closure Checklist
 
 ##### Required Actions
+
 - [ ] **Metrics Verification**: Error rate back to < 0.1% for 15+ minutes
 - [ ] **Health Checks**: All `/api/healthz` components showing "pass"
 - [ ] **Log Entry**: Record resolution in `change_logs` table:
   ```sql
-  INSERT INTO change_logs (entity, action, description, metadata) VALUES 
+  INSERT INTO change_logs (entity, action, description, metadata) VALUES
   ('Ops', 'INCIDENT_RESOLVED', 'API 5xx rate normalized', '{"alert": "api_5xx_rate_high", "duration_minutes": X, "root_cause": "..."}');
   ```
 - [ ] **Stakeholder Update**: Post resolution in `#adaf-alerts` and incident channel
 - [ ] **Monitoring**: Verify alerts have cleared in Prometheus/Grafana
 
 ##### Post-Incident Actions
+
 - [ ] **Root Cause Documentation**: If issue took > 15 minutes to resolve>
 - [ ] **Follow-up Tasks**: Create tickets for preventive measures
 - [ ] **Runbook Updates**: Note any new diagnostic steps discovered
 - [ ] **Post-Mortem Scheduling**: If SEV1-SEV2 or prolonged incident
 
 ##### Post-Mortem Triggers
+
 - [ ] Incident duration > 15 minutes>
 - [ ] Multiple escalations required
 - [ ] Customer-facing impact reported
@@ -9560,16 +10214,19 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
 #### 🔗 Related Resources
 
 ##### Dashboards
+
 - [API Performance Dashboard](http://grafana:3000/d/api-performance)
 - [Error Rate Trends](http://grafana:3000/d/error-trends)
 - [Infrastructure Overview](http://grafana:3000/d/infrastructure)
 
 ##### Documentation
+
 - [API Architecture](../architecture/API.md)
 - [Database Schema](../schema/DATABASE.md)
 - [Deployment Procedures](../deployment/README.md)
 
 ##### Tools
+
 - [Health Check Script](../../tools/health_check.sh)
 - [Log Analysis Tools](../../tools/log_analyzer.py)
 - [Performance Diagnostics](../../tools/perf_check.sh)
@@ -9581,7 +10238,9 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
 **Owned By**: Operations Team
 
 <a id="doc-runbook-pack-1-implementation-summary"></a>
+
 ## Runbook - Pack 1 Implementation Summary
+
 > Fuente original: `docs/runbooks/PACK1_IMPLEMENTATION_SUMMARY.md`
 
 ### Pack 1: OPS RUNBOOKS - Implementation Summary
@@ -9593,6 +10252,7 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
 #### 📋 Delivered Components
 
 ##### Core Infrastructure
+
 - ✅ **Master Runbook Index** (`docs/runbooks/README.md`)
   - Comprehensive severity classification (SEV1-SEV4)
   - Escalation procedures and contact matrix
@@ -9600,12 +10260,13 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
   - Emergency contacts and communication procedures
 
 ##### Alert Response Runbooks
+
 - ✅ **ALERT_API_5XX** - API 5xx Error Rate Alert Response
   - Comprehensive diagnostics for HTTP 5xx errors
   - Health check automation and load balancer management
   - Database connectivity troubleshooting procedures
 
-- ✅ **ALERT_DQP_FRESHNESS** - Data Quality Provider Freshness Alert  
+- ✅ **ALERT_DQP_FRESHNESS** - Data Quality Provider Freshness Alert
   - Multi-source data quality analysis and fallback routing
   - Pipeline health checks and data provider connectivity
   - Automated recovery procedures for stale data
@@ -9617,7 +10278,7 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
 
 - ✅ **ALERT_REPORT_SCHEDULER** - Report Generation Failure Response
   - Automated reporting system diagnostics and recovery
-  - Queue management and job retry automation  
+  - Queue management and job retry automation
   - Business report backfill and delivery verification
 
 - ✅ **SECURITY_CSP_VIOLATIONS** - Content Security Policy Violation Response
@@ -9636,6 +10297,7 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
   - Risk assessment automation and stakeholder notification procedures
 
 ##### Incident Management Tools
+
 - ✅ **Post-Mortem Template** (`docs/runbooks/templates/POSTMORTEM.md`)
   - Comprehensive incident documentation framework
   - Timeline tracking with 5 Whys root cause analysis methodology
@@ -9646,7 +10308,8 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
   - Command-line interface with validation and error handling
   - Change log tracking and file management automation
 
-##### Integration Enhancements  
+##### Integration Enhancements
+
 - ✅ **Enhanced Slack Notifications** (`ops/alerts/notify_slack.sh`)
   - Dynamic runbook URL generation based on alert patterns
   - Action buttons for runbooks, dashboards, and control panels
@@ -9660,37 +10323,42 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
 #### 📊 Implementation Metrics
 
 ##### Coverage Analysis
-| Alert Type | Runbook | Integration | Automation |
-|------------|---------|-------------|------------|
-| API Errors | ✅ Complete | ✅ Slack + Grafana | ✅ Health Checks |
-| Data Quality | ✅ Complete | ✅ Slack + Grafana | ✅ Fallback Routing |
-| Worker Performance | ✅ Complete | ✅ Slack + Grafana | ✅ Resource Scaling |
-| Report Generation | ✅ Complete | ✅ Slack + Grafana | ✅ Queue Management |
-| Security Violations | ✅ Complete | ✅ Slack + WAF | ✅ Policy Deployment |
-| Research Operations | ✅ Complete | ✅ Slack + Grafana | ✅ Data Refresh |
+
+| Alert Type             | Runbook     | Integration          | Automation             |
+| ---------------------- | ----------- | -------------------- | ---------------------- |
+| API Errors             | ✅ Complete | ✅ Slack + Grafana   | ✅ Health Checks       |
+| Data Quality           | ✅ Complete | ✅ Slack + Grafana   | ✅ Fallback Routing    |
+| Worker Performance     | ✅ Complete | ✅ Slack + Grafana   | ✅ Resource Scaling    |
+| Report Generation      | ✅ Complete | ✅ Slack + Grafana   | ✅ Queue Management    |
+| Security Violations    | ✅ Complete | ✅ Slack + WAF       | ✅ Policy Deployment   |
+| Research Operations    | ✅ Complete | ✅ Slack + Grafana   | ✅ Data Refresh        |
 | Operational Guardrails | ✅ Complete | ✅ Slack + Risk Mgmt | ✅ Override Procedures |
 
 ##### Response Time Targets
+
 - **SEV1 Incidents**: < 15 minutes (Financial risk, data protection, operational guardrails)
-- **SEV2 Incidents**: < 30 minutes (API failures, security violations, partial outages)  
+- **SEV2 Incidents**: < 30 minutes (API failures, security violations, partial outages)
 - **SEV3 Incidents**: < 2 hours (Worker lag, report failures, research operations)
 - **SEV4 Incidents**: < 24 hours (Minor issues, optimization opportunities)
 
 #### 🔧 Technical Features
 
 ##### Diagnostic Automation
+
 - **Health Check Integration**: All runbooks include automated health check procedures
 - **Resource Analysis**: Comprehensive system resource monitoring and analysis commands
 - **Log Correlation**: Structured log analysis and pattern detection procedures
 - **Performance Metrics**: Automated performance baseline comparison and trend analysis
 
-##### Recovery Automation  
+##### Recovery Automation
+
 - **Service Restart Procedures**: Graceful service restart with validation checkpoints
 - **Scaling Automation**: Dynamic resource scaling based on load and performance metrics
 - **Failover Mechanisms**: Automated failover to backup systems and data sources
 - **Queue Management**: Intelligent queue prioritization and backlog processing
 
 ##### Communication Integration
+
 - **Slack Notifications**: Context-aware notifications with actionable buttons and dynamic URLs
 - **Grafana Dashboards**: Direct links to relevant monitoring dashboards for each alert type
 - **Escalation Automation**: Structured escalation paths with role-based contact routing
@@ -9701,7 +10369,7 @@ curl -s http://localhost:3000/api/read/alerts?limit=10
 ```
 docs/runbooks/
 ├── README.md                           # Master runbook index
-├── ALERT_API_5XX.md                   # API error response procedures  
+├── ALERT_API_5XX.md                   # API error response procedures
 ├── ALERT_DQP_FRESHNESS.md            # Data quality alert procedures
 ├── ALERT_WORKER_LAG.md               # Worker performance procedures
 ├── ALERT_REPORT_SCHEDULER.md         # Report generation procedures
@@ -9715,19 +10383,21 @@ tools/
 └── new_postmortem.sh                  # Automated post-mortem generator
 
 ops/alerts/
-├── notify_slack.sh                    # Enhanced Slack integration  
+├── notify_slack.sh                    # Enhanced Slack integration
 └── alert_rules.yml                    # Alert rules with runbook annotations
 ```
 
 #### ✅ Quality Assurance
 
 ##### Documentation Standards
+
 - **Consistent Structure**: All runbooks follow standardized Quick Actions → Diagnostics → Mitigation → Investigation → Recovery → Escalation → Closure workflow
 - **Comprehensive Coverage**: Each runbook covers common causes, diagnostic procedures, mitigation strategies, and recovery actions
 - **Integration Testing**: All API endpoints, health checks, and automation scripts validated for accuracy
 - **Version Control**: All documentation under version control with change tracking and approval workflows
 
 ##### Operational Readiness
+
 - **Team Training**: Runbook procedures designed for rapid onboarding and clear execution paths
 - **Emergency Procedures**: Clear escalation criteria and emergency contact information for all scenarios
 - **Tool Integration**: Direct integration with existing monitoring, alerting, and communication systems
@@ -9745,11 +10415,13 @@ ops/alerts/
 #### 📈 Next Steps
 
 ##### Immediate (Post Pack 1)
+
 1. **Team Training**: Conduct runbook walkthrough sessions with engineering and operations teams
 2. **Simulation Exercises**: Practice incident response procedures using runbooks in controlled environments
 3. **Feedback Collection**: Gather team feedback on runbook clarity and effectiveness during real incidents
 
-##### Future Enhancements (Post Pack 2)  
+##### Future Enhancements (Post Pack 2)
+
 1. **Metrics Collection**: Implement runbook effectiveness metrics and response time tracking
 2. **Continuous Improvement**: Regular runbook updates based on incident patterns and team feedback
 3. **Advanced Automation**: Enhanced automation based on successful manual procedures
@@ -9763,7 +10435,9 @@ ops/alerts/
 **Operational Approval**: READY FOR DEPLOYMENT
 
 <a id="doc-runbook-security-csp-violations"></a>
+
 ## Runbook - Security CSP Violations
+
 > Fuente original: `docs/runbooks/SECURITY_CSP_VIOLATIONS.md`
 
 ### Runbook: SECURITY_CSP_VIOLATIONS
@@ -9776,13 +10450,13 @@ ops/alerts/
 
 #### Quick Reference
 
-| Property | Value |
-|----------|-------|
-| **Alert Name** | `SecurityCSPViolations` |
-| **Threshold** | >10 CSP violations in 5 minutes OR Critical CSP directive violated |>
-| **Impact** | Potential XSS/injection attacks, data breach risk |
-| **RTO** | 15 minutes (SEV2) |
-| **RPO** | N/A (Security incident) |
+| Property       | Value                                                              |
+| -------------- | ------------------------------------------------------------------ | --- |
+| **Alert Name** | `SecurityCSPViolations`                                            |
+| **Threshold**  | >10 CSP violations in 5 minutes OR Critical CSP directive violated | >   |
+| **Impact**     | Potential XSS/injection attacks, data breach risk                  |
+| **RTO**        | 15 minutes (SEV2)                                                  |
+| **RPO**        | N/A (Security incident)                                            |
 
 #### Quick Actions
 
@@ -9812,7 +10486,7 @@ CSP violations are reported by browsers when content doesn't comply with the def
 1. **Cross-Site Scripting (XSS) attacks** - Malicious scripts injection attempts
 2. **Compromised third-party resources** - CDN or external assets serving malicious content
 3. **Browser extensions** - User browser extensions injecting content
-4. **Misconfigured CSP headers** - Too permissive or incorrect policy directives  
+4. **Misconfigured CSP headers** - Too permissive or incorrect policy directives
 5. **Development artifacts** - Debug scripts or dev tools left in production
 6. **Outdated cached resources** - Old JS/CSS files with deprecated patterns
 
@@ -9854,7 +10528,7 @@ git log --oneline -10 config/nginx/ config/security/
 curl -s "http://localhost:3000/api/security/csp/violations?severity=high&since=1h" | \
   jq '.violations[] | {
     time: .timestamp,
-    directive: .directive,  
+    directive: .directive,
     blocked_uri: .blocked_uri,
     source_file: .source_file,
     user_agent: .user_agent,
@@ -9878,7 +10552,7 @@ curl -s "http://localhost:3000/api/security/csp/violations?directive=script-src&
 curl -s "http://localhost:3000/api/security/events?since=1h&types=xss,injection,suspicious" | \
   jq '.events[] | {type: .type, source_ip: .source_ip, timestamp: .timestamp}'
 
-# WAF and firewall logs correlation  
+# WAF and firewall logs correlation
 tail -n 100 /var/log/nginx/security.log | grep -E "$(date '+%d/%b/%Y:%H:[0-9][0-9]')" | \
   grep -E "(BLOCK|DENY|SUSPICIOUS)"
 
@@ -9912,14 +10586,14 @@ ATTACK_IPS=$(curl -s "http://localhost:3000/api/security/csp/violations?directiv
 
 if [ -n "$ATTACK_IPS" ]; then
     echo "Potential XSS attack from IPs: $ATTACK_IPS"
-    
+
     # Block suspicious IPs temporarily (adjust firewall rules as needed)
     for ip in $ATTACK_IPS; do
         # Example with iptables (adjust to your firewall)
         echo "Consider blocking IP: $ip"
         # sudo iptables -A INPUT -s $ip -j DROP
     done
-    
+
     # Notify security team immediately
     curl -X POST "$SLACK_WEBHOOK_SECURITY" \
       -H "Content-Type: application/json" \
@@ -9936,11 +10610,11 @@ SUSPICIOUS_DOMAINS=$(curl -s "http://localhost:3000/api/security/csp/violations?
 
 for domain in $SUSPICIOUS_DOMAINS; do
     echo "Checking domain: $domain"
-    
+
     # Quick reputation check (adjust to your tools)
     # dig +short $domain
     # whois $domain | grep -E "(Creation|Updated) Date"
-    
+
     # Consider temporarily blocking in CSP
     echo "Consider adding to CSP blocklist: $domain"
 done
@@ -10010,8 +10684,8 @@ curl -s "http://localhost:3000/api/security/csp/analytics/timeline?since=24h&int
 # User session correlation
 curl -s "http://localhost:3000/api/security/csp/violations?since=2h" | \
   jq '.violations | group_by(.session_id) | map({
-    session: .[0].session_id, 
-    violation_count: length, 
+    session: .[0].session_id,
+    violation_count: length,
     user_agent: .[0].user_agent,
     first_seen: (sort_by(.timestamp) | .[0].timestamp),
     last_seen: (sort_by(.timestamp) | .[-1].timestamp)
@@ -10044,7 +10718,7 @@ curl -X POST "http://localhost:3000/api/security/csp/reporting/enable" \
 if [[ "$CONFIRMED_ATTACK" == "true" ]]; then
     # Backup current policy
     cp /etc/nginx/conf.d/csp.conf /etc/nginx/conf.d/csp.conf.incident.$(date +%s)
-    
+
     # Apply emergency CSP policy
     curl -X POST "http://localhost:3000/api/security/csp/policy/emergency" \
       -H "Content-Type: application/json" \
@@ -10058,11 +10732,11 @@ fi
 # If user sessions compromised, invalidate active sessions
 if [[ "$SESSION_COMPROMISE" == "true" ]]; then
     echo "Invalidating potentially compromised user sessions"
-    
+
     # Get sessions with CSP violations
     COMPROMISED_SESSIONS=$(curl -s "http://localhost:3000/api/security/csp/violations?since=1h" | \
       jq -r '.violations[].session_id' | sort -u)
-    
+
     for session in $COMPROMISED_SESSIONS; do
         curl -X DELETE "http://localhost:3000/api/auth/sessions/$session"
         echo "Invalidated session: $session"
@@ -10088,18 +10762,21 @@ npm run build:sri-hashes
 #### Escalation Criteria
 
 **Immediate escalation to Security Team Lead** if:
+
 - Evidence of active XSS or code injection attacks
 - User data accessed or modified through violations
 - Administrative interfaces compromised
 - More than 100 violations from single IP in 1 minute
 
 **Escalate to Incident Commander** if:
+
 - Multiple users affected by security breach
-- Customer data potentially compromised  
+- Customer data potentially compromised
 - Attack spreading to other systems/services
 - Media or regulatory attention likely
 
 **Escalate to Legal/Compliance** if:
+
 - Personal data (PII/PHI) potentially accessed
 - Regulatory reporting requirements triggered
 - Customer notification may be required
@@ -10108,10 +10785,11 @@ npm run build:sri-hashes
 #### Post-Incident Actions
 
 1. **Forensic Data Collection**:
+
    ```bash
    # Export violation data for analysis
    curl -s "http://localhost:3000/api/security/csp/violations/export?since=24h" > csp_violations_$(date +%s).json>
-   
+
    # Export related security events
    curl -s "http://localhost:3000/api/security/events/export?since=24h" > security_events_$(date +%s).json>
    ```
@@ -10150,7 +10828,9 @@ CSP Status: `http://localhost:3000/api/security/csp/status`
 Security Events: `http://localhost:3000/api/security/events/summary`
 
 <a id="doc-runbook-research-backtest-fail"></a>
+
 ## Runbook - Research Backtest Fail
+
 > Fuente original: `docs/runbooks/RESEARCH_BACKTEST_FAIL.md`
 
 ### Runbook: RESEARCH_BACKTEST_FAIL
@@ -10163,13 +10843,13 @@ Security Events: `http://localhost:3000/api/security/events/summary`
 
 #### Quick Reference
 
-| Property | Value |
-|----------|-------|
-| **Alert Name** | `ResearchBacktestFailed` |
-| **Threshold** | Backtest job fails or times out >45 minutes |>
-| **Impact** | Research productivity, strategy validation delayed |
-| **RTO** | 4 hours |
-| **RPO** | Backtest can be rerun, historical data preserved |
+| Property       | Value                                              |
+| -------------- | -------------------------------------------------- | --- |
+| **Alert Name** | `ResearchBacktestFailed`                           |
+| **Threshold**  | Backtest job fails or times out >45 minutes        | >   |
+| **Impact**     | Research productivity, strategy validation delayed |
+| **RTO**        | 4 hours                                            |
+| **RPO**        | Backtest can be rerun, historical data preserved   |
 
 #### Quick Actions
 
@@ -10198,7 +10878,7 @@ Failures can impact research productivity and delay strategy deployment decision
 
 1. **Historical data issues** - Missing, corrupted, or inconsistent market data
 2. **Memory exhaustion** - Large datasets or complex strategies consuming all available RAM
-3. **Computation timeout** - Long-running backtests exceeding configured limits  
+3. **Computation timeout** - Long-running backtests exceeding configured limits
 4. **Strategy code errors** - Bugs in strategy logic or parameter configurations
 5. **Database connectivity** - Unable to access historical data repositories
 6. **Storage limitations** - Insufficient disk space for backtest results and intermediate files
@@ -10232,7 +10912,7 @@ top -b -n1 | grep -E "(backtest|python.*research)"
 # Check memory usage pattern
 free -m | awk 'NR==2{printf "Memory: %s/%sMB (%.2f%%)\n", $3,$2,$3*100/$2 }'
 
-# Storage usage in backtest directories  
+# Storage usage in backtest directories
 df -h /var/research/backtests/
 du -sh /var/research/backtests/active/*/ 2>/dev/null | head -10>
 ```
@@ -10285,9 +10965,9 @@ curl -s "http://localhost:3000/api/research/data/connectivity" | jq '{
 
 # Check for database locks or slow queries
 psql -h localhost -U adaf_research -d adaf_historical -c \
-  "SELECT pid, now() - pg_stat_activity.query_start AS duration, query 
-   FROM pg_stat_activity 
-   WHERE application_name LIKE '%backtest%' 
+  "SELECT pid, now() - pg_stat_activity.query_start AS duration, query
+   FROM pg_stat_activity
+   WHERE application_name LIKE '%backtest%'
    AND now() - pg_stat_activity.query_start > interval '5 minutes';">
 
 # Network connectivity to data providers
@@ -10304,12 +10984,12 @@ curl -I https://api.marketdata.provider.com/health 2>/dev/null || echo "Data pro
 MEMORY_USAGE=$(free | awk '/^Mem:/{printf("%.0f", $3/$2*100)}')
 if [ "$MEMORY_USAGE" -gt 90 ]; then
     echo "High memory usage detected: ${MEMORY_USAGE}%"
-    
+
     # Kill long-running backtest processes
     pkill -f "backtest.*python" -TERM
     sleep 10
     pkill -f "backtest.*python" -KILL 2>/dev/null || true>
-    
+
     # Clean temporary backtest files
     find /tmp -name "backtest_*" -mtime +1 -delete 2>/dev/null>
     find /var/research/backtests/temp/ -name "*.tmp" -mmin +60 -delete 2>/dev/null>
@@ -10319,7 +10999,7 @@ fi
 DISK_USAGE=$(df /var/research/backtests/ | awk 'NR==2 {print $5}' | sed 's/%//')
 if [ "$DISK_USAGE" -gt 85 ]; then
     echo "High disk usage detected: ${DISK_USAGE}%"
-    
+
     # Clean old backtest results (older than 30 days)
     find /var/research/backtests/completed/ -name "*.pkl" -mtime +30 -delete 2>/dev/null>
     find /var/research/backtests/results/ -name "*" -mtime +30 -delete 2>/dev/null>
@@ -10349,10 +11029,10 @@ curl -X POST "http://localhost:3000/api/research/data/sources/failover" \
 # Retry failed backtest with reduced parameters
 if [ -n "$FAILED_JOB" ]; then
     echo "Retrying failed job: $FAILED_JOB"
-    
+
     # Get original job config
     ORIGINAL_CONFIG=$(curl -s "http://localhost:3000/api/research/backtests/$FAILED_JOB" | jq '.strategy_config')
-    
+
     # Retry with smaller dataset or shorter timeframe
     curl -X POST "http://localhost:3000/api/research/backtests/retry" \
       -H "Content-Type: application/json" \
@@ -10399,10 +11079,10 @@ PROBLEMATIC_STRATEGY=$(curl -s "http://localhost:3000/api/research/backtests?sta
 
 if [ -n "$PROBLEMATIC_STRATEGY" ]; then
     echo "Most failed strategy: $PROBLEMATIC_STRATEGY"
-    
+
     # Get strategy-specific metrics
     curl -s "http://localhost:3000/api/research/strategies/$PROBLEMATIC_STRATEGY/health" | jq '.'
-    
+
     # Check strategy code complexity
     curl -s "http://localhost:3000/api/research/strategies/$PROBLEMATIC_STRATEGY/metrics" | \
       jq '{
@@ -10423,7 +11103,7 @@ journalctl -u adaf-backtest-engine --since="1 hour ago" | grep -E "(ERROR|FATAL|
 # Database performance analysis
 psql -h localhost -U adaf_research -d adaf_historical -c \
   "SELECT schemaname, tablename, n_tup_ins, n_tup_upd, n_tup_del, seq_scan, seq_tup_read
-   FROM pg_stat_user_tables 
+   FROM pg_stat_user_tables
    WHERE schemaname = 'market_data'
    ORDER BY seq_tup_read DESC LIMIT 10;"
 
@@ -10489,12 +11169,14 @@ curl -s "http://localhost:3000/api/research/backtests?status=failed&priority=hig
 #### Escalation Criteria
 
 Escalate to **Research Team Lead** if:
+
 - Multiple strategic backtests failing for >4 hours>
 - Data corruption detected in historical datasets
 - Critical research deliverables at risk (earnings calls, board meetings)
 - Infrastructure changes needed for resolution
 
 Escalate to **Data Engineering Team** if:
+
 - Historical data pipeline failures causing backtest issues
 - Database performance degradation affecting multiple research workflows
 - Data provider connectivity issues requiring infrastructure changes
@@ -10503,6 +11185,7 @@ Escalate to **Data Engineering Team** if:
 #### Post-Incident Actions
 
 1. **Research Impact Assessment**:
+
    ```bash
    # Identify affected research projects
    curl -s "http://localhost:3000/api/research/projects/impact-analysis" \
@@ -10542,10 +11225,12 @@ Backtest Engine: `http://localhost:3000/api/research/backtests/health`
 Data Status: `http://localhost:3000/api/research/data/status`
 
 <a id="doc-postmortem-2025-09-30-high-api-error-rate"></a>
+
 ## Postmortem - 2025-09-30 High API Error Rate
+
 > Fuente original: `docs/postmortems/INCIDENT-20250930-0024-highapierrorrate.md`
 
-<!-- 
+<!--
 Post-Mortem generated on: 2025-09-30 00:24 UTC
 Generator: tools/new_postmortem.sh
 Incident: HighAPIErrorRate
@@ -10559,7 +11244,7 @@ Author: parallels
 **Date**: 2025-09-30  
 **Duration**: X hours Y minutes  
 **Severity**: SEV2  
-**Status**: UNDER INVESTIGATION  
+**Status**: UNDER INVESTIGATION
 
 #### 📋 Executive Summary
 
@@ -10599,31 +11284,31 @@ Author: parallels
 
 ##### Detection and Response
 
-| Time | Event | Actor | Action/Observation |
-|------|-------|-------|-------------------|
-| HH:MM | Initial trigger | System | Alert fired: [Alert Name] |
-| HH:MM | Detection | On-call | Alert acknowledged |
-| HH:MM | Initial assessment | Engineer | Confirmed impact scope |
-| HH:MM | Incident declared | On-call | SEV-X incident opened |
-| HH:MM | First mitigation | Engineer | [Describe action taken] |
+| Time  | Event              | Actor    | Action/Observation        |
+| ----- | ------------------ | -------- | ------------------------- |
+| HH:MM | Initial trigger    | System   | Alert fired: [Alert Name] |
+| HH:MM | Detection          | On-call  | Alert acknowledged        |
+| HH:MM | Initial assessment | Engineer | Confirmed impact scope    |
+| HH:MM | Incident declared  | On-call  | SEV-X incident opened     |
+| HH:MM | First mitigation   | Engineer | [Describe action taken]   |
 
 ##### Investigation and Escalation
 
-| Time | Event | Actor | Action/Observation |
-|------|-------|-------|-------------------|
-| HH:MM | Root cause hypothesis | Engineer | [Initial theory] |
-| HH:MM | Escalation | On-call | Engaged [Team/SME] |
-| HH:MM | Additional findings | Engineer | [New information discovered] |
-| HH:MM | Escalation | Manager | [If needed] |
+| Time  | Event                 | Actor    | Action/Observation           |
+| ----- | --------------------- | -------- | ---------------------------- |
+| HH:MM | Root cause hypothesis | Engineer | [Initial theory]             |
+| HH:MM | Escalation            | On-call  | Engaged [Team/SME]           |
+| HH:MM | Additional findings   | Engineer | [New information discovered] |
+| HH:MM | Escalation            | Manager  | [If needed]                  |
 
 ##### Resolution and Recovery
 
-| Time | Event | Actor | Action/Observation |
-|------|-------|-------|-------------------|
-| HH:MM | Solution implemented | Engineer | [Describe fix] |
-| HH:MM | Monitoring | Team | Verified metrics recovery |
-| HH:MM | Incident resolved | On-call | All systems nominal |
-| HH:MM | Post-incident | Team | Customer communication sent |
+| Time  | Event                | Actor    | Action/Observation          |
+| ----- | -------------------- | -------- | --------------------------- |
+| HH:MM | Solution implemented | Engineer | [Describe fix]              |
+| HH:MM | Monitoring           | Team     | Verified metrics recovery   |
+| HH:MM | Incident resolved    | On-call  | All systems nominal         |
+| HH:MM | Post-incident        | Team     | Customer communication sent |
 
 #### 🔍 Root Cause Analysis
 
@@ -10637,7 +11322,7 @@ Author: parallels
 2. **Why did that happen?** [First level]
    - Answer: [Contributing factor]
 
-3. **Why did that occur?** [Second level]  
+3. **Why did that occur?** [Second level]
    - Answer: [Deeper cause]
 
 4. **Why was that the case?** [Third level]
@@ -10671,26 +11356,26 @@ Author: parallels
 
 ##### Immediate Actions (Complete within 1 week)
 
-| Action Item | Owner | Due Date | Status | Verification |
-|-------------|-------|----------|--------|--------------|
-| [Specific action] | @parallels | 2025-09-30 | ⏳ Open | [How to verify completion] |
-| [Fix monitoring gap] | @parallels | 2025-09-30 | ⏳ Open | [Verification criteria] |
-| [Update runbook] | @parallels | 2025-09-30 | ⏳ Open | [Link to updated doc] |
+| Action Item          | Owner      | Due Date   | Status  | Verification               |
+| -------------------- | ---------- | ---------- | ------- | -------------------------- |
+| [Specific action]    | @parallels | 2025-09-30 | ⏳ Open | [How to verify completion] |
+| [Fix monitoring gap] | @parallels | 2025-09-30 | ⏳ Open | [Verification criteria]    |
+| [Update runbook]     | @parallels | 2025-09-30 | ⏳ Open | [Link to updated doc]      |
 
 ##### Medium-term Actions (Complete within 1 month)
 
-| Action Item | Owner | Due Date | Status | Verification |
-|-------------|-------|----------|--------|--------------|
-| [Process improvement] | @parallels | 2025-09-30 | ⏳ Open | [Success criteria] |
-| [System enhancement] | @parallels | 2025-09-30 | ⏳ Open | [Testing plan] |
-| [Training plan] | @parallels | 2025-09-30 | ⏳ Open | [Training completion] |
+| Action Item           | Owner      | Due Date   | Status  | Verification          |
+| --------------------- | ---------- | ---------- | ------- | --------------------- |
+| [Process improvement] | @parallels | 2025-09-30 | ⏳ Open | [Success criteria]    |
+| [System enhancement]  | @parallels | 2025-09-30 | ⏳ Open | [Testing plan]        |
+| [Training plan]       | @parallels | 2025-09-30 | ⏳ Open | [Training completion] |
 
 ##### Long-term Actions (Complete within 1 quarter)
 
-| Action Item | Owner | Due Date | Status | Verification |
-|-------------|-------|----------|--------|--------------|
+| Action Item           | Owner | Due Date   | Status  | Verification             |
+| --------------------- | ----- | ---------- | ------- | ------------------------ |
 | [Architecture change] | @team | 2025-09-30 | ⏳ Open | [Design review complete] |
-| [Tool implementation] | @team | 2025-09-30 | ⏳ Open | [Tool deployed] |
+| [Tool implementation] | @team | 2025-09-30 | ⏳ Open | [Tool deployed]          |
 
 #### 📚 Lessons Learned
 
@@ -10701,7 +11386,7 @@ Author: parallels
 - **Deployment**: [Release or configuration management insights]
 - **Dependencies**: [Third-party or internal service learnings]
 
-##### Process Lessons  
+##### Process Lessons
 
 - **Incident Response**: [Response process improvements]
 - **Communication**: [Internal and external communication lessons]
@@ -10720,7 +11405,7 @@ Author: parallels
 ##### Response Time Metrics
 
 - **Time to Detect**: X minutes (from issue start to alert firing)
-- **Time to Acknowledge**: X minutes (from alert to human response)  
+- **Time to Acknowledge**: X minutes (from alert to human response)
 - **Time to Mitigate**: X minutes (from acknowledgment to first mitigation)
 - **Time to Resolve**: X hours Y minutes (total incident duration)
 
@@ -10730,7 +11415,7 @@ Author: parallels
 Availability Impact:
 - Total downtime: X minutes
 - Monthly SLO budget: 43 minutes (99.9%)
-- SLO budget consumed: X% 
+- SLO budget consumed: X%
 - Remaining budget: Y minutes
 
 Error Rate Impact:
@@ -10752,7 +11437,7 @@ Error Rate Impact:
 
 - **Incident Slack Channel**: #incident-YYYYMMDD-HHMM
 - **Alert Dashboard**: [Grafana link]
-- **Log Analysis**: [CloudWatch/ELK/Splunk link]  
+- **Log Analysis**: [CloudWatch/ELK/Splunk link]
 - **Code Changes**: [GitHub PR links]
 - **Configuration Changes**: [Change management tickets]
 
@@ -10781,7 +11466,7 @@ Error Rate Impact:
 ##### Distribution List
 
 - [ ] Engineering Team
-- [ ] Operations Team  
+- [ ] Operations Team
 - [ ] Product Management
 - [ ] Customer Success
 - [ ] Executive Team (if SEV1-SEV2)
@@ -10794,7 +11479,9 @@ Error Rate Impact:
 **Last Updated**: 2025-09-30 by @parallels
 
 <a id="doc-terraform-infrastructure-overview"></a>
+
 ## Terraform Infrastructure Overview
+
 > Fuente original: `infra/terraform/README.md`
 
 ### ADAF Terraform Infrastructure
@@ -10816,7 +11503,7 @@ infra/terraform/
 │   └── observability/      # CloudWatch, metrics, logging (to be implemented)
 ├── environments/           # Environment-specific configurations
 │   ├── dev/                # Development environment
-│   ├── staging/            # Staging environment  
+│   ├── staging/            # Staging environment
 │   └── prod/               # Production environment
 └── README.md              # This file
 ```
@@ -10824,24 +11511,26 @@ infra/terraform/
 #### Quick Start - Development Environment
 
 1. **Prerequisites**
+
    ```bash
    # Install Terraform >= 1.5.0
    terraform --version
-   
+
    # Configure AWS CLI with appropriate credentials
    aws configure
    ```
 
 2. **Backend Setup** (First time only)
+
    ```bash
    # Create S3 bucket for Terraform state
    aws s3 mb s3://adaf-terraform-state-dev --region us-west-2
-   
+
    # Enable versioning
    aws s3api put-bucket-versioning \
      --bucket adaf-terraform-state-dev \
      --versioning-configuration Status=Enabled
-   
+
    # Create DynamoDB table for state locking
    aws dynamodb create-table \
      --table-name adaf-terraform-locks-dev \
@@ -10852,19 +11541,20 @@ infra/terraform/
    ```
 
 3. **Deploy Development Environment**
+
    ```bash
    cd environments/dev
-   
+
    # Copy and customize variables
    cp terraform.tfvars.example terraform.tfvars
    # Edit terraform.tfvars with your specific values
-   
+
    # Initialize Terraform
    terraform init
-   
+
    # Plan deployment
    terraform plan
-   
+
    # Deploy infrastructure
    terraform apply
    ```
@@ -10872,24 +11562,28 @@ infra/terraform/
 #### Module Overview
 
 ##### Network Module (`modules/network/`)
+
 - **Purpose**: Core networking infrastructure foundation
 - **Resources**: VPC, public/private/database subnets, NAT gateways, security groups, VPC Flow Logs
 - **Features**: Multi-AZ setup, proper subnet segmentation, security group rules for all services
 - **Outputs**: VPC ID, subnet IDs, security group IDs for other modules
 
 ##### RDS PostgreSQL Module (`modules/rds-postgres/`)
+
 - **Purpose**: Managed PostgreSQL database with high availability
 - **Resources**: RDS instance, parameter groups, option groups, KMS encryption, Secrets Manager
 - **Features**: Multi-AZ support, automated backups, enhanced monitoring, Performance Insights
 - **Security**: Encryption at rest/transit, Secrets Manager integration, least privilege access
 
 ##### Redis Module (`modules/redis/`)
+
 - **Purpose**: ElastiCache Redis for caching and session storage
 - **Resources**: ElastiCache replication group, parameter groups, CloudWatch logging
 - **Features**: Cluster mode support, automatic failover, encryption, auth tokens
 - **Monitoring**: CloudWatch alarms for CPU, memory, evictions, replication lag
 
 ##### ALB Module (`modules/alb/`)
+
 - **Purpose**: Application Load Balancer with blue/green deployment support
 - **Resources**: ALB, target groups (blue/green), listeners, listener rules
 - **Features**: SSL/TLS termination, health checks, weighted/header-based routing
@@ -10898,6 +11592,7 @@ infra/terraform/
 #### Environment Configuration
 
 ##### Development (`environments/dev/`)
+
 - **Purpose**: Development and testing environment
 - **Configuration**: Single AZ, minimal resources, no encryption for cost optimization
 - **Database**: db.t3.micro, 20GB storage, 1-day backups, no Multi-AZ
@@ -10905,6 +11600,7 @@ infra/terraform/
 - **Features**: All modules enabled, CloudWatch alarms, blue/green ALB
 
 ##### Staging (`environments/staging/`)
+
 - **Purpose**: Pre-production testing environment (to be implemented)
 - **Configuration**: Multi-AZ, production-like setup, moderate resources
 - **Database**: Multi-AZ enabled, enhanced monitoring, encryption
@@ -10912,6 +11608,7 @@ infra/terraform/
 - **Features**: SSL certificates, WAF protection, full observability
 
 ##### Production (`environments/prod/`)
+
 - **Purpose**: Production environment (to be implemented)
 - **Configuration**: Full high availability, encryption, monitoring, performance optimization
 - **Database**: Multi-AZ, Performance Insights, automated backups, read replicas
@@ -10921,18 +11618,21 @@ infra/terraform/
 #### Security Configuration
 
 ##### Encryption
+
 - **RDS**: Encryption at rest with customer-managed KMS keys
 - **Redis**: At-rest and in-transit encryption with auth tokens
 - **Secrets**: AWS Secrets Manager for database credentials and Redis auth tokens
 - **Traffic**: ALB SSL/TLS termination with modern cipher suites
 
 ##### Network Security
+
 - **VPC**: Private subnets for application and database tiers
 - **Security Groups**: Least privilege access, specific port/protocol rules
 - **NAT Gateway**: Secure outbound internet access for private subnets
 - **Flow Logs**: VPC traffic monitoring and analysis
 
 ##### Access Control
+
 - **IAM**: Service-specific roles with minimal required permissions
 - **Database**: Secrets Manager integration, no hardcoded credentials
 - **Monitoring**: CloudWatch alarms for security and operational events
@@ -10940,6 +11640,7 @@ infra/terraform/
 #### Deployment Strategies
 
 ##### Blue/Green Deployment
+
 ```bash
 # Deploy to green environment
 terraform apply -var="active_target_group=green"
@@ -10954,6 +11655,7 @@ curl -H "X-Deployment-Target: green" https://your-alb-endpoint.com/health
 ```
 
 ##### Canary Deployment
+
 ```bash
 # Enable weighted routing (90% blue, 10% green)
 terraform apply -var="enable_canary_routing=true" \
@@ -10967,18 +11669,21 @@ terraform apply -var="enable_canary_routing=true" \
 #### Monitoring and Observability
 
 ##### CloudWatch Alarms
+
 - **RDS**: CPU utilization, connection count, free storage space
-- **Redis**: CPU utilization, memory usage, evictions, replication lag  
+- **Redis**: CPU utilization, memory usage, evictions, replication lag
 - **ALB**: Response time, healthy host count, 5XX errors
 - **Custom**: Application-specific metrics via CloudWatch Agent
 
 ##### Logging
+
 - **VPC Flow Logs**: Network traffic analysis and security monitoring
 - **RDS**: PostgreSQL logs, slow query logs, error logs
 - **Redis**: Slow log analysis via CloudWatch
 - **ALB**: Access logs for request analysis and debugging
 
 ##### Secrets Management
+
 - **Database Credentials**: Stored in AWS Secrets Manager with automatic rotation
 - **Redis Auth Tokens**: Encrypted storage with least-privilege access
 - **SSL Certificates**: AWS Certificate Manager for automatic renewal
@@ -10986,17 +11691,19 @@ terraform apply -var="enable_canary_routing=true" \
 #### Cost Optimization
 
 ##### Development Environment
+
 - **RDS**: db.t3.micro instance, single AZ, minimal backup retention
 - **Redis**: cache.t3.micro, single node cluster, no encryption overhead
 - **Network**: Single NAT gateway, basic security group rules
 - **Monitoring**: Essential alarms only, short log retention
 
 ##### Resource Scaling
+
 ```bash
 # Scale RDS instance class
 terraform apply -var="rds_instance_class=db.t3.small"
 
-# Scale Redis node type  
+# Scale Redis node type
 terraform apply -var="redis_node_type=cache.t3.small"
 
 # Enable Multi-AZ for higher availability
@@ -11006,12 +11713,14 @@ terraform apply -var="rds_multi_az=true"
 #### Troubleshooting
 
 ##### Common Issues
+
 1. **Backend Configuration**: Ensure S3 bucket and DynamoDB table exist before `terraform init`
 2. **AWS Permissions**: Verify IAM permissions for all AWS services used
 3. **Resource Limits**: Check AWS account limits for VPCs, subnets, security groups
 4. **State Conflicts**: Use DynamoDB state locking to prevent concurrent modifications
 
 ##### Debugging Commands
+
 ```bash
 # Check Terraform state
 terraform show
@@ -11032,6 +11741,7 @@ terraform refresh
 #### Next Steps - Implementation Roadmap
 
 ##### Phase 1: Core Infrastructure ✅
+
 - [x] Network module (VPC, subnets, security groups)
 - [x] RDS PostgreSQL module with Multi-AZ support
 - [x] Redis ElastiCache module with clustering
@@ -11039,24 +11749,28 @@ terraform refresh
 - [x] Development environment configuration
 
 ##### Phase 2: Compute and Application (Next)
+
 - [ ] ECS Fargate compute module
 - [ ] Container definitions and task definitions
 - [ ] Auto-scaling policies and target tracking
 - [ ] Service discovery and load balancer integration
 
-##### Phase 3: DNS and Security  
+##### Phase 3: DNS and Security
+
 - [ ] Route53 DNS module with health checks
 - [ ] ACM SSL certificate management
 - [ ] WAF module with custom rules and rate limiting
 - [ ] Security headers and DDoS protection
 
 ##### Phase 4: Observability and Monitoring
+
 - [ ] CloudWatch dashboard and custom metrics
 - [ ] X-Ray distributed tracing integration
-- [ ] Prometheus/Grafana for application metrics  
+- [ ] Prometheus/Grafana for application metrics
 - [ ] Centralized logging with ELK stack
 
 ##### Phase 5: CI/CD Integration
+
 - [ ] GitHub Actions workflows for terraform plan/apply
 - [ ] Environment promotion pipeline (dev → staging → prod)
 - [ ] Automated testing and validation
@@ -11065,16 +11779,19 @@ terraform refresh
 #### Support and Maintenance
 
 ##### Terraform State Management
+
 - **Backend**: S3 with versioning and encryption
 - **Locking**: DynamoDB prevents concurrent modifications
 - **Backup**: Regular state file backups for disaster recovery
 
 ##### Version Management
+
 - **Terraform**: Pin to specific version for consistency
 - **Providers**: Use version constraints for stability
 - **Modules**: Semantic versioning for module releases
 
 ##### Documentation
+
 - **Code**: Inline comments for complex logic
 - **Variables**: Comprehensive descriptions and validation
 - **Outputs**: Clear descriptions for integration points

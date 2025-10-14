@@ -5,7 +5,8 @@
   "description": "LAV/ADAF - Sistema Integral de Agentes de Trading Cuantitativo",
   "workspaces": [
     "apps/*",
-    "libs/*"
+    "libs/*",
+    "packages/*"
   ],
   "scripts": {
     "build": "pnpm -r build",
@@ -25,7 +26,8 @@
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "start-core": "make start-core",
-    "smoke-test": "make smoke-test"
+    "smoke-test": "make smoke-test",
+    "demo": "pnpm --filter @lav-adaf/dashboard demo"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",

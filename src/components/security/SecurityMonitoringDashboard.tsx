@@ -1,9 +1,9 @@
 /**
  * 🖥️ SECURITY MONITORING WEB INTERFACE
- * 
+ *
  * This creates a REAL-TIME web interface for monitoring security status.
  * Provides executive dashboards, threat visualization, and security controls.
- * 
+ *
  * Features:
  * - Real-time threat monitoring dashboard
  * - Executive security overview
@@ -31,21 +31,23 @@ export function SecurityCommandDashboard() {
     activeThreats: 0,
     blockedAttacks: 247,
     systemIntegrity: 98,
-    complianceStatus: 'COMPLIANT'
+    complianceStatus: 'COMPLIANT',
   });
 
   const [activeThreats, setActiveThreats] = useState<any[]>([]);
-  const [securityMetrics, _setSecurityMetrics] = useState<any>({});
-  const [recentIncidents, _setRecentIncidents] = useState<any[]>([]);
+  const [_securityMetrics] = useState<any>({});
+  const [_recentIncidents] = useState<any[]>([]);
 
   const updateSecurityData = useCallback(() => {
     // Simulate dynamic security data
     setSecurityStatus({
-      overallHealth: ['HEALTHY', 'WARNING', 'CRITICAL'][Math.floor(Math.random() * 3)],
+      overallHealth: ['HEALTHY', 'WARNING', 'CRITICAL'][
+        Math.floor(Math.random() * 3)
+      ],
       activeThreats: Math.floor(Math.random() * 10),
       blockedAttacks: 247 + Math.floor(Math.random() * 50),
       systemIntegrity: 95 + Math.floor(Math.random() * 5),
-      complianceStatus: 'COMPLIANT'
+      complianceStatus: 'COMPLIANT',
     });
 
     // Generate mock threat data
@@ -57,17 +59,17 @@ export function SecurityCommandDashboard() {
         sourceIP: '192.168.1.100',
         status: 'ACTIVE',
         firstSeen: Date.now() - 300000,
-        actions: ['Rate Limited', 'Geo Blocked']
+        actions: ['Rate Limited', 'Geo Blocked'],
       },
       {
-        id: 'THR-002', 
+        id: 'THR-002',
         type: 'Credential Stuffing',
         severity: 'MEDIUM',
         sourceIP: '10.0.0.50',
         status: 'CONTAINED',
         firstSeen: Date.now() - 600000,
-        actions: ['Account Locked', 'MFA Enforced']
-      }
+        actions: ['Account Locked', 'MFA Enforced'],
+      },
     ];
 
     setActiveThreats(mockThreats.slice(0, securityStatus.activeThreats));
@@ -84,20 +86,29 @@ export function SecurityCommandDashboard() {
 
   const getHealthColor = (health: string) => {
     switch (health) {
-      case 'HEALTHY': return 'text-green-600';
-      case 'WARNING': return 'text-yellow-600';
-      case 'CRITICAL': return 'text-red-600';
-      default: return 'text-gray-600';
+      case 'HEALTHY':
+        return 'text-green-600';
+      case 'WARNING':
+        return 'text-yellow-600';
+      case 'CRITICAL':
+        return 'text-red-600';
+      default:
+        return 'text-gray-600';
     }
   };
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'LOW': return 'bg-blue-100 text-blue-800';
-      case 'MEDIUM': return 'bg-yellow-100 text-yellow-800';
-      case 'HIGH': return 'bg-orange-100 text-orange-800';
-      case 'CRITICAL': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'LOW':
+        return 'bg-blue-100 text-blue-800';
+      case 'MEDIUM':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'HIGH':
+        return 'bg-orange-100 text-orange-800';
+      case 'CRITICAL':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -106,11 +117,17 @@ export function SecurityCommandDashboard() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">🎯 Security Command Center</h1>
-          <p className="text-gray-600 mt-1">Real-time security monitoring and threat intelligence</p>
+          <h1 className="text-3xl font-bold text-gray-900">
+            🎯 Security Command Center
+          </h1>
+          <p className="text-gray-600 mt-1">
+            Real-time security monitoring and threat intelligence
+          </p>
         </div>
         <div className="flex items-center gap-2">
-          <Badge className={`${getHealthColor(securityStatus.overallHealth)} bg-opacity-10`}>
+          <Badge
+            className={`${getHealthColor(securityStatus.overallHealth)} bg-opacity-10`}
+          >
             {securityStatus.overallHealth}
           </Badge>
           <Button variant="outline" size="sm">
@@ -123,41 +140,63 @@ export function SecurityCommandDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">System Health</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600">
+              System Health
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">{securityStatus.overallHealth}</div>
-            <div className="text-sm text-gray-500 mt-1">All systems operational</div>
+            <div className="text-2xl font-bold text-gray-900">
+              {securityStatus.overallHealth}
+            </div>
+            <div className="text-sm text-gray-500 mt-1">
+              All systems operational
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Active Threats</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600">
+              Active Threats
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">{securityStatus.activeThreats}</div>
-            <div className="text-sm text-gray-500 mt-1">Currently being monitored</div>
+            <div className="text-2xl font-bold text-gray-900">
+              {securityStatus.activeThreats}
+            </div>
+            <div className="text-sm text-gray-500 mt-1">
+              Currently being monitored
+            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Attacks Blocked</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600">
+              Attacks Blocked
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">{securityStatus.blockedAttacks}</div>
+            <div className="text-2xl font-bold text-green-600">
+              {securityStatus.blockedAttacks}
+            </div>
             <div className="text-sm text-gray-500 mt-1">Last 24 hours</div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">System Integrity</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-600">
+              System Integrity
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">{securityStatus.systemIntegrity}%</div>
-            <div className="text-sm text-gray-500 mt-1">Security posture score</div>
+            <div className="text-2xl font-bold text-gray-900">
+              {securityStatus.systemIntegrity}%
+            </div>
+            <div className="text-sm text-gray-500 mt-1">
+              Security posture score
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -177,8 +216,11 @@ export function SecurityCommandDashboard() {
             </div>
           ) : (
             <div className="space-y-3">
-              {activeThreats.map((threat) => (
-                <div key={threat.id} className="flex items-center justify-between p-3 border rounded-lg bg-white">
+              {activeThreats.map(threat => (
+                <div
+                  key={threat.id}
+                  className="flex items-center justify-between p-3 border rounded-lg bg-white"
+                >
                   <div className="flex items-center gap-3">
                     <Badge className={getSeverityColor(threat.severity)}>
                       {threat.severity}
@@ -215,15 +257,21 @@ export function SecurityCommandDashboard() {
           <CardContent>
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">ML Detection Accuracy</span>
+                <span className="text-sm text-gray-600">
+                  ML Detection Accuracy
+                </span>
                 <span className="font-medium">94.2%</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">False Positive Rate</span>
+                <span className="text-sm text-gray-600">
+                  False Positive Rate
+                </span>
                 <span className="font-medium">2.1%</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Threat Models Active</span>
+                <span className="text-sm text-gray-600">
+                  Threat Models Active
+                </span>
                 <span className="font-medium">4/4</span>
               </div>
               <div className="flex justify-between items-center">
@@ -242,11 +290,15 @@ export function SecurityCommandDashboard() {
           <CardContent>
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Mean Response Time</span>
+                <span className="text-sm text-gray-600">
+                  Mean Response Time
+                </span>
                 <span className="font-medium">2.3 sec</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Auto-Containment Rate</span>
+                <span className="text-sm text-gray-600">
+                  Auto-Containment Rate
+                </span>
                 <span className="font-medium">98.7%</span>
               </div>
               <div className="flex justify-between items-center">
@@ -254,7 +306,9 @@ export function SecurityCommandDashboard() {
                 <span className="font-medium">4</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Incidents Resolved</span>
+                <span className="text-sm text-gray-600">
+                  Incidents Resolved
+                </span>
                 <span className="font-medium">156</span>
               </div>
             </div>
@@ -309,8 +363,11 @@ export function SecurityCommandDashboard() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {['SOX', 'PCI-DSS', 'GDPR', 'ISO27001', 'SOC2'].map((framework) => (
-              <div key={framework} className="text-center p-3 border rounded-lg bg-green-50">
+            {['SOX', 'PCI-DSS', 'GDPR', 'ISO27001', 'SOC2'].map(framework => (
+              <div
+                key={framework}
+                className="text-center p-3 border rounded-lg bg-green-50"
+              >
                 <div className="font-medium text-green-800">{framework}</div>
                 <div className="text-sm text-green-600 mt-1">✓ Compliant</div>
               </div>
@@ -327,14 +384,46 @@ export function SecurityCommandDashboard() {
         <CardContent>
           <div className="space-y-2 max-h-64 overflow-y-auto">
             {[
-              { time: '14:32:15', type: 'Attack Blocked', message: 'DDoS attempt from 192.168.1.100 automatically mitigated', severity: 'HIGH' },
-              { time: '14:31:45', type: 'Honeypot Triggered', message: 'Attacker accessed fake admin panel at /admin-fake', severity: 'MEDIUM' },
-              { time: '14:30:22', type: 'ML Detection', message: 'Behavioral anomaly detected in user session', severity: 'MEDIUM' },
-              { time: '14:29:15', type: 'Compliance Scan', message: 'PCI-DSS compliance scan completed successfully', severity: 'LOW' },
-              { time: '14:28:45', type: 'Threat Intelligence', message: 'New malicious IP added to blacklist: 10.0.0.100', severity: 'LOW' }
+              {
+                time: '14:32:15',
+                type: 'Attack Blocked',
+                message:
+                  'DDoS attempt from 192.168.1.100 automatically mitigated',
+                severity: 'HIGH',
+              },
+              {
+                time: '14:31:45',
+                type: 'Honeypot Triggered',
+                message: 'Attacker accessed fake admin panel at /admin-fake',
+                severity: 'MEDIUM',
+              },
+              {
+                time: '14:30:22',
+                type: 'ML Detection',
+                message: 'Behavioral anomaly detected in user session',
+                severity: 'MEDIUM',
+              },
+              {
+                time: '14:29:15',
+                type: 'Compliance Scan',
+                message: 'PCI-DSS compliance scan completed successfully',
+                severity: 'LOW',
+              },
+              {
+                time: '14:28:45',
+                type: 'Threat Intelligence',
+                message: 'New malicious IP added to blacklist: 10.0.0.100',
+                severity: 'LOW',
+              },
             ].map((event, index) => (
-              <div key={index} className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded">
-                <Badge className={getSeverityColor(event.severity)} variant="outline">
+              <div
+                key={index}
+                className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded"
+              >
+                <Badge
+                  className={getSeverityColor(event.severity)}
+                  variant="outline"
+                >
                   {event.severity}
                 </Badge>
                 <div className="flex-1">
@@ -354,9 +443,10 @@ export function SecurityCommandDashboard() {
       <Alert>
         <AlertDescription className="flex items-center justify-between">
           <div>
-            <strong>🎯 Executive Summary:</strong> All security systems operational. 
-            Advanced threat detection active with 94.2% accuracy. Zero critical vulnerabilities detected.
-            Compliance maintained across all frameworks.
+            <strong>🎯 Executive Summary:</strong> All security systems
+            operational. Advanced threat detection active with 94.2% accuracy.
+            Zero critical vulnerabilities detected. Compliance maintained across
+            all frameworks.
           </div>
           <Button variant="outline" size="sm">
             📊 Full Report
@@ -368,7 +458,7 @@ export function SecurityCommandDashboard() {
 }
 
 // ==========================================
-// 📈 SECURITY METRICS COMPONENT  
+// 📈 SECURITY METRICS COMPONENT
 // ==========================================
 
 export function SecurityMetrics() {
@@ -376,7 +466,7 @@ export function SecurityMetrics() {
     detectionRate: 94.2,
     responseTime: 2.3,
     uptime: 99.8,
-    threatsBlocked: 1247
+    threatsBlocked: 1247,
   });
 
   return (
@@ -384,7 +474,9 @@ export function SecurityMetrics() {
       <Card>
         <CardContent className="pt-6">
           <div className="text-center">
-            <div className="text-3xl font-bold text-green-600">{metrics.detectionRate}%</div>
+            <div className="text-3xl font-bold text-green-600">
+              {metrics.detectionRate}%
+            </div>
             <div className="text-sm text-gray-500">Detection Rate</div>
           </div>
         </CardContent>
@@ -393,7 +485,9 @@ export function SecurityMetrics() {
       <Card>
         <CardContent className="pt-6">
           <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600">{metrics.responseTime}s</div>
+            <div className="text-3xl font-bold text-blue-600">
+              {metrics.responseTime}s
+            </div>
             <div className="text-sm text-gray-500">Response Time</div>
           </div>
         </CardContent>
@@ -402,7 +496,9 @@ export function SecurityMetrics() {
       <Card>
         <CardContent className="pt-6">
           <div className="text-center">
-            <div className="text-3xl font-bold text-purple-600">{metrics.uptime}%</div>
+            <div className="text-3xl font-bold text-purple-600">
+              {metrics.uptime}%
+            </div>
             <div className="text-sm text-gray-500">System Uptime</div>
           </div>
         </CardContent>
@@ -411,7 +507,9 @@ export function SecurityMetrics() {
       <Card>
         <CardContent className="pt-6">
           <div className="text-center">
-            <div className="text-3xl font-bold text-orange-600">{metrics.threatsBlocked}</div>
+            <div className="text-3xl font-bold text-orange-600">
+              {metrics.threatsBlocked}
+            </div>
             <div className="text-sm text-gray-500">Threats Blocked</div>
           </div>
         </CardContent>

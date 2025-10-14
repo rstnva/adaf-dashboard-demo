@@ -6,13 +6,20 @@ import { RefreshCw, Calendar, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 import { ResearchApi, ResearchApiError } from '@/lib/research/api';
 import { BacktestSummary, Backtest } from '@/types/research';
 
 interface BacktestListProps {
-  onSelect?: (backtest: Backtest | null) => void;
+  onSelect?: (_backtest: Backtest | null) => void;
   selectedId?: number;
 }
 
@@ -35,7 +42,7 @@ export function BacktestList({ onSelect, selectedId }: BacktestListProps) {
       const response = await ResearchApi.listBacktests({
         limit: 20,
         orderBy: 'created_at',
-        orderDir: 'DESC'
+        orderDir: 'DESC',
       });
 
       if (response.success && response.backtests) {
@@ -43,12 +50,12 @@ export function BacktestList({ onSelect, selectedId }: BacktestListProps) {
       } else {
         throw new Error(response.error || 'Failed to load backtests');
       }
-
     } catch (error) {
       console.error('Load backtests error:', error);
-      const message = error instanceof ResearchApiError 
-        ? error.message 
-        : 'Failed to load backtests';
+      const message =
+        error instanceof ResearchApiError
+          ? error.message
+          : 'Failed to load backtests';
       setError(message);
     } finally {
       setLoading(false);
@@ -64,13 +71,12 @@ export function BacktestList({ onSelect, selectedId }: BacktestListProps) {
     try {
       // Load full backtest details
       const response = await ResearchApi.getBacktest(summary.id);
-      
+
       if (response.success && response.backtest) {
         onSelect(response.backtest);
       } else {
         throw new Error(response.error || 'Failed to load backtest details');
       }
-
     } catch (error) {
       console.error('Load backtest details error:', error);
       onSelect(null);
@@ -82,29 +88,28 @@ export function BacktestList({ onSelect, selectedId }: BacktestListProps) {
    */
   const getStatusBadge = (status: BacktestSummary['status']) => {
     const variants = {
-      'queued': 'outline',
-      'running': 'secondary', 
-      'done': 'default',
-      'failed': 'destructive'
+      queued: 'outline',
+      running: 'secondary',
+      done: 'default',
+      failed: 'destructive',
     } as const;
 
-    return (
-      <Badge variant={variants[status] || 'outline'}>
-        {status}
-      </Badge>
-    );
+    return <Badge variant={variants[status] || 'outline'}>{status}</Badge>;
   };
 
   /**
    * Format performance metrics
    */
-  const formatMetric = (value: number | undefined, type: 'percentage' | 'ratio') => {
+  const formatMetric = (
+    value: number | undefined,
+    type: 'percentage' | 'ratio'
+  ) => {
     if (value === undefined) return '-';
-    
+
     if (type === 'percentage') {
       return `${(value * 100).toFixed(2)}%`;
     }
-    
+
     return value.toFixed(3);
   };
 
@@ -194,7 +199,7 @@ export function BacktestList({ onSelect, selectedId }: BacktestListProps) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {backtests.map((backtest) => (
+                {backtests.map(backtest => (
                   <TableRow
                     key={backtest.id}
                     className={`cursor-pointer hover:bg-muted/50 ${
@@ -210,9 +215,7 @@ export function BacktestList({ onSelect, selectedId }: BacktestListProps) {
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell>
-                      {getStatusBadge(backtest.status)}
-                    </TableCell>
+                    <TableCell>{getStatusBadge(backtest.status)}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-1 text-sm">
                         <Calendar className="h-3 w-3" />
@@ -223,16 +226,20 @@ export function BacktestList({ onSelect, selectedId }: BacktestListProps) {
                       <Badge variant="outline">{backtest.benchmark}</Badge>
                     </TableCell>
                     <TableCell>
-                      <div className="text-sm">{backtest.agentCount} agents</div>
+                      <div className="text-sm">
+                        {backtest.agentCount} agents
+                      </div>
                     </TableCell>
                     <TableCell>
-                      <span className={`font-medium ${
-                        backtest.pnlPct && backtest.pnlPct > 0 
-                          ? 'text-green-600' 
-                          : backtest.pnlPct && backtest.pnlPct < 0
-                          ? 'text-red-600'
-                          : ''
-                      }`}>
+                      <span
+                        className={`font-medium ${
+                          backtest.pnlPct && backtest.pnlPct > 0
+                            ? 'text-green-600'
+                            : backtest.pnlPct && backtest.pnlPct < 0
+                              ? 'text-red-600'
+                              : ''
+                        }`}
+                      >
                         {formatMetric(backtest.pnlPct, 'percentage')}
                       </span>
                     </TableCell>
@@ -240,9 +247,7 @@ export function BacktestList({ onSelect, selectedId }: BacktestListProps) {
                       {formatMetric(backtest.sharpe, 'ratio')}
                     </TableCell>
                     <TableCell>
-                      <span className={
-                        backtest.maxDDPct ? 'text-red-600' : ''
-                      }>
+                      <span className={backtest.maxDDPct ? 'text-red-600' : ''}>
                         {formatMetric(backtest.maxDDPct, 'percentage')}
                       </span>
                     </TableCell>

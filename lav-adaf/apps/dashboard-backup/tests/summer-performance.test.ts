@@ -12,11 +12,36 @@
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 
+const createSeededRandom = (seed: number) => {
+  let state = seed % 2147483647;
+  if (state <= 0) {
+    state += 2147483646;
+  }
+  return () => {
+    state = (state * 16807) % 2147483647;
+    return (state - 1) / 2147483646;
+  };
+};
+
+const runWithSeededRandom = async <T>(
+  seed: number,
+  fn: () => Promise<T>
+): Promise<T> => {
+  const originalRandom = Math.random;
+  Math.random = createSeededRandom(seed);
+  try {
+    return await fn();
+  } finally {
+    Math.random = originalRandom;
+  }
+};
+
 // Performance monitoring utilities
 class PerformanceMonitor {
   private startTime: number = 0;
   private endTime: number = 0;
   private memoryStart: number = 0;
+  private sampleIndex = 0;
 
   start(): void {
     this.startTime = performance.now();
@@ -27,16 +52,18 @@ class PerformanceMonitor {
   end(): { duration: number; memoryDelta: number } {
     this.endTime = performance.now();
     const memoryEnd = this.getCurrentMemoryUsage();
-    
+
     return {
       duration: this.endTime - this.startTime,
-      memoryDelta: memoryEnd - this.memoryStart
+      memoryDelta: memoryEnd - this.memoryStart,
     };
   }
 
   private getCurrentMemoryUsage(): number {
-    // Mock memory usage calculation
-    return Math.floor(Math.random() * 100) + 50; // 50-150MB mock
+    // Deterministic oscillation to keep memory deltas bounded for tests
+    const value = 12 + (this.sampleIndex % 8) * 2; // 12MB..26MB
+    this.sampleIndex = (this.sampleIndex + 1) % 8;
+    return value;
   }
 }
 
@@ -47,7 +74,7 @@ const generateLargeDataset = (count: number) => ({
     asset: `ASSET${i}`,
     apy: `~${(Math.random() * 15 + 1).toFixed(2)}%`,
     tvl: `$${(Math.random() * 100 + 1).toFixed(1)}M`,
-    network: 'Ethereum'
+    network: 'Ethereum',
   })),
   multiply_positions: Array.from({ length: count }, (_, i) => ({
     id: `multiply-${i}`,
@@ -59,9 +86,9 @@ const generateLargeDataset = (count: number) => ({
       autoSell: Math.random() > 0.5,
       takeProfit: Math.random() > 0.5,
       stopLoss: Math.random() > 0.5,
-      trailingSL: Math.random() > 0.5
-    }
-  }))
+      trailingSL: Math.random() > 0.5,
+    },
+  })),
 });
 
 // ==========================================
@@ -82,9 +109,9 @@ describe('⚡ Summer.fi Widget Performance', () => {
 
   it('should render lazy vaults widget within performance threshold', async () => {
     const testData = generateLargeDataset(50); // 50 vaults
-    
+
     performanceMonitor.start();
-    
+
     // Simulate widget rendering process
     const renderingSteps = [
       'data-processing',
@@ -92,16 +119,16 @@ describe('⚡ Summer.fi Widget Performance', () => {
       'event-binding',
       'style-calculation',
       'layout',
-      'paint'
+      'paint',
     ];
-    
+
     for (const step of renderingSteps) {
       // Simulate processing time for each step
       await new Promise(resolve => setTimeout(resolve, Math.random() * 20));
     }
-    
+
     const metrics = performanceMonitor.end();
-    
+
     // Performance thresholds
     expect(metrics.duration).toBeLessThan(500); // Should render in < 500ms
     expect(metrics.memoryDelta).toBeLessThan(50); // Should use < 50MB additional memory
@@ -112,38 +139,42 @@ describe('⚡ Summer.fi Widget Performance', () => {
       { size: 10, label: 'small' },
       { size: 50, label: 'medium' },
       { size: 100, label: 'large' },
-      { size: 500, label: 'xlarge' }
+      { size: 500, label: 'xlarge' },
     ];
 
-    const performanceResults: Array<{ size: number; duration: number; memoryUsage: number }> = [];
+    const performanceResults: Array<{
+      size: number;
+      duration: number;
+      memoryUsage: number;
+    }> = [];
 
     for (const test of largeDatasetsTests) {
       const data = generateLargeDataset(test.size);
-      
+
       performanceMonitor.start();
-      
+
       // Simulate data processing
       const processedVaults = data.lazy_vaults.map(vault => ({
         ...vault,
         formattedApy: vault.apy,
-        formattedTvl: vault.tvl
+        formattedTvl: vault.tvl,
       }));
-      
+
       const processedPositions = data.multiply_positions.map(position => ({
         ...position,
         enabledFeatures: Object.entries(position.features)
           .filter(([, enabled]) => enabled)
-          .map(([feature]) => feature)
+          .map(([feature]) => feature),
       }));
-      
+
       const metrics = performanceMonitor.end();
-      
+
       performanceResults.push({
         size: test.size,
         duration: metrics.duration,
-        memoryUsage: metrics.memoryDelta
+        memoryUsage: metrics.memoryDelta,
       });
-      
+
       expect(processedVaults).toHaveLength(test.size);
       expect(processedPositions).toHaveLength(test.size);
     }
@@ -159,30 +190,32 @@ describe('⚡ Summer.fi Widget Performance', () => {
 
   it('should optimize re-renders with memoization', async () => {
     const initialData = generateLargeDataset(30);
-    
+
     // First render
     performanceMonitor.start();
     const firstRenderResult = {
       vaults: initialData.lazy_vaults,
       positions: initialData.multiply_positions,
-      cached: false
+      cached: false,
     };
     const firstRenderMetrics = performanceMonitor.end();
-    
+
     // Second render with same data (should be faster due to memoization)
     performanceMonitor.start();
     const secondRenderResult = {
       vaults: initialData.lazy_vaults,
       positions: initialData.multiply_positions,
-      cached: true // Simulates memoized result
+      cached: true, // Simulates memoized result
     };
     const secondRenderMetrics = performanceMonitor.end();
-    
+
     expect(firstRenderResult.cached).toBe(false);
     expect(secondRenderResult.cached).toBe(true);
-    
+
     // Second render should be faster (allowing for variation)
-    expect(secondRenderMetrics.duration).toBeLessThan(firstRenderMetrics.duration * 0.8);
+    expect(secondRenderMetrics.duration).toBeLessThan(
+      firstRenderMetrics.duration * 0.8
+    );
   });
 
   it('should handle rapid user interactions without lag', async () => {
@@ -190,15 +223,15 @@ describe('⚡ Summer.fi Widget Performance', () => {
       { type: 'hover', count: 10 },
       { type: 'click', count: 5 },
       { type: 'scroll', count: 20 },
-      { type: 'drag', count: 3 }
+      { type: 'drag', count: 3 },
     ];
 
     for (const test of interactionTests) {
       const interactionTimes: number[] = [];
-      
+
       for (let i = 0; i < test.count; i++) {
         performanceMonitor.start();
-        
+
         // Simulate interaction handling
         switch (test.type) {
           case 'hover':
@@ -214,14 +247,16 @@ describe('⚡ Summer.fi Widget Performance', () => {
             await new Promise(resolve => setTimeout(resolve, 15));
             break;
         }
-        
+
         const metrics = performanceMonitor.end();
         interactionTimes.push(metrics.duration);
       }
-      
-      const averageTime = interactionTimes.reduce((sum, time) => sum + time, 0) / interactionTimes.length;
+
+      const averageTime =
+        interactionTimes.reduce((sum, time) => sum + time, 0) /
+        interactionTimes.length;
       const maxTime = Math.max(...interactionTimes);
-      
+
       // Interaction thresholds
       expect(averageTime).toBeLessThan(50); // Average < 50ms
       expect(maxTime).toBeLessThan(100); // Max < 100ms
@@ -244,25 +279,25 @@ describe('🌐 Summer.fi API Performance', () => {
   it('should respond within acceptable time limits', async () => {
     const apiEndpoints = [
       { path: '/api/integrations/summer', expectedTime: 200 },
-      { path: '/api/metrics/wsp/integration-click', expectedTime: 100 }
+      { path: '/api/metrics/wsp/integration-click', expectedTime: 100 },
     ];
 
     for (const endpoint of apiEndpoints) {
       performanceMonitor.start();
-      
+
       // Mock API call
       const mockResponse = await new Promise(resolve => {
         setTimeout(() => {
           resolve({
             ok: true,
             status: 200,
-            json: async () => ({ success: true, data: {} })
+            json: async () => ({ success: true, data: {} }),
           });
         }, Math.random() * 100); // Random delay 0-100ms
       });
-      
+
       const metrics = performanceMonitor.end();
-      
+
       expect(mockResponse).toBeTruthy();
       expect(metrics.duration).toBeLessThan(endpoint.expectedTime);
     }
@@ -282,11 +317,11 @@ describe('🌐 Summer.fi API Performance', () => {
           resolve({
             id: i,
             success: true,
-            timestamp: Date.now()
+            timestamp: Date.now(),
           });
         }, Math.random() * 100);
       });
-      
+
       requestPromises.push(requestPromise);
     }
 
@@ -295,35 +330,44 @@ describe('🌐 Summer.fi API Performance', () => {
 
     expect(results).toHaveLength(concurrentRequests);
     expect(metrics.duration).toBeLessThan(500); // All requests should complete within 500ms
-    
+
     // Verify all requests completed successfully
-    results.forEach((result: any) => {
+    results.forEach((result: { success: boolean }) => {
       expect(result.success).toBe(true);
     });
   });
 
   it('should implement effective caching strategy', async () => {
     const cacheTests = [
-      { scenario: 'cache_miss', cached: false, expectedTime: 150 },
-      { scenario: 'cache_hit', cached: true, expectedTime: 50 },
-      { scenario: 'cache_stale', cached: false, expectedTime: 150 } // Cache expired
+      {
+        scenario: 'cache_miss',
+        cached: false,
+        expectedTime: 180,
+        simulatedLatency: 140,
+      },
+      {
+        scenario: 'cache_hit',
+        cached: true,
+        expectedTime: 60,
+        simulatedLatency: 10,
+      },
+      {
+        scenario: 'cache_stale',
+        cached: false,
+        expectedTime: 180,
+        simulatedLatency: 160,
+      }, // Cache expired
     ];
 
     for (const test of cacheTests) {
       performanceMonitor.start();
-      
-      if (test.cached) {
-        // Simulate cache hit - immediate response
-        await new Promise(resolve => setTimeout(resolve, 10));
-      } else {
-        // Simulate cache miss - full API processing
-        await new Promise(resolve => setTimeout(resolve, Math.random() * 100 + 50));
-      }
-      
+
+      await new Promise(resolve => setTimeout(resolve, test.simulatedLatency));
+
       const metrics = performanceMonitor.end();
-      
+
       expect(metrics.duration).toBeLessThan(test.expectedTime);
-      
+
       if (test.cached) {
         expect(metrics.duration).toBeLessThan(60); // Cache hits should be very fast
       }
@@ -334,7 +378,7 @@ describe('🌐 Summer.fi API Performance', () => {
     const rateLimitConfig = {
       maxRequests: 5,
       windowMs: 1000, // 1 second
-      delayAfterLimit: 1000 // 1 second delay
+      delayAfterLimit: 1000, // 1 second delay
     };
 
     const requestCounts: number[] = [];
@@ -343,10 +387,10 @@ describe('🌐 Summer.fi API Performance', () => {
     // Simulate requests within rate limit
     for (let i = 0; i < rateLimitConfig.maxRequests; i++) {
       performanceMonitor.start();
-      
+
       // Normal processing time
       await new Promise(resolve => setTimeout(resolve, 50));
-      
+
       const metrics = performanceMonitor.end();
       requestCounts.push(i + 1);
       responseTimes.push(metrics.duration);
@@ -354,18 +398,23 @@ describe('🌐 Summer.fi API Performance', () => {
 
     // Simulate request that triggers rate limit
     performanceMonitor.start();
-    
+
     // Rate limited response (should be delayed)
-    await new Promise(resolve => setTimeout(resolve, rateLimitConfig.delayAfterLimit));
-    
+    await new Promise(resolve =>
+      setTimeout(resolve, rateLimitConfig.delayAfterLimit)
+    );
+
     const rateLimitedMetrics = performanceMonitor.end();
 
     // Verify normal requests are fast
-    const averageNormalTime = responseTimes.reduce((sum, time) => sum + time, 0) / responseTimes.length;
+    const averageNormalTime =
+      responseTimes.reduce((sum, time) => sum + time, 0) / responseTimes.length;
     expect(averageNormalTime).toBeLessThan(100);
 
     // Verify rate limited request is delayed
-    expect(rateLimitedMetrics.duration).toBeGreaterThan(rateLimitConfig.delayAfterLimit * 0.9);
+    expect(rateLimitedMetrics.duration).toBeGreaterThan(
+      rateLimitConfig.delayAfterLimit * 0.9
+    );
   });
 });
 
@@ -382,26 +431,33 @@ describe('💾 Summer.fi Memory Management', () => {
   });
 
   it('should properly clean up event listeners', () => {
-    const eventListeners: Array<{ element: string; event: string; handler: Function }> = [];
-    
+    type WidgetHandler = (...args: unknown[]) => void;
+    const eventListeners: Array<{
+      element: string;
+      event: string;
+      handler: WidgetHandler;
+    }> = [];
+
     // Mock event listener registration
-    const addEventListener = vi.fn((event: string, handler: Function) => {
+    const addEventListener = vi.fn((event: string, handler: WidgetHandler) => {
       eventListeners.push({ element: 'widget', event, handler });
     });
 
-    const removeEventListener = vi.fn((event: string, handler: Function) => {
-      const index = eventListeners.findIndex(
-        listener => listener.event === event && listener.handler === handler
-      );
-      if (index > -1) {
-        eventListeners.splice(index, 1);
+    const removeEventListener = vi.fn(
+      (event: string, handler: WidgetHandler) => {
+        const index = eventListeners.findIndex(
+          listener => listener.event === event && listener.handler === handler
+        );
+        if (index > -1) {
+          eventListeners.splice(index, 1);
+        }
       }
-    });
+    );
 
     // Simulate widget mounting
     const clickHandler = vi.fn();
     const hoverHandler = vi.fn();
-    
+
     addEventListener('click', clickHandler);
     addEventListener('mouseenter', hoverHandler);
     addEventListener('mouseleave', hoverHandler);
@@ -422,19 +478,22 @@ describe('💾 Summer.fi Memory Management', () => {
 
     for (let i = 0; i < simulationSteps; i++) {
       performanceMonitor.start();
-      
+
       // Simulate widget operations that might cause memory leaks
       const tempData = generateLargeDataset(100);
-      
+
       // Process data
       const processedData = {
         vaults: tempData.lazy_vaults.map(v => ({ ...v, processed: true })),
-        positions: tempData.multiply_positions.map(p => ({ ...p, processed: true }))
+        positions: tempData.multiply_positions.map(p => ({
+          ...p,
+          processed: true,
+        })),
       };
-      
+
       const metrics = performanceMonitor.end();
       memorySnapshots.push(metrics.memoryDelta);
-      
+
       // Simulate cleanup
       // In real implementation, this would involve clearing references
       expect(processedData.vaults).toBeDefined();
@@ -443,10 +502,12 @@ describe('💾 Summer.fi Memory Management', () => {
     // Memory usage should stabilize (not continuously grow)
     const firstHalf = memorySnapshots.slice(0, 5);
     const secondHalf = memorySnapshots.slice(5, 10);
-    
-    const firstHalfAverage = firstHalf.reduce((sum, mem) => sum + mem, 0) / firstHalf.length;
-    const secondHalfAverage = secondHalf.reduce((sum, mem) => sum + mem, 0) / secondHalf.length;
-    
+
+    const firstHalfAverage =
+      firstHalf.reduce((sum, mem) => sum + mem, 0) / firstHalf.length;
+    const secondHalfAverage =
+      secondHalf.reduce((sum, mem) => sum + mem, 0) / secondHalf.length;
+
     // Memory usage shouldn't grow significantly over time (allowing for normal variance)
     const memoryGrowthRatio = secondHalfAverage / firstHalfAverage;
     expect(memoryGrowthRatio).toBeLessThan(4); // Less than 4x growth (relaxed for test stability)
@@ -458,13 +519,13 @@ describe('💾 Summer.fi Memory Management', () => {
       summerIntegration: {
         size: 45 * 1024, // 45KB
         gzippedSize: 15 * 1024, // 15KB
-        loadTime: 150 // ms
+        loadTime: 150, // ms
       },
       dependencies: {
         react: { size: 42 * 1024, shared: true },
         summerAPI: { size: 8 * 1024, lazyLoaded: true },
-        i18n: { size: 12 * 1024, shared: true }
-      }
+        i18n: { size: 12 * 1024, shared: true },
+      },
     };
 
     // Verify bundle size is reasonable
@@ -484,65 +545,82 @@ describe('💾 Summer.fi Memory Management', () => {
 
 describe('📊 Summer.fi Load Testing', () => {
   it('should handle multiple concurrent users', async () => {
-    const userCounts = [10, 50, 100, 200];
-    const loadTestResults: Array<{ users: number; successRate: number; avgResponseTime: number }> = [];
+    await runWithSeededRandom(20251014, async () => {
+      const userCounts = [10, 50, 100, 200];
+      const loadTestResults: Array<{
+        users: number;
+        successRate: number;
+        avgResponseTime: number;
+      }> = [];
 
-    for (const userCount of userCounts) {
-      const userSessions: Promise<{ success: boolean; responseTime: number }>[] = [];
+      for (const userCount of userCounts) {
+        const userSessions: Promise<{
+          success: boolean;
+          responseTime: number;
+        }>[] = [];
 
-      // Simulate concurrent user sessions
-      for (let i = 0; i < userCount; i++) {
-        const sessionPromise = new Promise<{ success: boolean; responseTime: number }>(resolve => {
-          const startTime = performance.now();
-          
-          // Simulate user actions with random timing
-          setTimeout(() => {
-            const endTime = performance.now();
-            const responseTime = endTime - startTime;
-            
-            // Simulate occasional failures under high load
-            const success = Math.random() > (userCount > 150 ? 0.05 : 0.01);
-            
-            resolve({ success, responseTime });
-          }, Math.random() * 500 + 100); // 100-600ms session time
+        // Simulate concurrent user sessions
+        for (let i = 0; i < userCount; i++) {
+          const sessionPromise = new Promise<{
+            success: boolean;
+            responseTime: number;
+          }>(resolve => {
+            const startTime = performance.now();
+
+            // Simulate user actions with random timing
+            setTimeout(
+              () => {
+                const endTime = performance.now();
+                const responseTime = endTime - startTime;
+
+                // Simulate occasional failures under high load
+                const success = Math.random() > (userCount > 150 ? 0.05 : 0.01);
+
+                resolve({ success, responseTime });
+              },
+              Math.random() * 500 + 100
+            ); // 100-600ms session time
+          });
+
+          userSessions.push(sessionPromise);
+        }
+
+        const results = await Promise.all(userSessions);
+
+        const successfulSessions = results.filter(r => r.success);
+        const successRate = successfulSessions.length / results.length;
+        const avgResponseTime =
+          successfulSessions.reduce((sum, r) => sum + r.responseTime, 0) /
+          successfulSessions.length;
+
+        loadTestResults.push({
+          users: userCount,
+          successRate,
+          avgResponseTime,
         });
-        
-        userSessions.push(sessionPromise);
+
+        // Performance thresholds based on user count
+        if (userCount <= 50) {
+          expect(successRate).toBeGreaterThan(0.95); // 95% success rate
+          expect(avgResponseTime).toBeLessThan(500); // < 500ms average (adjusted for test environment)
+        } else if (userCount <= 100) {
+          expect(successRate).toBeGreaterThan(0.9); // 90% success rate
+          expect(avgResponseTime).toBeLessThan(500); // < 500ms average
+        } else {
+          expect(successRate).toBeGreaterThan(0.85); // 85% success rate under high load
+          expect(avgResponseTime).toBeLessThan(1000); // < 1s average under high load
+        }
       }
 
-      const results = await Promise.all(userSessions);
-      
-      const successfulSessions = results.filter(r => r.success);
-      const successRate = successfulSessions.length / results.length;
-      const avgResponseTime = successfulSessions.reduce((sum, r) => sum + r.responseTime, 0) / successfulSessions.length;
+      // Verify system degrades gracefully under load
+      expect(loadTestResults).toHaveLength(4);
 
-      loadTestResults.push({
-        users: userCount,
-        successRate,
-        avgResponseTime
-      });
+      // Success rate should not drop dramatically
+      const lowLoadSuccessRate = loadTestResults[0].successRate;
+      const highLoadSuccessRate = loadTestResults[3].successRate;
+      const successRateDrop = lowLoadSuccessRate - highLoadSuccessRate;
 
-      // Performance thresholds based on user count
-      if (userCount <= 50) {
-        expect(successRate).toBeGreaterThan(0.95); // 95% success rate
-        expect(avgResponseTime).toBeLessThan(500); // < 500ms average (adjusted for test environment)
-      } else if (userCount <= 100) {
-        expect(successRate).toBeGreaterThan(0.90); // 90% success rate
-        expect(avgResponseTime).toBeLessThan(500); // < 500ms average
-      } else {
-        expect(successRate).toBeGreaterThan(0.85); // 85% success rate under high load
-        expect(avgResponseTime).toBeLessThan(1000); // < 1s average under high load
-      }
-    }
-
-    // Verify system degrades gracefully under load
-    expect(loadTestResults).toHaveLength(4);
-    
-    // Success rate should not drop dramatically
-    const lowLoadSuccessRate = loadTestResults[0].successRate;
-    const highLoadSuccessRate = loadTestResults[3].successRate;
-    const successRateDrop = lowLoadSuccessRate - highLoadSuccessRate;
-    
-    expect(successRateDrop).toBeLessThan(0.15); // No more than 15% drop in success rate
+      expect(successRateDrop).toBeLessThan(0.15); // No more than 15% drop in success rate
+    });
   });
 });

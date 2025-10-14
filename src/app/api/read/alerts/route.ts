@@ -1,10 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-import { incApiRequest } from '@/lib/metrics'
+import { NextRequest, NextResponse } from 'next/server';
+import { incApiRequest } from '@/lib/metrics';
 
-const prisma = new PrismaClient()
-
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   // MOCK: Always return static data for local/dev
   const page = 1;
   const limit = 10;
@@ -18,7 +15,12 @@ export async function GET(req: NextRequest) {
       severity: 'sev1',
       resolved: false,
       createdAt: new Date().toISOString(),
-      signal: { type: 'system', source: 'mock', title: 'Mock Signal', timestamp: new Date().toISOString() }
+      signal: {
+        type: 'system',
+        source: 'mock',
+        title: 'Mock Signal',
+        timestamp: new Date().toISOString(),
+      },
     },
     {
       id: 2,
@@ -27,7 +29,12 @@ export async function GET(req: NextRequest) {
       severity: 'sev2',
       resolved: false,
       createdAt: new Date().toISOString(),
-      signal: { type: 'api', source: 'mock', title: 'Mock API', timestamp: new Date().toISOString() }
+      signal: {
+        type: 'api',
+        source: 'mock',
+        title: 'Mock API',
+        timestamp: new Date().toISOString(),
+      },
     },
     {
       id: 3,
@@ -36,10 +43,15 @@ export async function GET(req: NextRequest) {
       severity: 'sev3',
       resolved: true,
       createdAt: new Date().toISOString(),
-      signal: { type: 'data', source: 'mock', title: 'Mock Data', timestamp: new Date().toISOString() }
-    }
+      signal: {
+        type: 'data',
+        source: 'mock',
+        title: 'Mock Data',
+        timestamp: new Date().toISOString(),
+      },
+    },
   ];
   const res = NextResponse.json({ page, limit, total, pages, data });
-  incApiRequest('/api/read/alerts','GET', res.status);
+  incApiRequest('/api/read/alerts', 'GET', res.status);
   return res;
 }

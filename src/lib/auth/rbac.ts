@@ -1,49 +1,82 @@
 // RBAC (Role-Based Access Control) helper functions
 // Simplified mock implementation for ADAF Dashboard
 
-export type Role = 'viewer' | 'user' | 'admin' | 'system'
+export type Role = 'viewer' | 'user' | 'admin' | 'system';
 
-export type Permission = 
+export type Permission =
   | 'feature:summer'
   | 'feature:echarts'
   | 'feature:semaforo'
   | 'admin:control'
-  | 'admin:reports'
+  | 'admin:reports';
 
 // Mock user roles and permissions for development - in production this would come from JWT/session
-const mockUserRole: Role = 'admin' // Default to admin for development
-const mockUserPermissions: Permission[] = [
+const envRole = process.env.ADAF_RBAC_DEFAULT_ROLE;
+const defaultRole: Role =
+  envRole === 'viewer' ||
+  envRole === 'user' ||
+  envRole === 'admin' ||
+  envRole === 'system'
+    ? envRole
+    : 'admin';
+const defaultPermissions: Permission[] = [
   'feature:summer',
-  'feature:echarts', 
+  'feature:echarts',
   'feature:semaforo',
   'admin:control',
-  'admin:reports'
-]
+  'admin:reports',
+];
+
+const basePermissionsByRole: Record<Role, Permission[]> = {
+  viewer: [],
+  user: ['feature:summer', 'feature:echarts', 'feature:semaforo'],
+  admin: defaultPermissions,
+  system: defaultPermissions,
+};
+
+let overrideRole: Role | null = null;
+let overridePermissions: Permission[] | null = null;
+
+function currentRole(): Role {
+  return overrideRole ?? defaultRole;
+}
+
+function currentPermissions(): Permission[] {
+  if (overridePermissions) {
+    return [...overridePermissions];
+  }
+
+  const role = currentRole();
+  return [...(basePermissionsByRole[role] ?? [])];
+}
 
 /**
  * Require a specific role or higher to access an endpoint
  * @param requiredRole - Minimum role required
  * @throws {Error} If user doesn't have sufficient permissions
  */
+const roleHierarchy: Record<Role, number> = {
+  viewer: 1,
+  user: 2,
+  admin: 3,
+  system: 4,
+};
+
 export async function requireRole(requiredRole: Role): Promise<void> {
   // In development, we allow everything for admin
-  if (mockUserRole === 'admin') {
-    return
+  const role = currentRole();
+
+  if (role === 'admin') {
+    return;
   }
-  
-  // Role hierarchy: viewer < user < admin < system
-  const roleHierarchy: Record<Role, number> = {
-    viewer: 1,
-    user: 2,
-    admin: 3,
-    system: 4
-  }
-  
-  const userLevel = roleHierarchy[mockUserRole]
-  const requiredLevel = roleHierarchy[requiredRole]
-  
+
+  const userLevel = roleHierarchy[role];
+  const requiredLevel = roleHierarchy[requiredRole];
+
   if (userLevel < requiredLevel) {
-    throw new Error(`Insufficient permissions. Required: ${requiredRole}, Current: ${mockUserRole}`)
+    throw new Error(
+      `Insufficient permissions. Required: ${requiredRole}, Current: ${role}`
+    );
   }
 }
 
@@ -53,26 +86,28 @@ export async function requireRole(requiredRole: Role): Promise<void> {
  * @returns True if user has role or higher
  */
 export function hasRole(role: Role): boolean {
-  try {
-    requireRole(role)
-    return true
-  } catch {
-    return false
+  const current = currentRole();
+  if (current === 'admin') {
+    return true;
   }
+
+  return roleHierarchy[current] >= roleHierarchy[role];
 }
 
 /**
  * Check if user has a specific permission
- * @param permission - Permission to check  
+ * @param permission - Permission to check
  * @returns True if user has permission
  */
 export function hasPermission(permission: Permission): boolean {
   // In development, admin has all permissions
-  if (mockUserRole === 'admin') {
-    return true
+  const role = currentRole();
+
+  if (role === 'admin') {
+    return true;
   }
-  
-  return mockUserPermissions.includes(permission)
+
+  return currentPermissions().includes(permission);
 }
 
 /**
@@ -82,7 +117,7 @@ export function hasPermission(permission: Permission): boolean {
  */
 export function requirePermission(permission: Permission): void {
   if (!hasPermission(permission)) {
-    throw new Error(`Missing required permission: ${permission}`)
+    throw new Error(`Missing required permission: ${permission}`);
   }
 }
 
@@ -91,7 +126,7 @@ export function requirePermission(permission: Permission): void {
  * @returns Current user role
  */
 export function getCurrentRole(): Role {
-  return mockUserRole
+  return currentRole();
 }
 
 /**
@@ -99,9 +134,32 @@ export function getCurrentRole(): Role {
  * @returns Array of user permissions
  */
 export function getCurrentPermissions(): Permission[] {
-  if (mockUserRole === 'admin') {
-    return ['feature:summer', 'feature:echarts', 'feature:semaforo', 'admin:control', 'admin:reports']
+  const role = currentRole();
+  if (role === 'admin') {
+    return [
+      'feature:summer',
+      'feature:echarts',
+      'feature:semaforo',
+      'admin:control',
+      'admin:reports',
+    ];
   }
-  
-  return mockUserPermissions
+
+  return currentPermissions();
+}
+
+export function setMockRbacContext(
+  role: Role,
+  permissions?: Permission[]
+): void {
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
+  overrideRole = role;
+  overridePermissions = permissions ?? null;
+}
+
+export function resetMockRbacContext(): void {
+  overrideRole = null;
+  overridePermissions = null;
 }

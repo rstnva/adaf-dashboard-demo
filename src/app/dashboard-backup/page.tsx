@@ -1,53 +1,80 @@
+'use client';
+
 // This is the main dashboard - no redirect needed
-import { KpiCard } from '@/components/KpiCard'
-import GuardrailsHealth from '@/components/GuardrailsHealth'
-import RiskPanel from '@/components/RiskPanel'
-import DerivativesPanel from '@/components/DerivativesPanel'
-import DqpPanel from '@/components/DqpPanel'
+import GuardrailsHealth from '@/components/GuardrailsHealth';
+import RiskPanel from '@/components/RiskPanel';
+import DerivativesPanel from '@/components/DerivativesPanel';
+import DqpPanel from '@/components/DqpPanel';
 
 // Enhanced Dashboard Components
-import { SimpleKpiStrip } from '@/components/dashboard/SimpleKpiStrip'
-import { PnlLine } from '@/components/charts/PnlLine'
-import PnlBucketsChart from '@/components/PnlBucketsChart'
-import PnlBucketsCards from '@/components/PnlBucketsCards'
-import { PresetsDrawer } from '@/components/panels/PresetsDrawer'
-import { ActiveBotsStatus } from '@/components/dashboard/ActiveBotsStatus'
-import { StrategyOverviewPanel } from '@/components/dashboard/StrategyOverviewPanel'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Activity, Bot, TrendingUp, Shield, Target, Zap, BarChart3, ExternalLink, Settings } from 'lucide-react'
-import Link from 'next/link'
+import { SimpleKpiStrip } from '@/components/dashboard/SimpleKpiStrip';
+import { PnlLine } from '@/components/charts/PnlLine';
+import PnlBucketsChart from '@/components/PnlBucketsChart';
+import PnlBucketsCards from '@/components/PnlBucketsCards';
+import { PresetsDrawer } from '@/components/panels/PresetsDrawer';
+import { ActiveBotsStatus } from '@/components/dashboard/ActiveBotsStatus';
+import { StrategyOverviewPanel } from '@/components/dashboard/StrategyOverviewPanel';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Activity,
+  TrendingUp,
+  Shield,
+  Target,
+  Zap,
+  BarChart3,
+  ExternalLink,
+  Settings,
+} from 'lucide-react';
+import Link from 'next/link';
 
 async function getJSON(path: string) {
   try {
-    const r = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}${path}`, { cache: 'no-store' })
-    if (!r.ok) return null
-    return r.json()
+    const r = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}${path}`,
+      { cache: 'no-store' }
+    );
+    if (!r.ok) return null;
+    return r.json();
   } catch {
-    return null
+    return null;
   }
 }
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function MainDashboardPage() {
-  const [nav, setNav] = useState<any>(null);
-  const [alerts7d, setAlerts7d] = useState<any>(null);
   const [navUsd, setNavUsd] = useState<number>(1000000);
   const [navTs, setNavTs] = useState<string | null>(null);
   const [alertsCount, setAlertsCount] = useState<number>(3);
   const [localTime, setLocalTime] = useState<string>('Cargando...');
+  const [alerts, setAlerts] = useState<Array<{ d: string; c: number }>>([]);
 
   useEffect(() => {
     (async () => {
       const navData = await getJSON('/api/read/kpi/nav');
       const alertsData = await getJSON('/api/read/kpi/alerts7d');
-      setNav(navData);
-      setAlerts7d(alertsData);
       setNavUsd(navData?.navUsd ?? 1000000);
       setNavTs(navData?.ts ?? null);
-      setAlertsCount(Array.isArray(alertsData) ? alertsData.reduce((s: number, x: { d?: string; c?: number }) => s + Number(x.c || 0), 0) : 3);
+      if (Array.isArray(alertsData)) {
+        setAlerts(
+          alertsData.map(({ d, c }) => ({
+            d: d ?? 'Sin fecha',
+            c: Number(c ?? 0),
+          }))
+        );
+        setAlertsCount(
+          alertsData.reduce(
+            (sum: number, x: { d?: string; c?: number }) =>
+              sum + Number(x.c || 0),
+            0
+          )
+        );
+      } else {
+        setAlerts([]);
+        setAlertsCount(3);
+      }
     })();
   }, []);
 
@@ -55,6 +82,17 @@ export default function MainDashboardPage() {
     if (!navTs) return;
     setLocalTime(new Date(navTs).toLocaleTimeString());
   }, [navTs]);
+
+  const alertsSummary = useMemo(() => {
+    if (!alerts.length) {
+      return null;
+    }
+    const latest = alerts[0];
+    return {
+      latest,
+      avg: alerts.reduce((sum, item) => sum + item.c, 0) / alerts.length,
+    };
+  }, [alerts]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -69,34 +107,66 @@ export default function MainDashboardPage() {
                 </h1>
               </Link>
               <nav className="hidden md:flex items-center gap-1">
-                <Link href="/markets" className="px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium">
+                <Link
+                  href="/markets"
+                  className="px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium"
+                >
                   Dashboard
                 </Link>
-                <Link href="/research" className="px-4 py-2 hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors">
+                <Link
+                  href="/research"
+                  className="px-4 py-2 hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors"
+                >
                   Research
                 </Link>
-                <Link href="/reports" className="px-4 py-2 hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors">
+                <Link
+                  href="/reports"
+                  className="px-4 py-2 hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors"
+                >
                   Reports
                 </Link>
-                <Link href="/control" className="px-4 py-2 hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors">
+                <Link
+                  href="/control"
+                  className="px-4 py-2 hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors"
+                >
                   Control
                 </Link>
-                <Link href="/opx" className="px-4 py-2 hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors">
+                <Link
+                  href="/opx"
+                  className="px-4 py-2 hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors"
+                >
                   OP-X
                 </Link>
-                <Link href="/monitoring" className="px-4 py-2 hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors">
+                <Link
+                  href="/monitoring"
+                  className="px-4 py-2 hover:bg-accent hover:text-accent-foreground rounded-lg transition-colors"
+                >
                   Monitor
                 </Link>
               </nav>
             </div>
             <div className="flex items-center gap-3">
-              <Badge variant="outline" className="bg-green-50 border-green-300 text-green-700 px-3 py-1">
+              <Badge
+                variant="outline"
+                className="bg-green-50 border-green-300 text-green-700 px-3 py-1"
+              >
                 <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
                 Sistema Operativo
               </Badge>
-              <Badge variant="outline" className="bg-blue-50 border-blue-300 text-blue-700 px-3 py-1">
+              <Badge
+                variant="outline"
+                className="bg-blue-50 border-blue-300 text-blue-700 px-3 py-1"
+              >
                 💰 ${(navUsd / 1000000).toFixed(1)}M NAV
               </Badge>
+              {localTime && (
+                <Badge
+                  variant="outline"
+                  className="bg-slate-50 border-slate-200 text-slate-700 px-3 py-1"
+                >
+                  ⏱️ Actualizado: {localTime}
+                </Badge>
+              )}
             </div>
           </div>
         </div>
@@ -105,12 +175,15 @@ export default function MainDashboardPage() {
       <main className="container mx-auto px-6 py-6 space-y-8">
         {/* Enhanced KPI Strip */}
         <div className="w-full">
-          <SimpleKpiStrip navUsd={navUsd} navTs={navTs} alertsCount={alertsCount} />
+          <SimpleKpiStrip
+            navUsd={navUsd}
+            navTs={navTs}
+            alertsCount={alertsCount}
+          />
         </div>
 
         {/* Main Dashboard Grid - Vista Panorámica Fortune 500 */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
           {/* Column 1: PnL & Performance (4 columns) */}
           <div className="lg:col-span-4 space-y-6">
             {/* PnL Evolution Chart */}
@@ -203,7 +276,7 @@ export default function MainDashboardPage() {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="shadow-md">
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-2 text-base">
@@ -238,9 +311,11 @@ export default function MainDashboardPage() {
               <CardContent className="space-y-4">
                 <div className="p-4 bg-gradient-to-r from-orange-50 to-red-50 rounded-lg">
                   <div className="text-lg font-bold">🔥 TVL Heatmap</div>
-                  <p className="text-sm text-muted-foreground">Protocolos DeFi monitoreados</p>
+                  <p className="text-sm text-muted-foreground">
+                    Protocolos DeFi monitoreados
+                  </p>
                   <div className="mt-2 text-sm">
-                    <span className="text-green-600">Aave: $12.3B</span> • 
+                    <span className="text-green-600">Aave: $12.3B</span> •
                     <span className="text-blue-600"> Uniswap: $8.9B</span>
                   </div>
                 </div>
@@ -262,23 +337,35 @@ export default function MainDashboardPage() {
                   <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm font-medium">Alta volatilidad BTC</span>
+                      <span className="text-sm font-medium">
+                        Alta volatilidad BTC
+                      </span>
                     </div>
-                    <span className="text-xs text-muted-foreground">2m ago</span>
+                    <span className="text-xs text-muted-foreground">
+                      2m ago
+                    </span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm font-medium">Funding rate spike</span>
+                      <span className="text-sm font-medium">
+                        Funding rate spike
+                      </span>
                     </div>
-                    <span className="text-xs text-muted-foreground">5m ago</span>
+                    <span className="text-xs text-muted-foreground">
+                      5m ago
+                    </span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                      <span className="text-sm font-medium">Arbitrage detected</span>
+                      <span className="text-sm font-medium">
+                        Arbitrage detected
+                      </span>
                     </div>
-                    <span className="text-xs text-muted-foreground">8m ago</span>
+                    <span className="text-xs text-muted-foreground">
+                      8m ago
+                    </span>
                   </div>
                 </div>
               </CardContent>
@@ -331,14 +418,29 @@ export default function MainDashboardPage() {
               <CardContent>
                 <div className="space-y-4">
                   <div className="p-4 border rounded-lg hover:bg-accent/50 transition-colors">
-                    <h4 className="font-medium">Últimas Noticias del Mercado</h4>
-                    <p className="text-sm text-muted-foreground mt-1">Análisis de mercado y actualizaciones regulatorias</p>
-                    <div className="text-xs text-muted-foreground mt-2">Actualizado hace 15 minutos</div>
+                    <h4 className="font-medium">
+                      Últimas Noticias del Mercado
+                    </h4>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Análisis de mercado y actualizaciones regulatorias
+                    </p>
+                    <div className="text-xs text-muted-foreground mt-2">
+                      Promedio 7d:{' '}
+                      {alertsSummary ? alertsSummary.avg.toFixed(1) : '—'}{' '}
+                      alertas/día
+                    </div>
                   </div>
                   <div className="p-4 border rounded-lg hover:bg-accent/50 transition-colors">
-                    <h4 className="font-medium">Actualizaciones Regulatorias</h4>
-                    <p className="text-sm text-muted-foreground mt-1">Cambios de política que afectan los mercados DeFi</p>
-                    <div className="text-xs text-muted-foreground mt-2">Actualizado hace 1 hora</div>
+                    <h4 className="font-medium">
+                      Actualizaciones Regulatorias
+                    </h4>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Cambios de política que afectan los mercados DeFi
+                    </p>
+                    <div className="text-xs text-muted-foreground mt-2">
+                      Último evento registrado:{' '}
+                      {alertsSummary?.latest?.d ?? 'Sin datos'}
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -362,30 +464,54 @@ export default function MainDashboardPage() {
                   <Zap className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <div className="font-semibold text-blue-900">Centro de Comando</div>
-                  <div className="text-sm text-blue-700">Acceso rápido a todas las funcionalidades</div>
+                  <div className="font-semibold text-blue-900">
+                    Centro de Comando
+                  </div>
+                  <div className="text-sm text-blue-700">
+                    Acceso rápido a todas las funcionalidades
+                  </div>
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <Button size="sm" variant="outline" className="bg-white/80 hover:bg-white" asChild>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="bg-white/80 hover:bg-white"
+                  asChild
+                >
                   <Link href="/research">
                     <BarChart3 className="h-4 w-4 mr-2" />
                     Research
                   </Link>
                 </Button>
-                <Button size="sm" variant="outline" className="bg-white/80 hover:bg-white" asChild>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="bg-white/80 hover:bg-white"
+                  asChild
+                >
                   <Link href="/control">
                     <Shield className="h-4 w-4 mr-2" />
                     Control
                   </Link>
                 </Button>
-                <Button size="sm" variant="outline" className="bg-white/80 hover:bg-white" asChild>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="bg-white/80 hover:bg-white"
+                  asChild
+                >
                   <Link href="/opx">
                     <Target className="h-4 w-4 mr-2" />
                     OP-X Triage
                   </Link>
                 </Button>
-                <Button size="sm" variant="outline" className="bg-white/80 hover:bg-white" asChild>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="bg-white/80 hover:bg-white"
+                  asChild
+                >
                   <Link href="/monitoring">
                     <Activity className="h-4 w-4 mr-2" />
                     Monitoring
@@ -409,12 +535,10 @@ export default function MainDashboardPage() {
             <span className="flex items-center gap-2">
               📊 Última actualización: {localTime}
             </span>
-            <span className="flex items-center gap-2">
-              💾 DB: Conectada
-            </span>
+            <span className="flex items-center gap-2">💾 DB: Conectada</span>
           </div>
         </div>
       </main>
     </div>
-  )
+  );
 }

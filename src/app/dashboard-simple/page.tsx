@@ -1,28 +1,33 @@
 // Dashboard simplificado para debugging
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Activity, Bot, TrendingUp, Shield, Target, Zap, BarChart3, ExternalLink, Settings } from 'lucide-react'
-import Link from 'next/link'
+import { Badge } from '@/components/ui/badge';
+import { Activity } from 'lucide-react';
+import Link from 'next/link';
 
 async function getJSON(path: string) {
   try {
-    const r = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}${path}`, { cache: 'no-store' })
-    if (!r.ok) return null
-    return r.json()
+    const r = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}${path}`,
+      { cache: 'no-store' }
+    );
+    if (!r.ok) return null;
+    return r.json();
   } catch {
-    return null
+    return null;
   }
 }
 
 export default async function MainDashboardPage() {
   const [nav, alerts7d] = await Promise.all([
     getJSON('/api/read/kpi/nav'),
-    getJSON('/api/read/kpi/alerts7d')
-  ])
-  const navUsd = nav?.navUsd ?? 1000000
-  const navTs = nav?.ts ?? null
-  const alertsCount = Array.isArray(alerts7d) ? alerts7d.reduce((s: number, x: { d?: string; c?: number }) => s + Number(x.c || 0), 0) : 3
+    getJSON('/api/read/kpi/alerts7d'),
+  ]);
+  const navUsd = nav?.navUsd ?? 1000000;
+  const alertsCount = Array.isArray(alerts7d)
+    ? alerts7d.reduce(
+        (s: number, x: { d?: string; c?: number }) => s + Number(x.c || 0),
+        0
+      )
+    : 3;
 
   return (
     <div className="min-h-screen bg-background">

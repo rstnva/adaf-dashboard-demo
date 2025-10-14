@@ -15,10 +15,25 @@ async function main() {
     update: {},
     create: { name: 'analyst' },
   });
-  const user = await prisma.user.upsert({
+  const adminUser = await prisma.user.upsert({
     where: { email: 'demo@adaf.com' },
     update: {},
     create: { email: 'demo@adaf.com', roleId: adminRole.id },
+  });
+
+  const analystUser = await prisma.user.upsert({
+    where: { email: 'analyst@adaf.com' },
+    update: {},
+    create: { email: 'analyst@adaf.com', roleId: analystRole.id },
+  });
+
+  console.log('👥 Roles iniciales listos', {
+    admin: adminRole.name,
+    analyst: analystRole.name,
+  });
+  console.log('📧 Usuarios sembrados', {
+    admin: adminUser.email,
+    analyst: analystUser.email,
   });
 
   // Seed NewsData
@@ -26,7 +41,8 @@ async function main() {
     data: [
       {
         title: 'Bitcoin Breaks $50k Resistance Level',
-        description: 'Major bullish momentum as Bitcoin surpasses key resistance...',
+        description:
+          'Major bullish momentum as Bitcoin surpasses key resistance...',
         link: 'https://example.com/bitcoin-news',
         pubDate: subDays(new Date(), 1),
         source: 'CryptoNews',
@@ -63,7 +79,8 @@ async function main() {
         type: 'news',
         source: 'CryptoNews',
         title: 'Bitcoin Breaks $50k Resistance Level',
-        description: 'Major bullish momentum as Bitcoin surpasses key resistance...',
+        description:
+          'Major bullish momentum as Bitcoin surpasses key resistance...',
         severity: 'high',
         metadata: { tickers: ['BTC'], keywords: ['bitcoin', 'bullish'] },
         fingerprint: 'btc-50k',
@@ -164,7 +181,7 @@ async function main() {
 }
 
 main()
-  .catch((e) => {
+  .catch(e => {
     console.error(e);
     process.exit(1);
   })

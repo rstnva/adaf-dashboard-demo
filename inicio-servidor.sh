@@ -54,6 +54,7 @@ echo "🚀 Iniciando ADAF Dashboard Pro$([ $START_LAV -eq 1 ] && echo " + LAV-AD
 
 # Función de limpieza al salir
 cleanup() {
+    local exit_code=${1:-0}
     echo ""
     echo "🛑 Deteniendo servidores..."
     
@@ -68,7 +69,7 @@ cleanup() {
     [ $START_LAV -eq 1 ] && [ ! -z "$PID2" ] && kill -9 $PID2 2>/dev/null || true
     
     echo "✅ Servidores detenidos"
-    exit 0
+    exit $exit_code
 }
 trap cleanup SIGINT SIGTERM
 
@@ -202,6 +203,23 @@ sleep 8
 echo "🔍 Verificando conectividad..."
 wait_ready "ADAF Dashboard Pro" "http://localhost:3000" $READY_TIMEOUT
 [ $START_LAV -eq 1 ] && wait_ready "LAV-ADAF" "http://localhost:3005" $READY_TIMEOUT
+
+echo "🩺 Ejecutando health checks automáticos..."
+node ./scripts/health-check.mjs --mode=shallow --label=adaf --timeout=2000 || {
+    echo "❌ Health check superficial falló para ADAF";
+    cleanup 1;
+}
+node ./scripts/health-check.mjs --mode=deep --label=adaf --timeout=2000 --force-real || {
+    echo "❌ Health check profundo falló para ADAF";
+    cleanup 1;
+}
+
+if [ $START_LAV -eq 1 ]; then
+    node ./scripts/health-check.mjs --mode=shallow --label=lav --port=3005 --timeout=2000 || {
+        echo "❌ Health check superficial falló para LAV";
+        cleanup 1;
+    }
+fi
 
 echo ""
 echo "✅ ¡Servidores iniciados exitosamente!"

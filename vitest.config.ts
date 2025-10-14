@@ -1,10 +1,11 @@
-import { defineConfig } from 'vitest/config'
-import path from 'node:path'
+import { defineConfig } from 'vitest/config';
+import path from 'node:path';
 
 export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@/lib': path.resolve(__dirname, 'lav-adaf/apps/dashboard/src/lib'),
     },
   },
   test: {
@@ -19,12 +20,13 @@ export default defineConfig({
       '**/e2e/**',
       '**/*.e2e.test.{ts,tsx}',
       '**/playwright/**',
-      '**/*.spec.ts'
+      '**/*.spec.ts',
+      '**/ADAF-DASHBOARD-v1.1/**',
     ],
     coverage: {
       provider: 'v8',
       reportsDirectory: 'coverage/wsp',
-      reporter: ['text','lcov'],
+      reporter: ['text', 'lcov'],
       all: true,
       include: [
         'src/lib/wsp/adapters/**',
@@ -32,9 +34,9 @@ export default defineConfig({
         'src/lib/wsp/norm/**',
         'src/lib/wsp/schemas/**',
         'src/components/dashboard/wsp/utils/**',
-        'src/metrics/wsp.metrics.ts'
+        'src/metrics/wsp.metrics.ts',
       ],
       thresholds: { lines: 75, functions: 75, branches: 70, statements: 75 },
     },
   },
-})
+});
