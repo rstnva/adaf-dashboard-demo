@@ -2,7 +2,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { BarChart3, TrendingUp, Shield, Activity, ExternalLink } from 'lucide-react'
+import {
+  Activity,
+  BarChart3,
+  BellRing,
+  ExternalLink,
+  RefreshCw,
+  Shield,
+  ShieldCheck,
+  SlidersHorizontal,
+  TrendingUp
+} from 'lucide-react'
 import Link from 'next/link'
 
 export default function DashboardMainPage() {
@@ -103,6 +113,95 @@ export default function DashboardMainPage() {
             <div className="text-center p-4 bg-purple-50 rounded-lg">
               <div className="text-2xl font-bold text-purple-600">ACTIVO</div>
               <div className="text-sm text-gray-600">Estado</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Options Panel */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-start justify-between">
+            <div>
+              <CardTitle>Opciones y Configuración</CardTitle>
+              <p className="text-sm text-gray-500 mt-1">
+                Panel rápido para ajustar el comportamiento del dashboard al vuelo.
+              </p>
+            </div>
+            <Badge variant="secondary" className="hidden md:inline-flex">
+              <SlidersHorizontal className="w-4 h-4 mr-1" />
+              Preferencias
+            </Badge>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex items-start justify-between border rounded-lg p-4 bg-slate-50">
+              <div className="flex items-start gap-3">
+                <div className="mt-1 rounded-md bg-blue-100 text-blue-600 p-2">
+                  <SlidersHorizontal className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm">Preferencias del Dashboard</h3>
+                  <p className="text-xs text-gray-600">
+                    Layout, densidad, idioma y permisos principales.
+                  </p>
+                </div>
+              </div>
+              <Button asChild size="sm" variant="secondary">
+                <Link href="./control">Abrir Control</Link>
+              </Button>
+            </div>
+
+            <div className="flex items-start justify-between border rounded-lg p-4 bg-amber-50">
+              <div className="flex items-start gap-3">
+                <div className="mt-1 rounded-md bg-amber-100 text-amber-600 p-2">
+                  <BellRing className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm">Alertas &amp; Notificaciones</h3>
+                  <p className="text-xs text-gray-600">
+                    Ajusta sensibilidad, canales de entrega y escalaciones.
+                  </p>
+                </div>
+              </div>
+              <Button asChild size="sm" variant="outline">
+                <Link href="./alerts">Configurar alertas</Link>
+              </Button>
+            </div>
+
+            <div className="flex items-start justify-between border rounded-lg p-4 bg-emerald-50">
+              <div className="flex items-start gap-3">
+                <div className="mt-1 rounded-md bg-emerald-100 text-emerald-600 p-2">
+                  <RefreshCw className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm">Actualización de Datos</h3>
+                  <p className="text-xs text-gray-600">
+                    Controla el auto-refresh, health checks y reinicios de agentes.
+                  </p>
+                </div>
+              </div>
+              <Button asChild size="sm" variant="outline">
+                <Link href="./monitoring">Panel de monitoreo</Link>
+              </Button>
+            </div>
+
+            <div className="flex items-start justify-between border rounded-lg p-4 bg-purple-50">
+              <div className="flex items-start gap-3">
+                <div className="mt-1 rounded-md bg-purple-100 text-purple-600 p-2">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm">Credenciales &amp; Integraciones</h3>
+                  <p className="text-xs text-gray-600">
+                    Administra llaves, proveedores externos y políticas de acceso.
+                  </p>
+                </div>
+              </div>
+              <Button asChild size="sm" variant="outline">
+                <Link href="./security">Centro de seguridad</Link>
+              </Button>
             </div>
           </div>
         </CardContent>

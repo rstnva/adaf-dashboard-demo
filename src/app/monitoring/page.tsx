@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react'
+import { NavigationGuard } from '@/components/NavigationGuard'
 
 type Check = { healthy: boolean; message?: string; error?: string };
 type Health = { status: string; timestamp: string; checks?: Record<string, Check> };
@@ -31,11 +32,12 @@ export default function MonitoringPage() {
   const items = Object.entries(checks);
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Monitoring</h1>
-        <p className="text-gray-600">Estado del sistema y diagnósticos rápidos.</p>
-      </div>
+    <NavigationGuard fallbackUrl="/" storageKey="monitoring-panel">
+      <div className="p-6 space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold">Monitoring</h1>
+          <p className="text-gray-600">Estado del sistema y diagnósticos rápidos.</p>
+        </div>
 
       <div className="flex gap-2">
         <button onClick={() => load(false)} className="px-3 py-2 rounded-md bg-blue-600 text-white">Refrescar</button>
@@ -68,6 +70,7 @@ export default function MonitoringPage() {
           ))}
         </div>
       )}
-    </div>
+      </div>
+    </NavigationGuard>
   )
 }

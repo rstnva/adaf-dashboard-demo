@@ -206,51 +206,57 @@ export function TopBar({ children }: TopBarProps = {}) {
   }, [getFormattedAsOf]);
 
   return (
-    <div className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-      <div className="flex h-16 items-center gap-4 px-6">
-        {/* Left: Global Selectors */}
+    <div className="sticky top-0 z-50 px-6 pt-6">
+      <div className="glass-panel flex h-[88px] items-center gap-6 px-6">
         <div className="flex items-center gap-3">
-          {/* Asset Selector */}
           <div className="relative">
             <Button
               variant="outline"
               size="sm"
               onClick={() => setShowAssetSelector(!showAssetSelector)}
-              className="h-9 min-w-[120px] justify-between"
+              className="h-10 min-w-[140px] justify-between rounded-2xl border-white/20 bg-white/10 text-slate-100 hover:bg-white/16"
             >
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1.5">
                 {selectedAssets.slice(0, 2).map(asset => {
                   const assetInfo = AVAILABLE_ASSETS.find(a => a.symbol === asset);
                   return (
-                    <div key={asset} className={cn("w-3 h-3 rounded-full", assetInfo?.color)} />
+                    <div
+                      key={asset}
+                      className={cn("h-2.5 w-2.5 rounded-full", assetInfo?.color)}
+                    />
                   );
                 })}
-                <span className="ml-1 font-medium">
+                <span className="ml-2 font-semibold tracking-tight">
                   {selectedAssets.length === 1 ? selectedAssets[0] : `${selectedAssets.length} Assets`}
                 </span>
               </div>
-              <ChevronDown className="h-4 w-4 opacity-50" />
+              <ChevronDown className="h-4 w-4 opacity-70" />
             </Button>
-            
+
             {showAssetSelector && (
-              <div className="absolute top-full mt-1 w-64 rounded-md border bg-white p-3 shadow-lg">
-                <div className="space-y-2">
-                  <h4 className="text-sm font-medium">Select Assets</h4>
+              <div className="glass-panel absolute top-full mt-3 w-64 rounded-2xl border-white/20 bg-slate-900/70 p-4 text-slate-100">
+                <div className="space-y-3">
+                  <h4 className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-300/70">Assets</h4>
                   {AVAILABLE_ASSETS.map(asset => (
-                    <div key={asset.symbol} className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={selectedAssets.includes(asset.symbol)}
-                        onChange={() => handleAssetToggle(asset.symbol)}
-                        className="rounded"
-                      />
-                      <div className={cn("w-3 h-3 rounded-full", asset.color)} />
-                      <span className="text-sm">{asset.name} ({asset.symbol})</span>
-                    </div>
+                    <label
+                      key={asset.symbol}
+                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm transition-colors hover:border-white/25"
+                    >
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={selectedAssets.includes(asset.symbol)}
+                          onChange={() => handleAssetToggle(asset.symbol)}
+                          className="h-4 w-4 rounded border-white/30 bg-transparent text-sky-400 focus:ring-sky-400/60"
+                        />
+                        <div className={cn("h-3 w-3 rounded-full", asset.color)} />
+                        <span>{asset.name} ({asset.symbol})</span>
+                      </div>
+                    </label>
                   ))}
                 </div>
-                <div className="mt-3 flex justify-end">
-                  <Button size="sm" onClick={() => setShowAssetSelector(false)}>
+                <div className="mt-4 flex justify-end">
+                  <Button size="sm" onClick={() => setShowAssetSelector(false)} className="rounded-xl bg-white/15 px-4 text-slate-100 hover:bg-white/25">
                     Done
                   </Button>
                 </div>
@@ -258,21 +264,20 @@ export function TopBar({ children }: TopBarProps = {}) {
             )}
           </div>
 
-          {/* Time Range Selector */}
           <div className="relative">
             <Button
               variant="outline"
               size="sm"
               onClick={() => setShowRangeSelector(!showRangeSelector)}
-              className="h-9 justify-between"
+              className="h-10 rounded-2xl border-white/20 bg-white/10 px-4 text-slate-100 hover:bg-white/16"
             >
               <Clock className="h-4 w-4" />
-              <span className="ml-1">{range}</span>
-              <ChevronDown className="h-4 w-4 opacity-50" />
+              <span className="ml-2 font-semibold">{range}</span>
+              <ChevronDown className="ml-1 h-4 w-4 opacity-70" />
             </Button>
-            
+
             {showRangeSelector && (
-              <div className="absolute top-full mt-1 w-32 rounded-md border bg-white py-1 shadow-lg">
+              <div className="glass-panel absolute top-full mt-3 w-36 rounded-2xl border-white/20 bg-slate-900/70 py-2 text-sm text-slate-100">
                 {TIME_RANGES.map(r => (
                   <button
                     key={r.value}
@@ -281,8 +286,8 @@ export function TopBar({ children }: TopBarProps = {}) {
                       setShowRangeSelector(false);
                     }}
                     className={cn(
-                      "w-full px-3 py-2 text-left text-sm hover:bg-gray-100",
-                      range === r.value && "bg-gray-100 font-medium"
+                      "flex w-full items-center justify-between px-4 py-2 hover:bg-white/10",
+                      range === r.value && "text-sky-300"
                     )}
                   >
                     {r.label}
@@ -292,21 +297,20 @@ export function TopBar({ children }: TopBarProps = {}) {
             )}
           </div>
 
-          {/* Currency Selector */}
           <div className="relative">
             <Button
               variant="outline"
               size="sm"
               onClick={() => setShowCurrencySelector(!showCurrencySelector)}
-              className="h-9 justify-between"
+              className="h-10 rounded-2xl border-white/20 bg-white/10 px-4 text-slate-100 hover:bg-white/16"
             >
               <DollarSign className="h-4 w-4" />
-              <span className="ml-1">{currency}</span>
-              <ChevronDown className="h-4 w-4 opacity-50" />
+              <span className="ml-2 font-semibold">{currency}</span>
+              <ChevronDown className="ml-1 h-4 w-4 opacity-70" />
             </Button>
-            
+
             {showCurrencySelector && (
-              <div className="absolute top-full mt-1 w-24 rounded-md border bg-white py-1 shadow-lg">
+              <div className="glass-panel absolute top-full mt-3 w-28 rounded-2xl border-white/20 bg-slate-900/70 py-2 text-sm text-slate-100">
                 {CURRENCIES.map(c => (
                   <button
                     key={c.value}
@@ -314,10 +318,7 @@ export function TopBar({ children }: TopBarProps = {}) {
                       setCurrency(c.value);
                       setShowCurrencySelector(false);
                     }}
-                    className={cn(
-                      "w-full px-3 py-2 text-left text-sm hover:bg-gray-100",
-                      currency === c.value && "bg-gray-100 font-medium"
-                    )}
+                    className={cn("flex w-full items-center justify-between px-4 py-2 hover:bg-white/10", currency === c.value && "text-sky-300")}
                   >
                     {c.label}
                   </button>
@@ -326,23 +327,20 @@ export function TopBar({ children }: TopBarProps = {}) {
             )}
           </div>
 
-          {/* Timezone Selector */}
           <div className="relative">
             <Button
               variant="outline"
               size="sm"
               onClick={() => setShowTimezoneSelector(!showTimezoneSelector)}
-              className="h-9 justify-between"
+              className="h-10 rounded-2xl border-white/20 bg-white/10 px-4 text-slate-100 hover:bg-white/16"
             >
               <Globe className="h-4 w-4" />
-              <span className="ml-1">
-                {TIMEZONES.find(tz => tz.value === timezone)?.short}
-              </span>
-              <ChevronDown className="h-4 w-4 opacity-50" />
+              <span className="ml-2 font-semibold">{TIMEZONES.find(tz => tz.value === timezone)?.short}</span>
+              <ChevronDown className="ml-1 h-4 w-4 opacity-70" />
             </Button>
-            
+
             {showTimezoneSelector && (
-              <div className="absolute top-full mt-1 w-48 rounded-md border bg-white py-1 shadow-lg">
+              <div className="glass-panel absolute top-full mt-3 w-60 rounded-2xl border-white/20 bg-slate-900/70 py-3 text-sm text-slate-100">
                 {TIMEZONES.map(tz => (
                   <button
                     key={tz.value}
@@ -350,54 +348,46 @@ export function TopBar({ children }: TopBarProps = {}) {
                       setTimezone(tz.value);
                       setShowTimezoneSelector(false);
                     }}
-                    className={cn(
-                      "w-full px-3 py-2 text-left text-sm hover:bg-gray-100",
-                      timezone === tz.value && "bg-gray-100 font-medium"
-                    )}
+                    className={cn("flex w-full items-center justify-between px-4 py-2 hover:bg-white/10", timezone === tz.value && "text-sky-300")}
                   >
-                    <div className="flex justify-between">
-                      <span>{tz.label}</span>
-                      <span className="text-gray-500">{tz.short}</span>
-                    </div>
+                    <span>{tz.label}</span>
+                    <span className="text-xs text-slate-300/70">{tz.short}</span>
                   </button>
                 ))}
               </div>
             )}
           </div>
 
-          {/* As-of timestamp */}
-          <Badge variant="outline" className="text-xs">as of {mounted ? asOfText : '—'}</Badge>
+          <Badge variant="outline" className="border-white/20 bg-white/5 px-4 text-xs text-slate-200/80">
+            as of {mounted ? asOfText : '—'}
+          </Badge>
         </div>
 
-        {/* Centro: Búsqueda Spotlight */}
-        <div className="flex-1 max-w-md">
+        <div className="flex-1 max-w-lg">
           <Button
             variant="outline"
             onClick={() => window.dispatchEvent(new CustomEvent('spotlight:open'))}
-            className="w-full justify-start text-gray-500 hover:bg-gray-50"
+            className="group w-full justify-start rounded-2xl border-white/20 bg-white/8 px-4 py-3 text-sm text-slate-300/90 hover:border-white/30 hover:bg-white/14 hover:text-white"
           >
-            <Search className="mr-2 h-4 w-4" />
+            <Search className="mr-3 h-4 w-4 text-sky-300 group-hover:text-sky-200" />
             <span>Búsqueda Spotlight...</span>
-            <div className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
-              <kbd className="px-1.5 py-0.5 text-xs bg-gray-100 rounded border">{keyHint}</kbd>
-              <kbd className="px-1.5 py-0.5 text-xs bg-gray-100 rounded border">K</kbd>
+            <div className="ml-auto flex items-center gap-1 text-[11px] text-slate-400/80">
+              <kbd className="rounded-lg border border-white/20 bg-white/10 px-2 py-1">{keyHint}</kbd>
+              <kbd className="rounded-lg border border-white/20 bg-white/10 px-2 py-1">K</kbd>
             </div>
           </Button>
         </div>
 
-        {/* Right: Quick Actions & Notifications */}
         <div className="flex items-center gap-2">
-          {/* Guides toggle */}
-          <Button size="sm" variant={guidesAlways ? 'default' : 'outline'} onClick={toggleGuidesAlways} title="Mostrar guías siempre">
+          <Button size="sm" variant={guidesAlways ? 'default' : 'outline'} onClick={toggleGuidesAlways} className="rounded-2xl px-4">
             <Sparkles className="mr-1 h-4 w-4" />
             {guidesAlways ? 'Guías: ON' : 'Guías: OFF'}
           </Button>
-          {/* Quick Actions */}
           <Button
             size="sm"
             onClick={handleRunWorker}
             disabled={isRunningWorker}
-            className="bg-green-600 hover:bg-green-700"
+            className="rounded-2xl bg-emerald-500/20 px-4 text-emerald-100 hover:bg-emerald-500/30"
           >
             <Play className="mr-1 h-4 w-4" />
             {isRunningWorker ? 'Running...' : 'Run Worker'}
@@ -408,25 +398,23 @@ export function TopBar({ children }: TopBarProps = {}) {
             variant="outline"
             onClick={handleGenerateReport}
             disabled={isGeneratingReport}
+            className="rounded-2xl border-white/20 px-4 text-slate-200 hover:border-white/35 hover:text-white"
           >
             <FileText className="mr-1 h-4 w-4" />
             {isGeneratingReport ? 'Generating...' : 'One-Pager'}
           </Button>
 
-          {/* Alert Bell */}
-          <Button size="sm" variant="outline" className="relative">
+          <Button size="sm" variant="outline" className="relative rounded-2xl border-white/20 px-3 text-slate-200 hover:border-white/30">
             <Bell className="h-4 w-4" />
-            <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs">
+            <Badge className="absolute -top-2 -right-1 h-5 w-5 rounded-full border-white/20 bg-rose-500/60 text-[11px] text-white">
               3
             </Badge>
           </Button>
 
-          {/* Configuración */}
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="outline" className="rounded-2xl border-white/20 px-3 text-slate-200 hover:border-white/30">
             <Settings className="h-4 w-4" />
           </Button>
 
-          {/* Children - Controles adicionales */}
           {children}
         </div>
       </div>

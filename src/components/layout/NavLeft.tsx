@@ -125,23 +125,28 @@ export function NavLeft() {
   const { sidebarCollapsed, toggleSidebar } = useUIStore();
 
   return (
-    <nav className={cn(
-      "flex h-screen flex-col border-r bg-white transition-all duration-300",
-      sidebarCollapsed ? "w-16" : "w-64"
-    )}>
+    <nav
+      className={cn(
+        "flex h-screen flex-col border-r border-amber-300/20 bg-black/60 backdrop-blur-2xl text-amber-100/75 shadow-[0_30px_90px_-40px_rgba(15,23,42,0.95)] transition-all duration-300",
+        sidebarCollapsed ? "w-16" : "w-64"
+      )}
+    >
       {/* Header */}
-      <div className="flex h-16 items-center justify-between border-b px-4">
+      <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
         {!sidebarCollapsed && (
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600" />
-            <span className="font-bold text-xl">ADAF</span>
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-amber-500/70 via-yellow-400/70 to-amber-300/70 shadow-[0_12px_35px_rgba(250,204,21,0.45)]" />
+            <div className="flex flex-col">
+              <span className="text-xs uppercase tracking-[0.4em] text-amber-200/60">ADAF</span>
+              <span className="text-lg font-semibold text-amber-100">Vision Hub</span>
+            </div>
           </div>
         )}
         <Button
           variant="ghost"
           size="sm"
           onClick={toggleSidebar}
-          className="h-8 w-8 p-0"
+          className="h-8 w-8 rounded-full bg-white/5 p-0 text-slate-300/80 hover:bg-white/15 hover:text-white"
         >
           {sidebarCollapsed ? (
             <ChevronRight className="h-4 w-4" />
@@ -168,24 +173,29 @@ export function NavLeft() {
             return (
               <Link key={item.href} {...linkProps}>
                 <Button
-                  variant={isActive ? "secondary" : "ghost"}
+                  variant="ghost"
                   size="sm"
                   className={cn(
-                    "w-full justify-start transition-colors",
+                    "group w-full justify-start rounded-2xl border border-transparent bg-black/40 px-3 py-2 text-sm font-medium text-amber-200/70 transition-all duration-200 hover:border-amber-200/40 hover:bg-amber-500/10 hover:text-amber-100",
                     sidebarCollapsed ? "px-2" : "px-3",
-                    isActive && "bg-blue-50 text-blue-700 hover:bg-blue-100",
-                    isExternal && "bg-gradient-to-r from-purple-50 to-blue-50 hover:from-purple-100 hover:to-blue-100 text-purple-700"
+                    isActive && "border-amber-300/45 bg-gradient-to-r from-amber-500/30 via-amber-400/25 to-yellow-300/30 text-amber-100 shadow-[0_12px_40px_rgba(250,204,21,0.35)]",
+                    isExternal && "bg-gradient-to-r from-amber-500/20 to-yellow-400/15 text-amber-100 hover:from-amber-500/35 hover:to-yellow-300/20"
                   )}
                 >
-                  <Icon className={cn("h-4 w-4 flex-shrink-0", sidebarCollapsed ? "" : "mr-3")} />
+                  <Icon
+                    className={cn(
+                      "h-4 w-4 flex-shrink-0 transition-transform duration-200 group-hover:scale-105",
+                      sidebarCollapsed ? "" : "mr-3"
+                    )}
+                  />
                   {!sidebarCollapsed && (
                     <div className="flex flex-col items-start">
                       <div className="flex items-center gap-1">
-                        <span className="font-medium">{item.label}</span>
+                        <span className="font-medium tracking-tight">{item.label}</span>
                         {isExternal && <ExternalLink className="h-3 w-3" />}
                       </div>
                       {item.description && (
-                        <span className="text-xs text-gray-500 font-normal">
+                        <span className="text-xs font-normal text-amber-200/60">
                           {item.description}
                         </span>
                       )}

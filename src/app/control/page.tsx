@@ -1,6 +1,7 @@
 "use client"
 import React, { useCallback, useEffect, useState } from 'react'
 import { RunWorkerOnceButton } from '@/components/RunWorkerOnceButton'
+import { NavigationGuard } from '@/components/NavigationGuard'
 
 type Limit = { key: string; value: number; notes: string | null; createdAt?: string; updatedAt?: string }
 type Rule = { id: string; agentCode: string; name: string; expr: unknown; enabled: boolean; createdAt?: string }
@@ -83,12 +84,13 @@ export default function ControlPage() {
   }
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-10">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">Panel de Control</h1>
-        <div className="flex items-center gap-3">
-          <a href="/control/compliance" className="text-sm underline">Cumplimiento</a>
-          <RunWorkerOnceButton />
+    <NavigationGuard fallbackUrl="/" storageKey="control-panel">
+      <main className="max-w-6xl mx-auto px-4 py-10">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-bold">Panel de Control</h1>
+          <div className="flex items-center gap-3">
+            <a href="/control/compliance" className="text-sm underline">Cumplimiento</a>
+            <RunWorkerOnceButton />
         </div>
       </div>
       {!!toast && (
@@ -221,6 +223,7 @@ export default function ControlPage() {
           </table>
         </div>
       </section>
-    </main>
+      </main>
+    </NavigationGuard>
   )
 }

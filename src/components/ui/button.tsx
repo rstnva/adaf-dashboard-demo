@@ -4,24 +4,24 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "relative inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-medium tracking-tight ring-offset-background transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 motion-safe:transform",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "border border-amber-300/30 bg-gradient-to-r from-amber-500/80 via-amber-400/80 to-yellow-300/80 text-zinc-900 shadow-[0_18px_50px_-25px_rgba(250,204,21,0.65)] hover:from-amber-400/90 hover:to-yellow-200/90 active:scale-95",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "border border-rose-500/50 bg-rose-500/25 text-rose-100 hover:bg-rose-500/35",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-amber-200/30 bg-transparent text-amber-100/80 hover:border-amber-200/60 hover:bg-amber-500/10 hover:text-amber-100",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "border border-zinc-700/40 bg-zinc-800/60 text-amber-100 hover:bg-zinc-700/60",
+        ghost: "text-amber-200/80 hover:text-amber-100 hover:bg-amber-500/10",
+        link: "text-amber-200 hover:text-amber-100 underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
+        default: "h-10 px-5",
+        sm: "h-9 rounded-lg px-4",
+        lg: "h-12 rounded-xl px-8",
         icon: "h-10 w-10",
       },
     },

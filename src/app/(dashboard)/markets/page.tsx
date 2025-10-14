@@ -19,7 +19,8 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { VisionGuide, VisionGuideItem } from '@/components/VisionGuide';
 
 // ETF Autoswitch Card as Hero variant
 function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: boolean }) {
@@ -32,13 +33,15 @@ function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: bool
 
   if (isLoading) {
     return (
-      <Card className="adaf-card">
-        <CardHeader 
+      <Card className="adaf-card relative overflow-hidden" id="etf-hero">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/12 via-amber-400/10 to-sky-500/12" />
+        <CardHeader
+          className="relative"
           title="ETF Market Overview"
-          badge="Real-time ETF flows and market movements"
+          subtitle="Flujos en vivo y comparación multi-activo"
         />
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <CardContent className="relative p-6">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
             <SkeletonPatterns.MetricValue />
             <SkeletonPatterns.MetricValue />
             <SkeletonPatterns.MetricValue />
@@ -53,16 +56,15 @@ function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: bool
 
   if (error) {
     return (
-      <Card className="adaf-card">
-        <CardHeader 
+      <Card className="adaf-card relative overflow-hidden" id="etf-hero">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-rose-500/12 via-amber-500/8 to-sky-500/10" />
+        <CardHeader
+          className="relative"
           title="ETF Market Overview"
-          badge="Real-time ETF flows and market movements"
+          subtitle="Flujos en vivo y comparación multi-activo"
         />
-        <CardContent className="p-6">
-          <ErrorState
-            title="ETF Market Data Unavailable"
-            onRetry={refetch}
-          />
+        <CardContent className="relative p-6">
+          <ErrorState title="ETF Market Data Unavailable" onRetry={refetch} />
         </CardContent>
       </Card>
     );
@@ -104,8 +106,8 @@ function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: bool
   const totalFlowUsd = topFlows.reduce((sum, etf) => sum + Math.abs(etf.flowsUsd), 0);
 
   const getFlowIndicator = (flowUsd: number) => {
-    if (flowUsd > 0) return { icon: TrendingUp, color: 'text-green-500' };
-    return { icon: TrendingDown, color: 'text-red-500' };
+    if (flowUsd > 0) return { icon: TrendingUp, color: 'text-emerald-300' };
+    return { icon: TrendingDown, color: 'text-rose-300' };
   };
 
   const getFlowSignal = (flowUsd: number): 'BUY' | 'SELL' | null => {
@@ -145,103 +147,113 @@ function EtfAutoswitchHero({ showAssetPicker = false }: { showAssetPicker?: bool
   };
 
   return (
-    <Card className="adaf-card">
-      <CardHeader 
+    <Card className="adaf-card relative overflow-hidden" id="etf-hero">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/12 via-amber-400/10 to-sky-500/12" />
+      <CardHeader
+        className="relative"
         title="ETF Market Overview"
-        badge="Real-time ETF flows and market movements"
+        subtitle="Flujos en vivo, señales y comparación multi-activo"
         asOf={flowsData?.[0]?.date}
         actions={
           <div className="flex gap-2">
             {showAssetPicker && (
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={handleAssetFilter}
-                >
-                  <Filter className="h-4 w-4 mr-2" />
-                  Asset Filter
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-xl"
+                onClick={handleAssetFilter}
+              >
+                <Filter className="mr-2 h-4 w-4" />
+                Asset Filter
               </Button>
             )}
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
-                onClick={handleExportCSV}
+              className="rounded-xl"
+              onClick={handleExportCSV}
             >
-              <Download className="h-4 w-4 mr-2" />
+              <Download className="mr-2 h-4 w-4" />
               Export CSV
             </Button>
           </div>
         }
       />
-      
-      <CardContent className="p-6 pt-0">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          {/* Total Flow */}
-          <div className="text-center">
-            <div className="text-3xl font-bold">
+
+      <CardContent className="relative p-6 pt-0">
+        <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="rounded-2xl border border-amber-200/25 bg-black/45 px-4 py-3 text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-amber-200/60">
+              Total Flow (24h)
+            </p>
+            <p className="mt-2 text-3xl font-semibold text-amber-100">
               {formatCurrency(totalFlowUsd, 'USD', true)}
-            </div>
-            <div className="text-sm text-muted-foreground">Total Flow (24h)</div>
+            </p>
           </div>
-          
-          {/* Active ETFs */}
-          <div className="text-center">
-            <div className="text-3xl font-bold">{topFlows.length}</div>
-            <div className="text-sm text-muted-foreground">Active ETFs</div>
+
+          <div className="rounded-2xl border border-amber-200/25 bg-black/45 px-4 py-3 text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-amber-200/60">
+              Active ETFs
+            </p>
+            <p className="mt-2 text-3xl font-semibold text-amber-100">{topFlows.length}</p>
           </div>
-          
-          {/* Market Sentiment */}
-          <div className="text-center">
-            <div className="text-3xl font-bold text-green-600">
+
+          <div className="rounded-2xl border border-amber-200/25 bg-black/45 px-4 py-3 text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-amber-200/60">
+              Positive Flows
+            </p>
+            <p className="mt-2 text-3xl font-semibold text-emerald-300">
               {topFlows.filter(etf => etf.flowsUsd > 0).length}/{topFlows.length}
-            </div>
-            <div className="text-sm text-muted-foreground">Positive Flows</div>
+            </p>
           </div>
         </div>
 
-        {/* ETF Flow Table */}
-        <div className="space-y-2">
-          <div className="text-sm font-medium text-muted-foreground mb-3">
+        <div className="space-y-3" id="etf-flows">
+          <div className="mb-2 text-sm font-semibold uppercase tracking-[0.3em] text-amber-200/60">
             Top ETF Flows
           </div>
-          
+
           {topFlows.map((etf: any, index: number) => {
             const { icon: FlowIcon, color } = getFlowIndicator(etf.flowsUsd);
             const signal = getFlowSignal(etf.flowsUsd);
-            
+
             return (
               <div 
                 key={`${etf.symbol}-${index}`}
-                className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                className="flex items-center justify-between rounded-2xl border border-amber-200/20 bg-black/45 px-4 py-3 transition-all duration-200 hover:border-amber-200/35 hover:bg-amber-500/10"
               >
                 <div className="flex items-center gap-3">
-                  <FlowIcon className={cn("h-4 w-4", color)} />
+                  <div className="rounded-full border border-amber-200/30 bg-amber-500/15 p-2 text-amber-100">
+                    <FlowIcon className={cn("h-3.5 w-3.5", color)} />
+                  </div>
                   <div>
-                    <div className="font-medium flex items-center gap-2">
+                    <div className="flex items-center gap-2 text-sm font-semibold text-amber-100">
                       {etf.symbol}
                       {signal && (
                         <Badge 
                           variant="outline" 
                           className={cn(
-                            "text-xs",
-                            signal === 'BUY' ? 'text-green-700 border-green-200' : 'text-red-700 border-red-200'
+                            "text-[10px] tracking-[0.3em]",
+                            signal === 'BUY'
+                              ? 'border-emerald-300/40 bg-emerald-500/15 text-emerald-100'
+                              : 'border-rose-400/50 bg-rose-500/15 text-rose-100'
                           )}
                         >
                           {signal}
                         </Badge>
                       )}
                     </div>
-                    <div className="text-xs text-muted-foreground">
-                      Provider: {etf.provider}
+                    <div className="text-xs text-amber-100/60">
+                      Provider · {etf.provider}
                     </div>
                   </div>
                 </div>
                 
-                <div className="text-right">
-                  <div className={cn("font-medium", color)}>
+                <div className="text-right text-sm">
+                  <div className={cn("font-semibold", color)}>
                     {etf.flowsUsd > 0 ? '+' : ''}{formatCurrency(etf.flowsUsd, 'USD', true)}
                   </div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-xs text-amber-100/60">
                     MXN: {formatCurrency(etf.flowsMxn, 'MXN', true)}
                   </div>
                 </div>
@@ -300,51 +312,70 @@ function EtfComparePanel({ defaultMode = 'daily' }: { defaultMode?: 'daily' | 'c
     const ethFlows = calculateFlows(ethSeries);
 
   return (
-    <Card className="adaf-card">
-      <CardHeader 
+    <Card className="adaf-card relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/10 via-amber-400/8 to-sky-500/10" />
+      <CardHeader
+        className="relative"
         title="BTC vs ETH Comparison (7D)"
-          badge={`${mode === 'daily' ? 'Daily' : 'Cumulative'} flow comparison`}
+        subtitle={`${mode === 'daily' ? 'Daily' : 'Cumulative'} flow comparison`}
         asOf={(compareData as any)?.BTC?.[0]?.date || (compareData as any)?.btc?.[0]?.date}
         actions={
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={handleToggleMode}
-            >
-              {mode === 'daily' ? 'Show Cumulative' : 'Show Daily'}
+          <Button
+            variant="outline"
+            size="sm"
+            className="rounded-xl"
+            onClick={handleToggleMode}
+          >
+            {mode === 'daily' ? 'Show Cumulative' : 'Show Daily'}
           </Button>
         }
       />
-      
-      <CardContent className="p-6 pt-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-medium mb-3 flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" />
+
+      <CardContent className="relative p-6 pt-0">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="rounded-2xl border border-amber-200/20 bg-black/45 p-4">
+            <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold text-amber-100">
+              <BarChart3 className="h-4 w-4 text-amber-200" />
               BTC ETF Flows
             </h4>
             <div className="space-y-2">
               {btcFlows.map((flow: any, i: number) => (
-                <div key={i} className="flex justify-between p-2 rounded bg-muted/30">
-                  <span className="text-sm">{flow.symbol}</span>
-                  <span className={cn("text-sm font-medium", flow.flowsUsd > 0 ? "text-green-600" : "text-red-600")}>
+                <div
+                  key={i}
+                  className="flex justify-between rounded-xl border border-amber-200/20 bg-black/40 px-3 py-2 text-sm text-amber-100/80"
+                >
+                  <span>{flow.symbol}</span>
+                  <span
+                    className={cn(
+                      "font-semibold",
+                      flow.flowsUsd > 0 ? "text-emerald-300" : "text-rose-300"
+                    )}
+                  >
                     {formatCurrency(flow.flowsUsd, 'USD', true)}
                   </span>
                 </div>
               ))}
             </div>
           </div>
-          
-          <div>
-            <h4 className="font-medium mb-3 flex items-center gap-2">
-              <Activity className="h-4 w-4" />
+
+          <div className="rounded-2xl border border-amber-200/20 bg-black/45 p-4">
+            <h4 className="mb-3 flex items-center gap-2 text-sm font-semibold text-amber-100">
+              <Activity className="h-4 w-4 text-amber-200" />
               ETH ETF Flows
             </h4>
             <div className="space-y-2">
               {ethFlows.map((flow: any, i: number) => (
-                <div key={i} className="flex justify-between p-2 rounded bg-muted/30">
-                  <span className="text-sm">{flow.symbol}</span>
-                  <span className={cn("text-sm font-medium", flow.flowsUsd > 0 ? "text-green-600" : "text-red-600")}>
+                <div
+                  key={i}
+                  className="flex justify-between rounded-xl border border-amber-200/20 bg-black/40 px-3 py-2 text-sm text-amber-100/80"
+                >
+                  <span>{flow.symbol}</span>
+                  <span
+                    className={cn(
+                      "font-semibold",
+                      flow.flowsUsd > 0 ? "text-emerald-300" : "text-rose-300"
+                    )}
+                  >
                     {formatCurrency(flow.flowsUsd, 'USD', true)}
                   </span>
                 </div>
@@ -396,22 +427,25 @@ function FundingTable({ asset = 'BTC', days = 14 }: { asset?: string; days?: num
 
   if (isLoading) {
     return (
-      <Card className="adaf-card">
-        <CardHeader 
+      <Card className="adaf-card relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/10 via-amber-400/8 to-sky-500/10" />
+        <CardHeader
+          className="relative"
           title="Funding Rates"
-          badge={`${asset} funding across exchanges (${days}d)`}
+          subtitle={`${asset} funding across exchanges (${days}d)`}
           actions={
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
-                onClick={handleExportFundingCSV}
+              className="rounded-xl"
+              onClick={handleExportFundingCSV}
             >
-              <Download className="h-4 w-4 mr-2" />
+              <Download className="mr-2 h-4 w-4" />
               Export CSV
             </Button>
           }
         />
-        <CardContent className="p-6">
+        <CardContent className="relative p-6">
           <SkeletonPatterns.Table />
         </CardContent>
       </Card>
@@ -420,15 +454,15 @@ function FundingTable({ asset = 'BTC', days = 14 }: { asset?: string; days?: num
 
   if (error) {
     return (
-      <Card className="adaf-card">
-        <CardHeader 
+      <Card className="adaf-card relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-rose-500/12 via-amber-500/8 to-sky-500/10" />
+        <CardHeader
+          className="relative"
           title="Funding Rates"
-          badge={`${asset} funding across exchanges (${days}d)`}
+          subtitle={`${asset} funding across exchanges (${days}d)`}
         />
-        <CardContent className="p-6">
-          <ErrorState
-            title="Funding Data Unavailable"
-          />
+        <CardContent className="relative p-6">
+          <ErrorState title="Funding Data Unavailable" />
         </CardContent>
       </Card>
     );
@@ -437,73 +471,86 @@ function FundingTable({ asset = 'BTC', days = 14 }: { asset?: string; days?: num
   const assetFunding = fundingData?.filter(f => f.asset === asset) || [];
 
   return (
-    <Card className="adaf-card">
-      <CardHeader 
+    <Card className="adaf-card relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-500/10 via-amber-400/8 to-sky-500/10" />
+      <CardHeader
+        className="relative"
         title="Funding Rates"
-        badge={`${asset} funding across exchanges (${days}d)`}
+        subtitle={`${asset} funding across exchanges (${days}d)`}
         asOf={assetFunding[0]?.timestamp}
         actions={
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="sm"
-              onClick={handleExportFundingCSV}
+            className="rounded-xl"
+            onClick={handleExportFundingCSV}
           >
-            <Download className="h-4 w-4 mr-2" />
+            <Download className="mr-2 h-4 w-4" />
             Export CSV
           </Button>
         }
       />
-      
-      <CardContent className="p-6 pt-0">
+
+      <CardContent className="relative p-6 pt-0">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full text-sm text-amber-100/80">
             <thead>
-              <tr className="border-b text-left">
-                <th className="pb-3 text-sm font-medium text-muted-foreground">Exchange</th>
-                <th className="pb-3 text-sm font-medium text-muted-foreground">Latest</th>
-                <th className="pb-3 text-sm font-medium text-muted-foreground">14D Spark</th>
-                <th className="pb-3 text-sm font-medium text-muted-foreground">Status</th>
+              <tr className="border-b border-amber-200/20 text-left uppercase tracking-[0.25em] text-amber-200/60">
+                <th className="pb-3">Exchange</th>
+                <th className="pb-3">Latest</th>
+                <th className="pb-3">14D Spark</th>
+                <th className="pb-3">Status</th>
               </tr>
             </thead>
             <tbody>
               {assetFunding
                 .sort((a, b) => b.rate - a.rate)
                 .map((funding, index) => {
-                const isNegative = funding.rate < 0;
-                const isNeg48h = funding.rate < 0; // Simplified - would need historical data
-                
-                return (
-                  <tr key={index} className="border-b border-border/40">
-                    <td className="py-3 font-medium">{funding.exchange}</td>
-                    <td className={cn(
-                      "py-3 font-mono text-sm",
-                      isNegative ? "text-red-600" : "text-green-600"
-                    )}>
-                      {(funding.rate * 100).toFixed(4)}%
-                    </td>
-                    <td className="py-3">
-                      <div className="h-6 w-16 bg-muted rounded flex items-center justify-center text-xs">
-                        📈 {/* Mock sparkline */}
-                      </div>
-                    </td>
-                    <td className="py-3">
-                      {isNegative && isNeg48h ? (
-                        <Badge variant="destructive" className="text-xs">
-                          Neg 48h+
-                        </Badge>
-                      ) : isNegative ? (
-                        <Badge variant="secondary" className="text-xs text-red-700">
-                          Negative
-                        </Badge>
-                      ) : (
-                        <Badge variant="outline" className="text-xs">
-                          Normal
-                        </Badge>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
+                  const isNegative = funding.rate < 0;
+                  const isNeg48h = funding.rate < 0; // Simplified placeholder
+
+                  return (
+                    <tr
+                      key={index}
+                      className="border-b border-amber-200/15 bg-black/40"
+                    >
+                      <td className="py-3 font-semibold text-amber-100">
+                        {funding.exchange}
+                      </td>
+                      <td
+                        className={cn(
+                          "py-3 font-mono",
+                          isNegative ? "text-rose-300" : "text-emerald-300"
+                        )}
+                      >
+                        {(funding.rate * 100).toFixed(4)}%
+                      </td>
+                      <td className="py-3">
+                        <div className="flex h-6 w-16 items-center justify-center rounded-full border border-amber-200/20 bg-black/60 text-xs text-amber-100/70">
+                          📈
+                        </div>
+                      </td>
+                      <td className="py-3">
+                        {isNegative && isNeg48h ? (
+                          <Badge variant="destructive" className="text-[10px]">
+                            Neg 48h+
+                          </Badge>
+                        ) : isNegative ? (
+                          <Badge
+                            variant="secondary"
+                            className="text-[10px] text-rose-200/85"
+                          >
+                            Negative
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline" className="text-[10px]">
+                            Normal
+                          </Badge>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>
@@ -515,28 +562,48 @@ function FundingTable({ asset = 'BTC', days = 14 }: { asset?: string; days?: num
 // Main Markets Page
 export default function MarketsPage() {
   const { selectedAssets } = useUIStore();
+  const handleScroll = useCallback((selector: string) => () => {
+    const el = document.querySelector(selector);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
+
+  const guideItems: VisionGuideItem[] = [
+    {
+      title: 'Filtrar activos ETF',
+      description: 'Usa el filtro superior para mostrar sólo los activos relevantes.',
+      action: { type: 'button', label: 'Ir al filtro', onClick: handleScroll('#etf-hero') },
+    },
+    {
+      title: 'Comparar BTC vs ETH',
+      description: 'Evalúa spreads diarios o acumulados en la sección de comparación.',
+      action: { type: 'link', label: 'Ver comparación', href: '#comparison' },
+    },
+    {
+      title: 'Revisar funding rates',
+      description: 'Supervisa exchanges con tasas negativas persistentes y exporta CSV.',
+      action: { type: 'link', label: 'Ir a funding', href: '#funding' },
+    },
+  ];
 
   return (
-    <div className="space-y-6 p-6">
-      {/* Breadcrumbs */}
-      <nav className="text-sm text-muted-foreground">
-        <Link href="/" className="hover:text-foreground">Dashboard</Link>
+    <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-24">
+      <nav className="text-xs uppercase tracking-[0.35em] text-amber-200/60">
+        <Link href="/" className="hover:text-amber-100">Dashboard</Link>
         <span className="mx-2">›</span>
         <span>Markets</span>
       </nav>
 
-      {/* Hero ETF Autoswitch */}
       <EtfAutoswitchHero showAssetPicker />
 
-      {/* BTC/ETH Comparison */}
-      <section id="comparison">
+      <section id="comparison" className="scroll-mt-24">
         <EtfComparePanel defaultMode="daily" />
       </section>
 
-      {/* Funding Table */}
-      <section id="funding">
+      <section id="funding" className="scroll-mt-24">
         <FundingTable asset={selectedAssets[0] ?? 'BTC'} days={14} />
       </section>
+
+      <VisionGuide items={guideItems} />
     </div>
   );
 }

@@ -37,6 +37,73 @@ function computeBlocking(meta: OpxMeta | null | undefined, rt: LimitsRuntime): s
   return Array.from(new Set(out))
 }
 
+
+function getMockOpportunities() {
+  const base = [
+    {
+      id: 'mock-1',
+      createdAt: new Date().toISOString(),
+      agentCode: 'OPX-A1',
+      idea: 'BTC Spot Accumulation',
+      thesis: 'Flujos institucionales favorecen acumulación en spot ETFs.',
+      risks: ['Volatilidad BTC', 'Regulación'],
+      sizing: { notionalPctNAV: 12, maxDDbps: 180 },
+      var: 42000,
+      type: 'beta' as const,
+      status: 'proposed' as const,
+      score: 74,
+      consensus: 0.62,
+      blocking: []
+    },
+    {
+      id: 'mock-2',
+      createdAt: new Date(Date.now() - 3600_000).toISOString(),
+      agentCode: 'OPX-B7',
+      idea: 'ETH Basis Trade',
+      thesis: 'Contango moderado y funding positivo abren spread neutral.',
+      risks: ['Latencia ejecuciones', 'Counterparty'],
+      sizing: { notionalPctNAV: 9, maxDDbps: 120 },
+      var: 25000,
+      type: 'basis' as const,
+      status: 'approved' as const,
+      score: 82,
+      consensus: 0.78,
+      blocking: []
+    },
+    {
+      id: 'mock-3',
+      createdAt: new Date(Date.now() - 86_400_000).toISOString(),
+      agentCode: 'OPX-R3',
+      idea: 'Real Yield Vault Rotation',
+      thesis: 'Aumenta rendimiento en stablecoins mediante vaults RWAs.',
+      risks: ['Riesgo emisor', 'Liquidaciones'],
+      sizing: { notionalPctNAV: 20, maxDDbps: 300 },
+      var: 60000,
+      type: 'realYield' as const,
+      status: 'proposed' as const,
+      score: 68,
+      consensus: 0.55,
+      blocking: ['LTV']
+    },
+    {
+      id: 'mock-4',
+      createdAt: new Date(Date.now() - 172_800_000).toISOString(),
+      agentCode: 'OPX-ARB2',
+      idea: 'Delta-Neutral Basis Arb',
+      thesis: 'Spread entre futuros trimestrales y spot permanece elevado.',
+      risks: ['Funding flip', 'Slippage'],
+      sizing: { notionalPctNAV: 6, maxDDbps: 80 },
+      var: 18000,
+      type: 'arb' as const,
+      status: 'rejected' as const,
+      score: 58,
+      consensus: 0.4,
+      blocking: []
+    }
+  ]
+  return base
+}
+
 function clamp(n: number, a: number, b: number) { return Math.min(Math.max(n, a), b) }
 
 export async function GET(req: NextRequest) {
@@ -57,6 +124,31 @@ export async function GET(req: NextRequest) {
   const limit = clamp(limitReq, 1, 500)
   const page = Math.max(1, pageReq)
   const skip = (page - 1) * limit
+
+  // Serve mock data immediately when running in MOCK_MODE
+  if (process.env.MOCK_MODE === '1') {
+    const mock = getMockOpportunities()
+      .filter(item => status === 'any' || item.status === status)
+      .filter(item => type === 'any' || item.type.toLowerCase() === type)
+      .filter(item => q === '' || item.idea.toLowerCase().includes(q.toLowerCase()) || item.thesis.toLowerCase().includes(q.toLowerCase()))
+
+    const dirMulMock = dir === 'asc' ? 1 : -1
+    const orderKeyMock = order === 'var' ? 'var' : order === 'createdat' ? 'createdAt' : 'score'
+    const sortedMock = mock.sort((a, b) => {
+      const av = orderKeyMock === 'createdAt' ? new Date(a.createdAt).getTime() : (a as any)[orderKeyMock]
+      const bv = orderKeyMock === 'createdAt' ? new Date(b.createdAt).getTime() : (b as any)[orderKeyMock]
+      if (av === bv) return 0
+      return av < bv ? -1 * dirMulMock : 1 * dirMulMock
+    })
+
+    const totalMock = sortedMock.length
+    const pagesMock = Math.max(1, Math.ceil(totalMock / limit))
+    const paginated = sortedMock.slice(skip, skip + limit)
+
+    const res = NextResponse.json({ page, pages: pagesMock, limit, total: totalMock, data: paginated })
+    incApiRequest('/api/read/opx/list','GET', res.status)
+    return res
+  }
 
   try {
     // Limits/runtime metrics (latest)
@@ -205,7 +297,7 @@ export async function GET(req: NextRequest) {
 
     // ordering by derived fields (score) client-side here
     const dirMul = dir === 'asc' ? 1 : -1
-    const orderKey = order === 'var' ? 'var' : order === 'createdAt' ? 'createdAt' : 'score'
+    const orderKey = order === 'var' ? 'var' : order === 'createdat' ? 'createdAt' : 'score'
     const sorted = [...data].sort((a,b) => a[orderKey] < b[orderKey] ? -1*dirMul : a[orderKey] > b[orderKey] ? 1*dirMul : 0)
 
     const res = NextResponse.json({ page, pages, limit, total: Number(total), data: sorted })
