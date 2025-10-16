@@ -1,0 +1,14 @@
+[
+  {
+    "feedId": "alpha/model/opx_10m_signal",
+    "ts": "2025-10-14T10:10:00Z",
+    "value": 0.18,
+    "unit": "signal_score",
+    "confidence": 0.78,
+    "quorum_ok": true,
+    "stale": false,
+    "evidence": [{ "source_id": "mock", "captured_at": "2025-10-14T10:10:00Z" }],
+    "tags": ["mock"],
+    "rev": 0
+  }
+]

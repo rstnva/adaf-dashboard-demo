@@ -1,0 +1,14 @@
+[
+  {
+    "feedId": "blockspace/fees/eth_base_fee_gwei",
+    "ts": "2025-10-14T10:30:00Z",
+    "value": 24.3,
+    "unit": "gwei",
+    "confidence": 0.7,
+    "quorum_ok": true,
+    "stale": false,
+    "evidence": [{ "source_id": "mock", "captured_at": "2025-10-14T10:30:00Z" }],
+    "tags": ["mock"],
+    "rev": 0
+  }
+]

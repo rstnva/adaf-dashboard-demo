@@ -28,7 +28,7 @@ describe('ADAF System End-to-End', () => {
     // Limpiar todas las tablas
     await prisma.alert.deleteMany()
     await prisma.opportunity.deleteMany()
-    await prisma.signal.deleteMany()
+  await prisma.agentSignal.deleteMany()
   })
 
   afterAll(async () => {
@@ -161,7 +161,7 @@ describe('ADAF System End-to-End', () => {
     }
 
     // Verificar que se crearon múltiples señales
-    const signals = await prisma.signal.findMany({
+  const signals = await prisma.agentSignal.findMany({
       orderBy: { timestamp: 'desc' },
       take: 10
     })
@@ -199,7 +199,7 @@ describe('ADAF System End-to-End', () => {
     expect(duplicateResponses).toHaveLength(4)
 
     // Verificar que solo hay una señal en la base de datos
-    const signals = await prisma.signal.findMany({
+  const signals = await prisma.agentSignal.findMany({
       where: {
         title: duplicateNews.title
       }
@@ -210,7 +210,7 @@ describe('ADAF System End-to-End', () => {
 
   it('should provide real-time data through API endpoints', async () => {
     // Crear datos de prueba
-    await prisma.signal.create({
+  await prisma.agentSignal.create({
       data: {
         type: 'news',
         source: 'TestAPI',

@@ -2,15 +2,15 @@
 
 import { evalRule } from '../rules/engine'
 import type { RuleExpr } from '../rules'
+import type { PrismaClient as PrismaClientType } from '@prisma/client'
 import cron from 'node-cron'
 import { incDerivsFundingAlert, setDerivsFundingNegHours, incDqpIncident, setDqpSourcesStatus } from '../metrics'
 import { createDqpIncident } from '../dqp/calculations'
 
-
-let prisma: any = null;
-async function getPrisma() {
+let prisma: PrismaClientType | null = null;
+async function getPrisma(): Promise<PrismaClientType> {
   if (!prisma) {
-    const mod = await import('@prisma/client');
+    const mod: typeof import('@prisma/client') = await import('@prisma/client');
     prisma = new mod.PrismaClient();
   }
   return prisma;
@@ -37,7 +37,7 @@ async function processFundingAlerts(): Promise<void> {
       for (const exchange of exchanges) {
   const prismaClient = await getPrisma();
   // Get recent funding signals for this asset/exchange
-  const recentSignals = await prismaClient.signal.findMany({
+  const recentSignals = await prismaClient.agentSignal.findMany({
           where: {
             type: 'derivs.funding.point',
             timestamp: { gte: cutoff72h },
@@ -254,7 +254,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
     console.log('🤖 Processing new signals...')
     
   const prismaClient = await getPrisma();
-  const signals = await prismaClient.signal.findMany({
+  const signals = await prismaClient.agentSignal.findMany({
       where: { processed: false },
       take: 200,
       orderBy: { timestamp: 'asc' }
@@ -297,7 +297,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
         
         if (protocol) {
           // Get last 2 points for this protocol
-          const lastSignals = await prismaClient.signal.findMany({
+          const lastSignals = await prismaClient.agentSignal.findMany({
             where: {
               type: 'onchain',
               source: 'OC-1',
@@ -410,7 +410,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
           }
         })
         
-  await prismaClient.signal.update({
+  await prismaClient.agentSignal.update({
           where: { id: signal.id },
           data: { processed: true }
         })
@@ -419,7 +419,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
         alertsCount += 1
         processedCount += 1
       } else {
-  await prismaClient.signal.update({
+  await prismaClient.agentSignal.update({
           where: { id: signal.id },
           data: { processed: true }
         })

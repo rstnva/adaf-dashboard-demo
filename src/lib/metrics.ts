@@ -319,6 +319,43 @@ export function incAcademyQuizSubmissions() {
   }
 }
 
+// News oracle metrics
+export const cNewsOracleRuns = new client.Counter({
+  name: 'adaf_news_oracle_runs_total',
+  help: 'Total runs of the news oracle pipeline',
+});
+
+export const cNewsOracleEscalations = new client.Counter({
+  name: 'adaf_news_oracle_escalations_total',
+  help: 'News oracle escalations total',
+});
+
+export const cNewsOracleDismissed = new client.Counter({
+  name: 'adaf_news_oracle_dismissed_total',
+  help: 'News oracle dismissed items total',
+});
+
+export const gNewsOracleStandby = new client.Gauge({
+  name: 'adaf_news_oracle_standby_total',
+  help: 'Current number of news analyses in standby',
+});
+
+export function recordNewsOracleRun(
+  runs: number,
+  standby: number,
+  escalated: number,
+  dismissed: number
+) {
+  try {
+    cNewsOracleRuns.inc(runs);
+    gNewsOracleStandby.set(Math.max(0, standby));
+    if (escalated > 0) cNewsOracleEscalations.inc(escalated);
+    if (dismissed > 0) cNewsOracleDismissed.inc(dismissed);
+  } catch {
+    /* no-op */
+  }
+}
+
 registry.registerMetric(mSignalsProcessed);
 registry.registerMetric(mAlertsCreated);
 registry.registerMetric(mOppsCreated);
@@ -341,3 +378,7 @@ registry.registerMetric(cAcademyExercisesRun);
 registry.registerMetric(cAcademyLessonsStarted);
 registry.registerMetric(cAcademyLessonsCompleted);
 registry.registerMetric(cAcademyQuizSubmissions);
+registry.registerMetric(cNewsOracleRuns);
+registry.registerMetric(cNewsOracleEscalations);
+registry.registerMetric(cNewsOracleDismissed);
+registry.registerMetric(gNewsOracleStandby);

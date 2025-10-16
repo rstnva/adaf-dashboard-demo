@@ -72,7 +72,7 @@ async function main() {
   });
 
   // Seed Signals
-  await prisma.signal.createMany({
+  await prisma.agentSignal.createMany({
     data: [
       {
         id: 'sig1',

@@ -30,6 +30,16 @@ import { AlertsLiveCard } from './AlertsLiveCard';
 import { OpxTopScores } from './OpxTopScores';
 import { GuardrailsCard } from './GuardrailsCard';
 import { ResearchPanel } from '@/components/research/ResearchPanel';
+import { BlockspaceOpsCard } from './sim/BlockspaceOpsCard';
+import { VaultsLavCard } from './sim/VaultsLavCard';
+import { AlphaFactoryCard } from './sim/AlphaFactoryCard';
+import { MetaAllocatorCard } from './sim/MetaAllocatorCard';
+import { VolProCard } from './sim/VolProCard';
+import { EventAlphaCard } from './sim/EventAlphaCard';
+import { SelectiveMMCard } from './sim/SelectiveMMCard';
+import { TcaInsightsCard } from './sim/TcaInsightsCard';
+import { CosmosExecutorCard } from './sim/CosmosExecutorCard';
+import { LiquidityBackstopCard } from './sim/LiquidityBackstopCard';
 
 // Component mapping
 const COMPONENT_MAP = {
@@ -44,6 +54,16 @@ const COMPONENT_MAP = {
   'OpxTopScores': OpxTopScores,
   'GuardrailsCard': GuardrailsCard,
   'ResearchPanel': ResearchPanel,
+  'BlockspaceOpsCard': BlockspaceOpsCard,
+  'VaultsLavCard': VaultsLavCard,
+  'AlphaFactoryCard': AlphaFactoryCard,
+  'MetaAllocatorCard': MetaAllocatorCard,
+  'VolProCard': VolProCard,
+  'EventAlphaCard': EventAlphaCard,
+  'SelectiveMMCard': SelectiveMMCard,
+  'TcaInsightsCard': TcaInsightsCard,
+  'CosmosExecutorCard': CosmosExecutorCard,
+  'LiquidityBackstopCard': LiquidityBackstopCard,
 };
 
 export function DashboardLayoutContainer() {

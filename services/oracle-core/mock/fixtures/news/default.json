@@ -1,0 +1,14 @@
+[
+  {
+    "feedId": "news/sentiment/crypto_policy_score",
+    "ts": "2025-10-14T10:05:00Z",
+    "value": 0.41,
+    "unit": "score",
+    "confidence": 0.62,
+    "quorum_ok": true,
+    "stale": false,
+    "evidence": [{ "source_id": "mock", "captured_at": "2025-10-14T10:05:00Z" }],
+    "tags": ["mock"],
+    "rev": 0
+  }
+]

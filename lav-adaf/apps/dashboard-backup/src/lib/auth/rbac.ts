@@ -7,6 +7,7 @@ export type Permission =
   | 'feature:summer'
   | 'feature:echarts'
   | 'feature:semaforo'
+  | 'feature:news_oracle'
   | 'admin:control'
   | 'admin:reports'
 
@@ -16,6 +17,7 @@ const mockUserPermissions: Permission[] = [
   'feature:summer',
   'feature:echarts', 
   'feature:semaforo',
+  'feature:news_oracle',
   'admin:control',
   'admin:reports'
 ]
@@ -100,7 +102,7 @@ export function getCurrentRole(): Role {
  */
 export function getCurrentPermissions(): Permission[] {
   if (mockUserRole === 'admin') {
-    return ['feature:summer', 'feature:echarts', 'feature:semaforo', 'admin:control', 'admin:reports']
+    return ['feature:summer', 'feature:echarts', 'feature:semaforo', 'feature:news_oracle', 'admin:control', 'admin:reports']
   }
   
   return mockUserPermissions

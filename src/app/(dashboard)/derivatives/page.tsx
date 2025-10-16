@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { SleeveGrid, type SleeveWidget } from '@/components/dashboard/common/SleeveGrid';
 
 // Funding Panel
 function FundingPanel({ defaultAsset = 'BTC' }: { defaultAsset?: string }) {
@@ -453,9 +454,25 @@ function GammaPanel({ defaultAsset = 'BTC' }: { defaultAsset?: string }) {
 }
 
 // Main Derivatives Page
+const STORAGE_KEY = 'derivatives-sleeve-layout-v1';
+
 export default function DerivativesPage() {
   const { selectedAssets } = useUIStore();
   const defaultAsset = selectedAssets[0] || 'BTC';
+
+  const widgets: SleeveWidget[] = useMemo(
+    () => [
+      {
+        key: 'funding-panel',
+        component: <FundingPanel defaultAsset={defaultAsset} />,
+      },
+      {
+        key: 'gamma-panel',
+        component: <GammaPanel defaultAsset={defaultAsset} />,
+      },
+    ],
+    [defaultAsset]
+  );
 
   return (
     <div className="space-y-6 p-6">
@@ -466,11 +483,12 @@ export default function DerivativesPage() {
         <span>Derivatives</span>
       </nav>
 
-      {/* Funding Panel */}
-      <FundingPanel defaultAsset={defaultAsset} />
-
-      {/* Gamma Panel */}
-      <GammaPanel defaultAsset={defaultAsset} />
+      <SleeveGrid
+        storageKey={STORAGE_KEY}
+        widgets={widgets}
+        gridClassName="lg:grid-cols-2"
+        orderAttribute="data-derivatives-order"
+      />
     </div>
   );
 }

@@ -1,0 +1,14 @@
+[
+  {
+    "feedId": "capacity/lsd/eth_staking_capacity",
+    "ts": "2025-10-14T10:25:00Z",
+    "value": 82.1,
+    "unit": "percent",
+    "confidence": 0.81,
+    "quorum_ok": true,
+    "stale": false,
+    "evidence": [{ "source_id": "mock", "captured_at": "2025-10-14T10:25:00Z" }],
+    "tags": ["mock"],
+    "rev": 0
+  }
+]

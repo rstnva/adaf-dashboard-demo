@@ -1,0 +1,14 @@
+[
+  {
+    "feedId": "stables/liquidity/usdc_eth_depth",
+    "ts": "2025-10-14T10:45:00Z",
+    "value": 89000000,
+    "unit": "usd",
+    "confidence": 0.77,
+    "quorum_ok": true,
+    "stale": false,
+    "evidence": [{ "source_id": "mock", "captured_at": "2025-10-14T10:45:00Z" }],
+    "tags": ["mock"],
+    "rev": 0
+  }
+]

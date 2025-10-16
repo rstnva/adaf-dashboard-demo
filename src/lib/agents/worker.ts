@@ -38,7 +38,7 @@ async function processFundingAlerts(): Promise<void> {
     for (const asset of assets) {
       for (const exchange of exchanges) {
         // Get recent funding signals for this asset/exchange
-        const recentSignals = await prisma.signal.findMany({
+  const recentSignals = await prisma.agentSignal.findMany({
           where: {
             type: 'derivs.funding.point',
             timestamp: { gte: cutoff72h },
@@ -274,7 +274,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
       console.log(`⏳ Cooldown active, ${Math.ceil(remainingTime/1000)}s remaining`)
       
       // Contar cuántas señales pendientes hay
-      const pendingSignals = await prisma.signal.count({
+  const pendingSignals = await prisma.agentSignal.count({
         where: { processed: false }
       })
       
@@ -288,7 +288,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
       // Redis no disponible - continuar sin cooldown
     }
     
-    const signals = await prisma.signal.findMany({
+  const signals = await prisma.agentSignal.findMany({
       where: { processed: false },
       take: 200,
       orderBy: { timestamp: 'asc' }
@@ -343,7 +343,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
           
           if (protocol) {
             // Get last 2 points for this protocol
-            const lastSignals = await prisma.signal.findMany({
+            const lastSignals = await prisma.agentSignal.findMany({
               where: {
                 type: 'onchain',
                 source: 'OC-1',
@@ -502,7 +502,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
           }
         })
         
-        await prisma.signal.update({
+  await prisma.agentSignal.update({
           where: { id: signal.id },
           data: { processed: true }
         })
@@ -511,7 +511,7 @@ export async function processNewSignals(): Promise<{ processed: number; alerts: 
         alertsCount += 1
         processedCount += 1
       } else {
-        await prisma.signal.update({
+  await prisma.agentSignal.update({
           where: { id: signal.id },
           data: { processed: true }
         })

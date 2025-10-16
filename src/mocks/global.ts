@@ -67,11 +67,14 @@ vi.mock('ioredis', () => {
 // Mock Prisma Client to avoid real DB
 vi.mock('@prisma/client', () => {
   const db: any = {
-    signal: [],
+    agentSignal: [],
     alert: [],
     opportunity: [],
     limit: [],
     newsData: [],
+    newsEvent: [],
+    newsAnalysis: [],
+    newsTriage: [],
   };
   if (!globalThis.__TEST_MOCKS__) globalThis.__TEST_MOCKS__ = {};
   globalThis.__TEST_MOCKS__.db = db;
@@ -150,9 +153,252 @@ vi.mock('@prisma/client', () => {
     }),
   };
 
-  const signal = {
+  const newsEvent = {
     findMany: vi.fn(async (args: any = {}) => {
-      let results = [...db.signal];
+      let results = [...db.newsEvent];
+      const { where, select, orderBy, take } = args;
+
+      if (where?.fingerprint?.in) {
+        results = results.filter((event: any) =>
+          where.fingerprint.in.includes(event.fingerprint)
+        );
+      }
+
+      if (where?.id?.in) {
+        results = results.filter((event: any) => where.id.in.includes(event.id));
+      }
+
+      if (orderBy?.publishedAt === 'desc') {
+        results = results.sort(
+          (a: any, b: any) =>
+            new Date(b.publishedAt).getTime() -
+            new Date(a.publishedAt).getTime()
+        );
+      }
+
+      if (orderBy?.createdAt === 'desc') {
+        results = results.sort(
+          (a: any, b: any) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      }
+
+      if (take) {
+        results = results.slice(0, take);
+      }
+
+      if (select) {
+        return results.map(item => {
+          const picked: any = {};
+          for (const key of Object.keys(select)) {
+            if (select[key]) picked[key] = clone(item[key]);
+          }
+          return picked;
+        });
+      }
+
+      return clone(results);
+    }),
+    upsert: vi.fn(async ({ where, update, create }: any) => {
+      const idx = db.newsEvent.findIndex(
+        (event: any) => event.fingerprint === where.fingerprint
+      );
+      const timestamp = new Date().toISOString();
+
+      if (idx !== -1) {
+        const updated = {
+          ...db.newsEvent[idx],
+          ...update,
+          updatedAt: timestamp,
+        };
+        db.newsEvent[idx] = updated;
+        return clone(updated);
+      }
+
+      const entry = {
+        id: genId(),
+        createdAt: timestamp,
+        updatedAt: timestamp,
+        dedupedAt: timestamp,
+        ...create,
+      };
+      db.newsEvent.push(entry);
+      return clone(entry);
+    }),
+    update: vi.fn(async ({ where, data }: any) => {
+      const idx = db.newsEvent.findIndex((event: any) => event.id === where.id);
+      if (idx === -1) throw new Error('NewsEvent not found');
+      const next = {
+        ...db.newsEvent[idx],
+        ...data,
+        updatedAt: new Date().toISOString(),
+      };
+      db.newsEvent[idx] = next;
+      return clone(next);
+    }),
+  };
+
+  const newsAnalysis = {
+    create: vi.fn(async ({ data }: any) => {
+      const timestamp = new Date().toISOString();
+      const entry = {
+        id: genId(),
+        createdAt: timestamp,
+        updatedAt: timestamp,
+        tags: [],
+        ...data,
+      };
+      db.newsAnalysis.push(entry);
+      return clone(entry);
+    }),
+    findMany: vi.fn(async (args: any = {}) => {
+      const { where, include, orderBy, take } = args;
+      let results = [...db.newsAnalysis];
+
+      if (where?.status) {
+        if (where.status.in) {
+          results = results.filter((analysis: any) =>
+            where.status.in.includes(analysis.status)
+          );
+        } else {
+          results = results.filter(
+            (analysis: any) => analysis.status === where.status
+          );
+        }
+      }
+
+      if (where?.id?.in) {
+        results = results.filter((analysis: any) =>
+          where.id.in.includes(analysis.id)
+        );
+      }
+
+      if (orderBy?.createdAt === 'desc') {
+        results = results.sort(
+          (a: any, b: any) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      }
+
+      if (orderBy?.updatedAt === 'desc') {
+        results = results.sort(
+          (a: any, b: any) =>
+            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+        );
+      }
+
+      if (take) {
+        results = results.slice(0, take);
+      }
+
+      return results.map(analysis => {
+        if (!include) return clone(analysis);
+        const enriched: any = clone(analysis);
+        if (include.event) {
+          enriched.event = clone(
+            db.newsEvent.find((event: any) => event.id === analysis.eventId)
+          );
+        }
+        if (include.triages) {
+          enriched.triages = db.newsTriage
+            .filter((triage: any) => triage.analysisId === analysis.id)
+            .map((triage: any) => clone(triage));
+        }
+        return enriched;
+      });
+    }),
+    update: vi.fn(async ({ where, data }: any) => {
+      const idx = db.newsAnalysis.findIndex(
+        (analysis: any) => analysis.id === where.id
+      );
+      if (idx === -1) throw new Error('NewsAnalysis not found');
+      const merged = {
+        ...db.newsAnalysis[idx],
+        ...data,
+        updatedAt: new Date().toISOString(),
+      };
+      db.newsAnalysis[idx] = merged;
+      return clone(merged);
+    }),
+  };
+
+  const newsTriage = {
+    findFirst: vi.fn(async ({ where }: any = {}) => {
+      if (!where) {
+        return db.newsTriage.length ? clone(db.newsTriage[0]) : null;
+      }
+      const match = db.newsTriage.find((triage: any) => {
+        return Object.entries(where).every(([key, value]) => {
+          if (value && typeof value === 'object' && 'equals' in value) {
+            return triage[key] === value.equals;
+          }
+          return triage[key] === value;
+        });
+      });
+      return match ? clone(match) : null;
+    }),
+    upsert: vi.fn(async ({ where, update, create }: any) => {
+      const idx = db.newsTriage.findIndex(
+        (triage: any) => triage.analysisId === where.analysisId
+      );
+      const timestamp = new Date().toISOString();
+
+      if (idx !== -1) {
+        const merged = {
+          ...db.newsTriage[idx],
+          ...update,
+          updatedAt: timestamp,
+        };
+        db.newsTriage[idx] = merged;
+        return clone(merged);
+      }
+
+      const entry = {
+        id: genId(),
+        createdAt: timestamp,
+        updatedAt: timestamp,
+        ...create,
+      };
+      db.newsTriage.push(entry);
+      return clone(entry);
+    }),
+    findMany: vi.fn(async (args: any = {}) => {
+      const { where } = args;
+      let results = [...db.newsTriage];
+      if (where?.analysisId) {
+        results = results.filter(
+          (triage: any) => triage.analysisId === where.analysisId
+        );
+      }
+      return clone(results);
+    }),
+    create: vi.fn(async ({ data }: any) => {
+      const timestamp = new Date().toISOString();
+      const entry = {
+        id: genId(),
+        createdAt: timestamp,
+        updatedAt: timestamp,
+        ...data,
+      };
+      db.newsTriage.push(entry);
+      return clone(entry);
+    }),
+    update: vi.fn(async ({ where, data }: any) => {
+      const idx = db.newsTriage.findIndex((triage: any) => triage.id === where.id);
+      if (idx === -1) throw new Error('NewsTriage not found');
+      const merged = {
+        ...db.newsTriage[idx],
+        ...data,
+        updatedAt: new Date().toISOString(),
+      };
+      db.newsTriage[idx] = merged;
+      return clone(merged);
+    }),
+  };
+
+  const agentSignal = {
+    findMany: vi.fn(async (args: any = {}) => {
+      let results = [...db.agentSignal];
       if (args.where?.processed !== undefined)
         results = results.filter(
           (s: any) => s.processed === args.where.processed
@@ -168,10 +414,25 @@ vi.mock('@prisma/client', () => {
       if (args.take) results = results.slice(0, args.take);
       return clone(results);
     }),
+    upsert: vi.fn(async ({ where, update, create }: any) => {
+      const idx = db.agentSignal.findIndex(
+        (signal: any) => signal.fingerprint === where.fingerprint
+      );
+      if (idx !== -1) {
+        const merged = {
+          ...db.agentSignal[idx],
+          ...update,
+          updatedAt: new Date().toISOString(),
+        };
+        db.agentSignal[idx] = merged;
+        return clone(merged);
+      }
+      return agentSignal.create({ data: create });
+    }),
     create: vi.fn(async ({ data }: any) => {
       if (
         data.fingerprint &&
-        db.signal.some((s: any) => s.fingerprint === data.fingerprint)
+        db.agentSignal.some((s: any) => s.fingerprint === data.fingerprint)
       ) {
         const err: any = new Error('Duplicate signal');
         err.code = 'P2002';
@@ -188,25 +449,25 @@ vi.mock('@prisma/client', () => {
         severity,
         timestamp: data.timestamp || new Date(),
       };
-      db.signal.push(obj);
+      db.agentSignal.push(obj);
       return clone(obj);
     }),
     deleteMany: vi.fn(async () => {
-      const count = db.signal.length;
-      db.signal.length = 0;
+      const count = db.agentSignal.length;
+      db.agentSignal.length = 0;
       return { count };
     }),
     count: vi.fn(async ({ where }: any = {}) => {
-      let results = [...db.signal];
+      let results = [...db.agentSignal];
       if (where?.processed !== undefined)
         results = results.filter((s: any) => s.processed === where.processed);
       return results.length;
     }),
     update: vi.fn(async ({ where, data }: any) => {
-      const idx = db.signal.findIndex((s: any) => s.id === where.id);
+      const idx = db.agentSignal.findIndex((s: any) => s.id === where.id);
       if (idx === -1) throw new Error('Signal not found');
-      db.signal[idx] = { ...db.signal[idx], ...data };
-      return clone(db.signal[idx]);
+      db.agentSignal[idx] = { ...db.agentSignal[idx], ...data };
+      return clone(db.agentSignal[idx]);
     }),
   };
 
@@ -218,6 +479,19 @@ vi.mock('@prisma/client', () => {
           (a: any) => a.signalId === args.where.signalId
         );
       return results;
+    }),
+    upsert: vi.fn(async ({ where, update, create }: any) => {
+      const idx = db.alert.findIndex((a: any) => a.signalId === where.signalId);
+      if (idx !== -1) {
+        const merged = {
+          ...db.alert[idx],
+          ...update,
+          updatedAt: new Date().toISOString(),
+        };
+        db.alert[idx] = merged;
+        return clone(merged);
+      }
+      return alert.create({ data: create });
     }),
     create: vi.fn(async ({ data }: any) => {
       let type = data.type;
@@ -283,11 +557,14 @@ vi.mock('@prisma/client', () => {
   };
 
   class PrismaClient {
-    signal = signal;
+    agentSignal = agentSignal;
     alert = alert;
     opportunity = opportunity;
     limit = limit;
     newsData = newsData;
+    newsEvent = newsEvent;
+    newsAnalysis = newsAnalysis;
+    newsTriage = newsTriage;
     async $disconnect() {
       return;
     }
@@ -311,6 +588,15 @@ vi.mock('@prisma/client', () => {
         ];
       }
       return [];
+    }
+    async $transaction(actions: any | any[], _options?: any) {
+      if (typeof actions === 'function') {
+        return actions(this);
+      }
+      if (Array.isArray(actions)) {
+        return Promise.all(actions);
+      }
+      throw new TypeError('Unsupported transaction payload in mock');
     }
   }
 
@@ -425,7 +711,7 @@ vi.mock('../src/app/api/ingest/tvl/route', () => ({
       );
     }
     const hash = `mock-tvl-${data.protocol}-${data.tvl ?? data.value}`;
-    if (db.signal.some((s: any) => s.fingerprint === hash)) {
+  if (db.agentSignal.some((s: any) => s.fingerprint === hash)) {
       return new Response(
         JSON.stringify({
           success: false,
@@ -442,7 +728,7 @@ vi.mock('../src/app/api/ingest/tvl/route', () => ({
       severity = 'high';
     }
     if ((data.change24h ?? 0) > -0.01 && (data.change24h ?? 0) < 0.01) {
-      db.signal.push({
+      db.agentSignal.push({
         ...data,
         fingerprint: hash,
         signalId: hash,
@@ -463,7 +749,7 @@ vi.mock('../src/app/api/ingest/tvl/route', () => ({
         { status: 201 }
       );
     }
-    db.signal.push({
+    db.agentSignal.push({
       ...data,
       fingerprint: hash,
       signalId: hash,

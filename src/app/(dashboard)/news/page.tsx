@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { NewsOracleCard } from '@/components/dashboard/NewsOracleCard';
 
 interface NewsFilters {
   search: string;
@@ -541,6 +542,8 @@ export default function NewsPage() {
         <span className="mx-2">›</span>
         <span>News & Research</span>
       </nav>
+
+      <NewsOracleCard />
 
       {/* News & Research Tabs */}
       <Card className="adaf-card">

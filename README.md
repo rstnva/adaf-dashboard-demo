@@ -1,179 +1,32 @@
-> **Contexto Unificado:** La documentación extendida vive ahora en `motor-del-dash/documentacion/CONTEXTO_UNIFICADO.md`.
+# ADAF Dashboard Pro
 
-## Avances recientes (Octubre 2025)
+> Toda la documentación técnica, operativa y de memorias vive ahora dentro de `motor-del-dash/`. Este README solo deja los accesos esenciales.
 
-### Resumen para humanos y agentes
+## 📚 Documentación centralizada
 
-> **Bitácora Git (Octubre 2025)**
->
-> - `main` (repo raíz) quedó en `871772ed857c87fab3794ba8a6d34b914680a54b` con todos los cambios locales y el puntero actualizado del dashboard LAV-ADAF.
-> - Dentro de `lav-adaf/apps/dashboard` se generó el commit `312c077a0a0686549a51ab96ad54a40704b6c54b`, pero el push fue rechazado porque el token actual no tiene scope `workflow`.
-> - Para publicar ese commit:
->   1. Ejecuta `gh auth refresh -h github.com -s workflow` (o usa credenciales/SSH con dicho scope).
->   2. Entra a `lav-adaf/apps/dashboard/` y corre `git pull --rebase` para traer los 12 commits remotos y resolver conflictos si aparecen.
->   3. Haz `git push origin main` cuando todo esté limpio.
-> - Hasta entonces, cualquier clon deberá correr `git submodule update --init lav-adaf/apps/dashboard` una vez que `312c077` esté publicado.
-> - `git status` está limpio en el repo raíz después del push; solo falta publicar el submódulo.
+- [`motor-del-dash/documentacion/README-COMPLETO.md`](./motor-del-dash/documentacion/README-COMPLETO.md) — Guía de arranque, troubleshooting y procedimientos Fortune 500.
+- [`motor-del-dash/documentacion/CONTEXTO_UNIFICADO.md`](./motor-del-dash/documentacion/CONTEXTO_UNIFICADO.md) — Compendio con todo el contexto histórico y anexos.
+- [`motor-del-dash/arquitectura/ARCHITECTURE.md`](./motor-del-dash/arquitectura/ARCHITECTURE.md) — Vista técnica y flujos del sistema ADAF/LAV.
+- [`motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md`](./motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md) — Bitácora de decisiones, avances y criterios Fortune 500.
 
-> Si retomas este proyecto, revisa también `ARCHITECTURE.md` y `MEMORIA_GITHUB_COPILOT.md` para contexto técnico y decisiones clave.
-
-# 🚀 ADAF Dashboard Pro - Sistema Integrado de Inteligencia Financiera
-
-## ⚡ **INICIO INMEDIATO**
-
-### 🎯 **¿Empezar ahora? → 30 segundos**
+## ⚡ Inicio rápido (ver guía completa para más opciones)
 
 ```bash
-# Clonar e iniciar TODO con UN SOLO COMANDO
 git clone [repo-url]
 cd adaf-dashboard-pro
 ./inicio-completo.sh
 ```
 
-> **Accesos directos**
->
-> - **ADAF Dashboard** → http://localhost:3000
-> - **LAV-ADAF Dashboard** → http://localhost:3005
-> - **API Healthcheck** → http://localhost:3000/api/health
+- ADAF Dashboard → http://localhost:3000
+- LAV-ADAF Dashboard → http://localhost:3005
+- Healthcheck rápido → http://localhost:3000/api/health
 
----
+## 🧾 Logs operativos
 
-## 📂 **DOCUMENTACIÓN COMPLETA EN: `motor-del-dash/`**
+Los registros principales se mantienen en el root del repositorio para diagnóstico rápido:
 
-### 📚 **Todo lo que necesitas está organizado aquí:**
+- `adaf-dashboard.log`, `dashboard.log`, `dashboard-live.log`, `dashboard-mejorado.log`
+- `lav-adaf-dashboard.log`, `adaf-live.log`, `server.log`, `server-test.log`, `server-clean.log`
+- `nohup.out` y los dumps específicos generados por scripts (`adaf-clean.log`, etc.)
 
-| 📁 **Carpeta**                                             | 📋 **Contenido**                   | 🎯 **Para qué es**                      |
-| ---------------------------------------------------------- | ---------------------------------- | --------------------------------------- |
-| 🚀 **[`documentacion/`](./motor-del-dash/documentacion/)** | README completo, guías paso a paso | **Usar el sistema, resolver problemas** |
-| 🏗️ **[`arquitectura/`](./motor-del-dash/arquitectura/)**   | Documentación técnica detallada    | **Desarrollar, extender, integrar**     |
-| 🧠 **[`memoria/`](./motor-del-dash/memoria/)**             | Historial de decisiones técnicas   | **Entender el por qué de cada cambio**  |
-
-### 🎯 **Accesos Rápidos:**
-
-- 📚 **[Contexto Unificado](./motor-del-dash/documentacion/CONTEXTO_UNIFICADO.md)** ← Documentación extendida + memorias
-- 📖 **[Guía Completa de Uso](./motor-del-dash/documentacion/README-COMPLETO.md)** ← **¡Empieza aquí!**
-- 🏗️ **[Documentación Técnica](./motor-del-dash/arquitectura/ARCHITECTURE.md)** ← Para desarrolladores
-- 🧠 **[Memoria Técnica](./motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md)** ← Historial de decisiones
-
----
-
-## 🏆 **ESTADO: 100% FUNCIONAL** ✅
-
-- ✅ **Navegación completa**: Sin errores 404
-- ✅ **850+ tests pasando**: Sistema robusto
-- ✅ **Dual dashboard**: ADAF (3000) + LAV-ADAF (3005)
-- ✅ **Build exitoso**: Zero errores
-- ✅ **Documentación organizada**: Todo en `motor-del-dash/`
-
----
-
-## 🚨 **¿PROBLEMA? → SOLUCIÓN INMEDIATA**
-
-### 1️⃣ **Leer la guía completa:**
-
-👉 **[motor-del-dash/documentacion/README-COMPLETO.md](./motor-del-dash/documentacion/README-COMPLETO.md)**
-
-### 2️⃣ **Reset de emergencia:**
-
-```bash
-# Limpiar todo y empezar de cero
-lsof -t -i:3000,3005 | xargs kill -9
-rm -rf .next/ node_modules/
-pnpm install && ./inicio-completo.sh
-```
-
-### 3️⃣ **Verificar funcionamiento:**
-
-```bash
-curl http://localhost:3000/api/health  # ✅ Debe responder OK
-curl http://localhost:3005/            # ✅ Debe responder OK
-```
-
----
-
-## 💡 **¿QUÉ ES ADAF Dashboard Pro?**
-
-**Sistema Fortune 500** de inteligencia financiera:
-
-- 📊 **Dashboard web profesional** (Next.js 15, React 19)
-- 🤖 **30+ agentes cuantitativos** de trading
-- 🎓 **Academy interactiva** con lecciones
-- 📈 **Analytics avanzados** (ETFs, DeFi, derivados)
-- 🛡️ **Seguridad enterprise** y compliance
-
----
-
-## 🎯 **PRÓXIMOS PASOS**
-
-### 🚀 **Para usar el sistema:**
-
-1. **Lee**: [`motor-del-dash/documentacion/README-COMPLETO.md`](./motor-del-dash/documentacion/README-COMPLETO.md)
-2. **Ejecuta**: `./inicio-completo.sh`
-3. **Accede** → http://localhost:3000
-
-### 👨‍💻 **Para desarrollar:**
-
-1. **Estudia**: [`motor-del-dash/arquitectura/ARCHITECTURE.md`](./motor-del-dash/arquitectura/ARCHITECTURE.md)
-2. **Revisa**: [`motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md`](./motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md)
-3. **Desarrolla**: `pnpm dev`
-
----
-
-## 📞 **SOPORTE**
-
-- 🐛 **Problemas**: Ver sección "RECUPERACIÓN DE EMERGENCIA" en la [guía completa](./motor-del-dash/documentacion/README-COMPLETO.md)
-- 🏗️ **Desarrollo**: Consultar [documentación técnica](./motor-del-dash/arquitectura/ARCHITECTURE.md)
-- 🧠 **Decisiones**: Revisar [memoria técnica](./motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md)
-
----
-
-## 🚀 Arranque rápido con Docker Compose (Desarrollo)
-
-Puedes levantar todo el entorno de desarrollo (Postgres, Redis, ADAF Dashboard, LAV-ADAF Dashboard) con un solo comando:
-
-```bash
-docker compose -f docker-compose.dev.yml up --build
-```
-
-- **ADAF Dashboard** → http://localhost:3000
-- **LAV-ADAF Dashboard** → http://localhost:3005
-- **Base de datos Postgres** → localhost:5432 (usuario: `adaf_user`, pass: `adaf_pass`)
-- **Redis** → localhost:6379
-
-> El código fuente se monta en caliente (hot reload) para desarrollo. Puedes modificar archivos y ver los cambios en tiempo real.
-
-Para detener todo:
-
-```bash
-docker compose -f docker-compose.dev.yml down
-```
-
-### Arranque aún más rápido
-
-Puedes iniciar todo el entorno con un solo comando:
-
-```bash
-./inicio-docker.sh
-```
-
-Esto levantará ADAF Dashboard, LAV-ADAF, Postgres y Redis en modo desarrollo usando Docker Compose.
-
----
-
-### Alternativa guiada
-
-Si prefieres que el proyecto valide el acceso a Docker antes de levantar los servicios, usa:
-
-```bash
-./scripts/start-dev-containers.sh
-```
-
-Si ves el error `cannot set capabilities: Operation not permitted` (o mensajes emitidos por el script) significa que estás en un entorno sin privilegios de Docker. Ejecuta el script desde tu máquina anfitriona con Docker instalado, servicio activo y tu usuario dentro del grupo `docker`.
-
----
-
-### Sistema enterprise-grade listo para uso inmediato
-
-**📂 TODA la documentación está perfectamente organizada en `motor-del-dash/`** 🚀
-
----
+Consulta la guía en `motor-del-dash/documentacion/` para rutas adicionales, políticas de rotación y procedimientos de análisis.

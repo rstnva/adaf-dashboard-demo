@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useOnchain } from '@/hooks';
+import { useOnchain, type TvlHeatmapData, type TvlHeatmapRange } from '@/hooks';
 import { formatCurrency } from '@/lib/utils/numberFormat';
 import { CardHeader } from '@/components/common/CardHeader';
 import { SkeletonPatterns } from '@/components/common/SkeletonBlock';
@@ -20,17 +20,79 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { SleeveGrid, type SleeveWidget } from '@/components/dashboard/common/SleeveGrid';
 
 // TVL Heatmap Card with selectable days
-function TvlHeatmapCard({ selectableDays = [7, 14, 30], defaultDays = 14 }: { 
-  selectableDays?: number[]; 
-  defaultDays?: number; 
-}) {
-  const [selectedDays, setSelectedDays] = useState(defaultDays);
-  const { tvlHeatmap } = useOnchain();
-  const { data: tvlData, isLoading, error } = tvlHeatmap;
+const DEFAULT_SELECTABLE_DAYS: TvlHeatmapRange[] = [7, 14, 30];
 
-  if (isLoading) {
+function TvlHeatmapCard({ selectableDays = DEFAULT_SELECTABLE_DAYS, defaultDays = 14 }: { 
+  selectableDays?: TvlHeatmapRange[]; 
+  defaultDays?: TvlHeatmapRange; 
+}) {
+  const normalizedDefault = selectableDays.includes(defaultDays) ? defaultDays : selectableDays[0];
+  const [selectedDays, setSelectedDays] = useState<TvlHeatmapRange>(normalizedDefault);
+  const {
+    tvlHeatmap,
+    getCachedTvlHeatmap,
+    getTvlHeatmapByDays,
+    prefetchTvlHeatmap,
+  } = useOnchain();
+  const { isLoading: baseLoading, error: baseError, data: defaultData } = tvlHeatmap;
+  const [heatmapData, setHeatmapData] = useState<TvlHeatmapData[] | undefined>(() =>
+    getCachedTvlHeatmap(normalizedDefault) ?? defaultData
+  );
+  const [rangeError, setRangeError] = useState<Error | null>(null);
+  const [isFetchingRange, setIsFetchingRange] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    const cached = getCachedTvlHeatmap(selectedDays);
+
+    if (cached) {
+      setHeatmapData(cached);
+    }
+
+    setIsFetchingRange(!cached);
+    setRangeError(null);
+
+    getTvlHeatmapByDays(selectedDays)
+      .then((data) => {
+        if (!active) return;
+        setHeatmapData(data);
+      })
+      .catch((err) => {
+        if (!active) return;
+        setRangeError(err instanceof Error ? err : new Error(String(err)));
+      })
+      .finally(() => {
+        if (!active) return;
+        setIsFetchingRange(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [selectedDays, getCachedTvlHeatmap, getTvlHeatmapByDays]);
+
+  useEffect(() => {
+    if (selectedDays === normalizedDefault && defaultData) {
+      setHeatmapData(defaultData);
+    }
+  }, [selectedDays, normalizedDefault, defaultData]);
+
+  useEffect(() => {
+    selectableDays
+      .filter((days) => days !== selectedDays)
+      .forEach((days) => {
+        void prefetchTvlHeatmap(days);
+      });
+  }, [selectableDays, selectedDays, prefetchTvlHeatmap]);
+
+  const isInitialLoading = !heatmapData && (baseLoading || isFetchingRange);
+  const error = rangeError || baseError;
+  const tvlData = heatmapData ?? tvlHeatmap.data;
+
+  if (isInitialLoading) {
     return (
       <Card className="adaf-card">
         <CardHeader 
@@ -85,6 +147,9 @@ function TvlHeatmapCard({ selectableDays = [7, 14, 30], defaultDays = 14 }: {
                 variant={days === selectedDays ? "default" : "outline"} 
                 size="sm"
                 onClick={() => setSelectedDays(days)}
+                onMouseEnter={() => prefetchTvlHeatmap(days)}
+                onFocus={() => prefetchTvlHeatmap(days)}
+                disabled={isFetchingRange && days === selectedDays}
               >
                 {days}d
               </Button>
@@ -94,6 +159,9 @@ function TvlHeatmapCard({ selectableDays = [7, 14, 30], defaultDays = 14 }: {
       />
       
       <CardContent className="p-6 pt-0" id="heatmap">
+        {isFetchingRange && tvlData && (
+          <div className="mb-3 text-xs text-muted-foreground">Refreshing heatmap...</div>
+        )}
         {/* TVL Heatmap Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-6">
           {protocolData.map((protocol, index) => {
@@ -320,7 +388,30 @@ function RealYieldTile() {
 }
 
 // Main OnChain Page
+const STORAGE_KEY = 'onchain-sleeve-layout-v1';
+
 export default function OnChainPage() {
+  const widgets: SleeveWidget[] = useMemo(
+    () => [
+      {
+        key: 'tvl-heatmap',
+        component: <TvlHeatmapCard selectableDays={[7, 14, 30]} defaultDays={14} />,
+        className: 'lg:col-span-2',
+      },
+      {
+        key: 'stablecoin-flows',
+        component: <StablecoinFlowsCard />,
+        className: 'lg:col-span-1',
+      },
+      {
+        key: 'real-yield',
+        component: <RealYieldTile />,
+        className: 'lg:col-span-1',
+      },
+    ],
+    []
+  );
+
   return (
     <div className="space-y-6 p-6">
       {/* Breadcrumbs */}
@@ -330,14 +421,12 @@ export default function OnChainPage() {
         <span>On-Chain</span>
       </nav>
 
-      {/* TVL Heatmap */}
-      <TvlHeatmapCard selectableDays={[7, 14, 30]} defaultDays={14} />
-
-      {/* Stablecoin Flows & Real Yield */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <StablecoinFlowsCard />
-        <RealYieldTile />
-      </div>
+      <SleeveGrid
+        storageKey={STORAGE_KEY}
+        widgets={widgets}
+        gridClassName="lg:grid-cols-2"
+        orderAttribute="data-onchain-order"
+      />
     </div>
   );
 }

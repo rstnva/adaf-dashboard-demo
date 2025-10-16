@@ -15,6 +15,8 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import Link from 'next/link';
+import { NewsOracleCard } from '@/components/dashboard/NewsOracleCard';
+import { OracleDataQualityCard } from '@/components/dashboard/OracleDataQualityCard';
 
 export default function DashboardMainPage() {
   return (
@@ -122,6 +124,11 @@ export default function DashboardMainPage() {
       </Card>
 
       <LintStatusCard />
+
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <OracleDataQualityCard />
+        <NewsOracleCard />
+      </div>
 
       {/* Options Panel */}
       <Card>

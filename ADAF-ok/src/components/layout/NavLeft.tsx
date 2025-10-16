@@ -19,7 +19,8 @@ import {
   GraduationCap,
   Settings,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Coins
 } from 'lucide-react';
 
 interface NavItem {
@@ -47,6 +48,12 @@ const NAV_ITEMS: NavItem[] = [
     icon: LinkIcon,
     label: 'On-Chain',
     description: 'TVL, stablecoin flows, real yield'
+  },
+  {
+    href: '/defi/opportunities',
+    icon: Coins,
+    label: 'DeFi Yield',
+    description: 'APYs multichain y real yield'
   },
   {
     href: '/derivatives',

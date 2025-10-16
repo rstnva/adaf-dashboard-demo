@@ -23,7 +23,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Bot,
-  ExternalLink
+  ExternalLink,
+  Coins,
+  LineChart
 } from 'lucide-react';
 
 interface NavItem {
@@ -51,6 +53,18 @@ const NAV_ITEMS: NavItem[] = [
     icon: LinkIcon,
     label: 'On-Chain',
     description: 'TVL, flujos stablecoin, real yield'
+  },
+  {
+    href: '/defi/opportunities',
+    icon: Coins,
+    label: 'DeFi Yield',
+    description: 'APYs multichain y real yield'
+  },
+  {
+    href: '/equities',
+    icon: LineChart,
+    label: 'Equities AI',
+    description: 'Sleeve institucional multi-factor'
   },
   {
     href: '/derivatives',

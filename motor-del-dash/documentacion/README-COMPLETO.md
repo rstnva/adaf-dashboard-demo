@@ -43,6 +43,47 @@ Sistema **Fortune 500** de inteligencia financiera con:
 
 ---
 
+## Avances recientes (Octubre 2025)
+
+### Resumen para humanos y agentes
+
+> **Bitácora Git (Octubre 2025)**
+>
+> - `main` (repo raíz) quedó en `871772ed857c87fab3794ba8a6d34b914680a54b` con todos los cambios locales y el puntero actualizado del dashboard LAV-ADAF.
+> - Dentro de `lav-adaf/apps/dashboard` se generó el commit `312c077a0a0686549a51ab96ad54a40704b6c54b`, pero el push fue rechazado porque el token actual no tiene scope `workflow`.
+> - Para publicar ese commit:
+>   1. Ejecuta `gh auth refresh -h github.com -s workflow` (o usa credenciales/SSH con dicho scope).
+>   2. Entra a `lav-adaf/apps/dashboard/` y corre `git pull --rebase` para traer los 12 commits remotos y resolver conflictos si aparecen.
+>   3. Haz `git push origin main` cuando todo esté limpio.
+> - Hasta entonces, cualquier clon deberá correr `git submodule update --init lav-adaf/apps/dashboard` una vez que `312c077` esté publicado.
+> - `git status` está limpio en el repo raíz después del push; solo falta publicar el submódulo.
+
+#### Estado 2025-10-15 (Fortune 500)
+
+- ✅ Barrido Fortune 500 completado: eslint plano ya entrega **0 errores y 0 warnings** en `src/**`; commit `chore: zero out lint warnings` publicado en `origin/main`.
+- ✅ Calidad automatizada: hooks pre-commit ejecutaron `pnpm lint`, `pnpm typecheck` y **874 tests Vitest** sin fallos antes del push.
+- 🔍 Gap analysis del prompt maestro: faltan por implementar módulos como Vaults v2, Alpha Research 2.0, feature flags dinámicos, métricas extendidas y localización. La priorización alimentará los próximos lossprints.
+- ✍️ Próxima acción: refrescar documentación (`MEMORIA_GITHUB_COPILOT.md`, README extendido) y convertir los hallazgos en backlog Fortune 500 antes de planificar el siguiente sprint.
+- 🛠️ Oracle Core v1.1 DoD: la migración `20251012121500_oracle_feeds_foundation` renombra `signals`→`agent_signals`, crea tablas de feeds/evidencia/quarantines/read_stats/news-triage con índices Fortune 500 y fue aplicada con `pnpm prisma migrate deploy`; el seed (`pnpm tsx infra/seed.ts`) ahora detecta entornos sin TimescaleDB y continúa en modo degradado; `pnpm test agent.worker.test.ts` valida compatibilidad ADAF/LAV/backup con el nuevo `agentSignal`.
+
+#### 📰 Oráculo de Noticias (Sim-only)
+
+- **Pipeline Fortune 500** listo end-to-end: ingesta (RSS) → dedupe (Redis + fingerprint) → análisis en standby → orquestador → alertas & triage.
+- **Feature flag**: habilitar con `NEXT_PUBLIC_FF_NEWS_ORACLE_ENABLED=true`. **RBAC** requerido: `feature:news_oracle`.
+- **APIs** nuevas:
+    - `POST /api/news/oracle/run` → fuerza un ciclo completo (solo dry-run).
+    - `GET /api/news/oracle/standby` → cola de standby + contexto de análisis.
+    - `GET /api/news/oracle/triage` → decisiones recientes (simulación controlada).
+- **Métricas Prometheus** (`/api/metrics`):
+    - `adaf_news_oracle_runs_total`
+    - `adaf_news_oracle_escalations_total`
+    - `adaf_news_oracle_dismissed_total`
+    - `adaf_news_oracle_standby_total`
+- **UI**: tarjeta `News Oracle (Sim)` en el dashboard principal y módulo `/dashboard/news` con card contextual (solo cuando la flag está activa).
+- **Modo seguro**: `EXECUTION_MODE=dry-run` obligatorio (`requireDryRun()`); las alertas generadas quedan registradas como simulaciones y nunca ejecutan flujos productivos.
+
+---
+
 ## 🏆 **ESTADO: 100% OPERATIVO** ✅
 
 ### ✅ **NAVEGACIÓN COMPLETAMENTE FUNCIONAL**
@@ -228,7 +269,8 @@ adaf-dashboard-pro/
 │
 └── 📚 Documentación
     ├── README.md               # Esta guía
-    ├── ARCHITECTURE.md         # Documentación técnica
+    ├── arquitectura/
+    │   └── ARCHITECTURE.md         # Documentación técnica
     └── MEMORIA_*.md            # Historial de cambios
 ```
 
@@ -264,7 +306,7 @@ adaf-dashboard-pro/
 ## 🔗 **LINKS IMPORTANTES**
 
 ### 📚 **Documentación Completa**
-- [**ARCHITECTURE.md**](./ARCHITECTURE.md) - Documentación técnica detallada
+- [**ARCHITECTURE.md**](../arquitectura/ARCHITECTURE.md) - Documentación técnica detallada
 - [**MEMORIA_GITHUB_COPILOT.md**](./MEMORIA_GITHUB_COPILOT.md) - Historial de cambios y decisiones técnicas
 - [**Roadmap & OKRs**](./ROADMAP_OKRS_2025_2026.md) - Planificación institucional
 - [**Onboarding Fortune 500**](./ONBOARDING_FORTUNE500.md) - Guía de incorporación
@@ -279,7 +321,7 @@ adaf-dashboard-pro/
 Si tienes problemas:
 1. Revisa la sección **"RECUPERACIÓN DE EMERGENCIA"** arriba
 2. Consulta los logs: `tail -f adaf-dashboard.log`  
-3. Verifica la documentación técnica en `ARCHITECTURE.md`
+3. Verifica la documentación técnica en `../arquitectura/ARCHITECTURE.md`
 4. Revisa el historial en `MEMORIA_GITHUB_COPILOT.md`
 
 ---
@@ -302,7 +344,7 @@ Si tienes problemas:
 
 ### 📞 **¿Necesitas Ayuda?**
 1. **Problemas técnicos**: Consulta "RECUPERACIÓN DE EMERGENCIA" arriba
-2. **Arquitectura**: Lee `ARCHITECTURE.md`
+2. **Arquitectura**: Lee `../arquitectura/ARCHITECTURE.md`
 3. **Historial**: Revisa `MEMORIA_GITHUB_COPILOT.md`
 4. **APIs**: Explora `/api/health` y `/api/metrics`
 

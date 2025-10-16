@@ -230,6 +230,18 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
   - Nuevo `LintStatusCard` en el dashboard principal muestra salud de ESLint con métricas mock (errores, warnings, pass rate y top findings) para demos institucionales.
   - Puerta de lint Fortune 500 restablecida: `next.config.js` vuelve a fallar builds ante cualquier incidencia, `pnpm lint` exige `--max-warnings=0` y el workflow CI genera artefacto JSON (`.reports/lint/latest.json`) mediante `scripts/generate-lint-report.mjs` para alimentar el dashboard y auditorías.
 
+- 2025-10-14 (noche)
+  - Guardrails del Oracle Core reforzados: `services/oracle-core/dq/guardrails.ts` ahora calcula checksum SHA-256, hora de carga y ruta del manifiesto, con cache seguro y fallback Fortune 500.
+  - Observabilidad extendida: `services/oracle-core/metrics/oracle.metrics.ts` expone `oracle_guardrail_manifest_load_total` con labels de modo (`initial`, `reload`) para auditoría de cambios.
+  - APIs institucionales actualizadas (`services/oracle-core/serve/api/rest.ts` y `src/app/api/read/oracle/guardrails/route.ts`) devuelven manifest + metadata (checksum, timestamp ISO y path) para dashboards y controles operativos.
+  - Pruebas dedicadas (`tests/oracle.dq.guardrails.test.ts`) verifican recarga opcional, valores del manifest y consistencia del metadata tras cada load; ejecución `pnpm vitest run tests/oracle.dq.guardrails.test.ts` PASS.
+  - Procedimiento documentado: ante discrepancias en checksum, disparar alerta de integridad, invalidar cache vía `getGuardrailManifest({ reload: true })` y registrar incidentes en SLO runbook.
+  - Telemetría granular de reglas DQ: `services/oracle-core/metrics/oracle.metrics.ts` incorpora `oracle_dq_evaluations_total` con labels (`feed`, `rule`, `outcome`), mientras `evaluateSignal` devuelve `checks` detallados. El pipeline y REST publisher incrementan la métrica por cada regla y outcome, manteniendo `oracle_dq_fail_total` para fallas. Tests (`tests/oracle.dq.guardrails.test.ts`) confirman la nueva interfaz y los checks reportados.
+  - Resumen institucional de calidad de datos: nuevo módulo `services/oracle-core/dq/summary.ts` agrega telemetría por feed/regla (pass/fail, ratio) leyendo Prometheus, expuesto vía `services/oracle-core/serve/api/rest.ts#getDataQualitySummaryHandler` y API Next `src/app/api/read/oracle/dq/summary/route.ts` (permiso `feature:news_oracle`). Tests (`tests/oracle.dq.summary.test.ts`) validan agregados y filtros por feed.
+  - Clasificación Fortune 500 de severidad DQ: el summary agrega `severity` (`healthy`, `warning`, `critical`) y recomendaciones operativas por regla/feed/totales según ratio y recuento de fallas; se actualizan tests para cubrir escalamiento crítico y advertencias.
+  - Tendencias operativas DQ: el summary persiste un snapshot previo y calcula `trend` (`improving`, `stable`, `deteriorating`) con deltas de fail/pass/ratio y recomendaciones de acción. Se expone reset `resetDataQualitySummaryCache()` para pruebas y se validan escenarios de degradación progresiva en `tests/oracle.dq.summary.test.ts`.
+  - UI institucional para DQ: nueva tarjeta `OracleDataQualityCard` en el dashboard principal consume `/api/read/oracle/dq/summary` vía `useOracleDQSummary`, mostrando severidad, tendencias, KPIs y feeds prioritarios con recomendaciones Fortune 500; se actualiza la vista principal y se refuerza la experiencia de monitoreo en tiempo real.
+
 ---
 
 ## 5) Riesgos y mitigaciones
@@ -386,6 +398,6 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 
 ## 9) Referencias
 
-- `README.md`, `ONBOARDING_FORTUNE500.md`, `ROADMAP_OKRS_2025_2026.md`, `MEJORA_CONTINUA.md`, `ARCHITECTURE.md`, `corte de caja.md`, `corte-de-caja-ejecutivo.md`
+- `README.md`, `ONBOARDING_FORTUNE500.md`, `ROADMAP_OKRS_2025_2026.md`, `MEJORA_CONTINUA.md`, `../arquitectura/ARCHITECTURE.md`, `corte de caja.md`, `corte-de-caja-ejecutivo.md`
 - Configuración: `next.config.js`, `tsconfig.json`, `eslint.config.mjs`, `package.json`
 - UI/Theme: `src/app/globals.css`, `src/theme/tokens.ts`

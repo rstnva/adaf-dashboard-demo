@@ -1,0 +1,14 @@
+[
+  {
+    "feedId": "equities/tech/msft_corr_btc_30d",
+    "ts": "2025-10-14T10:20:00Z",
+    "value": 0.37,
+    "unit": "correlation",
+    "confidence": 0.66,
+    "quorum_ok": true,
+    "stale": false,
+    "evidence": [{ "source_id": "mock", "captured_at": "2025-10-14T10:20:00Z" }],
+    "tags": ["mock"],
+    "rev": 0
+  }
+]

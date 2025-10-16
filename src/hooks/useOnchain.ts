@@ -1,6 +1,7 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { useCallback } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useUIStore } from '@/store/ui';
 
 export interface TvlHeatmapData {
@@ -12,6 +13,11 @@ export interface TvlHeatmapData {
   chain: string;
 }
 
+export type TvlHeatmapRange = 7 | 14 | 30;
+
+const TVL_HEATMAP_STALE_TIME_MS = 120_000; // 2 minutes
+const TVL_HEATMAP_GC_TIME_MS = TVL_HEATMAP_STALE_TIME_MS * 3;
+
 interface StablecoinFlowData {
   token: string;
   netFlow24h: number;
@@ -22,23 +28,33 @@ interface StablecoinFlowData {
 
 export function useOnchain() {
   const { timezone } = useUIStore();
+  const defaultHeatmapRange: TvlHeatmapRange = 7;
+  const queryClient = useQueryClient();
+
+  const buildTvlHeatmapKey = useCallback(
+    (days: number) => ['onchain', 'tvl-heatmap', days, timezone] as const,
+    [timezone]
+  );
+
+  const fetchTvlHeatmap = useCallback(async (days: number): Promise<TvlHeatmapData[]> => {
+    const params = new URLSearchParams({
+      days: days.toString(),
+      timezone,
+    });
+
+    const response = await fetch(`/api/read/onchain/tvl-heatmap?${params}`);
+    if (!response.ok) {
+      throw new Error(`TVL Heatmap API error: ${response.status}`);
+    }
+
+    return response.json();
+  }, [timezone]);
 
   // TVL Heatmap data
   const tvlHeatmapQuery = useQuery({
-    queryKey: ['onchain', 'tvl-heatmap', timezone],
-    queryFn: async (): Promise<TvlHeatmapData[]> => {
-      const params = new URLSearchParams({
-        days: '7', // Default to 7 days, can be made dynamic
-        timezone
-      });
-      
-      const response = await fetch(`/api/read/onchain/tvl-heatmap?${params}`);
-      if (!response.ok) {
-        throw new Error(`TVL Heatmap API error: ${response.status}`);
-      }
-      return response.json();
-    },
-    staleTime: 120_000, // 2 minutes
+    queryKey: buildTvlHeatmapKey(defaultHeatmapRange),
+    queryFn: () => fetchTvlHeatmap(defaultHeatmapRange),
+    staleTime: TVL_HEATMAP_STALE_TIME_MS,
     retry: 1,
   });
 
@@ -64,24 +80,39 @@ export function useOnchain() {
         }
       ];
     },
-    staleTime: 120_000, // 2 minutes
+    staleTime: TVL_HEATMAP_STALE_TIME_MS,
     retry: 1,
   });
 
-  // TVL Heatmap with different time periods
-    // Helper function to get TVL data for specific time periods
-    const getTvlHeatmapByDays = async (days: 7 | 14 | 30): Promise<TvlHeatmapData[]> => {
-      const params = new URLSearchParams({
-        days: days.toString(),
-        timezone
+  const getCachedTvlHeatmap = useCallback(
+    (days: TvlHeatmapRange) =>
+      queryClient.getQueryData<TvlHeatmapData[]>(buildTvlHeatmapKey(days)),
+    [queryClient, buildTvlHeatmapKey]
+  );
+
+  const getTvlHeatmapByDays = useCallback(
+    async (days: TvlHeatmapRange): Promise<TvlHeatmapData[]> => {
+      return queryClient.fetchQuery({
+        queryKey: buildTvlHeatmapKey(days),
+        queryFn: () => fetchTvlHeatmap(days),
+        staleTime: TVL_HEATMAP_STALE_TIME_MS,
+        gcTime: TVL_HEATMAP_GC_TIME_MS,
       });
-    
-      const response = await fetch(`/api/read/onchain/tvl-heatmap?${params}`);
-      if (!response.ok) {
-        throw new Error(`TVL Heatmap API error: ${response.status}`);
-      }
-      return response.json();
-    };
+    },
+    [queryClient, buildTvlHeatmapKey, fetchTvlHeatmap]
+  );
+
+  const prefetchTvlHeatmap = useCallback(
+    async (days: TvlHeatmapRange) => {
+      return queryClient.prefetchQuery({
+        queryKey: buildTvlHeatmapKey(days),
+        queryFn: () => fetchTvlHeatmap(days),
+        staleTime: TVL_HEATMAP_STALE_TIME_MS,
+        gcTime: TVL_HEATMAP_GC_TIME_MS,
+      });
+    },
+    [queryClient, buildTvlHeatmapKey, fetchTvlHeatmap]
+  );
 
   return {
     tvlHeatmap: {
@@ -90,12 +121,14 @@ export function useOnchain() {
       error: tvlHeatmapQuery.error,
       refetch: tvlHeatmapQuery.refetch,
     },
+    getCachedTvlHeatmap,
     stablecoinFlows: {
       data: stablecoinFlowsQuery.data,
       isLoading: stablecoinFlowsQuery.isLoading,
       error: stablecoinFlowsQuery.error,
       refetch: stablecoinFlowsQuery.refetch,
     },
+    prefetchTvlHeatmap,
     getTvlHeatmapByDays,
     isLoading: tvlHeatmapQuery.isLoading || stablecoinFlowsQuery.isLoading,
     error: tvlHeatmapQuery.error || stablecoinFlowsQuery.error,

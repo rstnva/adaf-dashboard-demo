@@ -8,7 +8,20 @@ async function main() {
   try {
     // First, ensure the database schema exists
     console.log('📋 Applying database schema...')
-    await prisma.$executeRaw`CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE`
+
+    let timescaleAvailable = true
+    try {
+      await prisma.$executeRaw`CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE`
+      console.log('🧩 TimescaleDB extension ensured')
+    } catch (extensionError) {
+      const message = extensionError instanceof Error ? extensionError.message : String(extensionError)
+      if (message.includes('timescaledb') && message.includes('is not available')) {
+        timescaleAvailable = false
+        console.warn('⚠️ TimescaleDB extension not installed on this Postgres instance. Continuing without hypertables.')
+      } else {
+        throw extensionError
+      }
+    }
     
     // Create the metrics table if it doesn't exist (for risk data)
     await prisma.$executeRaw`
@@ -22,9 +35,14 @@ async function main() {
     `
     
     // Convert to hypertable for TimescaleDB
-    await prisma.$executeRaw`
-      SELECT create_hypertable('metrics', 'ts', if_not_exists => true)
-    `
+    if (timescaleAvailable) {
+      await prisma.$executeRaw`
+        SELECT create_hypertable('metrics', 'ts', if_not_exists => true)
+      `
+      console.log('⏱️ Metrics hypertable configured')
+    } else {
+      console.log('ℹ️ Skipping hypertable conversion (TimescaleDB unavailable)')
+    }
     
     console.log('📊 Inserting sample NAV data...')
     const baseNavValue = 1000000; // $1M base

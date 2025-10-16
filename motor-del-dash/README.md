@@ -16,7 +16,7 @@ Esta carpeta contiene **TODA la documentación core** del sistema ADAF Dashboard
 
 ### 🏗️ **[arquitectura/](./arquitectura/)** - Documentación Técnica
 
-- **`ARCHITECTURE.md`** - Arquitectura técnica detallada
+- **[`arquitectura/ARCHITECTURE.md`](./arquitectura/ARCHITECTURE.md)** - Arquitectura técnica detallada
 - Stack tecnológico, APIs, integrations, deployment
 - **Para**: Desarrolladores, DevOps, arquitectos
 - **LAV-ADAF (3005)** → consulta también [`../lav-adaf/docs/architecture.md`](../lav-adaf/docs/architecture.md) para la nueva plataforma multi-agente y router IA.

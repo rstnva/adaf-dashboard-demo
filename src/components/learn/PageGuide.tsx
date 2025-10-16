@@ -192,6 +192,40 @@ const guides: Array<{ prefix: string; guide: Guide }> = [
     },
   },
   {
+    prefix: '/defi/opportunities',
+    guide: {
+      title: 'DeFi Yield Intelligence',
+      what: 'Mapa en tiempo real de rendimientos, TVL y riesgos en protocolos DeFi clave.',
+      objective: 'Detectar rendimientos sostenibles y rotaciones de liquidez para actuar antes que el mercado.',
+      steps: [
+        'Filtra por chain, protocolo o stablecoins según tu tesis',
+        'Ordena por APY y revisa la composición base vs. rewards',
+        'Cruza TVL y cambios de APY para validar sostenibilidad',
+      ],
+      concepts: ['APY', 'TVL', 'Risk score', 'Stablecoins', 'Restaking'],
+      success:
+        'Identificaste 1-2 oportunidades con APY atractivo, TVL saludable y riesgo alineado al mandato.',
+      tags: ['defi', 'yield', 'real-yield'],
+      cta: { label: 'Ver research DeFi', href: '/research?topic=defi' },
+    },
+  },
+  {
+    prefix: '/equities',
+    guide: {
+      title: 'Equities AI Sleeve',
+      what: 'Motor multi-factor con recomendaciones accionables, flujos ETF y control institucional.',
+      objective: 'Seleccionar el plan de rebalance con base en señales cuantitativas y riesgo controlado.',
+      steps: [
+        'Revisa el snapshot del sleeve y los límites de riesgo',
+        'Evalúa señales, fundamentales, flujos ETF y ownership para validar tesis',
+        'Ejecuta un backtest rápido y documenta la decisión en Control',
+      ],
+      concepts: ['Multi-factor', 'ETF flows', 'Institutional ownership', 'Backtest'],
+      success: 'Generaste un paquete validado con plan de ejecución y evidencia cuantitativa.',
+      cta: { label: 'Profundizar en Research', href: '/research?topic=equities' },
+    },
+  },
+  {
     prefix: '/wallstreet',
     guide: {
       title: 'Wall Street Pulse (WSP)',
