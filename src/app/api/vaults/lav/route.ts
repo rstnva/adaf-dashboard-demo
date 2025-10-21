@@ -11,6 +11,7 @@ import {
   simError,
   simSuccess,
 } from '@/lib/api/simResponse';
+import { recordVaultsSimulationLatency } from '@/lib/metrics';
 
 const ROUTE_ID = '/api/vaults/lav';
 
@@ -72,6 +73,11 @@ export async function POST(req: Request) {
       tenorDays: input.tenorDays,
       liquidityBand: input.riskProfile.liquidityBand,
     });
+
+    recordVaultsSimulationLatency(
+      input.riskProfile.liquidityBand,
+      Date.now() - startTime
+    );
 
     return simSuccess(
       ROUTE_ID,

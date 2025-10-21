@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { requirePermission } from '@/lib/auth/rbac';
-import { getRpcHeartbeatTable } from '../../../../../../../../../services/oracle-core/monitoring/heartbeats';
+import { getRpcHeartbeatTable } from '@services/oracle-core/monitoring/heartbeats';
 
 export async function GET() {
   try {

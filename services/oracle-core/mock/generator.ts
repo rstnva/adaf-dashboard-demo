@@ -70,6 +70,11 @@ export async function generateMockSamples(options: GeneratorOptions): Promise<Ar
           weight: 1,
           evidence: fixture.evidence?.length ? fixture.evidence : [createMockEvidence('mock')],
           confidence: fixture.confidence ?? 0.7,
+          provider: 'mock',
+          sourceId: 'mock-fixture',
+          updatedAt: fixture.ts ? new Date(fixture.ts) : options.timestamp ?? new Date(),
+          latencyMs: 0,
+          quorumEligible: true,
         };
 
         return {
@@ -89,6 +94,11 @@ export async function generateMockSamples(options: GeneratorOptions): Promise<Ar
         weight: 1,
         evidence: [createMockEvidence('mock')],
         confidence,
+        provider: 'mock',
+        sourceId: 'mock-generator',
+        updatedAt: options.timestamp ?? new Date(),
+        latencyMs: 0,
+        quorumEligible: true,
       };
 
       return {

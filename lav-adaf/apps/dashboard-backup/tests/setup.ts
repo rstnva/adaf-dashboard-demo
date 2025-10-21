@@ -360,36 +360,41 @@ process.env.DATABASE_URL = 'postgresql://mock:mock@mock:5432/mock_db'
 
 const mockStorage = new Map()
 
-vi.mock('ioredis', () => {
-  class MockRedis {
-    async get(key) {
-      const item = mockStorage.get(key)
-      if (!item) return null
-      const currentTime = Date.now()
-      if (item.expires && currentTime > item.expires) {
-        mockStorage.delete(key)
-        return null
-      }
-      return item.value
+class MockRedis {
+  on(_event, _handler) { return this }
+  async get(key) {
+    const item = mockStorage.get(key)
+    if (!item) return null
+    const currentTime = Date.now()
+    if (item.expires && currentTime > item.expires) {
+      mockStorage.delete(key)
+      return null
     }
-    async set(key, value, mode, duration) {
-      const item: any = { value }
-      const currentTime = Date.now()
-      if (mode === 'EX' && duration) {
-        // @ts-ignore - mock store attaches expiration on demand
-        item.expires = currentTime + (duration * 1000)
-      }
-      mockStorage.set(key, item)
-      return 'OK'
-    }
-    async del(key) { return mockStorage.delete(key) ? 1 : 0 }
-    async exists(key) { return mockStorage.has(key) ? 1 : 0 }
-    async flushdb() { mockStorage.clear(); return 'OK' }
-    async quit() { return 'OK' }
-    async disconnect() { return undefined }
+    return item.value
   }
-  return { default: MockRedis }
-})
+  async set(key, value, mode, duration) {
+    const item: any = { value }
+    const currentTime = Date.now()
+    if (mode === 'EX' && duration) {
+      // @ts-ignore - mock store attaches expiration on demand
+      item.expires = currentTime + (duration * 1000)
+    }
+    mockStorage.set(key, item)
+    return 'OK'
+  }
+  async del(key) { return mockStorage.delete(key) ? 1 : 0 }
+  async exists(key) { return mockStorage.has(key) ? 1 : 0 }
+  async flushdb() { mockStorage.clear(); return 'OK' }
+  async quit() { return 'OK' }
+  async disconnect() { return undefined }
+}
+
+// Expose for redis-config helpers expecting a global MockRedis in test mode
+;(globalThis as typeof globalThis & { MockRedis?: typeof MockRedis }).MockRedis = MockRedis
+
+vi.mock('ioredis', () => ({
+  default: MockRedis
+}))
 
 vi.mock('@prisma/client', () => {
   const db: { agentSignal: any[]; alert: any[]; opportunity: any[]; limit: any[]; newsData: any[] } = { agentSignal: [], alert: [], opportunity: [], limit: [], newsData: [] }

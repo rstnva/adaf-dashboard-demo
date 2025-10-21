@@ -19,7 +19,13 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*", "ADAF-ok/src/*"]
+      "@/*": [
+        "src/*",
+        "ADAF-ok/src/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ]
     },
     "types": [
       "vitest/globals"
@@ -31,13 +37,17 @@
     ]
   },
   "include": [
-    "next-env.d.ts",
     ".next/types/**/*.ts",
+    "middleware.ts",
+    "next-env.d.ts",
+    "services/**/*.ts",
+    "services/**/*.tsx",
     "src/**/*.ts",
     "src/**/*.tsx",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "types/**/*.d.ts"
+    "types/**/*.d.ts",
+    ".next-dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

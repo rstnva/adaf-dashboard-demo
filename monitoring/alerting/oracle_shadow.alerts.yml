@@ -1,0 +1,35 @@
+groups:
+  - name: oracle-shadow
+    rules:
+      - alert: OracleStaleRatioGlobal
+        expr: oracle_stale_ratio_global > 0.03
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Stale ratio global > 3%"
+          description: "Más del 3% de los feeds están stale por 15 minutos."
+      - alert: OracleQuorumFail
+        expr: oracle_quorum_fail_ratio > 0.01
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Quorum fail > 1%"
+          description: "Más del 1% de los feeds fallaron quorum por 10 minutos."
+      - alert: OracleShadowRMSE
+        expr: shadow_rmse{job="oracle"} > 0.01
+        for: 30m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Shadow RMSE > 1.0%"
+          description: "El RMSE de shadow supera 1% por 30 minutos."
+      - alert: OracleWebhookFail
+        expr: oracle_webhook_fail_ratio > 0.01
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Webhook fail ratio > 1%"
+          description: "Más del 1% de los webhooks fallaron por 15 minutos."

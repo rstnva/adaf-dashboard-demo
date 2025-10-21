@@ -65,6 +65,7 @@ Sistema **Fortune 500** de inteligencia financiera con:
 - 🔍 Gap analysis del prompt maestro: faltan por implementar módulos como Vaults v2, Alpha Research 2.0, feature flags dinámicos, métricas extendidas y localización. La priorización alimentará los próximos lossprints.
 - ✍️ Próxima acción: refrescar documentación (`MEMORIA_GITHUB_COPILOT.md`, README extendido) y convertir los hallazgos en backlog Fortune 500 antes de planificar el siguiente sprint.
 - 🛠️ Oracle Core v1.1 DoD: la migración `20251012121500_oracle_feeds_foundation` renombra `signals`→`agent_signals`, crea tablas de feeds/evidencia/quarantines/read_stats/news-triage con índices Fortune 500 y fue aplicada con `pnpm prisma migrate deploy`; el seed (`pnpm tsx infra/seed.ts`) ahora detecta entornos sin TimescaleDB y continúa en modo degradado; `pnpm test agent.worker.test.ts` valida compatibilidad ADAF/LAV/backup con el nuevo `agentSignal`.
+- 🧾 Contrato operativo actualizado: [`PROMPT_ORACLE_CORE_v1.1.md`](./PROMPT_ORACLE_CORE_v1.1.md) detalla el Meta-Oráculo 5× shadow, checklist de flip a mixed/live, DIA shadow add-on y Vox Populi Sentiment v1.
 
 #### 📰 Oráculo de Noticias (Sim-only)
 

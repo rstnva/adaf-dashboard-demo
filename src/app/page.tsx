@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -48,6 +49,7 @@ export default function HomePage() {
     alerts: 3,
     lastUpdate: '', // Solo se setea en el cliente
   });
+  const tLanding = useTranslations('landing');
 
   useEffect(() => {
     // Mock market data - in real app this would fetch from API
@@ -94,18 +96,15 @@ export default function HomePage() {
           <div className="mt-4 grid gap-10 lg:grid-cols-5">
             <div className="lg:col-span-3 space-y-6">
               <h1 className="section-heading">
-                Sistema institucional listo para Apple Vision y operaciones en
-                tiempo real.
+                {tLanding('headline')}
               </h1>
               <p className="section-subheading">
-                Orquesta mercados, riesgos y agentes cuantitativos desde una
-                superficie de vidrio interactiva. Optimizado para latencia baja,
-                mock completo y handoff inmediato hacia operaciones.
+                {tLanding('subheading')}
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <Link href="/markets" prefetch={false}>
                   <Button size="lg" className="rounded-2xl px-6 py-3 text-base">
-                    Lanzar Markets
+                    {tLanding('cta.launchMarkets')}
                   </Button>
                 </Link>
                 <Link href="/opx" prefetch={false}>
@@ -114,14 +113,14 @@ export default function HomePage() {
                     variant="outline"
                     className="rounded-2xl px-6 py-3 text-base"
                   >
-                    Ver OP-X Live
+                    {tLanding('cta.viewOpx')}
                   </Button>
                 </Link>
                 <Badge
                   variant="outline"
                   className="rounded-full border-white/20 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em]"
                 >
-                  MOCK MODE ACTIVO
+                  {tLanding('badge')}
                 </Badge>
               </div>
             </div>

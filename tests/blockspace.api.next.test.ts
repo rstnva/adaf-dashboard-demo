@@ -1,16 +1,25 @@
 import { describe, it, expect } from 'vitest';
 
-const BASE = 'http://localhost:3000/api/blockspace';
+import { POST as relayRoute } from '../src/app/api/blockspace/routes/route';
+import { POST as rebatesRoute } from '../src/app/api/blockspace/rebates/route';
+import { GET as sequencerRoute } from '../src/app/api/blockspace/sequencer/route';
 
-// Nota: El servidor Next.js debe estar corriendo en paralelo para estas pruebas
+const jsonRequest = (url: string, body: unknown) =>
+  new Request(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
 
 describe('Blockspace API (Next.js routes)', () => {
   it('POST /routes simula relay', async () => {
-    const res = await fetch(`${BASE}/routes`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ txs: ['0xabc'], meta: { user: 'demo' } })
-    });
+    const res = await relayRoute(
+      jsonRequest('http://localhost/api/blockspace/routes', {
+        txs: ['0xabc'],
+        meta: { user: 'demo' }
+      })
+    );
+
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data.status).toBe('simulated');
@@ -18,18 +27,20 @@ describe('Blockspace API (Next.js routes)', () => {
   });
 
   it('POST /rebates simula rebate', async () => {
-    const res = await fetch(`${BASE}/rebates`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ volume: 1000000 })
-    });
+    const res = await rebatesRoute(
+      jsonRequest('http://localhost/api/blockspace/rebates', {
+        volume: 1_000_000
+      })
+    );
+
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data).toHaveProperty('rebate');
   });
 
   it('GET /sequencer simula alianzas', async () => {
-    const res = await fetch(`${BASE}/sequencer`);
+    const res = await sequencerRoute();
+
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data).toHaveProperty('alliances');

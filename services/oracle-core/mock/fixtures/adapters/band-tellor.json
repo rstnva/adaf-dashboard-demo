@@ -1,0 +1,28 @@
+{
+  "band-btc": {
+    "value": 63098.11,
+    "updatedAt": "2025-10-16T14:00:08Z",
+    "confidence": 0.93,
+    "roundId": "band-oracle-btc-3181",
+    "validatorCount": 73,
+    "deviationBps": 20,
+    "latencyMs": 2100
+  },
+  "band-sol": {
+    "value": 153.96,
+    "updatedAt": "2025-10-16T14:00:05Z",
+    "confidence": 0.92,
+    "roundId": "band-oracle-sol-3180",
+    "validatorCount": 71,
+    "deviationBps": 18,
+    "latencyMs": 2300
+  },
+  "tellor-btc": {
+    "value": 63098.11,
+    "updatedAt": "2025-10-16T14:00:10Z",
+    "confidence": 0.9,
+    "roundId": "tellor-btc-443201",
+    "deviationBps": 42,
+    "latencyMs": 3200
+  }
+}

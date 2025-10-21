@@ -1,0 +1,16 @@
+[
+  {
+    "id": "etf_btc",
+    "label": "ETF Bitcoin",
+    "keywords": ["etf", "spot etf", "sec", "blackrock"],
+    "assets": ["btc"],
+    "priority": "high"
+  },
+  {
+    "id": "restaking",
+    "label": "Restaking",
+    "keywords": ["restaking", "eigenlayer", "avs"],
+    "assets": ["eth", "eigen"],
+    "priority": "medium"
+  }
+]

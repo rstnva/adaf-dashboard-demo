@@ -1,0 +1,7 @@
+[
+  {"feedId":"vox/x/sentiment_weighted:BTC","ts":"2025-10-20T00:00:00Z","value":0.25,"unit":"score","confidence":0.7,"quorum_ok":true,"stale":false,"evidence":[{"source_id":"mock-x","captured_at":"2025-10-20T00:00:00Z"}],"tags":["vox","mock"]},
+  {"feedId":"vox/x/volume:BTC","ts":"2025-10-20T00:00:00Z","value":420,"unit":"count/min","confidence":0.7,"quorum_ok":true,"stale":false,"evidence":[{"source_id":"mock-x","captured_at":"2025-10-20T00:00:00Z"}],"tags":["vox","mock"]},
+  {"feedId":"vox/x/velocity:BTC","ts":"2025-10-20T00:00:00Z","value":1.2,"unit":"zscore","confidence":0.7,"quorum_ok":true,"stale":false,"evidence":[{"source_id":"mock-x","captured_at":"2025-10-20T00:00:00Z"}],"tags":["vox","mock"]},
+  {"feedId":"vox/reddit/sentiment_weighted:BTC","ts":"2025-10-20T00:00:00Z","value":0.18,"unit":"score","confidence":0.7,"quorum_ok":true,"stale":false,"evidence":[{"source_id":"mock-reddit","captured_at":"2025-10-20T00:00:00Z"}],"tags":["vox","mock"]},
+  {"feedId":"vox/all/vpi:BTC","ts":"2025-10-20T00:00:00Z","value":62,"unit":"score","confidence":0.7,"quorum_ok":true,"stale":false,"evidence":[{"source_id":"mock-x","captured_at":"2025-10-20T00:00:00Z"},{"source_id":"mock-reddit","captured_at":"2025-10-20T00:00:00Z"}],"tags":["vox","mock"]}
+]

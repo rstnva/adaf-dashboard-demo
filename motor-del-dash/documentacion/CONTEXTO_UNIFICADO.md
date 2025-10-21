@@ -6813,7 +6813,7 @@ _This security documentation must be reviewed and updated with each release. For
 
 ## Sprints 2025-10-10
 
-> Fuente original: `SPRINTS_2025-10-10.md`
+> Fuente original: [`sprints/SPRINTS_2025-10-10.md`](../sprints/SPRINTS_2025-10-10.md)
 
 ### Sprints ADAF Dashboard Pro - 2025-10-10
 

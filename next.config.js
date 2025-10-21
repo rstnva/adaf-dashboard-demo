@@ -1,7 +1,11 @@
+const createNextIntlPlugin = require('next-intl/plugin');
+const withNextIntl = createNextIntlPlugin('./i18n.ts');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  distDir: '.next-dev',
   eslint: {
-    // Fortalecemos la puerta de calidad: cualquier error o warning crítico hará fallar la build
+    // Fortalecemos la puerta de calidad: cualquier error o warning crtico har fallar la build
     ignoreDuringBuilds: false,
   },
   // Note: Use process.env.MOCK_MODE=1 in CI/build to avoid external Redis/network during compilation.
@@ -63,4 +67,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);

@@ -4,6 +4,10 @@ export const EvidenceRefSchema = z.object({
   source_id: z.string(),
   url: z.string().url().optional(),
   hash: z.string().optional(),
+  round_id: z.string().optional(),
+  price_id: z.string().optional(),
+  block_number: z.number().int().nonnegative().optional(),
+  block_hash: z.string().optional(),
   captured_at: z.string().datetime(),
 });
 

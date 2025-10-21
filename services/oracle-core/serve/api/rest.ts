@@ -78,7 +78,13 @@ export async function postPublish(request: NextRequest, token: AccessToken | nul
   );
   if (!dq.valid) {
     dq.failures.forEach(rule => dqFailureTotal.inc({ feed: feed.id, rule: rule.id }));
-    quarantineSignal(signal, dq.failures.map(rule => rule.id).join(','));
+      await quarantineSignal(signal, {
+        reason: 'dq_failure',
+        ruleIds: dq.failures.map(rule => rule.id),
+        metadata: {
+          checks: dq.checks,
+        },
+      });
     return new Response('Signal quarantined', { status: 422 });
   }
 

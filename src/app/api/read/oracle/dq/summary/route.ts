@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { requirePermission } from '@/lib/auth/rbac';
-import { getDataQualitySummary } from '../../../../../../../../../services/oracle-core/dq/summary';
+import { getDataQualitySummary } from '@services/oracle-core/dq/summary';
 
 export async function GET(request: NextRequest) {
   try {

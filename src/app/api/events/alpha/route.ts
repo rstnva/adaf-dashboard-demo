@@ -11,6 +11,7 @@ import {
   simError,
   simSuccess,
 } from '@/lib/api/simResponse';
+import { recordEventAlphaAlerts } from '@/lib/metrics';
 
 const ROUTE_ID = '/api/events/alpha';
 
@@ -69,6 +70,8 @@ export async function POST(req: Request) {
       correlationId,
       catalystCount: catalysts.length,
     });
+
+    recordEventAlphaAlerts(catalysts.map(catalyst => catalyst.severity));
 
     return simSuccess(
       ROUTE_ID,

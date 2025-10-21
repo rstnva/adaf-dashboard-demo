@@ -5,35 +5,42 @@ import { Feed, FeedSchema } from './schema';
 
 let cachedFeeds: Feed[] | null = null;
 
-const FEEDS_FILE = path.join(
-  process.cwd(),
-  'services',
-  'oracle-core',
-  'registry',
-  'feeds.mock.json'
-);
+const REGISTRY_ROOT = path.join(process.cwd(), 'services', 'oracle-core', 'registry');
+const FEED_FILES = ['feeds.mock.json', 'feeds.onchain.shadow.json', 'feeds.vox.json'];
+
+async function loadFeedFile(fileName: string): Promise<Feed[]> {
+  const location = path.join(REGISTRY_ROOT, fileName);
+  const raw = await readFile(location, 'utf-8');
+  const parsed = JSON.parse(raw);
+
+  if (!Array.isArray(parsed)) {
+    throw new Error(`${fileName} must be an array`);
+  }
+
+  return parsed.map((entry, index) => {
+    try {
+      return FeedSchema.parse(entry);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'unknown error';
+      throw new Error(`Invalid feed definition in ${fileName} at index ${index}: ${message}`);
+    }
+  });
+}
 
 export async function loadFeeds(): Promise<Feed[]> {
   if (cachedFeeds) {
     return cachedFeeds;
   }
 
-  const raw = await readFile(FEEDS_FILE, 'utf-8');
-  const parsed = JSON.parse(raw);
-
-  if (!Array.isArray(parsed)) {
-    throw new Error('feeds.mock.json must be an array');
+  const feedsById = new Map<string, Feed>();
+  for (const file of FEED_FILES) {
+    const feeds = await loadFeedFile(file);
+    feeds.forEach(feed => {
+      feedsById.set(feed.id, feed);
+    });
   }
 
-  cachedFeeds = parsed.map((entry, index) => {
-    try {
-      return FeedSchema.parse(entry);
-    } catch (error) {
-      const message = error instanceof Error ? error.message : 'unknown error';
-      throw new Error(`Invalid feed definition at index ${index}: ${message}`);
-    }
-  });
-
+  cachedFeeds = Array.from(feedsById.values());
   return cachedFeeds;
 }
 

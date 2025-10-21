@@ -1,0 +1,47 @@
+{
+  "chainlink-btc": {
+    "value": 63123.18,
+    "updatedAt": "2025-10-16T14:00:00Z",
+    "confidence": 0.98,
+    "roundId": "18446744073709552000",
+    "blockNumber": 19654012,
+    "blockHash": "0x8f3b5cchainlinkbtc",
+    "latencyMs": 1200
+  },
+  "chainlink-eth": {
+    "value": 3312.45,
+    "updatedAt": "2025-10-16T14:00:02Z",
+    "confidence": 0.97,
+    "roundId": "18446744073709552018",
+    "blockNumber": 19654018,
+    "blockHash": "0x9d4ccechainlinketh",
+    "latencyMs": 950
+  },
+  "chainlink-gas": {
+    "value": 22.5,
+    "updatedAt": "2025-10-16T14:00:03Z",
+    "confidence": 0.95,
+    "roundId": "18446744073709552021",
+    "blockNumber": 19654021,
+    "blockHash": "0xf21cc5chainlinkgas",
+    "latencyMs": 600
+  },
+  "chainlink-usdc": {
+    "value": 1.0002,
+    "updatedAt": "2025-10-16T14:00:05Z",
+    "confidence": 0.99,
+    "roundId": "18446744073709552031",
+    "blockNumber": 19654031,
+    "blockHash": "0x2af7cechainlinkusdc",
+    "latencyMs": 1500
+  },
+  "chainlink-usdt": {
+    "value": 0.9995,
+    "updatedAt": "2025-10-16T14:00:06Z",
+    "confidence": 0.99,
+    "roundId": "18446744073709552036",
+    "blockNumber": 19654036,
+    "blockHash": "0x4bb12achainlinkusdt",
+    "latencyMs": 1480
+  }
+}

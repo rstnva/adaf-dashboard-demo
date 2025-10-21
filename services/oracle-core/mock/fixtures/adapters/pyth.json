@@ -1,0 +1,42 @@
+{
+  "pyth-btc": {
+    "value": 63110.42,
+    "updatedAt": "2025-10-16T14:00:01Z",
+    "confidence": 0.96,
+    "priceId": "0xfad34a3b61-btc-usd",
+    "confidenceInterval": 0.012,
+    "latencyMs": 1800
+  },
+  "pyth-eth": {
+    "value": 3310.91,
+    "updatedAt": "2025-10-16T14:00:04Z",
+    "confidence": 0.95,
+    "priceId": "0xfad34a3b61-eth-usd",
+    "confidenceInterval": 0.014,
+    "latencyMs": 1750
+  },
+  "pyth-sol": {
+    "value": 154.33,
+    "updatedAt": "2025-10-16T14:00:05Z",
+    "confidence": 0.94,
+    "priceId": "0xfad34a3b61-sol-usd",
+    "confidenceInterval": 0.02,
+    "latencyMs": 2100
+  },
+  "pyth-usdc": {
+    "value": 0.9998,
+    "updatedAt": "2025-10-16T14:00:03Z",
+    "confidence": 0.99,
+    "priceId": "0xfad34a3b61-usdc-usd",
+    "confidenceInterval": 0.002,
+    "latencyMs": 1900
+  },
+  "pyth-gas": {
+    "value": 23.2,
+    "updatedAt": "2025-10-16T14:00:06Z",
+    "confidence": 0.93,
+    "priceId": "0xfad34a3b61-eth-gas",
+    "confidenceInterval": 0.05,
+    "latencyMs": 2000
+  }
+}

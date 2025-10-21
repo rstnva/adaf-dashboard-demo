@@ -1,0 +1,47 @@
+{
+  "BTC": {
+    "symbol": "BTC",
+    "aliases": ["bitcoin", "btc", "sats", "xbt", "$btc"],
+    "tickers": ["BTC", "XBT"],
+    "hashtags": ["#btc", "#bitcoin"],
+    "contracts": ["0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"],
+    "narratives": ["digital_gold", "etf_btc"],
+    "negative_cases": ["btc turkey", "btc band"]
+  },
+  "ETH": {
+    "symbol": "ETH",
+    "aliases": ["ethereum", "eth", "ether", "$eth"],
+    "tickers": ["ETH"],
+    "hashtags": ["#eth", "#ethereum"],
+    "contracts": ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"],
+    "narratives": ["world_computer", "defi", "restaking"],
+    "negative_cases": []
+  },
+  "SOL": {
+    "symbol": "SOL",
+    "aliases": ["solana", "sol", "$sol"],
+    "tickers": ["SOL"],
+    "hashtags": ["#sol", "#solana"],
+    "contracts": ["So11111111111111111111111111111111111111112"],
+    "narratives": ["fast_chain", "memecoin_hub"],
+    "negative_cases": ["sun sol", "solar"]
+  },
+  "AVAX": {
+    "symbol": "AVAX",
+    "aliases": ["avalanche", "avax", "ava", "$avax"],
+    "tickers": ["AVAX"],
+    "hashtags": ["#avax", "#avalanche"],
+    "contracts": ["0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7"],
+    "narratives": ["subnet", "gaming"],
+    "negative_cases": ["ava max"]
+  },
+  "MATIC": {
+    "symbol": "MATIC",
+    "aliases": ["polygon", "matic", "$matic"],
+    "tickers": ["MATIC", "POL"],
+    "hashtags": ["#matic", "#polygon"],
+    "contracts": ["0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0"],
+    "narratives": ["l2", "scaling"],
+    "negative_cases": []
+  }
+}

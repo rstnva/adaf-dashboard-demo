@@ -1,0 +1,28 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Oracle Freshness & Shadow Demo",
+    "panels": [
+      {
+        "type": "graph",
+        "title": "Stale Ratio Global",
+        "targets": [{"expr": "oracle_stale_ratio_global"}]
+      },
+      {
+        "type": "graph",
+        "title": "Quorum Fail Ratio",
+        "targets": [{"expr": "oracle_quorum_fail_ratio"}]
+      },
+      {
+        "type": "graph",
+        "title": "Shadow RMSE",
+        "targets": [{"expr": "shadow_rmse{job=\"oracle\"}"}]
+      },
+      {
+        "type": "graph",
+        "title": "Deviation Total",
+        "targets": [{"expr": "deviation_total{job=\"oracle\"}"}]
+      }
+    ]
+  }
+}

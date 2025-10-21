@@ -61,5 +61,6 @@ export type {
   DqTrend,
   DqRuleSummary,
   DqFeedSummary,
+  DqShadowRmse,
   DqSummaryResponse,
 } from './useOracleDQ';

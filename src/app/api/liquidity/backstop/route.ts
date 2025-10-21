@@ -11,6 +11,7 @@ import {
   simError,
   simSuccess,
 } from '@/lib/api/simResponse';
+import { setLiquidityBackstopReserveRatio } from '@/lib/metrics';
 
 const ROUTE_ID = '/api/liquidity/backstop';
 
@@ -63,6 +64,8 @@ export async function POST(req: Request) {
       desk: input.desk,
       topUpUsd: plan.topUpUsd,
     });
+
+    setLiquidityBackstopReserveRatio(plan.desk || input.desk, plan.reserveMultiplier);
 
     return simSuccess(
       ROUTE_ID,

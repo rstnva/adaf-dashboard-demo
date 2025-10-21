@@ -9,7 +9,11 @@
     { "id": "fred", "name": "FRED", "tier": "tier-2", "tos_class": "public", "category": "macro" },
     { "id": "flashbots", "name": "Flashbots", "tier": "tier-1", "tos_class": "open", "category": "mev" },
     { "id": "thegraph", "name": "The Graph", "tier": "tier-2", "tos_class": "open", "category": "onchain_indexing" },
-    { "id": "defillama", "name": "DeFiLlama", "tier": "tier-2", "tos_class": "open", "category": "defi" }
+    { "id": "defillama", "name": "DeFiLlama", "tier": "tier-2", "tos_class": "open", "category": "defi" },
+    { "id": "vox-x", "name": "Vox Populi — X/Twitter", "tier": "tier-2", "tos_class": "public", "category": "social" },
+    { "id": "vox-reddit", "name": "Vox Populi — Reddit", "tier": "tier-2", "tos_class": "public", "category": "social" },
+    { "id": "vox-aggregate", "name": "Vox Populi — Aggregator", "tier": "tier-2", "tos_class": "internal", "category": "derived" },
+    { "id": "vox-signal", "name": "Vox Populi — Derived Signals", "tier": "tier-2", "tos_class": "internal", "category": "derived" }
   ],
   "legal_note": "Metadatos únicamente; las señales derivadas cumplen TOS tier-1/tier-2. No se activan conectores en mock mode."
 }

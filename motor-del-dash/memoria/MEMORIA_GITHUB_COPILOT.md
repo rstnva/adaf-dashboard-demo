@@ -242,6 +242,12 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
   - Tendencias operativas DQ: el summary persiste un snapshot previo y calcula `trend` (`improving`, `stable`, `deteriorating`) con deltas de fail/pass/ratio y recomendaciones de acción. Se expone reset `resetDataQualitySummaryCache()` para pruebas y se validan escenarios de degradación progresiva en `tests/oracle.dq.summary.test.ts`.
   - UI institucional para DQ: nueva tarjeta `OracleDataQualityCard` en el dashboard principal consume `/api/read/oracle/dq/summary` vía `useOracleDQSummary`, mostrando severidad, tendencias, KPIs y feeds prioritarios con recomendaciones Fortune 500; se actualiza la vista principal y se refuerza la experiencia de monitoreo en tiempo real.
 
+- 2025-10-15
+  - Sesión dedicada a consolidar el alcance del **Oracle Core v1.1**. Se revisó el estado real de `services/oracle-core` y se inventarió la brecha contra el contrato Meta-Oráculo 5× (adapters on-chain, consenso, storage, SDK, Command Center, observabilidad, Vox Populi).
+  - Se diseñó un plan de ejecución Fortune 500 en 10 fases: guardrails, storage/registry, ingest/digest, consenso+DQ, serving+SDK, Vox Populi, UI Command Center, observabilidad/scripts, pruebas y documentación, calidad final. Cada fase incluye entregables, riesgos y dependencias.
+  - Actualizado el tablero de tareas (`todo list`) marcando la evaluación como completa y dejando las fases siguientes preparadas para ejecución secuencial a partir de la próxima sesión.
+  - Sin cambios de código en esta jornada; se mantienen los quality gates verdes (`pnpm lint` ejecutado previamente, PASS). Próximo paso: iniciar la Fase 1 (registry y storage) con migraciones Prisma y seeders institucionales.
+
 ---
 
 ## 5) Riesgos y mitigaciones

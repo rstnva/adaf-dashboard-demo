@@ -1,0 +1,338 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "clipboard-write=(self \"http://localhost\")"
+        }
+      ],
+      "regex": "^/api(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
+    },
+    {
+      "source": "/_next/static/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ],
+      "regex": "^/_next/static(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
+    },
+    {
+      "source": "/:all*(js|css)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ],
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(js|css)(?:/)?$"
+    }
+  ],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/academy/lesson/[id]",
+      "regex": "^/academy/lesson/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/academy/lesson/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/academy/quiz/[id]",
+      "regex": "^/academy/quiz/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/academy/quiz/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/actions/alerts/[alert_id]/ack",
+      "regex": "^/api/actions/alerts/([^/]+?)/ack(?:/)?$",
+      "routeKeys": {
+        "nxtPalert_id": "nxtPalert_id"
+      },
+      "namedRegex": "^/api/actions/alerts/(?<nxtPalert_id>[^/]+?)/ack(?:/)?$"
+    },
+    {
+      "page": "/api/actions/opps/[opp_id]/status/[status]",
+      "regex": "^/api/actions/opps/([^/]+?)/status/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPopp_id": "nxtPopp_id",
+        "nxtPstatus": "nxtPstatus"
+      },
+      "namedRegex": "^/api/actions/opps/(?<nxtPopp_id>[^/]+?)/status/(?<nxtPstatus>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/learn/lesson/[id]",
+      "regex": "^/api/learn/lesson/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/learn/lesson/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/research/backtest/[id]",
+      "regex": "^/api/research/backtest/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/research/backtest/(?<nxtPid>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/academy",
+      "regex": "^/academy(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/academy(?:/)?$"
+    },
+    {
+      "page": "/alerts",
+      "regex": "^/alerts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/alerts(?:/)?$"
+    },
+    {
+      "page": "/control",
+      "regex": "^/control(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/control(?:/)?$"
+    },
+    {
+      "page": "/control/compliance",
+      "regex": "^/control/compliance(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/control/compliance(?:/)?$"
+    },
+    {
+      "page": "/dashboard",
+      "regex": "^/dashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard(?:/)?$"
+    },
+    {
+      "page": "/dashboard-backup",
+      "regex": "^/dashboard\\-backup(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard\\-backup(?:/)?$"
+    },
+    {
+      "page": "/dashboard-simple",
+      "regex": "^/dashboard\\-simple(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard\\-simple(?:/)?$"
+    },
+    {
+      "page": "/dashboard-test",
+      "regex": "^/dashboard\\-test(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard\\-test(?:/)?$"
+    },
+    {
+      "page": "/defi/opportunities",
+      "regex": "^/defi/opportunities(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/defi/opportunities(?:/)?$"
+    },
+    {
+      "page": "/derivatives",
+      "regex": "^/derivatives(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/derivatives(?:/)?$"
+    },
+    {
+      "page": "/dqp",
+      "regex": "^/dqp(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dqp(?:/)?$"
+    },
+    {
+      "page": "/equities",
+      "regex": "^/equities(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/equities(?:/)?$"
+    },
+    {
+      "page": "/etf-flows",
+      "regex": "^/etf\\-flows(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/etf\\-flows(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/lineage",
+      "regex": "^/lineage(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/lineage(?:/)?$"
+    },
+    {
+      "page": "/markets",
+      "regex": "^/markets(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/markets(?:/)?$"
+    },
+    {
+      "page": "/markets/compare",
+      "regex": "^/markets/compare(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/markets/compare(?:/)?$"
+    },
+    {
+      "page": "/monitoring",
+      "regex": "^/monitoring(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/monitoring(?:/)?$"
+    },
+    {
+      "page": "/news",
+      "regex": "^/news(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/news(?:/)?$"
+    },
+    {
+      "page": "/onchain",
+      "regex": "^/onchain(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/onchain(?:/)?$"
+    },
+    {
+      "page": "/opx",
+      "regex": "^/opx(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/opx(?:/)?$"
+    },
+    {
+      "page": "/oracle",
+      "regex": "^/oracle(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/oracle(?:/)?$"
+    },
+    {
+      "page": "/pnl",
+      "regex": "^/pnl(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pnl(?:/)?$"
+    },
+    {
+      "page": "/reports",
+      "regex": "^/reports(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/reports(?:/)?$"
+    },
+    {
+      "page": "/research",
+      "regex": "^/research(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/research(?:/)?$"
+    },
+    {
+      "page": "/security",
+      "regex": "^/security(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/security(?:/)?$"
+    },
+    {
+      "page": "/simple",
+      "regex": "^/simple(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/simple(?:/)?$"
+    },
+    {
+      "page": "/test-components",
+      "regex": "^/test\\-components(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/test\\-components(?:/)?$"
+    },
+    {
+      "page": "/test-report",
+      "regex": "^/test\\-report(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/test\\-report(?:/)?$"
+    },
+    {
+      "page": "/test-simple",
+      "regex": "^/test\\-simple(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/test\\-simple(?:/)?$"
+    },
+    {
+      "page": "/vox-war-room",
+      "regex": "^/vox\\-war\\-room(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/vox\\-war\\-room(?:/)?$"
+    },
+    {
+      "page": "/wallstreet",
+      "regex": "^/wallstreet(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/wallstreet(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

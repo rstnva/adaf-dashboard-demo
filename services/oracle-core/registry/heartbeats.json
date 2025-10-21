@@ -1,0 +1,35 @@
+[
+  {
+    "feed": "price/btc_usd.live",
+    "chainlink_ms": 200000,
+    "pyth_ms": 2000,
+    "redstone_ms": 10000,
+    "tellor_ms": 300000,
+    "uma_ms": 300000
+  },
+  {
+    "feed": "price/eth_usd.live",
+    "chainlink_ms": 200000,
+    "pyth_ms": 2000,
+    "chronicle_ms": 5000,
+    "band_ms": 15000,
+    "tellor_ms": 300000
+  },
+  {
+    "feed": "gas/eth_gwei.live",
+    "chainlink_ms": 20000,
+    "pyth_ms": 2000
+  },
+  {
+    "feed": "por/usdc_reserves_usd.live",
+    "chainlink_ms": 300000,
+    "pyth_ms": 60000,
+    "redstone_ms": 60000
+  },
+  {
+    "feed": "por/usdt_reserves_usd.live",
+    "chainlink_ms": 300000,
+    "pyth_ms": 60000,
+    "redstone_ms": 60000
+  }
+]

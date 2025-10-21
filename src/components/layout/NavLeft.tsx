@@ -4,6 +4,7 @@ import React from 'react';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useUIStore } from '@/store/ui';
@@ -25,118 +26,128 @@ import {
   Bot,
   ExternalLink,
   Coins,
-  LineChart
+  LineChart,
+  Database
 } from 'lucide-react';
+
+type NavKey =
+  | 'inicio'
+  | 'markets'
+  | 'onchain'
+  | 'defi'
+  | 'equities'
+  | 'derivatives'
+  | 'news'
+  | 'research'
+  | 'opx'
+  | 'reports'
+  | 'dqp'
+  | 'lineage'
+  | 'oracle'
+  | 'academy'
+  | 'control'
+  | 'monitoring'
+  | 'lava';
 
 interface NavItem {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  description?: string;
+  i18nKey: NavKey;
 }
 
 const NAV_ITEMS: NavItem[] = [
   {
     href: '/',
     icon: Home,
-    label: 'Inicio',
-    description: 'Resumen del dashboard'
+    i18nKey: 'inicio'
   },
   {
     href: '/markets',
     icon: TrendingUp,
-    label: 'Mercados',
-    description: 'Flujos ETF, funding, comparativos'
+    i18nKey: 'markets'
   },
   {
     href: '/onchain',
     icon: LinkIcon,
-    label: 'On-Chain',
-    description: 'TVL, flujos stablecoin, real yield'
+    i18nKey: 'onchain'
   },
   {
     href: '/defi/opportunities',
     icon: Coins,
-    label: 'DeFi Yield',
-    description: 'APYs multichain y real yield'
+    i18nKey: 'defi'
   },
   {
     href: '/equities',
     icon: LineChart,
-    label: 'Equities AI',
-    description: 'Sleeve institucional multi-factor'
+    i18nKey: 'equities'
   },
   {
     href: '/derivatives',
     icon: BarChart3,
-    label: 'Derivados',
-    description: 'Funding rates, exposición gamma'
+    i18nKey: 'derivatives'
   },
   {
     href: '/news',
     icon: Newspaper,
-    label: 'Noticias',
-    description: 'Sentinel de noticias, vigilancia regulatoria'
+    i18nKey: 'news'
   },
   {
     href: '/research',
     icon: Search,
-    label: 'Research',
-    description: 'Backtesting, herramientas de análisis'
+    i18nKey: 'research'
   },
   {
     href: '/opx',
     icon: Target,
-    label: 'OP-X',
-    description: 'Oportunidades de estrategia'
+    i18nKey: 'opx'
   },
   {
     href: '/reports',
     icon: FileText,
-    label: 'Reportes',
-    description: 'Reportes generados y entrega'
+    i18nKey: 'reports'
   },
   {
     href: '/dqp',
     icon: Shield,
-    label: 'DQP',
-    description: 'Calidad de datos y gobernanza'
+    i18nKey: 'dqp'
   },
   {
     href: '/lineage',
     icon: GitBranch,
-    label: 'Lineage',
-    description: 'Linaje de datos y procedencia'
+    i18nKey: 'lineage'
+  },
+  {
+    href: '/oracle',
+    icon: Database,
+    i18nKey: 'oracle'
   },
   {
     href: '/academy',
     icon: GraduationCap,
-    label: 'Academia',
-    description: 'Bootcamp de aprendizaje'
+    i18nKey: 'academy'
   },
   {
     href: '/control',
     icon: Settings,
-    label: 'Control',
-    description: 'Límites, reglas, auditoría'
+    i18nKey: 'control'
   },
   {
     href: '/monitoring',
     icon: Shield,
-    label: 'Monitoring',
-    description: 'Estado y diagnósticos rápidos'
+    i18nKey: 'monitoring'
   },
   {
     href: 'http://localhost:3005',
     icon: Bot,
-    label: 'LAV-ADAF',
-    description: 'Sistema de Agentes Cuantitativos'
+    i18nKey: 'lava'
   }
 ];
 
 export function NavLeft() {
   const pathname = usePathname();
   const { sidebarCollapsed, toggleSidebar } = useUIStore();
+  const tNav = useTranslations('nav');
+  const tCommon = useTranslations('common');
 
   return (
     <nav
@@ -151,8 +162,12 @@ export function NavLeft() {
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-amber-500/70 via-yellow-400/70 to-amber-300/70 shadow-[0_12px_35px_rgba(250,204,21,0.45)]" />
             <div className="flex flex-col">
-              <span className="text-xs uppercase tracking-[0.4em] text-amber-200/60">ADAF</span>
-              <span className="text-lg font-semibold text-amber-100">Vision Hub</span>
+              <span className="text-xs uppercase tracking-[0.4em] text-amber-200/60">
+                {tCommon('brand.subtitle')}
+              </span>
+              <span className="text-lg font-semibold text-amber-100">
+                {tCommon('brand.title')}
+              </span>
             </div>
           </div>
         )}
@@ -173,7 +188,7 @@ export function NavLeft() {
       {/* Navigation Items */}
       <div className="flex-1 overflow-y-auto py-4">
         <div className="space-y-1 px-2">
-          {NAV_ITEMS.map((item) => {
+          {NAV_ITEMS.map(item => {
             const Icon = item.icon;
             const isExternal = item.href.startsWith('http');
             const isActive = !isExternal && (item.href === '/'
@@ -205,14 +220,14 @@ export function NavLeft() {
                   {!sidebarCollapsed && (
                     <div className="flex flex-col items-start">
                       <div className="flex items-center gap-1">
-                        <span className="font-medium tracking-tight">{item.label}</span>
+                        <span className="font-medium tracking-tight">
+                          {tNav(`${item.i18nKey}.label`)}
+                        </span>
                         {isExternal && <ExternalLink className="h-3 w-3" />}
                       </div>
-                      {item.description && (
-                        <span className="text-xs font-normal text-amber-200/60">
-                          {item.description}
-                        </span>
-                      )}
+                      <span className="text-xs font-normal text-amber-200/60">
+                        {tNav(`${item.i18nKey}.description`)}
+                      </span>
                     </div>
                   )}
                 </Button>
@@ -226,8 +241,8 @@ export function NavLeft() {
       {!sidebarCollapsed && (
         <div className="border-t p-4">
           <div className="text-xs text-gray-500">
-            <div className="font-medium">ADAF Dashboard Pro</div>
-            <div>v2.1.0 • 2025</div>
+            <div className="font-medium">{tCommon('footer.product')}</div>
+            <div>{tCommon('footer.version')}</div>
           </div>
         </div>
       )}

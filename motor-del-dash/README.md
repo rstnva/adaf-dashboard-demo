@@ -11,12 +11,14 @@ Esta carpeta contiene **TODA la documentación core** del sistema ADAF Dashboard
 ### 🚀 **[documentacion/](./documentacion/)** - Guías de Usuario
 
 - **`README-COMPLETO.md`** - Guía completa paso a paso (375 líneas optimizadas)
+- **`ORACLE_CORE_IMPLEMENTATION.md`** - Implementación completa del Oracle Core (Meta-Oráculo 5× Fortune 500)
 - Inicio rápido, recuperación de emergencia, troubleshooting
 - **Para**: Usuarios, administradores, instalación y uso
 
 ### 🏗️ **[arquitectura/](./arquitectura/)** - Documentación Técnica
 
-- **[`arquitectura/ARCHITECTURE.md`](./arquitectura/ARCHITECTURE.md)** - Arquitectura técnica detallada
+- **[`ARCHITECTURE.md`](./arquitectura/ARCHITECTURE.md)** - Arquitectura técnica detallada
+- **[`ORACLE_ARCHITECTURE.md`](./arquitectura/ORACLE_ARCHITECTURE.md)** - Arquitectura del Oracle Core (flujos, seguridad, observabilidad)
 - Stack tecnológico, APIs, integrations, deployment
 - **Para**: Desarrolladores, DevOps, arquitectos
 - **LAV-ADAF (3005)** → consulta también [`../lav-adaf/docs/architecture.md`](../lav-adaf/docs/architecture.md) para la nueva plataforma multi-agente y router IA.
@@ -26,6 +28,12 @@ Esta carpeta contiene **TODA la documentación core** del sistema ADAF Dashboard
 - **`MEMORIA_GITHUB_COPILOT.md`** - Registro completo de cambios técnicos
 - Decisiones de diseño, evolución del sistema, aprendizajes
 - **Para**: Contexto histórico, decisiones futuras, onboarding
+
+### 📈 **[sprints/](./sprints/)** - Planificación y seguimiento
+
+- **`SPRINTS_2025-10-10.md`** - Bitácora de validaciones por sprint
+- **`PLAN_2025-10-15.md`** - Plan de cierre Fortune 500 (pendientes críticos y responsables)
+- **Para**: PMO, leads técnicos, seguimiento de compromisos Fortune 500
 
 ---
 
@@ -49,6 +57,15 @@ Esta carpeta contiene **TODA la documentación core** del sistema ADAF Dashboard
 - 📋 Stack tecnológico completo
 - 🔌 APIs y endpoints
 - 🐳 Docker y deployment
+
+👉 **[arquitectura/ORACLE_ARCHITECTURE.md](./arquitectura/ORACLE_ARCHITECTURE.md)**
+
+- 🎯 Oracle Core - Meta-Oráculo Multi-Fuente
+- 🔄 Flujos de consenso (weighted median, trimmed mean, k-of-n)
+- 🔐 Seguridad (RBAC, rate limiting, audit trail)
+- 📊 Observabilidad (Prometheus, Grafana, alertas)
+- 🚀 Deployment (shadow → mixed → live)
+
 - 🤖 **Multi-agente LAV (puerto 3005)**: [`../lav-adaf/docs/architecture.md`](../lav-adaf/docs/architecture.md) y [`../lav-adaf/docs/runbook-demo.md`](../lav-adaf/docs/runbook-demo.md)
 
 ### 🧠 **¿Quieres entender decisiones técnicas?**

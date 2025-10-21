@@ -11,6 +11,7 @@ import {
   simError,
   simSuccess,
 } from '@/lib/api/simResponse';
+import { recordAlphaFactorySignals } from '@/lib/metrics';
 
 const ROUTE_ID = '/api/alpha/factory';
 const DEFAULT_UNIVERSE = ['btc', 'eth', 'sol', 'arb', 'op'];
@@ -53,6 +54,12 @@ export async function POST(req: Request) {
       universe: universe.slice(0, 5),
       signalCount: signals.length,
     });
+
+    const strategyLabels = signals.map(signal => {
+      const preferredTag = signal.tags.find(tag => tag === 'momentum' || tag === 'mean-reversion');
+      return preferredTag || signal.tags[0] || 'unknown';
+    });
+    recordAlphaFactorySignals(strategyLabels);
 
     return simSuccess(
       ROUTE_ID,

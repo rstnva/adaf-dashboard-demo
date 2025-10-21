@@ -11,6 +11,7 @@ import {
   simError,
   simSuccess,
 } from '@/lib/api/simResponse';
+import { recordBlockspaceSimulation } from '@/lib/metrics';
 
 const ROUTE_ID = '/api/blockspace/builder';
 
@@ -71,6 +72,12 @@ export async function POST(req: Request) {
       accepted: result.accepted,
       latencyMs: result.latencyMs,
     });
+
+    recordBlockspaceSimulation(
+      result.accepted ? 'accepted' : 'rejected',
+      Boolean(input.preferences?.mevProtection),
+      Date.now() - startTime
+    );
 
     return simSuccess(
       ROUTE_ID,

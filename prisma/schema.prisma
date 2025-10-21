@@ -100,6 +100,7 @@ model Feed {
 }
 
 model OracleSignal {
+  externalId String   @unique
   feedId      String
   ts          DateTime
   value       Decimal
@@ -116,6 +117,7 @@ model OracleSignal {
   status      String   @default("ok") // ok | stale | quarantined | disputed
   mode        String   @default("shadow")
   rev         Int      @default(0)
+  tags        String[] @default([])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -125,6 +127,7 @@ model OracleSignal {
 
   @@id([feedId, ts])
   @@index([feedId, ts(sort: Desc)], map: "signals_feed_ts_idx")
+  @@index([externalId], map: "signals_external_id_idx")
   @@index([status], map: "signals_status_idx")
   @@index([mode], map: "signals_mode_idx")
   @@map("signals")

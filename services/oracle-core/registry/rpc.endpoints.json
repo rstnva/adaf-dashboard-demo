@@ -1,0 +1,26 @@
+{
+  "ethereum": {
+    "primary": "https://rpc.primario",
+    "backup": "https://rpc.backup",
+    "weights": {
+      "https://rpc.primario": 0.7,
+      "https://rpc.backup": 0.3
+    }
+  },
+  "arbitrum": {
+    "primary": "https://arb.primario",
+    "backup": "https://arb.backup",
+    "weights": {
+      "https://arb.primario": 0.7,
+      "https://arb.backup": 0.3
+    }
+  },
+  "solana": {
+    "primary": "https://sol.primario",
+    "backup": "https://sol.backup",
+    "weights": {
+      "https://sol.primario": 0.6,
+      "https://sol.backup": 0.4
+    }
+  }
+}

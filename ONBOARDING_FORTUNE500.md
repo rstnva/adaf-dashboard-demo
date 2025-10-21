@@ -25,6 +25,17 @@ Bienvenido/a al equipo ADAF Dashboard Pro. Este onboarding te guiará paso a pas
 - Usa los scripts automatizados (`inicio-completo.sh`, `inicio-dashboard.sh`) para evitar errores manuales.
 - Verifica que los tests y el linting pasen localmente antes de cualquier PR.
 
+### 3.1 Configuración de simulación y feature flags
+- Copia `.env.example` a `.env.local` y revisa los toggles bajo la sección **Feature Flags (Simulación ADAF)**.
+- Activa únicamente los módulos que vas a probar (`NEXT_PUBLIC_FF_*`) para evitar ruido en los reportes de control.
+	- Blockspace, Vaults LAV, Alpha Factory, Volatility Pro, Event Alpha, Market Making selectivo, TCA, Cosmos Executor, Liquidity Backstop.
+	- Equities AI y News Oracle cuentan con toggles dedicados para habilitar integraciones institucionales.
+- Define explícitamente el modo de ejecución:
+	- `EXECUTION_MODE=dry-run` para procesos server-side (workers, agentes LAV).
+	- `NEXT_PUBLIC_EXECUTION_MODE=dry-run` para la capa React/Next.js.
+- Documenta cualquier cambio de modo (`dry-run`, `paper`, `micro`, `live`) en la bitácora y notifica al equipo de riesgo antes de pasar a modos no simulados.
+- Conserva `NEXT_PUBLIC_FF_WSP_ENABLED` y `NEXT_PUBLIC_FF_WSP_AUTOREACT` en `true` únicamente si vas a validar flujos WSP; apágalos en auditorías que requieran aislamiento.
+
 ## 4. Estándares de calidad y CI/CD
 - Todo el código debe pasar ESLint (flat config, reglas estrictas) y tests (>95% cobertura).
 - Las PRs deben incluir descripción clara, checklist de QA y referencia a la bitácora si aplica.
