@@ -1,0 +1,43 @@
+name: Integration Tests (Shadow Profile)
+
+on:
+  pull_request:
+    branches: ['*']
+  push:
+    branches: [backup/**, feature/**]
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      EXECUTION_MODE: dry-run
+      ORACLE_SOURCE_MODE: mock
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Start dev servers (ADAF + LAV)
+        run: pnpm dev:ambos &
+
+      - name: Wait for ports 3000 and 3005
+        run: |
+          timeout 120 bash -c 'until nc -z localhost 3000; do sleep 2; done'
+          timeout 120 bash -c 'until nc -z localhost 3005; do sleep 2; done'
+
+      - name: Run integration tests
+        run: pnpm test:integration

@@ -22,6 +22,9 @@ export default defineConfig({
       '**/playwright/**',
       '**/*.spec.ts',
       '**/ADAF-DASHBOARD-v1.1/**',
+      // Exclude HTTP integration tests by default; they run in a separate job
+      'tests/api/**',
+      'services/oracle-core/tests/api.oracle.test.ts',
     ],
     coverage: {
       provider: 'v8',

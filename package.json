@@ -21,6 +21,8 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "test": "vitest",
+    "test:unit": "vitest -c vitest.config.ts run",
+    "test:integration": "vitest -c vitest.integration.config.ts run",
     "test:coverage": "vitest --coverage",
     "test:wsp": "vitest -c vitest.wsp.config.ts run",
     "test:wsp:coverage": "vitest -c vitest.wsp.config.ts run --coverage",
