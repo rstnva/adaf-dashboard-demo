@@ -349,7 +349,35 @@ Sprint exitoso con **130 archivos** modificados, **99.4% de cobertura de tests**
 
 ---
 
-## 🔧 BUILD FIXES APLICADOS
+## � Estado real de documentación (20/10/2025)
+
+Para evitar confusiones, se listan los documentos efectivamente presentes en el repositorio hoy:
+
+- `motor-del-dash/arquitectura/SHADOW_MODE_V1_1_ARCHITECTURE.md` ✅
+- `motor-del-dash/sprints/SPRINT_SHADOW_MODE_V1_1_REPORT.md` ✅
+- `motor-del-dash/modulos/MODULO_SHADOW_MODE_V1_1_COMPLETO.md` ➡️ esperado (si no existe, crear en esta ruta)
+- `DOCUMENTACION_COMPLETA_SHADOW_V1_1.md` (resumen ejecutivo general) ✅
+
+Documentos referidos como parte del alcance (planificados) y a crear bajo `motor-del-dash/documentacion/`:
+
+- `ORACLE_CORE_V1_IMPLEMENTATION.md`
+- `VOX_POPULI_V1_1_IMPLEMENTATION.md`
+- `SHADOW_MODE_INFRASTRUCTURE.md`
+- `API_ORACLE_V1_REFERENCE.md`
+- `SDK_ORACLE_CLIENT_USAGE.md`
+- `V3_SCORING_FORMULA.md`
+- `BOTGUARD_ALGORITHMS.md`
+- `FEEDS_CATALOG.md`
+
+Runbooks (planificados) bajo `motor-del-dash/documentacion/runbooks/`:
+
+- `RUNBOOK_START_SHADOW_MODE.md`
+- `RUNBOOK_HEALTH_CHECK.md`
+- `RUNBOOK_72H_VALIDATION.md`
+
+Nota: Si se prefiere, generaremos esqueletos mínimos de estos archivos con estructura de secciones y TODOs para cerrarlo en este sprint.
+
+## �🔧 BUILD FIXES APLICADOS
 
 ### Fix 1: next-intl Middleware
 **Problema:** Error en `middleware.ts` al usar `createSharedPathnamesNavigation`

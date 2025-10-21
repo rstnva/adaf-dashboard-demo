@@ -212,7 +212,7 @@ function mean(values: number[]): number {
 }
 ```
 
-2. **Weighted (Ponderado por confianza)**
+1. **Weighted (Ponderado por confianza)**
 ```typescript
 function weighted(readings: Reading[]): number {
   const totalWeight = readings.reduce((sum, r) => sum + r.confidence, 0);
@@ -222,7 +222,7 @@ function weighted(readings: Reading[]): number {
 }
 ```
 
-3. **Median (Resistente a outliers)**
+1. **Median (Resistente a outliers)**
 ```typescript
 function median(values: number[]): number {
   const sorted = [...values].sort((a, b) => a - b);
@@ -311,7 +311,7 @@ function isstale(timestamp: number, ttl: number): boolean {
 }
 ```
 
-2. **Outlier Detection**
+1. **Outlier Detection**
 ```typescript
 function isOutlier(
   value: number, 
@@ -323,7 +323,7 @@ function isOutlier(
 }
 ```
 
-3. **Brigading Detection**
+1. **Brigading Detection**
 ```typescript
 function detectBrigading(
   signals: Signal[], 
@@ -337,7 +337,7 @@ function detectBrigading(
 }
 ```
 
-4. **Source Diversity**
+1. **Source Diversity**
 ```typescript
 function validateSourceDiversity(
   readings: Reading[], 
@@ -421,7 +421,7 @@ function detectCoordinated(posts: Post[]): boolean {
 }
 ```
 
-2. **Velocity Anomaly**
+1. **Velocity Anomaly**
 ```typescript
 function detectVelocityAnomaly(
   current: number, 
@@ -433,7 +433,7 @@ function detectVelocityAnomaly(
 }
 ```
 
-3. **Account Quality**
+1. **Account Quality**
 ```typescript
 function calculateAccountQuality(account: Account): number {
   let score = 1.0;
