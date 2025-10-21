@@ -3,7 +3,7 @@ import supertest from 'supertest';
 
 const api = supertest('http://localhost:3005');
 
-describe('Oracle API', () => {
+describe('@integration Oracle API', () => {
   it('GET /api/oracle/v1/feeds returns ≥ 30 feeds', async () => {
     const res = await api.get('/api/oracle/v1/feeds');
     expect(res.status).toBe(200);
@@ -12,7 +12,9 @@ describe('Oracle API', () => {
   });
 
   it('GET /api/oracle/v1/feeds/by-id?id=wsp/indices/vix_index returns feed', async () => {
-    const res = await api.get('/api/oracle/v1/feeds/by-id?id=wsp/indices/vix_index');
+    const res = await api.get(
+      '/api/oracle/v1/feeds/by-id?id=wsp/indices/vix_index'
+    );
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty('id', 'wsp/indices/vix_index');
     expect(res.body).toHaveProperty('stale');
@@ -21,7 +23,9 @@ describe('Oracle API', () => {
   });
 
   it('GET /api/oracle/v1/feeds/by-id/latest?id=wsp/indices/vix_index returns latest', async () => {
-    const res = await api.get('/api/oracle/v1/feeds/by-id/latest?id=wsp/indices/vix_index');
+    const res = await api.get(
+      '/api/oracle/v1/feeds/by-id/latest?id=wsp/indices/vix_index'
+    );
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty('id', 'wsp/indices/vix_index');
     expect(res.body).toHaveProperty('value');

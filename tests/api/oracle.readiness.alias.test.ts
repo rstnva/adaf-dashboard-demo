@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-describe('Oracle Readiness Alias', () => {
+describe('@integration Oracle Readiness Alias', () => {
   const base = 'http://localhost:3000';
 
   it('responds with READY or NOT_READY', async () => {

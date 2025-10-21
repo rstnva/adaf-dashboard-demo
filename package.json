@@ -23,6 +23,8 @@
     "test": "vitest",
     "test:unit": "vitest -c vitest.config.ts run",
     "test:integration": "vitest -c vitest.integration.config.ts run",
+    "shadow:up": "docker compose -f docker-compose.prod.yml --profile shadow up -d oracle-core",
+    "shadow:down": "docker compose -f docker-compose.prod.yml --profile shadow down",
     "test:coverage": "vitest --coverage",
     "test:wsp": "vitest -c vitest.wsp.config.ts run",
     "test:wsp:coverage": "vitest -c vitest.wsp.config.ts run --coverage",

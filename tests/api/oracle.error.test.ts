@@ -1,9 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import fetch from 'node-fetch';
 
-describe('Oracle Error Middleware', () => {
+describe('@integration Oracle Error Middleware', () => {
   it('404 returns JSON with trace_id', async () => {
-    const res = await fetch('http://localhost:3005/api/oracle/v1/feeds/by-id?id=inexistente');
+    const res = await fetch(
+      'http://localhost:3005/api/oracle/v1/feeds/by-id?id=inexistente'
+    );
     expect(res.status).toBe(404);
     const json = await res.json();
     expect(json).toHaveProperty('trace_id');

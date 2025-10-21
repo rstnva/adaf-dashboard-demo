@@ -1,1 +1,659 @@
-(()=>{var a={};a.id=5448,a.ids=[5448],a.modules={261:a=>{"use strict";a.exports=require("next/dist/shared/lib/router/utils/app-paths")},3295:a=>{"use strict";a.exports=require("next/dist/server/app-render/after-task-async-storage.external.js")},3368:(a,b,c)=>{"use strict";c.d(b,{DZ:()=>f,G_:()=>i,dx:()=>e,iU:()=>h,qK:()=>g});var d=c(50029);let e=new d.Registry;new d.Counter({name:"oracle_ingest_total",help:"Total number of ingested signals",labelNames:["source"],registers:[e]}),new d.Counter({name:"oracle_ingest_fail_total",help:"Total number of failed ingestions",labelNames:["source"],registers:[e]}),new d.Histogram({name:"oracle_digest_latency_seconds",help:"Latency histogram for digest stage",buckets:[.01,.05,.1,.3,.5,1,2,5],registers:[e]}),new d.Histogram({name:"oracle_consensus_latency_seconds",help:"Latency histogram for consensus stage",buckets:[.01,.05,.1,.3,.5,1,2,5],registers:[e]}),new d.Counter({name:"oracle_signals_total",help:"Signals generated per feed",labelNames:["feed"],registers:[e]}),new d.Gauge({name:"oracle_stale_ratio",help:"Stale ratio by feed",labelNames:["feed"],registers:[e]}),new d.Counter({name:"oracle_quorum_fail_total",help:"Total quorum failures by feed",labelNames:["feed"],registers:[e]}),new d.Counter({name:"oracle_dq_fail_total",help:"Total number of data quality failures",labelNames:["feed","rule"],registers:[e]});let f=new d.Counter({name:"oracle_dq_evaluations_total",help:"Total number of data quality rule evaluations by outcome",labelNames:["feed","rule","outcome"],registers:[e]});new d.Counter({name:"oracle_reads_total",help:"Oracle reads by feed and widget",labelNames:["feed","widget"],registers:[e]}),new d.Histogram({name:"oracle_read_latency_seconds",help:"Read latency distribution",buckets:[.005,.01,.05,.1,.3,.5,1],registers:[e]}),new d.Gauge({name:"oracle_subscribers_gauge",help:"Active websocket subscribers per feed",labelNames:["feed"],registers:[e]});let g=new d.Counter({name:"oracle_guardrail_manifest_load_total",help:"Total guardrail manifest loads grouped by mode",labelNames:["mode"],registers:[e]}),h=new d.Gauge({name:"oracle_rpc_latency_score",help:"Latency score (0-1) per feed RPC heartbeat",labelNames:["feed","rpc"],registers:[e]}),i=new d.Gauge({name:"oracle_rpc_heartbeat_age_seconds",help:"Age in seconds since last RPC heartbeat was recorded",labelNames:["feed","rpc"],registers:[e]})},10846:a=>{"use strict";a.exports=require("next/dist/compiled/next-server/app-page.runtime.prod.js")},19121:a=>{"use strict";a.exports=require("next/dist/server/app-render/action-async-storage.external.js")},19771:a=>{"use strict";a.exports=require("process")},27172:a=>{"use strict";a.exports=require("cluster")},28354:a=>{"use strict";a.exports=require("util")},29021:a=>{"use strict";a.exports=require("fs")},29294:a=>{"use strict";a.exports=require("next/dist/server/app-render/work-async-storage.external.js")},44870:a=>{"use strict";a.exports=require("next/dist/compiled/next-server/app-route.runtime.prod.js")},50463:(a,b,c)=>{"use strict";c.d(b,{PS:()=>k,_m:()=>j,cl:()=>i});let d=process.env.ADAF_RBAC_DEFAULT_ROLE,e="viewer"===d||"user"===d||"admin"===d||"system"===d?d:"admin",f=["feature:summer","feature:echarts","feature:semaforo","feature:blockspace","feature:vaults-lav","feature:alpha-factory","feature:vol-pro","feature:event-alpha","feature:mm-selective","feature:tca","feature:cosmos-executor","feature:liquidity-backstop","feature:equities-ai","feature:news_oracle","admin:control","admin:reports"],g={viewer:[],user:["feature:summer","feature:echarts","feature:blockspace","feature:vaults-lav","feature:alpha-factory","feature:equities-ai","feature:news_oracle"],admin:f,system:f},h={viewer:1,user:2,admin:3,system:4};async function i(a){if("admin"!==e){if(h[e]<h[a])throw Error(`Insufficient permissions. Required: ${a}, Current: ${e}`)}}function j(a){return"admin"===e||[...g[e]??[]].includes(a)}function k(a){if(!j(a))throw Error(`Missing required permission: ${a}`)}},55591:a=>{"use strict";a.exports=require("https")},56161:()=>{},63033:a=>{"use strict";a.exports=require("next/dist/server/app-render/work-unit-async-storage.external.js")},74075:a=>{"use strict";a.exports=require("zlib")},74998:a=>{"use strict";a.exports=require("perf_hooks")},77824:a=>{"use strict";a.exports=require("v8")},79551:a=>{"use strict";a.exports=require("url")},81630:a=>{"use strict";a.exports=require("http")},86439:a=>{"use strict";a.exports=require("next/dist/shared/lib/no-fallback-error.external")},92609:()=>{},98881:(a,b,c)=>{"use strict";c.r(b),c.d(b,{handler:()=>N,patchFetch:()=>M,routeModule:()=>I,serverHooks:()=>L,workAsyncStorage:()=>J,workUnitAsyncStorage:()=>K});var d={};c.r(d),c.d(d,{GET:()=>H});var e=c(70818),f=c(73659),g=c(27002),h=c(69532),i=c(40386),j=c(261),k=c(8404),l=c(92638),m=c(35254),n=c(92229),o=c(53203),p=c(29865),q=c(25183),r=c(7896),s=c(86439),t=c(15974),u=c(41315),v=c(50463);let w=require("node:crypto"),x=require("node:fs/promises"),y=require("node:path"),z=require("node:url");var A=c(3368);let B=null,C=null,D=null,E=null;async function F(a={}){if(a.reload)B=null;else if(B)return B;try{let b=function(){if(C)return C;try{let a=(0,y.dirname)((0,z.fileURLToPath)("file:///home/parallels/Desktop/adaf-dashboard-pro/services/oracle-core/dq/guardrails.ts"));return C=(0,y.resolve)(a,"guardrails.json")}catch(a){return console.warn("oracle-guardrails: import.meta fallback engaged",a),C=(0,y.resolve)(process.cwd(),"services/oracle-core/dq/guardrails.json")}}(),c=await (0,x.readFile)(b,"utf-8"),d=JSON.parse(c);return B=d,A.qK.inc({mode:a.reload?"reload":"initial"}),D=(0,w.createHash)("sha256").update(c).digest("hex"),E=new Date().toISOString(),d}catch(a){return console.warn("oracle-guardrails: failed to load manifest",a),B={},D=null,E=null,{}}}async function G(a={}){return F({reload:a.reload})}async function H(a){try{await (0,v.PS)("feature:news_oracle")}catch(b){let a=b instanceof Error?b.message:"forbidden";return u.NextResponse.json({ok:!1,error:a},{status:403})}let b="true"===a.nextUrl.searchParams.get("reload");try{let a=await G({reload:b}),c={checksum:D,lastLoadedAt:E,path:C};return u.NextResponse.json({ok:!0,manifest:a,metadata:c,reloaded:b,generatedAt:new Date().toISOString()},{status:200})}catch(b){let a=b instanceof Error?b.message:"guardrail_load_error";return u.NextResponse.json({ok:!1,error:a},{status:500})}}let I=new e.AppRouteRouteModule({definition:{kind:f.RouteKind.APP_ROUTE,page:"/api/read/oracle/guardrails/route",pathname:"/api/read/oracle/guardrails",filename:"route",bundlePath:"app/api/read/oracle/guardrails/route"},distDir:".next-dev",relativeProjectDir:"",resolvedPagePath:"/home/parallels/Desktop/adaf-dashboard-pro/src/app/api/read/oracle/guardrails/route.ts",nextConfigOutput:"",userland:d}),{workAsyncStorage:J,workUnitAsyncStorage:K,serverHooks:L}=I;function M(){return(0,g.patchFetch)({workAsyncStorage:J,workUnitAsyncStorage:K})}async function N(a,b,c){var d;let e="/api/read/oracle/guardrails/route";"/index"===e&&(e="/");let g=await I.prepare(a,b,{srcPage:e,multiZoneDraftMode:!1});if(!g)return b.statusCode=400,b.end("Bad Request"),null==c.waitUntil||c.waitUntil.call(c,Promise.resolve()),null;let{buildId:u,params:v,nextConfig:w,isDraftMode:x,prerenderManifest:y,routerServerContext:z,isOnDemandRevalidate:A,revalidateOnlyGenerated:B,resolvedPathname:C}=g,D=(0,j.normalizeAppPath)(e),E=!!(y.dynamicRoutes[D]||y.routes[C]);if(E&&!x){let a=!!y.routes[C],b=y.dynamicRoutes[D];if(b&&!1===b.fallback&&!a)throw new s.NoFallbackError}let F=null;!E||I.isDev||x||(F="/index"===(F=C)?"/":F);let G=!0===I.isDev||!E,H=E&&!G,J=a.method||"GET",K=(0,i.getTracer)(),L=K.getActiveScopeSpan(),M={params:v,prerenderManifest:y,renderOpts:{experimental:{cacheComponents:!!w.experimental.cacheComponents,authInterrupts:!!w.experimental.authInterrupts},supportsDynamicResponse:G,incrementalCache:(0,h.getRequestMeta)(a,"incrementalCache"),cacheLifeProfiles:null==(d=w.experimental)?void 0:d.cacheLife,isRevalidate:H,waitUntil:c.waitUntil,onClose:a=>{b.on("close",a)},onAfterTaskError:void 0,onInstrumentationRequestError:(b,c,d)=>I.onRequestError(a,b,d,z)},sharedContext:{buildId:u}},N=new k.NodeNextRequest(a),O=new k.NodeNextResponse(b),P=l.NextRequestAdapter.fromNodeNextRequest(N,(0,l.signalFromNodeResponse)(b));try{let d=async c=>I.handle(P,M).finally(()=>{if(!c)return;c.setAttributes({"http.status_code":b.statusCode,"next.rsc":!1});let d=K.getRootSpanAttributes();if(!d)return;if(d.get("next.span_type")!==m.BaseServerSpan.handleRequest)return void console.warn(`Unexpected root span type '${d.get("next.span_type")}'. Please report this Next.js issue https://github.com/vercel/next.js`);let e=d.get("next.route");if(e){let a=`${J} ${e}`;c.setAttributes({"next.route":e,"http.route":e,"next.span_name":a}),c.updateName(a)}else c.updateName(`${J} ${a.url}`)}),g=async g=>{var i,j;let k=async({previousCacheEntry:f})=>{try{if(!(0,h.getRequestMeta)(a,"minimalMode")&&A&&B&&!f)return b.statusCode=404,b.setHeader("x-nextjs-cache","REVALIDATED"),b.end("This page could not be found"),null;let e=await d(g);a.fetchMetrics=M.renderOpts.fetchMetrics;let i=M.renderOpts.pendingWaitUntil;i&&c.waitUntil&&(c.waitUntil(i),i=void 0);let j=M.renderOpts.collectedTags;if(!E)return await (0,o.I)(N,O,e,M.renderOpts.pendingWaitUntil),null;{let a=await e.blob(),b=(0,p.toNodeOutgoingHttpHeaders)(e.headers);j&&(b[r.NEXT_CACHE_TAGS_HEADER]=j),!b["content-type"]&&a.type&&(b["content-type"]=a.type);let c=void 0!==M.renderOpts.collectedRevalidate&&!(M.renderOpts.collectedRevalidate>=r.INFINITE_CACHE)&&M.renderOpts.collectedRevalidate,d=void 0===M.renderOpts.collectedExpire||M.renderOpts.collectedExpire>=r.INFINITE_CACHE?void 0:M.renderOpts.collectedExpire;return{value:{kind:t.CachedRouteKind.APP_ROUTE,status:e.status,body:Buffer.from(await a.arrayBuffer()),headers:b},cacheControl:{revalidate:c,expire:d}}}}catch(b){throw(null==f?void 0:f.isStale)&&await I.onRequestError(a,b,{routerKind:"App Router",routePath:e,routeType:"route",revalidateReason:(0,n.c)({isRevalidate:H,isOnDemandRevalidate:A})},z),b}},l=await I.handleResponse({req:a,nextConfig:w,cacheKey:F,routeKind:f.RouteKind.APP_ROUTE,isFallback:!1,prerenderManifest:y,isRoutePPREnabled:!1,isOnDemandRevalidate:A,revalidateOnlyGenerated:B,responseGenerator:k,waitUntil:c.waitUntil});if(!E)return null;if((null==l||null==(i=l.value)?void 0:i.kind)!==t.CachedRouteKind.APP_ROUTE)throw Object.defineProperty(Error(`Invariant: app-route received invalid cache entry ${null==l||null==(j=l.value)?void 0:j.kind}`),"__NEXT_ERROR_CODE",{value:"E701",enumerable:!1,configurable:!0});(0,h.getRequestMeta)(a,"minimalMode")||b.setHeader("x-nextjs-cache",A?"REVALIDATED":l.isMiss?"MISS":l.isStale?"STALE":"HIT"),x&&b.setHeader("Cache-Control","private, no-cache, no-store, max-age=0, must-revalidate");let m=(0,p.fromNodeOutgoingHttpHeaders)(l.value.headers);return(0,h.getRequestMeta)(a,"minimalMode")&&E||m.delete(r.NEXT_CACHE_TAGS_HEADER),!l.cacheControl||b.getHeader("Cache-Control")||m.get("Cache-Control")||m.set("Cache-Control",(0,q.getCacheControlHeader)(l.cacheControl)),await (0,o.I)(N,O,new Response(l.value.body,{headers:m,status:l.value.status||200})),null};L?await g(L):await K.withPropagatedContext(a.headers,()=>K.trace(m.BaseServerSpan.handleRequest,{spanName:`${J} ${a.url}`,kind:i.SpanKind.SERVER,attributes:{"http.method":J,"http.target":a.url}},g))}catch(b){if(b instanceof s.NoFallbackError||await I.onRequestError(a,b,{routerKind:"App Router",routePath:D,routeType:"route",revalidateReason:(0,n.c)({isRevalidate:H,isOnDemandRevalidate:A})}),E)throw b;return await (0,o.I)(N,O,new Response(null,{status:500})),null}}}};var b=require("../../../../../webpack-runtime.js");b.C(a);var c=b.X(0,[246,6186,6674,29],()=>b(b.s=98881));module.exports=c})();
+(() => {
+  var a = {};
+  ((a.id = 5448),
+    (a.ids = [5448]),
+    (a.modules = {
+      261: a => {
+        'use strict';
+        a.exports = require('next/dist/shared/lib/router/utils/app-paths');
+      },
+      3295: a => {
+        'use strict';
+        a.exports = require('next/dist/server/app-render/after-task-async-storage.external.js');
+      },
+      3368: (a, b, c) => {
+        'use strict';
+        c.d(b, {
+          DZ: () => f,
+          G_: () => i,
+          dx: () => e,
+          iU: () => h,
+          qK: () => g,
+        });
+        var d = c(50029);
+        let e = new d.Registry();
+        (new d.Counter({
+          name: 'oracle_ingest_total',
+          help: 'Total number of ingested signals',
+          labelNames: ['source'],
+          registers: [e],
+        }),
+          new d.Counter({
+            name: 'oracle_ingest_fail_total',
+            help: 'Total number of failed ingestions',
+            labelNames: ['source'],
+            registers: [e],
+          }),
+          new d.Histogram({
+            name: 'oracle_digest_latency_seconds',
+            help: 'Latency histogram for digest stage',
+            buckets: [0.01, 0.05, 0.1, 0.3, 0.5, 1, 2, 5],
+            registers: [e],
+          }),
+          new d.Histogram({
+            name: 'oracle_consensus_latency_seconds',
+            help: 'Latency histogram for consensus stage',
+            buckets: [0.01, 0.05, 0.1, 0.3, 0.5, 1, 2, 5],
+            registers: [e],
+          }),
+          new d.Counter({
+            name: 'oracle_signals_total',
+            help: 'Signals generated per feed',
+            labelNames: ['feed'],
+            registers: [e],
+          }),
+          new d.Gauge({
+            name: 'oracle_stale_ratio',
+            help: 'Stale ratio by feed',
+            labelNames: ['feed'],
+            registers: [e],
+          }),
+          new d.Counter({
+            name: 'oracle_quorum_fail_total',
+            help: 'Total quorum failures by feed',
+            labelNames: ['feed'],
+            registers: [e],
+          }),
+          new d.Counter({
+            name: 'oracle_dq_fail_total',
+            help: 'Total number of data quality failures',
+            labelNames: ['feed', 'rule'],
+            registers: [e],
+          }));
+        let f = new d.Counter({
+          name: 'oracle_dq_evaluations_total',
+          help: 'Total number of data quality rule evaluations by outcome',
+          labelNames: ['feed', 'rule', 'outcome'],
+          registers: [e],
+        });
+        (new d.Counter({
+          name: 'oracle_reads_total',
+          help: 'Oracle reads by feed and widget',
+          labelNames: ['feed', 'widget'],
+          registers: [e],
+        }),
+          new d.Histogram({
+            name: 'oracle_read_latency_seconds',
+            help: 'Read latency distribution',
+            buckets: [0.005, 0.01, 0.05, 0.1, 0.3, 0.5, 1],
+            registers: [e],
+          }),
+          new d.Gauge({
+            name: 'oracle_subscribers_gauge',
+            help: 'Active websocket subscribers per feed',
+            labelNames: ['feed'],
+            registers: [e],
+          }));
+        let g = new d.Counter({
+            name: 'oracle_guardrail_manifest_load_total',
+            help: 'Total guardrail manifest loads grouped by mode',
+            labelNames: ['mode'],
+            registers: [e],
+          }),
+          h = new d.Gauge({
+            name: 'oracle_rpc_latency_score',
+            help: 'Latency score (0-1) per feed RPC heartbeat',
+            labelNames: ['feed', 'rpc'],
+            registers: [e],
+          }),
+          i = new d.Gauge({
+            name: 'oracle_rpc_heartbeat_age_seconds',
+            help: 'Age in seconds since last RPC heartbeat was recorded',
+            labelNames: ['feed', 'rpc'],
+            registers: [e],
+          });
+      },
+      10846: a => {
+        'use strict';
+        a.exports = require('next/dist/compiled/next-server/app-page.runtime.prod.js');
+      },
+      19121: a => {
+        'use strict';
+        a.exports = require('next/dist/server/app-render/action-async-storage.external.js');
+      },
+      19771: a => {
+        'use strict';
+        a.exports = require('process');
+      },
+      27172: a => {
+        'use strict';
+        a.exports = require('cluster');
+      },
+      28354: a => {
+        'use strict';
+        a.exports = require('util');
+      },
+      29021: a => {
+        'use strict';
+        a.exports = require('fs');
+      },
+      29294: a => {
+        'use strict';
+        a.exports = require('next/dist/server/app-render/work-async-storage.external.js');
+      },
+      44870: a => {
+        'use strict';
+        a.exports = require('next/dist/compiled/next-server/app-route.runtime.prod.js');
+      },
+      50463: (a, b, c) => {
+        'use strict';
+        c.d(b, { PS: () => k, _m: () => j, cl: () => i });
+        let d = process.env.ADAF_RBAC_DEFAULT_ROLE,
+          e =
+            'viewer' === d || 'user' === d || 'admin' === d || 'system' === d
+              ? d
+              : 'admin',
+          f = [
+            'feature:summer',
+            'feature:echarts',
+            'feature:semaforo',
+            'feature:blockspace',
+            'feature:vaults-lav',
+            'feature:alpha-factory',
+            'feature:vol-pro',
+            'feature:event-alpha',
+            'feature:mm-selective',
+            'feature:tca',
+            'feature:cosmos-executor',
+            'feature:liquidity-backstop',
+            'feature:equities-ai',
+            'feature:news_oracle',
+            'admin:control',
+            'admin:reports',
+          ],
+          g = {
+            viewer: [],
+            user: [
+              'feature:summer',
+              'feature:echarts',
+              'feature:blockspace',
+              'feature:vaults-lav',
+              'feature:alpha-factory',
+              'feature:equities-ai',
+              'feature:news_oracle',
+            ],
+            admin: f,
+            system: f,
+          },
+          h = { viewer: 1, user: 2, admin: 3, system: 4 };
+        async function i(a) {
+          if ('admin' !== e) {
+            if (h[e] < h[a])
+              throw Error(
+                `Insufficient permissions. Required: ${a}, Current: ${e}`
+              );
+          }
+        }
+        function j(a) {
+          return 'admin' === e || [...(g[e] ?? [])].includes(a);
+        }
+        function k(a) {
+          if (!j(a)) throw Error(`Missing required permission: ${a}`);
+        }
+      },
+      51455: a => {
+        'use strict';
+        a.exports = require('node:fs/promises');
+      },
+      55591: a => {
+        'use strict';
+        a.exports = require('https');
+      },
+      56161: () => {},
+      63033: a => {
+        'use strict';
+        a.exports = require('next/dist/server/app-render/work-unit-async-storage.external.js');
+      },
+      69224: (a, b, c) => {
+        'use strict';
+        (c.r(b),
+          c.d(b, {
+            handler: () => N,
+            patchFetch: () => M,
+            routeModule: () => I,
+            serverHooks: () => L,
+            workAsyncStorage: () => J,
+            workUnitAsyncStorage: () => K,
+          }));
+        var d = {};
+        (c.r(d), c.d(d, { GET: () => H }));
+        var e = c(70818),
+          f = c(73659),
+          g = c(27002),
+          h = c(69532),
+          i = c(40386),
+          j = c(261),
+          k = c(8404),
+          l = c(92638),
+          m = c(35254),
+          n = c(92229),
+          o = c(53203),
+          p = c(29865),
+          q = c(25183),
+          r = c(7896),
+          s = c(86439),
+          t = c(15974),
+          u = c(41315),
+          v = c(50463);
+        let w = require('node:crypto');
+        var x = c(51455),
+          y = c(76760);
+        let z = require('node:url');
+        var A = c(3368);
+        let B = null,
+          C = null,
+          D = null,
+          E = null;
+        async function F(a = {}) {
+          if (a.reload) B = null;
+          else if (B) return B;
+          try {
+            let b = (function () {
+                if (C) return C;
+                try {
+                  let a = (0, y.dirname)(
+                    (0, z.fileURLToPath)(
+                      'file:///home/parallels/Desktop/adaf-dashboard-pro/services/oracle-core/dq/guardrails.ts'
+                    )
+                  );
+                  return (C = (0, y.resolve)(a, 'guardrails.json'));
+                } catch (a) {
+                  return (
+                    console.warn(
+                      'oracle-guardrails: import.meta fallback engaged',
+                      a
+                    ),
+                    (C = (0, y.resolve)(
+                      process.cwd(),
+                      'services/oracle-core/dq/guardrails.json'
+                    ))
+                  );
+                }
+              })(),
+              c = await (0, x.readFile)(b, 'utf-8'),
+              d = JSON.parse(c);
+            return (
+              (B = d),
+              A.qK.inc({ mode: a.reload ? 'reload' : 'initial' }),
+              (D = (0, w.createHash)('sha256').update(c).digest('hex')),
+              (E = new Date().toISOString()),
+              d
+            );
+          } catch (a) {
+            return (
+              console.warn('oracle-guardrails: failed to load manifest', a),
+              (B = {}),
+              (D = null),
+              (E = null),
+              {}
+            );
+          }
+        }
+        async function G(a = {}) {
+          return F({ reload: a.reload });
+        }
+        async function H(a) {
+          try {
+            await (0, v.PS)('feature:news_oracle');
+          } catch (b) {
+            let a = b instanceof Error ? b.message : 'forbidden';
+            return u.NextResponse.json({ ok: !1, error: a }, { status: 403 });
+          }
+          let b = 'true' === a.nextUrl.searchParams.get('reload');
+          try {
+            let a = await G({ reload: b }),
+              c = { checksum: D, lastLoadedAt: E, path: C };
+            return u.NextResponse.json(
+              {
+                ok: !0,
+                manifest: a,
+                metadata: c,
+                reloaded: b,
+                generatedAt: new Date().toISOString(),
+              },
+              { status: 200 }
+            );
+          } catch (b) {
+            let a = b instanceof Error ? b.message : 'guardrail_load_error';
+            return u.NextResponse.json({ ok: !1, error: a }, { status: 500 });
+          }
+        }
+        let I = new e.AppRouteRouteModule({
+            definition: {
+              kind: f.RouteKind.APP_ROUTE,
+              page: '/api/read/oracle/guardrails/route',
+              pathname: '/api/read/oracle/guardrails',
+              filename: 'route',
+              bundlePath: 'app/api/read/oracle/guardrails/route',
+            },
+            distDir: '.next-dev',
+            relativeProjectDir: '',
+            resolvedPagePath:
+              '/home/parallels/Desktop/adaf-dashboard-pro/src/app/api/read/oracle/guardrails/route.ts',
+            nextConfigOutput: '',
+            userland: d,
+          }),
+          { workAsyncStorage: J, workUnitAsyncStorage: K, serverHooks: L } = I;
+        function M() {
+          return (0, g.patchFetch)({
+            workAsyncStorage: J,
+            workUnitAsyncStorage: K,
+          });
+        }
+        async function N(a, b, c) {
+          var d;
+          let e = '/api/read/oracle/guardrails/route';
+          '/index' === e && (e = '/');
+          let g = await I.prepare(a, b, { srcPage: e, multiZoneDraftMode: !1 });
+          if (!g)
+            return (
+              (b.statusCode = 400),
+              b.end('Bad Request'),
+              null == c.waitUntil || c.waitUntil.call(c, Promise.resolve()),
+              null
+            );
+          let {
+              buildId: u,
+              params: v,
+              nextConfig: w,
+              isDraftMode: x,
+              prerenderManifest: y,
+              routerServerContext: z,
+              isOnDemandRevalidate: A,
+              revalidateOnlyGenerated: B,
+              resolvedPathname: C,
+            } = g,
+            D = (0, j.normalizeAppPath)(e),
+            E = !!(y.dynamicRoutes[D] || y.routes[C]);
+          if (E && !x) {
+            let a = !!y.routes[C],
+              b = y.dynamicRoutes[D];
+            if (b && !1 === b.fallback && !a) throw new s.NoFallbackError();
+          }
+          let F = null;
+          !E || I.isDev || x || (F = '/index' === (F = C) ? '/' : F);
+          let G = !0 === I.isDev || !E,
+            H = E && !G,
+            J = a.method || 'GET',
+            K = (0, i.getTracer)(),
+            L = K.getActiveScopeSpan(),
+            M = {
+              params: v,
+              prerenderManifest: y,
+              renderOpts: {
+                experimental: {
+                  cacheComponents: !!w.experimental.cacheComponents,
+                  authInterrupts: !!w.experimental.authInterrupts,
+                },
+                supportsDynamicResponse: G,
+                incrementalCache: (0, h.getRequestMeta)(a, 'incrementalCache'),
+                cacheLifeProfiles:
+                  null == (d = w.experimental) ? void 0 : d.cacheLife,
+                isRevalidate: H,
+                waitUntil: c.waitUntil,
+                onClose: a => {
+                  b.on('close', a);
+                },
+                onAfterTaskError: void 0,
+                onInstrumentationRequestError: (b, c, d) =>
+                  I.onRequestError(a, b, d, z),
+              },
+              sharedContext: { buildId: u },
+            },
+            N = new k.NodeNextRequest(a),
+            O = new k.NodeNextResponse(b),
+            P = l.NextRequestAdapter.fromNodeNextRequest(
+              N,
+              (0, l.signalFromNodeResponse)(b)
+            );
+          try {
+            let d = async c =>
+                I.handle(P, M).finally(() => {
+                  if (!c) return;
+                  c.setAttributes({
+                    'http.status_code': b.statusCode,
+                    'next.rsc': !1,
+                  });
+                  let d = K.getRootSpanAttributes();
+                  if (!d) return;
+                  if (
+                    d.get('next.span_type') !== m.BaseServerSpan.handleRequest
+                  )
+                    return void console.warn(
+                      `Unexpected root span type '${d.get('next.span_type')}'. Please report this Next.js issue https://github.com/vercel/next.js`
+                    );
+                  let e = d.get('next.route');
+                  if (e) {
+                    let a = `${J} ${e}`;
+                    (c.setAttributes({
+                      'next.route': e,
+                      'http.route': e,
+                      'next.span_name': a,
+                    }),
+                      c.updateName(a));
+                  } else c.updateName(`${J} ${a.url}`);
+                }),
+              g = async g => {
+                var i, j;
+                let k = async ({ previousCacheEntry: f }) => {
+                    try {
+                      if (
+                        !(0, h.getRequestMeta)(a, 'minimalMode') &&
+                        A &&
+                        B &&
+                        !f
+                      )
+                        return (
+                          (b.statusCode = 404),
+                          b.setHeader('x-nextjs-cache', 'REVALIDATED'),
+                          b.end('This page could not be found'),
+                          null
+                        );
+                      let e = await d(g);
+                      a.fetchMetrics = M.renderOpts.fetchMetrics;
+                      let i = M.renderOpts.pendingWaitUntil;
+                      i && c.waitUntil && (c.waitUntil(i), (i = void 0));
+                      let j = M.renderOpts.collectedTags;
+                      if (!E)
+                        return (
+                          await (0, o.I)(
+                            N,
+                            O,
+                            e,
+                            M.renderOpts.pendingWaitUntil
+                          ),
+                          null
+                        );
+                      {
+                        let a = await e.blob(),
+                          b = (0, p.toNodeOutgoingHttpHeaders)(e.headers);
+                        (j && (b[r.NEXT_CACHE_TAGS_HEADER] = j),
+                          !b['content-type'] &&
+                            a.type &&
+                            (b['content-type'] = a.type));
+                        let c =
+                            void 0 !== M.renderOpts.collectedRevalidate &&
+                            !(
+                              M.renderOpts.collectedRevalidate >=
+                              r.INFINITE_CACHE
+                            ) &&
+                            M.renderOpts.collectedRevalidate,
+                          d =
+                            void 0 === M.renderOpts.collectedExpire ||
+                            M.renderOpts.collectedExpire >= r.INFINITE_CACHE
+                              ? void 0
+                              : M.renderOpts.collectedExpire;
+                        return {
+                          value: {
+                            kind: t.CachedRouteKind.APP_ROUTE,
+                            status: e.status,
+                            body: Buffer.from(await a.arrayBuffer()),
+                            headers: b,
+                          },
+                          cacheControl: { revalidate: c, expire: d },
+                        };
+                      }
+                    } catch (b) {
+                      throw (
+                        (null == f ? void 0 : f.isStale) &&
+                          (await I.onRequestError(
+                            a,
+                            b,
+                            {
+                              routerKind: 'App Router',
+                              routePath: e,
+                              routeType: 'route',
+                              revalidateReason: (0, n.c)({
+                                isRevalidate: H,
+                                isOnDemandRevalidate: A,
+                              }),
+                            },
+                            z
+                          )),
+                        b
+                      );
+                    }
+                  },
+                  l = await I.handleResponse({
+                    req: a,
+                    nextConfig: w,
+                    cacheKey: F,
+                    routeKind: f.RouteKind.APP_ROUTE,
+                    isFallback: !1,
+                    prerenderManifest: y,
+                    isRoutePPREnabled: !1,
+                    isOnDemandRevalidate: A,
+                    revalidateOnlyGenerated: B,
+                    responseGenerator: k,
+                    waitUntil: c.waitUntil,
+                  });
+                if (!E) return null;
+                if (
+                  (null == l || null == (i = l.value) ? void 0 : i.kind) !==
+                  t.CachedRouteKind.APP_ROUTE
+                )
+                  throw Object.defineProperty(
+                    Error(
+                      `Invariant: app-route received invalid cache entry ${null == l || null == (j = l.value) ? void 0 : j.kind}`
+                    ),
+                    '__NEXT_ERROR_CODE',
+                    { value: 'E701', enumerable: !1, configurable: !0 }
+                  );
+                ((0, h.getRequestMeta)(a, 'minimalMode') ||
+                  b.setHeader(
+                    'x-nextjs-cache',
+                    A
+                      ? 'REVALIDATED'
+                      : l.isMiss
+                        ? 'MISS'
+                        : l.isStale
+                          ? 'STALE'
+                          : 'HIT'
+                  ),
+                  x &&
+                    b.setHeader(
+                      'Cache-Control',
+                      'private, no-cache, no-store, max-age=0, must-revalidate'
+                    ));
+                let m = (0, p.fromNodeOutgoingHttpHeaders)(l.value.headers);
+                return (
+                  ((0, h.getRequestMeta)(a, 'minimalMode') && E) ||
+                    m.delete(r.NEXT_CACHE_TAGS_HEADER),
+                  !l.cacheControl ||
+                    b.getHeader('Cache-Control') ||
+                    m.get('Cache-Control') ||
+                    m.set(
+                      'Cache-Control',
+                      (0, q.getCacheControlHeader)(l.cacheControl)
+                    ),
+                  await (0, o.I)(
+                    N,
+                    O,
+                    new Response(l.value.body, {
+                      headers: m,
+                      status: l.value.status || 200,
+                    })
+                  ),
+                  null
+                );
+              };
+            L
+              ? await g(L)
+              : await K.withPropagatedContext(a.headers, () =>
+                  K.trace(
+                    m.BaseServerSpan.handleRequest,
+                    {
+                      spanName: `${J} ${a.url}`,
+                      kind: i.SpanKind.SERVER,
+                      attributes: { 'http.method': J, 'http.target': a.url },
+                    },
+                    g
+                  )
+                );
+          } catch (b) {
+            if (
+              (b instanceof s.NoFallbackError ||
+                (await I.onRequestError(a, b, {
+                  routerKind: 'App Router',
+                  routePath: D,
+                  routeType: 'route',
+                  revalidateReason: (0, n.c)({
+                    isRevalidate: H,
+                    isOnDemandRevalidate: A,
+                  }),
+                })),
+              E)
+            )
+              throw b;
+            return (
+              await (0, o.I)(N, O, new Response(null, { status: 500 })),
+              null
+            );
+          }
+        }
+      },
+      74075: a => {
+        'use strict';
+        a.exports = require('zlib');
+      },
+      74998: a => {
+        'use strict';
+        a.exports = require('perf_hooks');
+      },
+      76760: a => {
+        'use strict';
+        a.exports = require('node:path');
+      },
+      77824: a => {
+        'use strict';
+        a.exports = require('v8');
+      },
+      79551: a => {
+        'use strict';
+        a.exports = require('url');
+      },
+      81630: a => {
+        'use strict';
+        a.exports = require('http');
+      },
+      86439: a => {
+        'use strict';
+        a.exports = require('next/dist/shared/lib/no-fallback-error.external');
+      },
+      92609: () => {},
+    }));
+  var b = require('../../../../../webpack-runtime.js');
+  b.C(a);
+  var c = b.X(0, [246, 6186, 6674, 29], () => b((b.s = 69224)));
+  module.exports = c;
+})();

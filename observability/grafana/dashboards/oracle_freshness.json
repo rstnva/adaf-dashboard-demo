@@ -1,0 +1,26 @@
+{
+  "title": "Oracle Freshness (DEMO)",
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Shadow RMSE p95 (price/*)",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(oracle_shadow_rmse_bucket[15m])) by (le,feed))"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Quorum Fails (24h)",
+      "targets": [{ "expr": "sum(increase(oracle_quorum_fail_total[24h]))" }]
+    },
+    {
+      "type": "gauge",
+      "title": "Stale Ratio Now",
+      "targets": [{ "expr": "avg(oracle_stale_ratio)" }]
+    }
+  ],
+  "schemaVersion": 39,
+  "version": 1
+}

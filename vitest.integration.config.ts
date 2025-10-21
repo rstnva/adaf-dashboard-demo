@@ -5,11 +5,10 @@ export default defineConfig({
     environment: 'node',
     globals: true,
     setupFiles: ['./tests/setup.ts'],
-    testTimeout: 30000,
-    hookTimeout: 15000,
-    include: [
-      'tests/api/**/*.test.ts',
-      'services/oracle-core/tests/api.oracle.test.ts',
-    ],
+    testTimeout: 60000,
+    hookTimeout: 30000,
+    include: ['**/*.{test,spec}.ts', '**/*.{test,spec}.tsx'],
+    testNamePattern: /@integration/i,
+    reporters: ['default'],
   },
 });

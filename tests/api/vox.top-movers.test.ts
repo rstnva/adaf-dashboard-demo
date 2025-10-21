@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 
 // These tests assume app server is running in test env or use mock flag
 
-describe('VOX Top Movers API', () => {
+describe('@integration VOX Top Movers API', () => {
   const base = 'http://localhost:3000';
 
   it('requires auth (401 without token)', async () => {
