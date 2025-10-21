@@ -476,6 +476,8 @@ services:
       timeout: 10s
       retries: 3
       start_period: 60s
+    ports:
+      - "3005:3005"
 
   # KPI Collector for Shadow Mode - Hourly metrics collection
   kpi-collector:

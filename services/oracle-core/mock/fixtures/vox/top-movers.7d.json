@@ -1,0 +1,6 @@
+{
+  "items": [
+    { "asset": "btc", "vpi_now": 120, "vpi_prev": 100, "delta": 20, "z": 0.7, "samples": 600, "confidence": 0.9 },
+    { "asset": "doge", "vpi_now": 5, "vpi_prev": 15, "delta": -10, "z": -0.8, "samples": 200, "confidence": 0.4 }
+  ]
+}
