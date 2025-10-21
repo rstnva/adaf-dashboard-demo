@@ -1,0 +1,201 @@
+{
+  "generatedAt": "2025-10-21T00:00:00Z",
+  "branch": "backup/2025-10-15-docs-structure",
+  "summary": {
+    "overall": "INCOMPLETE",
+    "notes": "Core artifacts for Oracle SSOT, Consensus, Metrics, and Vox UI are present. A few REST endpoints (e.g., vox/top-movers) are missing or only documented. Readiness is covered by /api/healthz and /api/system/validate but lacks an oracle-namespaced alias. Integration tests require shadow server at :3005."
+  },
+  "checks": [
+    {
+      "id": "CHK-ORC-REGISTRY",
+      "title": "Oracle Registry SSOT files present",
+      "category": "oracle-core",
+      "status": "FOUND",
+      "evidence": [
+        "services/oracle-core/registry/feeds.mock.json",
+        "services/oracle-core/registry/feeds.onchain.shadow.json",
+        "services/oracle-core/registry/heartbeats.json",
+        "services/oracle-core/registry/rpc.endpoints.json"
+      ],
+      "notes": "SSOT registry files for feeds, shadow set, heartbeats and RPC endpoints are in place."
+    },
+    {
+      "id": "CHK-ORC-INGEST",
+      "title": "Ingest adapters for on-chain oracles",
+      "category": "oracle-core",
+      "status": "FOUND",
+      "evidence": [
+        "services/oracle-core/ingest/adapters/chainlink.adapter.ts",
+        "services/oracle-core/ingest/adapters/pyth.adapter.ts",
+        "services/oracle-core/ingest/adapters/redstone.adapter.ts",
+        "services/oracle-core/ingest/adapters/band-tellor.adapter.ts",
+        "services/oracle-core/ingest/adapters/chronicle-uma.adapter.ts",
+        "services/oracle-core/ingest/scheduler.ts"
+      ],
+      "notes": "Multi-provider ingest adapters and scheduler exist. Vox ingest resides under ingest/vox/* (separate check)."
+    },
+    {
+      "id": "CHK-ORC-CONSENSUS",
+      "title": "Consensus strategies implemented",
+      "category": "oracle-core",
+      "status": "FOUND",
+      "evidence": [
+        "services/oracle-core/consensus/aggregators.ts",
+        "services/oracle-core/consensus/quorum.ts",
+        "services/oracle-core/consensus/validators.ts",
+        "services/oracle-core/pipeline.ts",
+        "services/oracle-core/tests/unit/consensus/aggregators.test.ts",
+        "docs/runbooks/ORACLE_CONSENSUS.md"
+      ],
+      "notes": "weightedMedian and trimmedMean referenced in pipeline and unit tests; validators/quorum present."
+    },
+    {
+      "id": "CHK-ORC-METRICS",
+      "title": "Oracle metrics defined and exported",
+      "category": "oracle-core",
+      "status": "FOUND",
+      "evidence": [
+        "services/oracle-core/metrics/oracle.metrics.ts",
+        "services/oracle-core/metrics/vox.metrics.ts",
+        "services/oracle-core/metrics/exporters/prometheus.ts",
+        "src/app/api/oracle/v1/metrics/route.ts",
+        "lav-adaf/apps/dashboard/src/app/api/oracle/v1/metrics/wsp/route.ts",
+        "monitoring/alerting/oracle_shadow.alerts.yml",
+        "monitoring/prometheus.yml",
+        "monitoring/grafana/**"
+      ],
+      "notes": "Key metrics include oracle_stale_ratio, oracle_quorum_fail_total, oracle_shadow_rmse and vox_vpi."
+    },
+    {
+      "id": "CHK-ORC-API",
+      "title": "Oracle API endpoints present (feeds, latest, metrics)",
+      "category": "oracle-core",
+      "status": "FOUND",
+      "evidence": [
+        "lav-adaf/apps/dashboard/src/app/api/oracle/v1/feeds/route.ts",
+        "lav-adaf/apps/dashboard/src/app/api/oracle/v1/feeds/by-id/route.ts",
+        "lav-adaf/apps/dashboard/src/app/api/oracle/v1/feeds/[feedId]/latest/route.ts",
+        "lav-adaf/apps/dashboard/src/app/api/oracle/v1/feeds/by-id/latest/route.ts",
+        "lav-adaf/apps/dashboard/src/app/api/oracle/v1/latest/route.ts",
+        "lav-adaf/apps/dashboard/src/app/api/oracle/v1/metrics/wsp/route.ts",
+        "src/app/api/oracle/v1/metrics/route.ts"
+      ],
+      "notes": "Core data endpoints exist under lav-adaf app; metrics also under ADAF src."
+    },
+    {
+      "id": "CHK-ORC-READINESS",
+      "title": "Oracle readiness/liveness endpoints",
+      "category": "oracle-core",
+      "status": "INCOMPLETE",
+      "evidence": [
+        "src/app/api/healthz/route.ts",
+        "src/app/api/system/validate/route.ts",
+        "lav-adaf/apps/dashboard/src/app/api/healthz/route.ts",
+        "lav-adaf/apps/dashboard/src/app/api/system/validate/route.ts"
+      ],
+      "notes": "Generic healthz/system validation present. Missing oracle-namespaced alias e.g., /api/oracle/v1/readiness to integrate with tests/runbooks."
+    },
+    {
+      "id": "CHK-VOX-INGEST",
+      "title": "Vox ingest adapters/providers present",
+      "category": "vox",
+      "status": "FOUND",
+      "evidence": [
+        "services/oracle-core/ingest/vox/x.adapter.ts",
+        "services/oracle-core/ingest/vox/reddit.adapter.ts",
+        "services/oracle-core/ingest/vox/news.adapter.ts",
+        "services/oracle-core/ingest/vox/telegram.adapter.ts",
+        "services/oracle-core/ingest/vox/discord.adapter.ts",
+        "services/oracle-core/ingest/vox/providers/lunarcrush.provider.ts",
+        "services/oracle-core/ingest/vox/providers/santiment.provider.ts",
+        "services/oracle-core/ingest/vox/taxonomy/narratives.json",
+        "services/oracle-core/ingest/vox/taxonomy/entities.map.json",
+        "services/oracle-core/ingest/vox/budget-guard.ts"
+      ],
+      "notes": "Ingest coverage for social/news sources and provider SDKs exists."
+    },
+    {
+      "id": "CHK-VOX-METRICS",
+      "title": "Vox metrics defined (VPI, brigading)",
+      "category": "vox",
+      "status": "FOUND",
+      "evidence": [
+        "services/oracle-core/metrics/vox.metrics.ts",
+        "RUNBOOK_SHADOW_MODE.md",
+        "scripts/shadow/health-check.sh",
+        "scripts/shadow/health-check.mjs"
+      ],
+      "notes": "vox_vpi and vox_brigading_suspected_total are defined and referenced by runbooks and scripts."
+    },
+    {
+      "id": "CHK-VOX-API",
+      "title": "Vox REST endpoints (top-movers, research)",
+      "category": "vox",
+      "status": "MISSING",
+      "evidence": [
+        "src/hooks/useOracleVox.ts (calls /api/oracle/v1/vox/top-movers)",
+        "VOX_POPULI_V1_1_DOD_CHECKLIST.md (documents /api/oracle/v1/vox/top-movers)",
+        "lav-adaf/apps/dashboard/src/app/api/oracle/v1/research/vox/route.ts (research entrypoint)"
+      ],
+      "notes": "Endpoint /api/oracle/v1/vox/top-movers is referenced in hooks/docs but no route implementation was found under src/app/api/oracle/v1/vox/top-movers."
+    },
+    {
+      "id": "CHK-VOX-UI",
+      "title": "Vox War Room UI present",
+      "category": "vox",
+      "status": "FOUND",
+      "evidence": [
+        "src/app/(oracle)/vox-war-room/page.tsx",
+        "src/components/oracle/vox/TopMovers.tsx",
+        "src/components/oracle/vox/HypeVsPrice.tsx",
+        "src/components/oracle/vox/NarrativesTreemap.tsx",
+        "src/components/oracle/vox/BrigadingHeatmap.tsx",
+        "src/components/oracle/vox/InfluencersBoard.tsx"
+      ],
+      "notes": "Vox War Room page and components wiring exists; hooks depend on missing /vox/top-movers API."
+    },
+    {
+      "id": "CHK-INF-SHADOW",
+      "title": "Shadow mode infra & scripts",
+      "category": "infrastructure",
+      "status": "FOUND",
+      "evidence": [
+        "docker-compose.dev.yml",
+        "docker-compose.prod.yml",
+        "scripts/shadow/health-check.sh",
+        "scripts/shadow/health-check.mjs",
+        "RUNBOOK_SHADOW_MODE.md",
+        "SHADOW_MODE_DEPLOYMENT_PROGRESS.md",
+        "SHADOW_MODE_IMPLEMENTATION.md"
+      ],
+      "notes": "Shadow scripts and runbooks are present; verify compose profiles for shadow if needed (not explicitly named)."
+    },
+    {
+      "id": "CHK-OBS",
+      "title": "Observability stack configured",
+      "category": "observability",
+      "status": "FOUND",
+      "evidence": [
+        "monitoring/prometheus.yml",
+        "monitoring/prometheus-alerts.yml",
+        "monitoring/alerting/oracle_shadow.alerts.yml",
+        "monitoring/grafana/**",
+        "src/app/monitoring/page.tsx",
+        "services/oracle-core/monitoring/heartbeats.ts"
+      ],
+      "notes": "Prometheus, Grafana dashboards, and alert rules present."
+    },
+    {
+      "id": "CHK-TESTS-INTEG",
+      "title": "Integration tests requiring shadow server",
+      "category": "tests",
+      "status": "INCOMPLETE",
+      "evidence": [
+        "tests/api/oracle.shadow.test.ts (ECONNREFUSED :3005)",
+        "tests/api/oracle.error.test.ts",
+        "services/oracle-core/tests/api.oracle.test.ts"
+      ],
+      "notes": "6 tests fail when shadow server not running. Suggest tagging as @integration and separate CI job with shadow profile."
+    }
+  ]
+}
