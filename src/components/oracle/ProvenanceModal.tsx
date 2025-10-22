@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from 'react';
 /**
@@ -38,40 +38,23 @@ interface SignalProvenance {
   evidence: EvidenceRef[];
   consensusMethod: string;
   quorumPassed: boolean;
+  metadata?: {
+    sources_count: number;
+    consensus_threshold: number;
+    processing_time_ms: number;
+  };
 }
 
 async function fetchProvenance(signalId: string): Promise<SignalProvenance> {
-  // TODO: Replace with real API call to /api/oracle/v1/provenance/${signalId}
-  return {
-    signalId,
-    feedId: 'price/btc_usd.live',
-    value: 64000,
-    unit: 'USD',
-    confidence: 0.95,
-    timestamp: new Date().toISOString(),
-    evidence: [
-      {
-        source_id: 'chainlink-btc',
-        url: 'https://data.chain.link/feeds/ethereum/mainnet/btc-usd',
-        round_id: '18446744073709562891',
-        captured_at: new Date(Date.now() - 5000).toISOString(),
-      },
-      {
-        source_id: 'pyth-btc',
-        price_id: '0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43',
-        url: 'https://pyth.network/price-feeds/crypto-btc-usd',
-        captured_at: new Date(Date.now() - 3000).toISOString(),
-      },
-      {
-        source_id: 'redstone-btc',
-        hash: '0x1234567890abcdef',
-        url: 'https://app.redstone.finance/#/app/data-services',
-        captured_at: new Date(Date.now() - 4000).toISOString(),
-      },
-    ],
-    consensusMethod: 'weighted_median',
-    quorumPassed: true,
-  };
+  // Call real API endpoint (mock-first implementation)
+  const response = await fetch(`/api/oracle/v1/provenance/${signalId}`);
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Failed to fetch provenance');
+  }
+
+  return response.json();
 }
 
 interface ProvenanceModalProps {
@@ -91,7 +74,8 @@ export function ProvenanceModal({ signalId, onClose }: ProvenanceModalProps) {
         <DialogHeader>
           <DialogTitle>Signal Provenance</DialogTitle>
           <DialogDescription>
-            Data lineage and source evidence for signal <code className="text-xs">{signalId}</code>
+            Data lineage and source evidence for signal{' '}
+            <code className="text-xs">{signalId}</code>
           </DialogDescription>
         </DialogHeader>
 
@@ -120,11 +104,17 @@ export function ProvenanceModal({ signalId, onClose }: ProvenanceModalProps) {
                 </Badge>
               </div>
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Consensus Method</div>
-                <Badge variant="outline">{data.consensusMethod.replace('_', ' ')}</Badge>
+                <div className="text-sm text-muted-foreground">
+                  Consensus Method
+                </div>
+                <Badge variant="outline">
+                  {data.consensusMethod.replace('_', ' ')}
+                </Badge>
               </div>
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">Quorum Status</div>
+                <div className="text-sm text-muted-foreground">
+                  Quorum Status
+                </div>
                 <Badge variant={data.quorumPassed ? 'default' : 'destructive'}>
                   {data.quorumPassed ? 'Passed' : 'Failed'}
                 </Badge>
@@ -157,30 +147,36 @@ export function ProvenanceModal({ signalId, onClose }: ProvenanceModalProps) {
                     <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
                       {evidence.round_id && (
                         <div>
-                          <span className="font-medium">Round ID:</span> {evidence.round_id}
+                          <span className="font-medium">Round ID:</span>{' '}
+                          {evidence.round_id}
                         </div>
                       )}
                       {evidence.price_id && (
                         <div>
                           <span className="font-medium">Price ID:</span>{' '}
-                          <code className="text-xs">{evidence.price_id.slice(0, 20)}...</code>
+                          <code className="text-xs">
+                            {evidence.price_id.slice(0, 20)}...
+                          </code>
                         </div>
                       )}
                       {evidence.hash && (
                         <div>
-                          <span className="font-medium">Hash:</span> <code className="text-xs">{evidence.hash}</code>
+                          <span className="font-medium">Hash:</span>{' '}
+                          <code className="text-xs">{evidence.hash}</code>
                         </div>
                       )}
                       {evidence.block_number && (
                         <div>
-                          <span className="font-medium">Block:</span> {evidence.block_number}
+                          <span className="font-medium">Block:</span>{' '}
+                          {evidence.block_number}
                         </div>
                       )}
                     </div>
 
                     <div className="flex items-center gap-1 text-xs text-muted-foreground">
                       <Clock className="h-3 w-3" />
-                      Captured: {new Date(evidence.captured_at).toLocaleString()}
+                      Captured:{' '}
+                      {new Date(evidence.captured_at).toLocaleString()}
                     </div>
                   </div>
                 ))}

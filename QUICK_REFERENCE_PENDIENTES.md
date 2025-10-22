@@ -52,66 +52,66 @@ src/app/api/oracle/v1/provenance/[id]/route.ts
 
 **Acción:**
 
-```bash
+````bash
 # Verificar si existe
 ls src/app/(dashboard)/opx/page.tsx
 
 # Si no existe, crear página OPX (Operational Excellence)
-```
+**Alta prioridad:** ✅ **2/2 COMPLETADOS** (Provenance API, /opx)
 
 ---
 
-## 📅 Siguiente Sprint (22h)
 
-### 3. ⚠️ SDK Test Suite (4h) - MEDIA
+## ✅ Completados Esta Semana (3h/3h)
 
-**Archivo:** `tests/oracle-sdk.test.ts` (crear)
+### 1. ✅ Provenance API (2h) - COMPLETADO
 
-**SDK existente:** `serve/sdk/ts/client.ts`
+**Archivos creados:**
+- `src/app/api/oracle/v1/provenance/[id]/route.ts` (212 líneas)
+- `tests/provenance-api.test.ts` (14 tests ✅)
 
-**Tests requeridos:**
+**Archivos modificados:**
+- `src/components/oracle/ProvenanceModal.tsx` (usa API endpoint)
 
-```typescript
-// 17 tests recomendados:
-- Constructor (2 tests)
+**Implementación (Mock-First):**
+- GET /api/oracle/v1/provenance/[id] endpoint
+- Mock data generator (5 feeds: BTC, ETH, SOL, AAVE, Funding)
+- 5 fuentes de datos (Chainlink, Pyth, Redstone, Chronicle, etc.)
+- Evidence refs con campos específicos por fuente
+- Consensus metrics (weighted_median, quorum >= 85%)
+- Metadata (sources_count, processing_time_ms, threshold)
+- Cache headers (10s s-maxage)
+- Error handling (400/500)
+- X-Mock-Data: true header
 - listFeeds() (3 tests)
-- getFeed(id) (3 tests)
+**Tests:** 14/14 passing ✅
 - getLatest() (2 tests)
-- subscribe() (3 tests)
-- Error handling (4 tests)
-```
-
-**Comando validación:**
-
-```bash
-pnpm test oracle-sdk --run
-# Target: 17/17 passing
-```
-
+**TODO_REPLACE_WITH_REAL_DATA:** Connect to lineage-storage.ts cuando se requieran datos reales
 ---
-
+### 2. ✅ Ruta /opx (1h) - COMPLETADO
 ## 📋 Siguiente Sprint (22h)
-
+**Archivos creados:**
+- `src/app/(dashboard)/opx/page.tsx` (320+ líneas)
 ### 5. Quarantine Webhooks (3h)
-
+**Archivos modificados:**
+- `src/components/research/ResearchPanel.tsx` (navegación con router.push)
 - Discord webhook integration
-- Slack webhook integration
-- 5 tests
+**Implementación (Mock-First):**
+- Dashboard completo de oportunidades OPX
+- 5 stats cards (Total, Proposed, Approved, Rejected, Avg Score)
+- Filtros (min score slider, type select, status select)
+- OpxTriageTable component integrado
+- Mock data generator (15 oportunidades, 8 ideas, 5 agentes)
+- Approve/Reject workflow con toast notifications
+- Responsive design (grid 1/3/5 cols)
+- Loading states y error handling
 
-### 4. ⚠️ Quarantine Webhooks (3h) - MEDIA
-
-- Discord/Slack integration
+**Navegación:** ✅ ResearchPanel → router.push('/opx')
 - Webhook endpoints
-- Alerting system
-
-### 5. Sistema Auth NextAuth.js (8h)
-
-- NextAuth.js setup
-- Session management
+**TODO_REPLACE_WITH_REAL_DATA:** Connect to /api/opx/opportunities cuando se requieran datos reales
 - 8 TODOs de auth context
-
+**Status:** ✅ Página funcional, todos los componentes integrados
 ### 6. RBAC Checks (3h)
-
 - ResearchPanel permissions
 - Role-based access
 - 2 TODOs
@@ -183,7 +183,7 @@ pnpm test oracle-ui --run
 # E2E (requiere servidor)
 ./inicio-completo.sh
 pnpm playwright test
-```
+````
 
 ---
 
