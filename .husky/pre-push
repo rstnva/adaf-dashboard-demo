@@ -1,5 +1,11 @@
 #!/usr/bin/env sh
 
+# Allow override for CI/CD or emergency fixes
+if [ "$SKIP_PUSH_CHECKS" = "1" ]; then
+  echo "⚠️  SKIP_PUSH_CHECKS=1: Bypassing pre-push checks"
+  exit 0
+fi
+
 echo "🚀 pre-push: Running checks before push..."
 
 # Check if we're pushing to protected branches
