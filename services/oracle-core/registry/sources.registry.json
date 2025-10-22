@@ -1,0 +1,19 @@
+{
+  "sources": [
+    { "id": "mock", "name": "ADAF Mock Generator", "tier": "sandbox", "tos_class": "internal", "category": "demo" },
+    { "id": "nansen", "name": "Nansen", "tier": "tier-1", "tos_class": "enterprise", "category": "onchain_analytics" },
+    { "id": "messari", "name": "Messari", "tier": "tier-1", "tos_class": "enterprise", "category": "research" },
+    { "id": "bloomberg", "name": "Bloomberg", "tier": "tier-0", "tos_class": "institutional", "category": "market_data" },
+    { "id": "sosovalue", "name": "SoSoValue", "tier": "tier-2", "tos_class": "enterprise", "category": "etf_flows" },
+    { "id": "investing", "name": "Investing.com", "tier": "tier-2", "tos_class": "public", "category": "macro" },
+    { "id": "fred", "name": "FRED", "tier": "tier-2", "tos_class": "public", "category": "macro" },
+    { "id": "flashbots", "name": "Flashbots", "tier": "tier-1", "tos_class": "open", "category": "mev" },
+    { "id": "thegraph", "name": "The Graph", "tier": "tier-2", "tos_class": "open", "category": "onchain_indexing" },
+    { "id": "defillama", "name": "DeFiLlama", "tier": "tier-2", "tos_class": "open", "category": "defi" },
+    { "id": "vox-x", "name": "Vox Populi — X/Twitter", "tier": "tier-2", "tos_class": "public", "category": "social" },
+    { "id": "vox-reddit", "name": "Vox Populi — Reddit", "tier": "tier-2", "tos_class": "public", "category": "social" },
+    { "id": "vox-aggregate", "name": "Vox Populi — Aggregator", "tier": "tier-2", "tos_class": "internal", "category": "derived" },
+    { "id": "vox-signal", "name": "Vox Populi — Derived Signals", "tier": "tier-2", "tos_class": "internal", "category": "derived" }
+  ],
+  "legal_note": "Metadatos únicamente; las señales derivadas cumplen TOS tier-1/tier-2. No se activan conectores en mock mode."
+}

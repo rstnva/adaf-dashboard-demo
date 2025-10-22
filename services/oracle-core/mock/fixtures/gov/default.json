@@ -1,0 +1,14 @@
+[
+  {
+    "feedId": "gov/dao/lido_proposal_participation",
+    "ts": "2025-10-14T10:35:00Z",
+    "value": 0.58,
+    "unit": "participation_rate",
+    "confidence": 0.64,
+    "quorum_ok": true,
+    "stale": false,
+    "evidence": [{ "source_id": "mock", "captured_at": "2025-10-14T10:35:00Z" }],
+    "tags": ["mock"],
+    "rev": 0
+  }
+]

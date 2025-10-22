@@ -7,10 +7,10 @@ const prisma = new PrismaClient()
 export async function POST(req: NextRequest) {
   const b = await req.json() as { provider: 'farside'|'sosovalue'; asset: 'BTC'|'ETH'; date: string; netInUsd: number }
   const fp = crypto.createHash('sha256').update(`${b.provider}|${b.asset}|${b.date}|${b.netInUsd}`).digest('hex')
-  const dup = await prisma.signal.findFirst({ where: { fingerprint: fp }})
+  const dup = await prisma.agentSignal.findFirst({ where: { fingerprint: fp }})
   if (dup) return NextResponse.json({ status: 'duplicate', fingerprint: fp })
 
-  const rec = await prisma.signal.create({
+  const rec = await prisma.agentSignal.create({
     data: {
       type: 'offchain',
       source: b.provider,

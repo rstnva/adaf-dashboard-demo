@@ -15,7 +15,7 @@
 ### 2️⃣ **✅ Enlaces Internos Actualizados**
 - **motor-del-dash/**: Todas las referencias actualizadas
 - **README.md**: Enlaces corregidos a nueva estructura
-- **ARCHITECTURE.md**: Referencias internas funcionando
+- **`arquitectura/ARCHITECTURE.md`**: Referencias internas funcionando
 - **Navegación**: Sin enlaces rotos o 404s
 
 ### 3️⃣ **✅ Índice de Navegación Maestro Creado**
@@ -65,7 +65,7 @@ motor-del-dash/
 │   ├── PERFORMANCE_REPORT.md              # Análisis de performance
 │   └── PRODUCTION_DEPLOYMENT_GUIDE.md     # Guía de deployment
 ├── 🏗️ arquitectura/
-│   └── ARCHITECTURE.md                    # Documentación técnica
+│   └── arquitectura/ARCHITECTURE.md        # Documentación técnica
 └── 🧠 memoria/
     └── MEMORIA_GITHUB_COPILOT.md          # Historial de decisiones
 ```

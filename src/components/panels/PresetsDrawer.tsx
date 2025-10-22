@@ -39,9 +39,9 @@ export function PresetsDrawer() {
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger asChild>
-        <Button variant="outline">Ver Presets de Ejecución</Button>
-      </DrawerTrigger>
+      <Button asChild variant="outline">
+        <DrawerTrigger>Ver Presets de Ejecución</DrawerTrigger>
+      </Button>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
@@ -76,9 +76,9 @@ export function PresetsDrawer() {
             <Button variant="outline" onClick={handleExport} className="w-full">
               Exportar
             </Button>
-            <DrawerClose asChild>
-              <Button variant="ghost" className="col-span-2">Cerrar</Button>
-            </DrawerClose>
+            <Button variant="ghost" className="col-span-2" asChild>
+              <DrawerClose>Cerrar</DrawerClose>
+            </Button>
           </DrawerFooter>
         </div>
       </DrawerContent>

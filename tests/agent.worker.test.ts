@@ -24,7 +24,7 @@ describe('Agent Worker Integration', () => {
     // Limpiar tablas relacionadas en orden correcto
     await prisma.alert.deleteMany()
     await prisma.opportunity.deleteMany()
-    await prisma.signal.deleteMany()
+  await prisma.agentSignal.deleteMany()
   })
 
   afterEach(async () => {
@@ -33,7 +33,7 @@ describe('Agent Worker Integration', () => {
 
   it('should process news signals and generate alerts', async () => {
     // Crear una señal de prueba en la base de datos
-    const testSignal = await prisma.signal.create({
+  const testSignal = await prisma.agentSignal.create({
       data: {
         type: 'news',
         source: 'CryptoNews',
@@ -67,7 +67,7 @@ describe('Agent Worker Integration', () => {
 
   it('should process TVL signals and detect significant drops', async () => {
     // Crear una señal TVL con caída significativa
-    const tvlSignal = await prisma.signal.create({
+  const tvlSignal = await prisma.agentSignal.create({
       data: {
         type: 'onchain',
         source: 'DeFiLlama',
@@ -102,7 +102,7 @@ describe('Agent Worker Integration', () => {
 
   it('should identify arbitrage opportunities', async () => {
     // Crear señales que podrían generar oportunidades
-    const priceSignal = await prisma.signal.create({
+  const priceSignal = await prisma.agentSignal.create({
       data: {
         type: 'price',
         source: 'PriceOracle',
@@ -138,7 +138,7 @@ describe('Agent Worker Integration', () => {
   it('should handle multiple signal types in batch', async () => {
     // Crear múltiples señales de diferentes tipos
     const signals = await Promise.all([
-      prisma.signal.create({
+  prisma.agentSignal.create({
         data: {
           type: 'news',
           source: 'NewsAPI',
@@ -150,7 +150,7 @@ describe('Agent Worker Integration', () => {
           timestamp: new Date()
         }
       }),
-      prisma.signal.create({
+  prisma.agentSignal.create({
         data: {
           type: 'onchain',
           source: 'ChainAnalysis',
@@ -162,7 +162,7 @@ describe('Agent Worker Integration', () => {
           timestamp: new Date()
         }
       }),
-      prisma.signal.create({
+  prisma.agentSignal.create({
         data: {
           type: 'social',
           source: 'TwitterAPI',
@@ -182,7 +182,7 @@ describe('Agent Worker Integration', () => {
     expect(result.alerts + result.opportunities).toBeGreaterThan(0)
 
     // Verificar que se procesaron todas las señales
-    const processedSignals = await prisma.signal.findMany({
+  const processedSignals = await prisma.agentSignal.findMany({
       where: {
         id: { in: signals.map(s => s.id) },
         processed: true
@@ -197,7 +197,7 @@ describe('Agent Worker Integration', () => {
     vi.useFakeTimers()
 
     // Crear una señal
-    const signal = await prisma.signal.create({
+  const signal = await prisma.agentSignal.create({
       data: {
         type: 'news',
         source: 'TestSource',
@@ -215,7 +215,7 @@ describe('Agent Worker Integration', () => {
     expect(result1.processed).toBe(1)
 
     // Crear otra señal inmediatamente
-    await prisma.signal.create({
+  await prisma.agentSignal.create({
       data: {
         type: 'news',
         source: 'TestSource',

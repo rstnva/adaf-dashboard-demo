@@ -130,7 +130,7 @@ export async function cleanupTestData(redis: any, prisma: any) {
     if (prisma) {
       await prisma.alert?.deleteMany?.()
       await prisma.opportunity?.deleteMany?.()
-      await prisma.signal?.deleteMany?.()
+  await prisma.agentSignal?.deleteMany?.()
     }
   } catch (error) {
     // Silenciar errores en cleanup para no afectar tests

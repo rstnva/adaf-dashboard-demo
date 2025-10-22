@@ -1,0 +1,5 @@
+[
+  {"feedId":"vox/signal/shock:BTC","ts":"2025-10-20T00:00:00Z","value":2.1,"unit":"zscore","confidence":0.7,"quorum_ok":true,"stale":false,"evidence":[{"source_id":"mock-x","captured_at":"2025-10-20T00:00:00Z","sample_size":15}],"tags":["vox","mock"]},
+  {"feedId":"vox/signal/divergence_hp:BTC","ts":"2025-10-20T00:00:00Z","value":0.32,"unit":"norm","confidence":0.7,"quorum_ok":true,"stale":false,"evidence":[{"source_id":"mock-x","captured_at":"2025-10-20T00:00:00Z"},{"source_id":"mock-price","captured_at":"2025-10-20T00:00:00Z"}],"tags":["vox","mock"]},
+  {"feedId":"vox/signal/leadlag:BTC","ts":"2025-10-20T00:00:00Z","value":-3,"unit":"min","confidence":0.7,"quorum_ok":true,"stale":false,"evidence":[{"source_id":"mock-x","captured_at":"2025-10-20T00:00:00Z"},{"source_id":"mock-price","captured_at":"2025-10-20T00:00:00Z"}],"tags":["vox","mock"]}
+]

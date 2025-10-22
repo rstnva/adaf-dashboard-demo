@@ -1,18 +1,29 @@
-# Keep Docker build contexts lean
-# Dependencies and build output
 node_modules
+.pnpm-store
+pnpm-lock.yaml
 .next
-out
-build
-
-# Git & editor
+.next-dev
+.turbo
 .git
 .gitignore
-.vscode
-
-# Local env and archives
+*.log
+nohup.out
+coverage
+evidence
+dist
+build
+tmp
+.cache
+tests
+**/*.test.*
+**/__tests__
+**/__mocks__
+Dockerfile.*
+docker-compose.*.yml
+*.local
 .env*
-*.tgz
-
-# OS noise
-.DS_Store
+!.env.example
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db

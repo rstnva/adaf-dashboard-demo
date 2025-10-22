@@ -1,0 +1,24 @@
+{
+  "title": "Vox Populi (DEMO)",
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "VPI (top assets)",
+      "targets": [{ "expr": "vox_vpi{asset=~\"btc|eth|sol|arb|op\"}" }]
+    },
+    {
+      "type": "stat",
+      "title": "Brigading Suspected (sum 24h)",
+      "targets": [{ "expr": "increase(vox_brigading_suspected_total[24h])" }]
+    },
+    {
+      "type": "bargauge",
+      "title": "Provider Calls (last 1h)",
+      "targets": [
+        { "expr": "sum by (provider)(increase(vox_provider_calls_total[1h]))" }
+      ]
+    }
+  ],
+  "schemaVersion": 39,
+  "version": 1
+}

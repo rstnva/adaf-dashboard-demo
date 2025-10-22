@@ -1,0 +1,52 @@
+name: integration
+'on':
+  push:
+  pull_request:
+concurrency:
+  group: ${{ github.ref }}-integration
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with: { version: 9 }
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm -w build # Build (quick) o eq. en monorepo
+      - run: pnpm -w test # unitarias
+  integration:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      ORACLE_READER_TOKEN: ${{ secrets.ORACLE_READER_TOKEN }}
+      EXECUTION_MODE: 'dry-run'
+      ORACLE_SOURCE_MODE: 'shadow'
+      NEXT_PUBLIC_FF_ORACLE_CORE_ENABLED: 'true'
+      ORACLE_VOX_ENABLED: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - run: pnpm i --frozen-lockfile
+      # Levanta perfil shadow (oracle-core en 3005)
+      - run: pnpm shadow:up
+      # Build y arranca dashboard en 3000 (prod)
+      - run: pnpm -w build
+      - run: nohup pnpm -w start -- -p 3000 >/dev/null 2>&1 &
+      # Espera puertos
+      - run: bash -lc 'for i in {1..60}; do (curl -sf localhost:3000/api/oracle/health && curl -sf localhost:3000/api/oracle/v1/feeds && exit 0) || sleep 2; done; exit 1'
+      - run: bash -lc 'for i in {1..60}; do (curl -sf localhost:3000/api/oracle/v1/readiness || true); curl -sf localhost:3000/api/oracle/health && exit 0 || sleep 2; done; exit 1'
+      # Pruebas etiquetadas @integration
+      - run: pnpm -w test:integration
+      - if: always()
+        run: pnpm shadow:down

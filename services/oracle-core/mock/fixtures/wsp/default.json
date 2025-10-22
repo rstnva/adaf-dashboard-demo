@@ -1,0 +1,26 @@
+[
+  {
+    "feedId": "wsp/etf/btc_inflow_usd",
+    "ts": "2025-10-14T10:00:00Z",
+    "value": 145000000,
+    "unit": "usd",
+    "confidence": 0.72,
+    "quorum_ok": true,
+    "stale": false,
+    "evidence": [{ "source_id": "mock", "captured_at": "2025-10-14T10:00:00Z" }],
+    "tags": ["mock"],
+    "rev": 0
+  },
+  {
+    "feedId": "wsp/indices/vix_index",
+    "ts": "2025-10-14T10:00:00Z",
+    "value": 18.4,
+    "unit": "index",
+    "confidence": 0.69,
+    "quorum_ok": true,
+    "stale": false,
+    "evidence": [{ "source_id": "mock", "captured_at": "2025-10-14T10:00:00Z" }],
+    "tags": ["mock"],
+    "rev": 0
+  }
+]

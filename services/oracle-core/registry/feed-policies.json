@@ -1,0 +1,75 @@
+{
+  "defaults": {
+    "acl": {
+      "allow": ["adaf-core"]
+    },
+    "circuitBreaker": {
+      "maxDeltaPct": 0.6,
+      "minConfidence": 0.5
+    }
+  },
+  "feeds": {
+    "wsp/etf/btc_inflow_usd": {
+      "acl": {
+        "allow": ["adaf-core", "desk-flow"]
+      },
+      "circuitBreaker": {
+        "maxDeltaPct": 0.35,
+        "maxAbsolute": 75000000
+      }
+    },
+    "news/impact/hack_score": {
+      "acl": {
+        "allow": ["adaf-core", "news-desk"]
+      },
+      "circuitBreaker": {
+        "maxDeltaPct": 0.5,
+        "maxAbsolute": 2,
+        "minConfidence": 0.65
+      }
+    },
+    "blackbox/onchain/token:eth/exch_balance_usd": {
+      "acl": {
+        "allow": ["adaf-core", "entity-lab"]
+      },
+      "circuitBreaker": {
+        "maxDeltaPct": 0.25,
+        "maxAbsolute": 150000000
+      }
+    },
+    "oracles/latency/chainlink_eth": {
+      "acl": {
+        "allow": ["adaf-core", "oracle-lab"]
+      },
+      "circuitBreaker": {
+        "maxDeltaPct": 0.45,
+        "maxAbsolute": 30,
+        "minConfidence": 0.55
+      },
+      "shadow": {
+        "provider": "dia",
+        "mode": "shadow",
+        "reference": 0.38
+      }
+    },
+    "stables/peg/usdc_premium_bps": {
+      "acl": {
+        "allow": ["adaf-core", "stable-lab"]
+      },
+      "circuitBreaker": {
+        "maxDeltaPct": 0.3,
+        "maxAbsolute": 75
+      }
+    },
+    "vol/surface/btc_iv_30d_atm": {
+      "acl": {
+        "allow": ["adaf-core", "vol-desk"]
+      },
+      "circuitBreaker": {
+        "maxDeltaPct": 0.28,
+        "maxAbsolute": 40,
+        "minConfidence": 0.6
+      }
+    }
+  }
+}

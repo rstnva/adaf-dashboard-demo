@@ -102,7 +102,7 @@ const newsDataModel: MockPrismaModel = {
     return { count };
   },
 };
-const signalModel: MockPrismaModel = {
+const agentSignalModel: MockPrismaModel = {
   findMany: async (args?: any) => {
     if (!args || !args.where) return [..._signals];
     // Simple where filter (equality only)
@@ -155,7 +155,7 @@ export class PrismaClient {
   checklist: MockPrismaModel;
   score: MockPrismaModel;
   funding: MockPrismaModel;
-  signal: MockPrismaModel;
+  agentSignal: MockPrismaModel;
   newsData: MockPrismaModel;
 
   constructor() {
@@ -169,7 +169,7 @@ export class PrismaClient {
     this.checklist = makeMockModel();
     this.score = makeMockModel();
     this.funding = makeMockModel();
-    this.signal = signalModel;
+  this.agentSignal = agentSignalModel;
     this.newsData = newsDataModel;
     console.log('Mock Prisma Client initialized');
   }

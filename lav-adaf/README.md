@@ -12,6 +12,10 @@
 
 **Sistema de Agentes de Inteligencia para Trading Algorítmico y Gestión de Riesgo**
 
+## ✅ Actualizaciones Sprint 5
+
+- [Checklist de sincronización LAV ↔ ADAF](./SYNC_CHECKLIST.md) — pasos operativos, métricas y criterios de bloqueo para la simulación v1.5.
+
 ## 🎯 **Visión General**
 
 [![Build Status](https://github.com/lav-adaf/monorepo/workflows/CI/badge.svg)](https://github.com/lav-adaf/monorepo/actions)

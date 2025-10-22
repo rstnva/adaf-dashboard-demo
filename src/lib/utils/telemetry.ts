@@ -101,4 +101,12 @@ export const trackUiEvent = {
   
   // Research
   researchRunPreset: (presetId: string) => postUiEvent('ResearchQuickActions', 'run_preset', { presetId }),
+
+  // Equities sleeve
+  equitiesMacroChange: (macro: 'risk-on' | 'risk-off' | 'neutral') =>
+    postUiEvent('EquitiesSleeve', 'macro_change', { macro }),
+  equitiesRefreshSignals: (macro: 'risk-on' | 'risk-off' | 'neutral') =>
+    postUiEvent('EquitiesSleeve', 'refresh_signals', { macro }),
+  equitiesRunBacktest: (meta: { sleeveId: string; macro: string; dryRun: boolean; tickers: string[] }) =>
+    postUiEvent('EquitiesSleeve', 'run_backtest', meta),
 };

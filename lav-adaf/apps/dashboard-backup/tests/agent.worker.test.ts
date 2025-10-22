@@ -36,7 +36,7 @@ describe('Agent Worker Integration', () => {
     // Limpiar tablas relacionadas en orden correcto
     await prisma.alert.deleteMany()
     await prisma.opportunity.deleteMany()
-    await prisma.signal.deleteMany()
+  await prisma.agentSignal.deleteMany()
   })
 
   afterEach(async () => {
@@ -45,7 +45,7 @@ describe('Agent Worker Integration', () => {
 
   it('should process news signals and generate alerts', async () => {
     // Crear una señal de prueba en la base de datos
-    const testSignal = await prisma.signal.create({
+  const testSignal = await prisma.agentSignal.create({
       data: {
         type: 'news',
         source: 'CryptoNews',
@@ -79,7 +79,7 @@ describe('Agent Worker Integration', () => {
 
   it('should process TVL signals and detect significant drops', async () => {
     // Crear una señal TVL con caída significativa (must match OC-1 logic)
-    const tvlSignal = await prisma.signal.create({
+  const tvlSignal = await prisma.agentSignal.create({
       data: {
         type: 'onchain',
         source: 'OC-1', // must be OC-1 for TVL drop logic
@@ -98,7 +98,7 @@ describe('Agent Worker Integration', () => {
     })
 
     // Insert a previous signal for delta calculation
-    await prisma.signal.create({
+  await prisma.agentSignal.create({
       data: {
         type: 'onchain',
         source: 'OC-1',
@@ -135,7 +135,7 @@ describe('Agent Worker Integration', () => {
 
   it('should identify arbitrage opportunities', async () => {
     // Crear señales que podrían generar oportunidades (no arbitrage logic in worker, so expect 0)
-    const priceSignal = await prisma.signal.create({
+  const priceSignal = await prisma.agentSignal.create({
       data: {
         type: 'price',
         source: 'PriceOracle',
@@ -163,7 +163,7 @@ describe('Agent Worker Integration', () => {
   it('should handle multiple signal types in batch', async () => {
     // Crear múltiples señales de diferentes tipos
     const signals = await Promise.all([
-      prisma.signal.create({
+  prisma.agentSignal.create({
         data: {
           type: 'news',
           source: 'NewsAPI',
@@ -175,7 +175,7 @@ describe('Agent Worker Integration', () => {
           timestamp: new Date()
         }
       }),
-      prisma.signal.create({
+  prisma.agentSignal.create({
         data: {
           type: 'onchain',
           source: 'ChainAnalysis',
@@ -187,7 +187,7 @@ describe('Agent Worker Integration', () => {
           timestamp: new Date()
         }
       }),
-      prisma.signal.create({
+  prisma.agentSignal.create({
         data: {
           type: 'social',
           source: 'TwitterAPI',
@@ -207,7 +207,7 @@ describe('Agent Worker Integration', () => {
     expect(result.alerts + result.opportunities).toBeGreaterThan(0)
 
     // Verificar que se procesaron todas las señales
-    const processedSignals = await prisma.signal.findMany({
+  const processedSignals = await prisma.agentSignal.findMany({
       where: {
         id: { in: signals.map(s => s.id) },
         processed: true
@@ -220,7 +220,7 @@ describe('Agent Worker Integration', () => {
   it('should respect processing cooldown periods', async () => {
     // Cooldown logic is not implemented in worker, so this test is not applicable
     // Just check that multiple signals are processed
-    const signal = await prisma.signal.create({
+  const signal = await prisma.agentSignal.create({
       data: {
         type: 'news',
         source: 'TestSource',
@@ -236,7 +236,7 @@ describe('Agent Worker Integration', () => {
     const result1 = await processNewSignals()
     expect(result1.processed).toBe(1)
 
-    await prisma.signal.create({
+  await prisma.agentSignal.create({
       data: {
         type: 'news',
         source: 'TestSource',

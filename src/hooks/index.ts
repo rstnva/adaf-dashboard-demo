@@ -12,10 +12,12 @@ export { useEtfFlows } from './useEtfFlows';
 export { useFundingGamma } from './useFundingGamma';
 export { useOnchain } from './useOnchain';
 export { useNewsReg } from './useNewsReg';
+export { useNewsOracle } from './useNewsOracle';
 export { useDqp } from './useDqp';
 export { useOpx } from './useOpx';
 export { useAlertsSSE } from './useAlertsSSE';
 export { useToast } from './use-toast';
+export { useOracleDQSummary } from './useOracleDQ';
 
 // Re-export common types
 export type { 
@@ -35,7 +37,8 @@ export type {
 } from './useFundingGamma';
 
 export type { 
-  TvlHeatmapData 
+  TvlHeatmapData,
+  TvlHeatmapRange 
 } from './useOnchain';
 
 export type { 
@@ -50,3 +53,14 @@ export type {
 export type { 
   OpxOpportunity 
 } from './useOpx';
+
+export type {
+  DqSeverityStatus,
+  DqTrendStatus,
+  DqSeverity,
+  DqTrend,
+  DqRuleSummary,
+  DqFeedSummary,
+  DqShadowRmse,
+  DqSummaryResponse,
+} from './useOracleDQ';

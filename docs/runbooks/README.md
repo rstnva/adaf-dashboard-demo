@@ -28,6 +28,14 @@ This directory contains standardized runbooks for incident response, escalation 
 
 - [OPX_BLOCKING_GUARDRAILS](./OPX_BLOCKING_GUARDRAILS.md) - Operational Guardrail Activation Response
 
+### Simulation Modules (Sprint 5)
+
+- [SIM_BLOCKSPACE](./SIM_BLOCKSPACE.md) - Block builder simulación y latencia.
+- [SIM_VAULTS_LAV](./SIM_VAULTS_LAV.md) - Escenarios de treasury y riesgo LAV.
+- [SIM_ALPHA_FACTORY](./SIM_ALPHA_FACTORY.md) - Producción de señales cuantitativas.
+- [SIM_EVENT_ALPHA](./SIM_EVENT_ALPHA.md) - Gestión de catalizadores y severidades.
+- [SIM_LIQUIDITY_BACKSTOP](./SIM_LIQUIDITY_BACKSTOP.md) - Planificación de reservas institucionales.
+
 ### Templates & Procedures
 
 - [templates/POSTMORTEM.md](./templates/POSTMORTEM.md) - Post-mortem template

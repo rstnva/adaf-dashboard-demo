@@ -7,6 +7,17 @@ export type Permission =
   | 'feature:summer'
   | 'feature:echarts'
   | 'feature:semaforo'
+  | 'feature:blockspace'
+  | 'feature:vaults-lav'
+  | 'feature:alpha-factory'
+  | 'feature:vol-pro'
+  | 'feature:event-alpha'
+  | 'feature:mm-selective'
+  | 'feature:tca'
+  | 'feature:cosmos-executor'
+  | 'feature:liquidity-backstop'
+  | 'feature:equities-ai'
+  | 'feature:news_oracle'
   | 'admin:control'
   | 'admin:reports';
 
@@ -19,17 +30,40 @@ const defaultRole: Role =
   envRole === 'system'
     ? envRole
     : 'admin';
+const simFeaturePermissions: Permission[] = [
+  'feature:blockspace',
+  'feature:vaults-lav',
+  'feature:alpha-factory',
+  'feature:vol-pro',
+  'feature:event-alpha',
+  'feature:mm-selective',
+  'feature:tca',
+  'feature:cosmos-executor',
+  'feature:liquidity-backstop',
+  'feature:equities-ai',
+  'feature:news_oracle',
+];
+
 const defaultPermissions: Permission[] = [
   'feature:summer',
   'feature:echarts',
   'feature:semaforo',
+  ...simFeaturePermissions,
   'admin:control',
   'admin:reports',
 ];
 
 const basePermissionsByRole: Record<Role, Permission[]> = {
   viewer: [],
-  user: ['feature:summer', 'feature:echarts', 'feature:semaforo'],
+  user: [
+    'feature:summer',
+    'feature:echarts',
+    'feature:blockspace',
+    'feature:vaults-lav',
+    'feature:alpha-factory',
+    'feature:equities-ai',
+    'feature:news_oracle',
+  ],
   admin: defaultPermissions,
   system: defaultPermissions,
 };
@@ -140,6 +174,7 @@ export function getCurrentPermissions(): Permission[] {
       'feature:summer',
       'feature:echarts',
       'feature:semaforo',
+      ...simFeaturePermissions,
       'admin:control',
       'admin:reports',
     ];

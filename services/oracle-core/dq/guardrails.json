@@ -1,0 +1,54 @@
+{
+  "defaults": {
+    "maxRelativeDelta": 5
+  },
+  "categories": {
+    "wsp": {
+      "min": 0
+    },
+    "news": {
+      "min": -1,
+      "max": 1
+    },
+    "vol": {
+      "min": 0,
+      "maxRelativeDelta": 3
+    },
+    "stables": {
+      "min": 0,
+      "maxRelativeDelta": 2
+    },
+    "blockspace": {
+      "min": 0,
+      "maxRelativeDelta": 4
+    }
+  },
+  "feeds": {
+    "wsp/etf/btc_inflow_usd": {
+      "maxRelativeDelta": 2
+    },
+    "wsp/rates/ust10y_yield_bps": {
+      "min": 0,
+      "max": 1200,
+      "maxRelativeDelta": 1.5
+    },
+    "vol/options/eth_iv_30d": {
+      "min": 0,
+      "max": 300,
+      "maxRelativeDelta": 2.5
+    },
+    "stables/liquidity/usdc_eth_depth": {
+      "min": 0,
+      "maxRelativeDelta": 1.8
+    },
+    "news/impact/hack_score": {
+      "min": -1,
+      "max": 1,
+      "maxRelativeDelta": 4
+    },
+    "oracles/aggregator/eth_usd_median": {
+      "min": 0,
+      "maxRelativeDelta": 0.6
+    }
+  }
+}

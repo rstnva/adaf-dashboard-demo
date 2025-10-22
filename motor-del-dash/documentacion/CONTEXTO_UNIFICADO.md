@@ -163,7 +163,7 @@ Seremos EL FONDO MÁS RENTABLE DEL MUNDO. ADAF/LAV integra moats irreplicables: 
 #### 9. Anexos y Trazabilidad
 
 - Se preservan íntegros los anexos históricos: v1.5, v1.4, v1.2, v1.1, fundacional
-- Referencias: README.md, ARCHITECTURE.md, MEMORIA_GITHUB_COPILOT.md, scripts, configs
+- Referencias: README.md, ../arquitectura/ARCHITECTURE.md, MEMORIA_GITHUB_COPILOT.md, scripts, configs
 
 ---
 
@@ -1656,7 +1656,7 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
 
 #### 9) Referencias
 
-- `README.md`, `ONBOARDING_FORTUNE500.md`, `ROADMAP_OKRS_2025_2026.md`, `MEJORA_CONTINUA.md`, `ARCHITECTURE.md`, `corte de caja.md`, `corte-de-caja-ejecutivo.md`
+- `README.md`, `ONBOARDING_FORTUNE500.md`, `ROADMAP_OKRS_2025_2026.md`, `MEJORA_CONTINUA.md`, `../arquitectura/ARCHITECTURE.md`, `corte de caja.md`, `corte-de-caja-ejecutivo.md`
 - Configuración: `next.config.js`, `tsconfig.json`, `eslint.config.mjs`, `package.json`
 - UI/Theme: `src/app/globals.css`, `src/theme/tokens.ts`
 
@@ -3075,9 +3075,10 @@ adaf-dashboard-pro/
 │   └── next.config.js          # Configuración Next.js
 │
 └── 📚 Documentación
-    ├── README.md               # Esta guía
-    ├── ARCHITECTURE.md         # Documentación técnica
-    └── MEMORIA_*.md            # Historial de cambios
+  ├── README.md               # Esta guía
+  ├── arquitectura/
+  │   └── arquitectura/ARCHITECTURE.md # Documentación técnica
+  └── MEMORIA_*.md            # Historial de cambios
 ```
 
 ---
@@ -3117,7 +3118,7 @@ adaf-dashboard-pro/
 
 ##### 📚 **Documentación Completa**
 
-- [**ARCHITECTURE.md**](./ARCHITECTURE.md) - Documentación técnica detallada
+- [**ARCHITECTURE.md**](../arquitectura/ARCHITECTURE.md) - Documentación técnica detallada
 - [**MEMORIA_GITHUB_COPILOT.md**](./MEMORIA_GITHUB_COPILOT.md) - Historial de cambios y decisiones técnicas
 - [**Roadmap & OKRs**](./ROADMAP_OKRS_2025_2026.md) - Planificación institucional
 - [**Onboarding Fortune 500**](./ONBOARDING_FORTUNE500.md) - Guía de incorporación
@@ -3135,7 +3136,7 @@ Si tienes problemas:
 
 1. Revisa la sección **"RECUPERACIÓN DE EMERGENCIA"** arriba
 2. Consulta los logs: `tail -f adaf-dashboard.log`
-3. Verifica la documentación técnica en `ARCHITECTURE.md`
+3. Verifica la documentación técnica en `../arquitectura/ARCHITECTURE.md`
 4. Revisa el historial en `MEMORIA_GITHUB_COPILOT.md`
 
 ---
@@ -3161,7 +3162,7 @@ Si tienes problemas:
 ##### 📞 **¿Necesitas Ayuda?**
 
 1. **Problemas técnicos**: Consulta "RECUPERACIÓN DE EMERGENCIA" arriba
-2. **Arquitectura**: Lee `ARCHITECTURE.md`
+2. **Arquitectura**: Lee `../arquitectura/ARCHITECTURE.md`
 3. **Historial**: Revisa `MEMORIA_GITHUB_COPILOT.md`
 4. **APIs**: Explora `/api/health` y `/api/metrics`
 
@@ -3339,7 +3340,7 @@ Todas las rutas agregan `X-WSP-Data: stale` si sirvieron datos en modo contingen
 
 ## Architecture
 
-> Fuente original: `ARCHITECTURE.md`
+> Fuente original: `../arquitectura/ARCHITECTURE.md`
 
 ### Avances recientes (Octubre 2025)
 
@@ -4689,7 +4690,7 @@ Bienvenido/a al equipo ADAF Dashboard Pro. Este onboarding te guiará paso a pas
 - [README.md](../README.md): visión general e inicio rápido del sistema.
 - [Documentación Completa](../motor-del-dash/README.md): toda la documentación organizada profesionalmente.
 - [Guía Completa de Uso](../motor-del-dash/documentacion/README-COMPLETO.md): guías paso a paso, instalación y operación.
-- [Arquitectura Técnica](../motor-del-dash/arquitectura/ARCHITECTURE.md): documentación técnica detallada.
+- [Arquitectura Técnica](../arquitectura/ARCHITECTURE.md): documentación técnica detallada.
 - [Memoria Técnica](../motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md): bitácora institucional, decisiones, incidentes y estándares.
 - [docs/runbooks/README.md](../docs/runbooks/README.md): runbooks operativos y respuesta a incidentes.
 - [docs/runbooks/templates/POSTMORTEM.md](../docs/runbooks/templates/POSTMORTEM.md): plantilla de post-mortem.
@@ -6812,7 +6813,7 @@ _This security documentation must be reviewed and updated with each release. For
 
 ## Sprints 2025-10-10
 
-> Fuente original: `SPRINTS_2025-10-10.md`
+> Fuente original: [`sprints/SPRINTS_2025-10-10.md`](../sprints/SPRINTS_2025-10-10.md)
 
 ### Sprints ADAF Dashboard Pro - 2025-10-10
 

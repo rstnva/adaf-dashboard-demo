@@ -1,0 +1,5 @@
+{
+  "price/btc_usd": { "live": 0.1, "mock": 0.9 },
+  "price/eth_usd": { "live": 0.1, "mock": 0.9 },
+  "gas/eth_gwei": { "live": 0.1, "mock": 0.9 }
+}

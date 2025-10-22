@@ -15,7 +15,8 @@ import {
   Hash,
   Bell,
   Activity,
-  DollarSign
+  DollarSign,
+  Coins
 } from 'lucide-react';
 
 export interface SpotlightCommand {
@@ -66,6 +67,17 @@ export const gotoCommands: SpotlightCommand[] = [
     action: 'navigate', 
     payload: '/onchain',
     priority: 90,
+  },
+  {
+    id: 'goto-defi-yield',
+    title: 'DeFi Yield Intelligence',
+    subtitle: 'APYs, TVL y oportunidades multichain',
+    icon: Coins,
+    category: 'goto',
+    keywords: ['defi', 'yield', 'apy', 'opportunities', 'gearbox', 'summerfi', 'eigenlayer', 'lido'],
+    action: 'navigate',
+    payload: '/defi/opportunities',
+    priority: 92,
   },
   {
     id: 'goto-derivatives',

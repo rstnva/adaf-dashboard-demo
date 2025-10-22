@@ -109,41 +109,43 @@ services:
       start_period: 60s
 
   # WAL-G Backup Service
-  wal-g-backup:
-    image: wal-g/wal-g:latest
-    container_name: adaf_wal_g
-    environment:
-      WALG_S3_PREFIX: ${WALG_S3_PREFIX:-s3://adaf-backups/wal-g}
-      AWS_ACCESS_KEY_ID_FILE: /run/secrets/aws_access_key
-      AWS_SECRET_ACCESS_KEY_FILE: /run/secrets/aws_secret_key
-      AWS_REGION: ${AWS_REGION:-us-east-1}
-      PGHOST: postgres-primary
-      PGPORT: 5432
-      PGUSER: ${POSTGRES_USER:-adaf_user}
-      PGPASSWORD_FILE: /run/secrets/postgres_password
-      PGDATABASE: ${POSTGRES_DB:-adaf_dashboard}
-    secrets:
-      - postgres_password
-      - aws_access_key
-      - aws_secret_key
-    volumes:
-      - wal_archive:/wal-archive:ro
-      - ./db/backup-cron.sh:/backup-cron.sh:ro
-    depends_on:
-      postgres-primary:
-        condition: service_healthy
-    networks:
-      - adaf_network
-    restart: unless-stopped
-    user: nobody:nogroup
-    read_only: true
-    tmpfs:
-      - /tmp
-    security_opt:
-      - no-new-privileges:true
-    cap_drop:
-      - ALL
-    command: ["/backup-cron.sh"]
+  # Note: Disabled for shadow mode - backup service not required for 72h validation
+  # TODO: Use correct image (e.g., opuscapita/wal-g or build custom) for production
+  # wal-g-backup:
+  #   image: wal-g/wal-g:latest
+  #   container_name: adaf_wal_g
+  #   environment:
+  #     WALG_S3_PREFIX: ${WALG_S3_PREFIX:-s3://adaf-backups/wal-g}
+  #     AWS_ACCESS_KEY_ID_FILE: /run/secrets/aws_access_key
+  #     AWS_SECRET_ACCESS_KEY_FILE: /run/secrets/aws_secret_key
+  #     AWS_REGION: ${AWS_REGION:-us-east-1}
+  #     PGHOST: postgres-primary
+  #     PGPORT: 5432
+  #     PGUSER: ${POSTGRES_USER:-adaf_user}
+  #     PGPASSWORD_FILE: /run/secrets/postgres_password
+  #     PGDATABASE: ${POSTGRES_DB:-adaf_dashboard}
+  #   secrets:
+  #     - postgres_password
+  #     - aws_access_key
+  #     - aws_secret_key
+  #   volumes:
+  #     - wal_archive:/wal-archive:ro
+  #     - ./db/backup-cron.sh:/backup-cron.sh:ro
+  #   depends_on:
+  #     postgres-primary:
+  #       condition: service_healthy
+  #   networks:
+  #     - adaf_network
+  #   restart: unless-stopped
+  #   user: nobody:nogroup
+  #   read_only: true
+  #   tmpfs:
+  #     - /tmp
+  #   security_opt:
+  #     - no-new-privileges:true
+  #   cap_drop:
+  #     - ALL
+  #   command: ["/backup-cron.sh"]
 
   # Redis with AOF Persistence
   redis-primary:
@@ -419,6 +421,88 @@ services:
     read_only: true
     tmpfs:
       - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  # ================================================================================================
+  # SHADOW MODE SERVICES - 72h Validation Profile
+  # ================================================================================================
+  # Oracle Core in Shadow Mode - Dual ingestion (mock + shadow sources)
+  oracle-core:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      target: production
+    container_name: adaf_oracle_shadow
+    profiles: ["shadow"]
+    environment:
+      NODE_ENV: production
+      EXECUTION_MODE: "dry-run"
+      ORACLE_SOURCE_MODE: "shadow"
+      NEXT_PUBLIC_FF_ORACLE_CORE_ENABLED: "true"
+      ORACLE_VOX_ENABLED: "true"
+      DATABASE_URL: postgresql://${POSTGRES_USER:-adaf_user}@postgres-primary:5432/${POSTGRES_DB:-adaf_dashboard}
+      REDIS_URL: redis://redis-primary:6379
+      REDIS_NAMESPACE: "shadow72h"
+      OTEL_SERVICE_NAME: adaf-oracle-shadow
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://jaeger:4318}
+    secrets:
+      - postgres_password
+      - app_secret_key
+    volumes:
+      - app_logs:/app/logs
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-primary:
+        condition: service_healthy
+    networks:
+      - adaf_network
+    restart: unless-stopped
+    user: node:node
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /app/.next/cache
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/oracle/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    ports:
+      - "3005:3005"
+
+  # KPI Collector for Shadow Mode - Hourly metrics collection
+  kpi-collector:
+    image: node:20-alpine
+    container_name: adaf_kpi_collector
+    profiles: ["shadow"]
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: ["node", "scripts/shadow/kpi-collector.mjs"]
+    environment:
+      ORACLE_SOURCE_MODE: "shadow"
+      SHADOW_NAMESPACE: "shadow72h"
+      REDIS_URL: redis://redis-primary:6379
+      DATABASE_URL: postgresql://${POSTGRES_USER:-adaf_user}@postgres-primary:5432/${POSTGRES_DB:-adaf_dashboard}
+      PROMETHEUS_PUSHGATEWAY: ${PROMETHEUS_PUSHGATEWAY:-http://prometheus:9090}
+    depends_on:
+      oracle-core:
+        condition: service_healthy
+      redis-primary:
+        condition: service_healthy
+    networks:
+      - adaf_network
+    restart: unless-stopped
+    user: node:node
     security_opt:
       - no-new-privileges:true
     cap_drop:

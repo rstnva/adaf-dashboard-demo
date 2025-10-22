@@ -1,6 +1,11 @@
 'use client';
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { arrayMove } from '@dnd-kit/sortable';
+import {
+  normalizeLayoutItems,
+  readLayoutItems,
+  writeLayoutItems,
+} from '@/lib/layout/persistence';
 
 export interface DashboardItem {
   id: string;
@@ -51,6 +56,18 @@ const DEFAULT_LAYOUT: DashboardItem[] = [
 
   // Research Panel (span completo)
   { id: 'research-panel', component: 'ResearchPanel', span: 12, order: 10 },
+
+  // Simulation modules (span 6)
+  { id: 'blockspace-ops', component: 'BlockspaceOpsCard', span: 6, order: 11 },
+  { id: 'vaults-lav', component: 'VaultsLavCard', span: 6, order: 12 },
+  { id: 'alpha-factory', component: 'AlphaFactoryCard', span: 6, order: 13 },
+  { id: 'meta-allocator', component: 'MetaAllocatorCard', span: 6, order: 14 },
+  { id: 'volpro-card', component: 'VolProCard', span: 6, order: 15 },
+  { id: 'event-alpha', component: 'EventAlphaCard', span: 6, order: 16 },
+  { id: 'mm-selective', component: 'SelectiveMMCard', span: 6, order: 17 },
+  { id: 'tca-insights', component: 'TcaInsightsCard', span: 6, order: 18 },
+  { id: 'cosmos-executor', component: 'CosmosExecutorCard', span: 6, order: 19 },
+  { id: 'liquidity-backstop', component: 'LiquidityBackstopCard', span: 6, order: 20 },
 ];
 
 export function DashboardLayoutProvider({
@@ -59,36 +76,27 @@ export function DashboardLayoutProvider({
   children: React.ReactNode;
 }) {
   const [items, setItems] = useState<DashboardItem[]>(() => {
-    // Try to load from localStorage
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('dashboard-layout');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch {
-          return DEFAULT_LAYOUT;
-        }
-      }
+    if (typeof window === 'undefined') {
+      return DEFAULT_LAYOUT;
     }
-    return DEFAULT_LAYOUT;
+    return readLayoutItems('dashboard-layout', DEFAULT_LAYOUT);
   });
 
   const [isEditMode, setIsEditMode] = useState(false);
 
   const saveLayout = useCallback((newItems: DashboardItem[]) => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('dashboard-layout', JSON.stringify(newItems));
-    }
+    writeLayoutItems('dashboard-layout', newItems);
   }, []);
 
   const moveItem = useCallback(
     (activeId: string, overId: string) => {
       setItems(items => {
-        const oldIndex = items.findIndex(item => item.id === activeId);
-        const newIndex = items.findIndex(item => item.id === overId);
+        const current = normalizeLayoutItems(DEFAULT_LAYOUT, items);
+        const oldIndex = current.findIndex(item => item.id === activeId);
+        const newIndex = current.findIndex(item => item.id === overId);
 
         if (oldIndex !== -1 && newIndex !== -1) {
-          const reorderedItems = arrayMove(items, oldIndex, newIndex).map(
+          const reorderedItems = arrayMove(current, oldIndex, newIndex).map(
             (item, index) => ({
               ...item,
               order: index,
@@ -98,7 +106,7 @@ export function DashboardLayoutProvider({
           return reorderedItems;
         }
 
-        return items;
+        return current;
       });
     },
     [saveLayout]
@@ -106,7 +114,8 @@ export function DashboardLayoutProvider({
 
   const reorderItems = useCallback(
     (newItems: DashboardItem[]) => {
-      const reorderedItems = newItems.map((item, index) => ({
+      const normalized = normalizeLayoutItems(DEFAULT_LAYOUT, newItems);
+      const reorderedItems = normalized.map((item, index) => ({
         ...item,
         order: index,
       }));
@@ -117,8 +126,9 @@ export function DashboardLayoutProvider({
   );
 
   const resetLayout = useCallback(() => {
-    setItems(DEFAULT_LAYOUT);
-    saveLayout(DEFAULT_LAYOUT);
+    const baseline = DEFAULT_LAYOUT.map((item, index) => ({ ...item, order: index }));
+    setItems(baseline);
+    saveLayout(baseline);
   }, [saveLayout]);
 
   const setEditMode = useCallback((enabled: boolean) => {

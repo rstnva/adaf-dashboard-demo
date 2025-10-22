@@ -1,0 +1,401 @@
+[
+  {
+    "id": "macro/us/walcl_total_usd",
+    "entity": "macro",
+    "description": "Federal Reserve Total Assets (WALCL) - Primary liquidity indicator",
+    "unit": "USD",
+    "frequency": "1d",
+    "ttl_ms": 86400000,
+    "tags": ["macro", "liquidity", "fed", "global"],
+    "source": {
+      "id": "fred",
+      "class": "macro",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [6000000000000, 10000000000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "macro/us/tga_balance_usd",
+    "entity": "macro",
+    "description": "US Treasury General Account Balance - Liquidity drain indicator",
+    "unit": "USD",
+    "frequency": "1d",
+    "ttl_ms": 86400000,
+    "tags": ["macro", "liquidity", "treasury", "global"],
+    "source": {
+      "id": "fred",
+      "class": "macro",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [0, 1000000000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "macro/us/rrp_total_usd",
+    "entity": "macro",
+    "description": "Federal Reserve Reverse Repo Outstanding - Liquidity parked indicator",
+    "unit": "USD",
+    "frequency": "1d",
+    "ttl_ms": 86400000,
+    "tags": ["macro", "liquidity", "fed", "rrp"],
+    "source": {
+      "id": "fred",
+      "class": "macro",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [0, 3000000000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "crypto/etf/btc_net_flow_usd",
+    "entity": "asset",
+    "description": "Bitcoin Spot ETF Net Flow (USD) - Institutional demand signal",
+    "unit": "USD",
+    "frequency": "1d",
+    "ttl_ms": 86400000,
+    "tags": ["crypto", "etf", "flow", "institutional"],
+    "source": {
+      "id": "farside",
+      "class": "macro",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [-1000000000, 1000000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "crypto/etf/eth_net_flow_usd",
+    "entity": "asset",
+    "description": "Ethereum Spot ETF Net Flow (USD) - Institutional demand signal",
+    "unit": "USD",
+    "frequency": "1d",
+    "ttl_ms": 86400000,
+    "tags": ["crypto", "etf", "flow", "institutional"],
+    "source": {
+      "id": "farside",
+      "class": "macro",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [-500000000, 500000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "crypto/stables/mcap_total_usd_yoy",
+    "entity": "market",
+    "description": "Total Stablecoin Market Cap YoY Growth Rate - Crypto native liquidity",
+    "unit": "ratio",
+    "frequency": "1d",
+    "ttl_ms": 86400000,
+    "tags": ["crypto", "stablecoins", "liquidity", "native"],
+    "source": {
+      "id": "defillama",
+      "class": "onchain",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [-0.5, 1.0],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "cex/agg/spot_depth_2pct_usd",
+    "entity": "market",
+    "description": "Aggregate CEX Spot Orderbook Depth ±2% (USD) - Market plumbing health",
+    "unit": "USD",
+    "frequency": "1h",
+    "ttl_ms": 7200000,
+    "tags": ["cex", "liquidity", "depth", "plumbing"],
+    "source": {
+      "id": "cex-aggregator",
+      "class": "derived",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [100000000, 10000000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "cex/agg/perp_oi_usd",
+    "entity": "market",
+    "description": "Aggregate CEX Perpetual Open Interest (USD) - Leverage signal",
+    "unit": "USD",
+    "frequency": "1h",
+    "ttl_ms": 7200000,
+    "tags": ["cex", "derivatives", "oi", "leverage"],
+    "source": {
+      "id": "cex-aggregator",
+      "class": "derived",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [1000000000, 50000000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "dex/agg/active_liquidity_usd",
+    "entity": "market",
+    "description": "Aggregate DEX Active Liquidity in Range (USD) - Onchain plumbing",
+    "unit": "USD",
+    "frequency": "1h",
+    "ttl_ms": 7200000,
+    "tags": ["dex", "liquidity", "onchain", "plumbing"],
+    "source": {
+      "id": "defillama",
+      "class": "onchain",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [1000000000, 20000000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "cex/binance/btc_usdt_spot_volume_1d_usd",
+    "entity": "pair",
+    "description": "Binance BTC/USDT 24h Spot Volume (USD) - Market activity gauge",
+    "unit": "USD",
+    "frequency": "1h",
+    "ttl_ms": 3600000,
+    "tags": ["cex", "binance", "volume", "btc"],
+    "source": {
+      "id": "binance-api",
+      "class": "cex",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [1000000000, 10000000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "onchain/btc/hashrate_7d_avg_ths",
+    "entity": "asset",
+    "description": "Bitcoin 7-Day Average Network Hashrate (TH/s) - Security metric",
+    "unit": "TH/s",
+    "frequency": "1h",
+    "ttl_ms": 7200000,
+    "tags": ["onchain", "btc", "hashrate", "security"],
+    "source": {
+      "id": "blockchain-com",
+      "class": "onchain",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [300000000, 700000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "onchain/eth/gas_price_gwei",
+    "entity": "asset",
+    "description": "Ethereum Average Gas Price (Gwei) - Network congestion",
+    "unit": "gwei",
+    "frequency": "5m",
+    "ttl_ms": 600000,
+    "tags": ["onchain", "eth", "gas", "congestion"],
+    "source": {
+      "id": "etherscan",
+      "class": "onchain",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [5, 500],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "cex/binance/btc_usdt_funding_rate_8h_bps",
+    "entity": "pair",
+    "description": "Binance BTC/USDT Perpetual 8h Funding Rate (bps) - Sentiment indicator",
+    "unit": "bps",
+    "frequency": "1h",
+    "ttl_ms": 3600000,
+    "tags": ["cex", "binance", "funding", "sentiment"],
+    "source": {
+      "id": "binance-api",
+      "class": "cex",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [-100, 100],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "macro/us/dxy_index",
+    "entity": "macro",
+    "description": "US Dollar Index (DXY) - Dollar strength indicator",
+    "unit": "index",
+    "frequency": "1h",
+    "ttl_ms": 3600000,
+    "tags": ["macro", "forex", "dxy", "dollar"],
+    "source": {
+      "id": "tradingview",
+      "class": "macro",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [80, 120],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "macro/us/spx_index",
+    "entity": "macro",
+    "description": "S&P 500 Index - Risk-on/off proxy",
+    "unit": "index",
+    "frequency": "1h",
+    "ttl_ms": 3600000,
+    "tags": ["macro", "equities", "spx", "risk"],
+    "source": {
+      "id": "tradingview",
+      "class": "macro",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [3000, 6000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "macro/us/vix_index",
+    "entity": "macro",
+    "description": "CBOE Volatility Index (VIX) - Fear gauge",
+    "unit": "index",
+    "frequency": "1h",
+    "ttl_ms": 3600000,
+    "tags": ["macro", "volatility", "vix", "fear"],
+    "source": {
+      "id": "tradingview",
+      "class": "macro",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [10, 80],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "crypto/btc/price_usd",
+    "entity": "asset",
+    "description": "Bitcoin Spot Price (USD) - Reference price",
+    "unit": "USD",
+    "frequency": "1m",
+    "ttl_ms": 120000,
+    "tags": ["crypto", "btc", "price", "spot"],
+    "source": {
+      "id": "cex-aggregator",
+      "class": "derived",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [10000, 200000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "crypto/eth/price_usd",
+    "entity": "asset",
+    "description": "Ethereum Spot Price (USD) - Reference price",
+    "unit": "USD",
+    "frequency": "1m",
+    "ttl_ms": 120000,
+    "tags": ["crypto", "eth", "price", "spot"],
+    "source": {
+      "id": "cex-aggregator",
+      "class": "derived",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [1000, 10000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "crypto/stables/mcap_total_usd",
+    "entity": "market",
+    "description": "Total Stablecoin Market Cap (USD) - Crypto native liquidity",
+    "unit": "USD",
+    "frequency": "1h",
+    "ttl_ms": 3600000,
+    "tags": ["crypto", "stablecoins", "mcap", "liquidity"],
+    "source": {
+      "id": "defillama",
+      "class": "onchain",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [100000000000, 200000000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "onchain/btc/supply_circulating",
+    "entity": "asset",
+    "description": "Bitcoin Circulating Supply - Supply metric",
+    "unit": "BTC",
+    "frequency": "1d",
+    "ttl_ms": 86400000,
+    "tags": ["onchain", "btc", "supply", "fundamental"],
+    "source": {
+      "id": "blockchain-com",
+      "class": "onchain",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [19000000, 21000000],
+      "seasonal": false
+    },
+    "version": 1
+  },
+  {
+    "id": "onchain/eth/total_value_locked_usd",
+    "entity": "asset",
+    "description": "Ethereum Total Value Locked in DeFi (USD) - DeFi health",
+    "unit": "USD",
+    "frequency": "1h",
+    "ttl_ms": 7200000,
+    "tags": ["onchain", "eth", "tvl", "defi"],
+    "source": {
+      "id": "defillama",
+      "class": "onchain",
+      "schema": "v1"
+    },
+    "quality": {
+      "expected_range": [10000000000, 100000000000],
+      "seasonal": false
+    },
+    "version": 1
+  }
+]

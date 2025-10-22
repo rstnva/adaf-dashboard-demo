@@ -1,8 +1,8 @@
 # Multi-stage build para optimizar tamaño y seguridad
 FROM node:18-alpine AS base
 
-# Security: Install dumb-init and security tools
-RUN apk add --no-cache libc6-compat curl dumb-init wget && \
+# Security: Install dumb-init, security tools, and OpenSSL for Prisma
+RUN apk add --no-cache libc6-compat curl dumb-init wget openssl-dev && \
     rm -rf /var/cache/apk/*
 
 # Etapa de dependencias
@@ -13,9 +13,10 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
-# Copiar archivos de dependencias
+# Copiar archivos de dependencias y schema de Prisma
 COPY package.json pnpm-lock.yaml* ./
-RUN corepack enable pnpm && pnpm i --frozen-lockfile --production=false
+COPY prisma ./prisma/
+RUN corepack enable pnpm && pnpm i --frozen-lockfile --production=false && pnpm prisma generate
 
 # Etapa de build
 FROM base AS builder
@@ -26,9 +27,12 @@ COPY . .
 # Variables de entorno para build
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
+ENV CI true
 
-# Build de la aplicación
-RUN corepack enable pnpm && pnpm build && pnpm prune --production
+# Build de la aplicación (separate steps for better error visibility)
+RUN corepack enable pnpm
+RUN pnpm build
+RUN pnpm prune --production
 
 # Etapa de producción (Security Hardened)
 FROM base AS production

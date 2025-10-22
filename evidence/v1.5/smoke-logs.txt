@@ -1,0 +1,19 @@
+# Instrucciones
+# 1. Ejecuta `pnpm smoke` con los feature flags de simulación activos.
+# 2. Pega aquí la salida relevante (última ejecución <24h).
+# 3. Anota fecha, commit y responsable al final del archivo.
+
+---
+Fecha: 2025-10-16
+Commit: 6f8334b
+Responsable: GitHub Copilot (asistente)
+Comando: `pnpm smoke`
+
+Resultado:
+/ -> 500 (4848ms)
+/dashboard -> 500 (907ms)
+/research -> 0 (4006ms) timeout
+/monitoring -> 500 (4803ms)
+
+Estado: ❌ Falló
+Nota: La verificación requiere un servidor activo. Se registran los fallos para seguimiento de infraestructura antes de reintentar.

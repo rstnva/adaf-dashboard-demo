@@ -1,0 +1,19 @@
+{
+  "chronicle-eth": {
+    "value": 3311.72,
+    "updatedAt": "2025-10-16T14:00:03Z",
+    "confidence": 0.96,
+    "roundId": "chronicle-eth-18220",
+    "blockNumber": 19654024,
+    "blockHash": "0x7ee85cchronicleeth",
+    "latencyMs": 1600
+  },
+  "uma-btc": {
+    "value": 63140.02,
+    "updatedAt": "2025-10-16T14:00:11Z",
+    "confidence": 0.91,
+    "roundId": "uma-btc-99210",
+    "disputeBond": 1500,
+    "latencyMs": 3400
+  }
+}

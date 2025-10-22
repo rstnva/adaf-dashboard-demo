@@ -1,0 +1,106 @@
+{
+  "datasources": [
+    {
+      "id": "fred",
+      "name": "Federal Reserve Economic Data",
+      "class": "macro",
+      "base_url": "https://api.stlouisfed.org/fred",
+      "rate_limit_rpm": 120,
+      "auth_type": "api_key",
+      "schema_version": "v1",
+      "reliability": 0.99,
+      "avg_latency_ms": 500,
+      "tags": ["macro", "us", "fed"]
+    },
+    {
+      "id": "farside",
+      "name": "Farside Investors",
+      "class": "macro",
+      "base_url": "https://farside.co.uk/api",
+      "rate_limit_rpm": 60,
+      "auth_type": "none",
+      "schema_version": "v1",
+      "reliability": 0.95,
+      "avg_latency_ms": 1000,
+      "tags": ["crypto", "etf", "institutional"]
+    },
+    {
+      "id": "defillama",
+      "name": "DeFi Llama",
+      "class": "onchain",
+      "base_url": "https://api.llama.fi",
+      "rate_limit_rpm": 300,
+      "auth_type": "none",
+      "schema_version": "v1",
+      "reliability": 0.97,
+      "avg_latency_ms": 800,
+      "tags": ["defi", "tvl", "onchain"]
+    },
+    {
+      "id": "binance-api",
+      "name": "Binance Public API",
+      "class": "cex",
+      "base_url": "https://api.binance.com",
+      "rate_limit_rpm": 1200,
+      "auth_type": "none",
+      "schema_version": "v3",
+      "reliability": 0.99,
+      "avg_latency_ms": 100,
+      "tags": ["cex", "binance", "spot", "derivatives"]
+    },
+    {
+      "id": "blockchain-com",
+      "name": "Blockchain.com API",
+      "class": "onchain",
+      "base_url": "https://api.blockchain.info",
+      "rate_limit_rpm": 180,
+      "auth_type": "none",
+      "schema_version": "v1",
+      "reliability": 0.98,
+      "avg_latency_ms": 600,
+      "tags": ["onchain", "btc", "blockchain"]
+    },
+    {
+      "id": "etherscan",
+      "name": "Etherscan API",
+      "class": "onchain",
+      "base_url": "https://api.etherscan.io",
+      "rate_limit_rpm": 300,
+      "auth_type": "api_key",
+      "schema_version": "v1",
+      "reliability": 0.99,
+      "avg_latency_ms": 400,
+      "tags": ["onchain", "eth", "ethereum"]
+    },
+    {
+      "id": "tradingview",
+      "name": "TradingView Data",
+      "class": "macro",
+      "base_url": "https://api.tradingview.com",
+      "rate_limit_rpm": 600,
+      "auth_type": "api_key",
+      "schema_version": "v1",
+      "reliability": 0.98,
+      "avg_latency_ms": 300,
+      "tags": ["macro", "forex", "indices"]
+    },
+    {
+      "id": "cex-aggregator",
+      "name": "Internal CEX Aggregator",
+      "class": "derived",
+      "base_url": "internal://cex-aggregator",
+      "rate_limit_rpm": 10000,
+      "auth_type": "internal",
+      "schema_version": "v1",
+      "reliability": 0.99,
+      "avg_latency_ms": 50,
+      "tags": ["derived", "aggregated", "internal"]
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "last_updated": "2025-10-20T00:00:00Z",
+    "total_sources": 8,
+    "active_sources": 8
+  }
+}

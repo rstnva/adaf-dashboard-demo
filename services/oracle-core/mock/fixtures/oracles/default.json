@@ -1,0 +1,14 @@
+[
+  {
+    "feedId": "oracles/aggregator/eth_usd_median",
+    "ts": "2025-10-14T10:40:00Z",
+    "value": 3140.2,
+    "unit": "usd",
+    "confidence": 0.9,
+    "quorum_ok": true,
+    "stale": false,
+    "evidence": [{ "source_id": "mock", "captured_at": "2025-10-14T10:40:00Z" }],
+    "tags": ["mock"],
+    "rev": 0
+  }
+]

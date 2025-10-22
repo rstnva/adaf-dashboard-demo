@@ -1,0 +1,11 @@
+apiVersion: 1
+datasources: []
+providers:
+  - name: 'Oracle LAV'
+    folder: 'Oracle LAV'
+    type: file
+    disableDeletion: false
+    editable: true
+    allowUiUpdates: true
+    options:
+      path: /var/lib/grafana/dashboards/oracle-lav

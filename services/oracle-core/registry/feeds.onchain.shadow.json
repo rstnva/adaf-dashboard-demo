@@ -1,0 +1,89 @@
+[
+  {
+    "id": "price/btc_usd.live",
+    "name": "BTC/USD Live Shadow Price",
+    "category": "price",
+    "unit": "usd",
+    "ttl_ms": 5000,
+    "quorum": { "k": 2, "n": 3 },
+    "sources": [
+      { "id": "chainlink-btc", "weight": 0.4 },
+      { "id": "pyth-btc", "weight": 0.3 },
+      { "id": "redstone-btc", "weight": 0.3 }
+    ],
+    "tags": ["shadow", "price", "btc"],
+    "version": 1
+  },
+  {
+    "id": "price/eth_usd.live",
+    "name": "ETH/USD Live Shadow Price",
+    "category": "price",
+    "unit": "usd",
+    "ttl_ms": 5000,
+    "quorum": { "k": 2, "n": 3 },
+    "sources": [
+      { "id": "chainlink-eth", "weight": 0.4 },
+      { "id": "pyth-eth", "weight": 0.3 },
+      { "id": "chronicle-eth", "weight": 0.3 }
+    ],
+    "tags": ["shadow", "price", "eth"],
+    "version": 1
+  },
+  {
+    "id": "price/sol_usd.live",
+    "name": "SOL/USD Live Shadow Price",
+    "category": "price",
+    "unit": "usd",
+    "ttl_ms": 5000,
+    "quorum": { "k": 2, "n": 3 },
+    "sources": [
+      { "id": "pyth-sol", "weight": 0.4 },
+      { "id": "redstone-sol", "weight": 0.3 },
+      { "id": "band-sol", "weight": 0.3 }
+    ],
+    "tags": ["shadow", "price", "sol"],
+    "version": 1
+  },
+  {
+    "id": "por/usdc_reserves_usd.live",
+    "name": "USDC Proof-of-Reserves",
+    "category": "por",
+    "unit": "usd",
+    "ttl_ms": 300000,
+    "quorum": { "k": 1, "n": 2 },
+    "sources": [
+      { "id": "chainlink-usdc", "weight": 0.5 },
+      { "id": "pyth-usdc", "weight": 0.5 }
+    ],
+    "tags": ["shadow", "por", "usdc"],
+    "version": 1
+  },
+  {
+    "id": "por/usdt_reserves_usd.live",
+    "name": "USDT Proof-of-Reserves",
+    "category": "por",
+    "unit": "usd",
+    "ttl_ms": 300000,
+    "quorum": { "k": 1, "n": 2 },
+    "sources": [
+      { "id": "chainlink-usdt", "weight": 0.5 },
+      { "id": "redstone-usdt", "weight": 0.5 }
+    ],
+    "tags": ["shadow", "por", "usdt"],
+    "version": 1
+  },
+  {
+    "id": "gas/eth_gwei.live",
+    "name": "ETH Gas Price",
+    "category": "gas",
+    "unit": "gwei",
+    "ttl_ms": 5000,
+    "quorum": { "k": 1, "n": 2 },
+    "sources": [
+      { "id": "chainlink-gas", "weight": 0.5 },
+      { "id": "pyth-gas", "weight": 0.5 }
+    ],
+    "tags": ["shadow", "gas", "eth"],
+    "version": 1
+  }
+]

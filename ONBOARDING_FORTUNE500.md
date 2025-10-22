@@ -8,7 +8,7 @@ Bienvenido/a al equipo ADAF Dashboard Pro. Este onboarding te guiará paso a pas
 - [README.md](../README.md): visión general e inicio rápido del sistema.
 - [Documentación Completa](../motor-del-dash/README.md): toda la documentación organizada profesionalmente.
 - [Guía Completa de Uso](../motor-del-dash/documentacion/README-COMPLETO.md): guías paso a paso, instalación y operación.
-- [Arquitectura Técnica](../motor-del-dash/arquitectura/ARCHITECTURE.md): documentación técnica detallada.
+- [Arquitectura Técnica](./motor-del-dash/arquitectura/ARCHITECTURE.md): documentación técnica detallada.
 - [Memoria Técnica](../motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md): bitácora institucional, decisiones, incidentes y estándares.
 - [docs/runbooks/README.md](../docs/runbooks/README.md): runbooks operativos y respuesta a incidentes.
 - [docs/runbooks/templates/POSTMORTEM.md](../docs/runbooks/templates/POSTMORTEM.md): plantilla de post-mortem.
@@ -24,6 +24,17 @@ Bienvenido/a al equipo ADAF Dashboard Pro. Este onboarding te guiará paso a pas
 - Sigue el README para instalar dependencias y levantar el entorno local.
 - Usa los scripts automatizados (`inicio-completo.sh`, `inicio-dashboard.sh`) para evitar errores manuales.
 - Verifica que los tests y el linting pasen localmente antes de cualquier PR.
+
+### 3.1 Configuración de simulación y feature flags
+- Copia `.env.example` a `.env.local` y revisa los toggles bajo la sección **Feature Flags (Simulación ADAF)**.
+- Activa únicamente los módulos que vas a probar (`NEXT_PUBLIC_FF_*`) para evitar ruido en los reportes de control.
+	- Blockspace, Vaults LAV, Alpha Factory, Volatility Pro, Event Alpha, Market Making selectivo, TCA, Cosmos Executor, Liquidity Backstop.
+	- Equities AI y News Oracle cuentan con toggles dedicados para habilitar integraciones institucionales.
+- Define explícitamente el modo de ejecución:
+	- `EXECUTION_MODE=dry-run` para procesos server-side (workers, agentes LAV).
+	- `NEXT_PUBLIC_EXECUTION_MODE=dry-run` para la capa React/Next.js.
+- Documenta cualquier cambio de modo (`dry-run`, `paper`, `micro`, `live`) en la bitácora y notifica al equipo de riesgo antes de pasar a modos no simulados.
+- Conserva `NEXT_PUBLIC_FF_WSP_ENABLED` y `NEXT_PUBLIC_FF_WSP_AUTOREACT` en `true` únicamente si vas a validar flujos WSP; apágalos en auditorías que requieran aislamiento.
 
 ## 4. Estándares de calidad y CI/CD
 - Todo el código debe pasar ESLint (flat config, reglas estrictas) y tests (>95% cobertura).

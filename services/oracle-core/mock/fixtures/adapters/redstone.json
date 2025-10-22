@@ -1,0 +1,29 @@
+{
+  "redstone-btc": {
+    "value": 63105.88,
+    "updatedAt": "2025-10-16T14:00:07Z",
+    "confidence": 0.95,
+    "txHash": "0xredstonebtcbeacon",
+    "blockNumber": 19654052,
+    "blockHash": "0x9ab334redstonebtc",
+    "latencyMs": 2200
+  },
+  "redstone-sol": {
+    "value": 154.01,
+    "updatedAt": "2025-10-16T14:00:08Z",
+    "confidence": 0.93,
+    "txHash": "0xredstonesolrelay",
+    "blockNumber": 19654055,
+    "blockHash": "0x8ccdeeredstonesol",
+    "latencyMs": 2600
+  },
+  "redstone-usdt": {
+    "value": 0.9990,
+    "updatedAt": "2025-10-16T14:00:09Z",
+    "confidence": 0.97,
+    "txHash": "0xredstoneusdtproof",
+    "blockNumber": 19654060,
+    "blockHash": "0x18dd19redstoneusdt",
+    "latencyMs": 2400
+  }
+}

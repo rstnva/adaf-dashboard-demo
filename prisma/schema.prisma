@@ -11,14 +11,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Signal {
+model AgentSignal {
   id          String   @id @default(cuid())
-  type        String   // 'news', 'onchain', 'social', 'price'
-  source      String   // 'RSS', 'DeFiLlama', 'Twitter', etc.
+  type        String // 'news', 'onchain', 'social', 'price'
+  source      String // 'RSS', 'DeFiLlama', 'Twitter', etc.
   title       String
   description String
-  severity    String   // 'low', 'medium', 'high', 'critical'
-  metadata    Json     // Datos específicos del tipo de señal
+  severity    String // 'low', 'medium', 'high', 'critical'
+  metadata    Json // Datos específicos del tipo de señal
   fingerprint String   @unique // Para prevenir duplicados
   processed   Boolean  @default(false)
   timestamp   DateTime @default(now())
@@ -29,56 +29,178 @@ model Signal {
   alerts        Alert[]
   opportunities Opportunity[]
 
-  @@map("signals")
+  @@map("agent_signals")
 }
 
 model Alert {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   signalId    String
-  type        String   // 'security', 'liquidity', 'regulatory', 'market'
-  severity    String   // 'low', 'medium', 'high', 'critical'
+  type        String // 'security', 'liquidity', 'regulatory', 'market'
+  severity    String // 'low', 'medium', 'high', 'critical'
   title       String
   description String
-  metadata    Json     // Datos adicionales específicos de la alerta
-  resolved    Boolean  @default(false)
+  metadata    Json // Datos adicionales específicos de la alerta
+  resolved    Boolean   @default(false)
   resolvedAt  DateTime?
-  timestamp   DateTime @default(now())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  timestamp   DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   // Relaciones
-  signal Signal @relation(fields: [signalId], references: [id])
+  signal AgentSignal @relation(fields: [signalId], references: [id])
 
   @@map("alerts")
 }
 
 model Opportunity {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   signalId    String
-  type        String   // 'arbitrage', 'yield', 'liquidation', 'governance'
-  confidence  Float    // 0.0 - 1.0
+  type        String // 'arbitrage', 'yield', 'liquidation', 'governance'
+  confidence  Float // 0.0 - 1.0
   title       String
   description String
-  metadata    Json     // Datos específicos de la oportunidad
-  status      String   @default("proposed") // proposed | approved | rejected
-  expired     Boolean  @default(false)
+  metadata    Json // Datos específicos de la oportunidad
+  status      String    @default("proposed") // proposed | approved | rejected
+  expired     Boolean   @default(false)
   expiredAt   DateTime?
-  timestamp   DateTime @default(now())
+  timestamp   DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relaciones
+  signal AgentSignal @relation(fields: [signalId], references: [id])
+
+  @@map("opportunities")
+}
+
+model Feed {
+  id          String   @id
+  name        String
+  description String?
+  category    String
+  unit        String
+  precision   Int? // decimal places expected for the resolved value
+  ttlMs       Int
+  heartbeatMs Int
+  quorumK     Int
+  quorumN     Int
+  mode        String   @default("shadow") // shadow | mixed | live
+  tags        String[]
+  version     Int      @default(1)
+  owner       String? // desk or team accountable for the feed
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  // Relaciones
-  signal Signal @relation(fields: [signalId], references: [id])
+  signals   OracleSignal[]
+  readStats ReadStat[]
 
-  @@map("opportunities")
+  @@index([category], map: "feeds_category_idx")
+  @@index([mode], map: "feeds_mode_idx")
+  @@map("feeds")
+}
+
+model OracleSignal {
+  externalId String   @unique
+  feedId      String
+  ts          DateTime
+  value       Decimal
+  unit        String
+  confidence  Float
+  quorumOk    Boolean
+  stale       Boolean  @default(false)
+  sourceCount Int      @default(0)
+  aggregates  Json?
+  shadowRmse  Float?
+  latencyMs   Int?
+  roundId     String? // e.g. Chainlink round ID
+  referenceId String? // e.g. price_id for Pyth / Chronicle
+  status      String   @default("ok") // ok | stale | quarantined | disputed
+  mode        String   @default("shadow")
+  rev         Int      @default(0)
+  tags        String[] @default([])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  feed        Feed              @relation(fields: [feedId], references: [id], onDelete: Cascade)
+  evidence    OracleEvidence[]
+  quarantines QuarantineEvent[]
+
+  @@id([feedId, ts])
+  @@index([feedId, ts(sort: Desc)], map: "signals_feed_ts_idx")
+  @@index([externalId], map: "signals_external_id_idx")
+  @@index([status], map: "signals_status_idx")
+  @@index([mode], map: "signals_mode_idx")
+  @@map("signals")
+}
+
+model OracleEvidence {
+  id          String   @id @default(cuid())
+  feedId      String
+  ts          DateTime
+  sourceId    String
+  provider    String
+  price       Decimal?
+  confidence  Float?
+  roundId     String?
+  transaction String?
+  blockNumber BigInt?
+  blockHash   String?
+  payload     Json?
+  capturedAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  signal OracleSignal @relation(fields: [feedId, ts], references: [feedId, ts], onDelete: Cascade)
+
+  @@index([feedId, ts], map: "evidence_feedId_ts_idx")
+  @@index([provider], map: "evidence_provider_idx")
+  @@map("evidence")
+}
+
+model QuarantineEvent {
+  id         String    @id @default(cuid())
+  feedId     String
+  ts         DateTime
+  rev        Int       @default(0)
+  ruleId     String
+  reason     String
+  zScore     Float?
+  disputeRef String?
+  status     String    @default("open") // open | resolved
+  metadata   Json?
+  createdAt  DateTime  @default(now())
+  resolvedAt DateTime?
+
+  signal OracleSignal @relation(fields: [feedId, ts], references: [feedId, ts], onDelete: Cascade)
+
+  @@index([feedId, ts], map: "quarantine_events_feedId_ts_idx")
+  @@index([status], map: "quarantine_events_status_idx")
+  @@map("quarantine_events")
+}
+
+model ReadStat {
+  id        String   @id @default(cuid())
+  feedId    String
+  readerId  String
+  latencyMs Int
+  success   Boolean
+  errorCode String?
+  stale     Boolean  @default(false)
+  fetchedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  feed Feed @relation(fields: [feedId], references: [id], onDelete: Cascade)
+
+  @@index([feedId, fetchedAt(sort: Desc)], map: "read_stats_feedId_fetchedAt_idx")
+  @@index([readerId, fetchedAt], map: "read_stats_readerId_fetchedAt_idx")
+  @@map("read_stats")
 }
 
 // Reglas por agente con expr JSON (string)
 model Rule {
   id        String   @id @default(cuid())
-  agentCode String   // p.ej. 'NM-1', 'OC-1', 'OP-X'
+  agentCode String // p.ej. 'NM-1', 'OC-1', 'OP-X'
   name      String
-  expr      String   // JSON.stringify(RuleExpr)
+  expr      String // JSON.stringify(RuleExpr)
   enabled   Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -89,7 +211,7 @@ model Rule {
 
 // Guardrails centralizados
 model Limit {
-  key       String  @id
+  key       String   @id
   value     Float
   notes     String?
   updatedAt DateTime @updatedAt
@@ -135,11 +257,73 @@ model NewsData {
   link        String   @unique
   pubDate     DateTime
   source      String
-  sentiment   Float?   // -1.0 to 1.0
+  sentiment   Float? // -1.0 to 1.0
   keywords    String[] // Array de palabras clave
   createdAt   DateTime @default(now())
 
   @@map("news_data")
+}
+
+model NewsEvent {
+  id           String    @id @default(cuid())
+  fingerprint  String    @unique
+  source       String
+  title        String
+  url          String
+  summary      String?
+  category     String?
+  publishedAt  DateTime
+  tickers      String[]
+  keywords     String[]
+  status       String    @default("ingested") // ingested | deduped | standby | triaged
+  priority     String    @default("normal") // high | medium | normal
+  dedupedAt    DateTime?
+  standbyUntil DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  analyses NewsAnalysis[]
+
+  @@index([status, priority, publishedAt])
+  @@index([createdAt])
+  @@map("news_events")
+}
+
+model NewsAnalysis {
+  id              String   @id @default(cuid())
+  eventId         String
+  sentiment       Float?
+  impactScore     Float?
+  confidenceScore Float?
+  riskLevel       String   @default("moderate") // low | moderate | high
+  status          String   @default("standby") // standby | escalated | dismissed
+  standbyReason   String?
+  tags            String[]
+  metadata        Json?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  event   NewsEvent    @relation(fields: [eventId], references: [id])
+  triages NewsTriage[]
+
+  @@index([status, riskLevel])
+  @@map("news_analysis")
+}
+
+model NewsTriage {
+  id          String   @id @default(cuid())
+  analysisId  String
+  status      String   @default("pending") // pending | acknowledged | dismissed
+  escalatedTo String? // desk, research, ops, etc.
+  assignedTo  String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  analysis NewsAnalysis @relation(fields: [analysisId], references: [id])
+
+  @@index([status])
+  @@map("news_triage")
 }
 
 model PriceData {
@@ -157,12 +341,12 @@ model PriceData {
 
 // RBAC (Role-Based Access Control) Models
 model Role {
-  id    String @id @default(cuid())
-  name  String @unique // 'viewer' | 'analyst' | 'admin'
-  
+  id   String @id @default(cuid())
+  name String @unique // 'viewer' | 'analyst' | 'admin'
+
   users   User[]
   apiKeys ApiKey[]
-  
+
   @@map("roles")
 }
 
@@ -170,24 +354,24 @@ model User {
   id     String @id @default(cuid())
   email  String @unique
   roleId String
-  
+
   role Role @relation(fields: [roleId], references: [id])
-  
+
   @@index([email])
   @@map("users")
 }
 
 model ApiKey {
   id        String   @id @default(cuid())
-  tokenHash String   // Hash of the actual token (never store plaintext)
-  preview   String   // First 6-8 chars of token for identification
+  tokenHash String // Hash of the actual token (never store plaintext)
+  preview   String // First 6-8 chars of token for identification
   roleId    String
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
-  createdBy String   // Who created this key
-  
+  createdBy String // Who created this key
+
   role Role @relation(fields: [roleId], references: [id])
-  
+
   @@index([tokenHash])
   @@index([active])
   @@map("api_keys")
@@ -199,30 +383,30 @@ model ExecutionPlan {
   oppId     String   @unique // FK to opportunities table
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
-  status    String   @default("draft") // 'draft'|'ready'|'live'|'paused'|'closed'
-  
+
+  status String @default("draft") // 'draft'|'ready'|'live'|'paused'|'closed'
+
   // Sizing configuration
-  sizing    Json     // { notionalPctNAV: number, legs?: Array<{market:string, side:'BUY'|'SELL', qty:number, venue:string}> }
-  
+  sizing Json // { notionalPctNAV: number, legs?: Array<{market:string, side:'BUY'|'SELL', qty:number, venue:string}> }
+
   // Risk management
-  risk      Json     // { sl?:{type:'price'|'time'|'var', value:number, unit:'%'|'usd'|'h'}, tp?:{...}, maxSlippagePct:number }
-  
+  risk Json // { sl?:{type:'price'|'time'|'var', value:number, unit:'%'|'usd'|'h'}, tp?:{...}, maxSlippagePct:number }
+
   // Task checklist
-  checklist Json     // Array<{id:string, title:string, done:boolean, owner:string}>
-  
+  checklist Json // Array<{id:string, title:string, done:boolean, owner:string}>
+
   // Role handoffs
-  handoffs  Json     // Array<{role:'Trading'|'Ops'|'Legal'|'RI', owner?:string, note?:string}>
-  
+  handoffs Json // Array<{role:'Trading'|'Ops'|'Legal'|'RI', owner?:string, note?:string}>
+
   // Plan expiration
-  expiry    DateTime?
-  
+  expiry DateTime?
+
   // Evidence and artifacts
-  artifacts Json     // Array<{kind:'chart'|'calc'|'approval'|'screenshot'|'tx', url:string, addedAt:string}>
-  
+  artifacts Json // Array<{kind:'chart'|'calc'|'approval'|'screenshot'|'tx', url:string, addedAt:string}>
+
   // Additional notes
-  notes     String?
-  
+  notes String?
+
   @@index([oppId])
   @@index([status, createdAt])
   @@map("execution_plans")

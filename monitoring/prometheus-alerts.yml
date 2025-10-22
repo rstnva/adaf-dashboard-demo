@@ -131,6 +131,60 @@ groups:
           description: "Canary p95 latency is {{ $value | humanizePercentage }} higher than stable"
           runbook_url: "https://docs.adaf.com/runbooks/canary-rollback"
 
+  - name: "oracle-dq"
+    interval: "30s"
+    rules:
+      - alert: OracleDQFailureRatioWarning
+        expr: |
+          (
+            sum by (feed) (rate(oracle_dq_evaluations_total{outcome="fail"}[5m]))
+            /
+            sum by (feed) (rate(oracle_dq_evaluations_total[5m]))
+          ) > 0.05
+        for: "10m"
+        labels:
+          severity: "warning"
+          service: "oracle"
+          component: "data-quality"
+        annotations:
+          summary: "Oracle data quality failure ratio en advertencia"
+          description: |
+            El feed {{ $labels.feed }} supera 5% de fallas en reglas de calidad durante 10 minutos consecutivos (ratio actual {{ $value | humanizePercentage }}).
+          runbook_url: "https://docs.adaf.com/runbooks/oracle-dq"
+
+      - alert: OracleDQFailureRatioCritical
+        expr: |
+          (
+            sum by (feed) (rate(oracle_dq_evaluations_total{outcome="fail"}[5m]))
+            /
+            sum by (feed) (rate(oracle_dq_evaluations_total[5m]))
+          ) > 0.10
+        for: "5m"
+        labels:
+          severity: "critical"
+          service: "oracle"
+          component: "data-quality"
+          action: "triage"
+        annotations:
+          summary: "Oracle data quality en estado crítico"
+          description: |
+            Más de 10% de las evaluaciones del feed {{ $labels.feed }} están fallando en los últimos 5 minutos. Requiere triage inmediato con el panel /monitoring.
+          runbook_url: "https://docs.adaf.com/runbooks/oracle-dq"
+
+      - alert: OracleDQNoEvaluations
+        expr: |
+          sum(rate(oracle_dq_evaluations_total[15m])) < 0.01
+        for: "15m"
+        labels:
+          severity: "warning"
+          service: "oracle"
+          component: "data-quality"
+        annotations:
+          summary: "Oracle sin evaluaciones de calidad recientes"
+          description: |
+            No se observan evaluaciones de reglas DQ en los últimos 15 minutos. Verifica pipelines y conexiones de Prometheus.
+          runbook_url: "https://docs.adaf.com/runbooks/oracle-dq"
+
       - alert: SummerFiCanaryErrorSpike
         expr: |
           sum(rate(http_requests_total{
