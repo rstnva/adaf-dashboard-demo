@@ -1,4 +1,18 @@
 #!/usr/bin/env sh
 
-# Run typecheck and tests, then lint-staged
-npm run precommit && npx lint-staged
+# Docs-only smart hook:
+# - Always run lint-staged on staged files
+# - Run typecheck+tests ONLY if staged changes include code files
+
+CHANGED_FILES=$(git diff --cached --name-only)
+
+# Patterns considered as code changes that require running tests/typecheck
+if echo "$CHANGED_FILES" | grep -E '\.(ts|tsx|js|jsx|mjs|cjs)$' >/dev/null 2>&1; then
+	echo "pre-commit: code changes detected -> running typecheck and tests"
+	npm run precommit || exit 1
+else
+	echo "pre-commit: no code changes detected -> skipping typecheck/tests"
+fi
+
+# Always run lint-staged for formatting/lint on staged files
+npx lint-staged
