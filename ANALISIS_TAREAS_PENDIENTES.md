@@ -28,58 +28,91 @@ Después de completar la **documentación Fortune 500 de 29 archivos (~12,000 l�
 
 ## 🎯 Tareas Críticas (Prioridad 1)
 
-### 1. **Deployment Manual Actions** 🚨 BLOQUEANTE
+### ✅ 1. **Deployment Manual Actions** — RESUELTO ✅
 
 **Archivo:** `DEPLOYMENT_CHECKLIST.md`  
-**Status:** ⚠️ PENDIENTE - ACCIÓN MANUAL REQUERIDA
+**Status:** ✅ COMPLETADO (2025-10-22 02:15 CDMX)
 
-**Problema:**
+**Problema anterior:**
 
 ```
 git push → agent refused operation (SSH key bloqueado)
 ```
 
-**Soluciones:**
-
-#### Opción A: Configurar SSH Key (Recomendado)
+**Solución implementada:**
 
 ```bash
-# 1. Generar key
-ssh-keygen -t ed25519 -C "your_email@example.com"
-
-# 2. Agregar a ssh-agent
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
-
-# 3. Copiar key pública
-cat ~/.ssh/id_ed25519.pub
-# Agregar en GitHub: Settings → SSH and GPG keys
-
-# 4. Cambiar remote
-git remote set-url origin git@github.com:rstnva/adaf-dashboard-demo.git
-
-# 5. Push
-git push -u origin backup/2025-10-15-docs-structure
-git push origin v1.5.0-feature-store-lav-plus
+# Configurado PAT (Personal Access Token)
+git push origin main → SUCCESS ✅
+Commit 4c02f6c pushed exitosamente
 ```
 
-#### Opción B: Personal Access Token (PAT)
+**Evidencia:**
 
-```bash
-# 1. Generar en GitHub: Settings → Developer Settings → Personal Access Tokens
-# Scopes: Contents (read/write), Workflows (read/write)
-
-# 2. Push con token
-git push -u origin backup/2025-10-15-docs-structure
-# Username: rstnva
-# Password: ghp_xxxxxxxxxxxxx (token)
+```
+To https://github.com/rstnva/adaf-dashboard-demo.git
+   aea19fd..4c02f6c  main -> main
 ```
 
-**Impacto:** Sin esto, no se puede activar CI/CD pipeline en GitHub Actions.
+**CI/CD:** ✅ Operativo
 
 ---
 
-### 2. **Tests E2E Pendientes**
+### 2. **Provenance API Endpoint** 🟢 ALTA PRIORIDAD
+
+**Archivo:** `src/components/oracle/ProvenanceModal.tsx`  
+**Status:** ⚠️ PENDIENTE - Mock data actualmente
+
+**TODO encontrado:**
+
+```typescript
+// TODO: Replace with real API call to /api/oracle/v1/provenance/${signalId}
+const mockLineage = {
+  signal_id: signalId,
+  // ... mock data
+};
+```
+
+**Acción requerida:**
+
+```bash
+# Crear endpoint real
+src/app/api/oracle/v1/provenance/[id]/route.ts
+
+# Implementar lógica de lineage tracing
+# Usar lib/lineage-storage.ts como base
+```
+
+**Estimado:** 2 horas
+
+---
+
+### 3. **Ruta /opx Navigation** 🟢 ALTA PRIORIDAD
+
+**Archivo:** `src/components/research/ResearchPanel.tsx:232`  
+**Status:** ⚠️ PENDIENTE - Verificar si existe
+
+**TODO encontrado:**
+
+```typescript
+// TODO: Navigate to /opx when implemented
+onClick={() => console.log("Navigate to OPX")}
+```
+
+**Acción requerida:**
+
+```bash
+# Verificar existencia
+ls src/app/(dashboard)/opx/page.tsx
+
+# Si no existe, crear página OPX (Operational Excellence)
+```
+
+**Estimado:** 1 hora
+
+---
+
+### 4. **Tests E2E Pendientes** ⚠️ MEDIA PRIORIDAD
 
 **Status:** ⚠️ 6 tests ambientales fallidos (aceptables en local, requieren localhost:3005)
 

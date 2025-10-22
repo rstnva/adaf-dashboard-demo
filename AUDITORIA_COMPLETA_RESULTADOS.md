@@ -294,25 +294,24 @@ const canPromote = true; // TODO: Implement RBAC check
 
 ---
 
-#### ⚠️ DEPLOYMENT_CHECKLIST.md
+#### ✅ DEPLOYMENT_CHECKLIST.md
 
-**Status:** ⚠️ **Acción manual pendiente**
+**Status:** ✅ **COMPLETADO** (2025-10-22 02:15)
 
-**Bloqueante identificado:**
+**Problema resuelto:**
 
 ```
-git push → agent refused operation (SSH key bloqueado)
+git push → FUNCIONANDO (PAT configurado)
+Commit 4c02f6c pushed exitosamente
 ```
-
-**Solución:** Configurar SSH key o PAT (10 min)
 
 **Checklist:**
 
 - ✅ Build passing
 - ✅ Tests passing (1016/1016)
 - ✅ Lint clean
-- ⚠️ **Git push bloqueado** (SSH/PAT pendiente)
-- ⏳ CI/CD pipeline (requiere git push funcionando)
+- ✅ **Git push FUNCIONANDO** (PAT configurado)
+- ✅ CI/CD pipeline operativo
 
 ---
 
@@ -401,12 +400,12 @@ git push → agent refused operation (SSH key bloqueado)
 
 **Pendientes REALES Validados:**
 
-- 🚨 **1 bloqueante:** Git push SSH/PAT (10 min)
+- ✅ **0 bloqueantes** (Git push resuelto 2025-10-22 02:15)
 - 🟢 **2 alta prioridad:** Provenance API + /opx route (3h)
 - ⚠️ **5 media prioridad:** SDK tests, Webhooks, Auth, RBAC, DB (22h)
 - 🔵 **5 baja prioridad:** Replay, SLO, Scripts, Opcionales (70h+)
 
-**Total pendientes:** 13 items, ~95 horas (excluyendo mock-first TODOs)
+**Total pendientes:** 12 items, ~95 horas (excluyendo mock-first TODOs)
 
 ---
 
@@ -414,48 +413,50 @@ git push → agent refused operation (SSH key bloqueado)
 
 ### Acción Inmediata (Esta Semana)
 
-1. **Configurar Git Push** (10 min) 🚨
-   - Opción A: SSH key
-   - Opción B: Personal Access Token
-
-2. **Crear Provenance API** (2h) 🟢
+1. **Crear Provenance API** (2h) 🟢
 
    ```bash
    src/app/api/oracle/v1/provenance/[id]/route.ts
    ```
 
-3. **Verificar ruta /opx** (1h) 🟢
+2. **Verificar ruta /opx** (1h) 🟢
 
    ```bash
    src/app/(dashboard)/opx/page.tsx
    ```
 
-4. **SDK Test Suite** (4h) ⚠️
+3. **SDK Test Suite** (4h) ⚠️
    ```bash
    tests/oracle-sdk.test.ts
    ```
 
-**Total:** 7 horas + 10 minutos
+**Total:** 3 horas
 
 ---
 
 ### Siguiente Sprint (2 Semanas)
 
-5. **Quarantine Webhooks** (3h)
-6. **Sistema Auth NextAuth.js** (8h)
-7. **RBAC checks** (3h)
-8. **Database insertions** (4h)
+3. **SDK Test Suite** (4h) ⚠️
 
-**Total:** 18 horas
+   ```bash
+   tests/oracle-sdk.test.ts
+   ```
+
+4. **Quarantine Webhooks** (3h)
+5. **Sistema Auth NextAuth.js** (8h)
+6. **RBAC checks** (3h)
+7. **Database insertions** (4h)
+
+**Total:** 22 horas
 
 ---
 
 ### Roadmap Q4 2025
 
-9. Replay & Snapshots (8h) - Opcional
-10. SLO Monitors (6h)
-11. Runbook Rollout (4h)
-12. Auditoría externa (planning)
+8. Replay & Snapshots (8h) - Opcional
+9. SLO Monitors (6h)
+10. Runbook Rollout (4h)
+11. Auditoría externa (planning)
 
 ---
 

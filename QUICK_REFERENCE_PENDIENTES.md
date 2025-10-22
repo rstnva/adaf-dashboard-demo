@@ -9,37 +9,16 @@
 
 **Tests:** ✅ **1016/1016 passing (100%)**  
 **Oracle Core P1:** ✅ **100% COMPLETO**  
-**Bloqueantes:** 🚨 **1** (Git push SSH/PAT)  
+**Git Push:** ✅ **FUNCIONANDO** (PAT configurado)  
 **Alta prioridad:** 🟢 **2** (Provenance API, /opx)  
 **Media prioridad:** ⚠️ **5** (22h total)  
 **Baja prioridad:** 🔵 **5 categorías** (70h+)
 
 ---
 
-## 🎯 Esta Semana (7h 10min)
+## 🎯 Esta Semana (3h)
 
-### 1. 🚨 Git Push SSH/PAT (10 min) - BLOQUEANTE
-
-**Problema:** `git push` bloqueado, CI/CD no funciona
-
-**Solución rápida (PAT):**
-
-```bash
-# 1. GitHub → Settings → Developer Settings → Personal Access Tokens
-# 2. Generate new token (classic)
-# 3. Scopes: repo (full), workflow
-# 4. git push con token como password
-```
-
-**Solución permanente (SSH):**
-
-```bash
-# Ver: SETUP_GPG_PASOS.md o PENDIENTES_FORTUNE500.md
-```
-
----
-
-### 2. 🟢 Provenance API (2h) - ALTA
+### 1. 🟢 Provenance API (2h) - ALTA
 
 **Archivo:** `src/components/oracle/ProvenanceModal.tsx:44`
 
@@ -61,7 +40,7 @@ src/app/api/oracle/v1/provenance/[id]/route.ts
 
 ---
 
-### 3. 🟢 Verificar /opx Route (1h) - ALTA
+### 2. 🟢 Verificar /opx Route (1h) - ALTA
 
 **Archivo:** `src/components/research/ResearchPanel.tsx:232`
 
@@ -82,7 +61,9 @@ ls src/app/(dashboard)/opx/page.tsx
 
 ---
 
-### 4. ⚠️ SDK Test Suite (4h) - MEDIA
+## 📅 Siguiente Sprint (22h)
+
+### 3. ⚠️ SDK Test Suite (4h) - MEDIA
 
 **Archivo:** `tests/oracle-sdk.test.ts` (crear)
 
@@ -117,19 +98,25 @@ pnpm test oracle-sdk --run
 - Slack webhook integration
 - 5 tests
 
-### 6. Sistema Auth NextAuth.js (8h)
+### 4. ⚠️ Quarantine Webhooks (3h) - MEDIA
+
+- Discord/Slack integration
+- Webhook endpoints
+- Alerting system
+
+### 5. Sistema Auth NextAuth.js (8h)
 
 - NextAuth.js setup
 - Session management
 - 8 TODOs de auth context
 
-### 7. RBAC Checks (3h)
+### 6. RBAC Checks (3h)
 
 - ResearchPanel permissions
 - Role-based access
 - 2 TODOs
 
-### 8. Database Insertions (4h)
+### 7. Database Insertions (4h)
 
 - Prisma mutations
 - 6 TODOs de DB
@@ -139,31 +126,31 @@ pnpm test oracle-sdk --run
 
 ## 🔵 Backlog (70h+)
 
-### P3-1: Replay & Snapshots (8h)
+### 8. Replay & Snapshots (8h)
 
 - CLI oracle-replay
 - S3/Parquet storage
 - Time-warp logic
 
-### P3-2: SLO Monitors (6h)
+### 9. SLO Monitors (6h)
 
 - /api/oracle/v1/readiness
 - Prometheus SLO queries
 - Grafana dashboards
 
-### P3-3: Runbook Rollout Script (4h)
+### 10. Runbook Rollout Script (4h)
 
 - MODE=mixed script
 - Dry-run validation
 - Rollback automation
 
-### P3-4: Opcionales Oracle (12h)
+### 11. Opcionales Oracle (12h)
 
 - DIA adapter (6º oracle)
 - Data contracts validation
 - Parquet export
 
-### P3-5: Integrar APIs Reales (40h+)
+### 12. Integrar APIs Reales (40h+)
 
 - 38 TODOs "TODO_REPLACE_WITH_REAL_DATA"
 - Mock-first → Real APIs
@@ -173,13 +160,12 @@ pnpm test oracle-sdk --run
 
 ## 📊 Matriz Rápida
 
-| Prioridad | Items  | Horas    | Bloqueante    |
-| --------- | ------ | -------- | ------------- |
-| 🚨 P0     | 1      | 0.2h     | ✅ SÍ         |
-| 🟢 P1     | 2      | 3h       | ⚠️ Parcial    |
-| ⚠️ P2     | 5      | 22h      | ❌ NO         |
-| 🔵 P3     | 5      | 70h+     | ❌ NO         |
-| **Total** | **13** | **~95h** | **1 crítico** |
+| Prioridad | Items  | Horas    | Bloqueante     |
+| --------- | ------ | -------- | -------------- |
+| P1        | 2      | 3h       | ⚠️ Parcial     |
+| ⚠️ P2     | 5      | 22h      | ❌ NO          |
+| 🔵 P3     | 5      | 70h+     | ❌ NO          |
+| **Total** | **12** | **~95h** | **0 críticos** |
 
 ---
 
