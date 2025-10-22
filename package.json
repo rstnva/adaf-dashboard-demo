@@ -91,7 +91,7 @@
     "next": "15.5.4",
     "next-intl": "^4.3.12",
     "node-cron": "^3.0.3",
-    "playwright": "^1.55.1",
+    "playwright": "^1.56.0",
     "prom-client": "^15.1.3",
     "react": "19.1.1",
     "react-beautiful-dnd": "^13.1.1",
@@ -105,6 +105,8 @@
     "zustand": "^4.5.7"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@playwright/test": "^1.56.0",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",

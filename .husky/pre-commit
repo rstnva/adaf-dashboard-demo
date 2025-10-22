@@ -1,9 +1,31 @@
 #!/usr/bin/env sh
 
-# Docs-only smart hook:
-# - Always run lint-staged on staged files
-# - Run typecheck+tests ONLY if staged changes include code files
+# ============================================================================
+# FORTUNE 500 PRE-COMMIT HOOK
+# ============================================================================
 
+# 1. BRANCH NAMING VALIDATION
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+VALID_BRANCH_REGEX="^(main|master|develop|staging|production|release/[0-9]+\.[0-9]+(\.[0-9]+)?|feature/[a-z0-9-]+|bugfix/[a-z0-9-]+|hotfix/[a-z0-9-]+|chore/[a-z0-9-]+|docs/[a-z0-9-]+|test/[a-z0-9-]+|refactor/[a-z0-9-]+)$"
+
+if ! echo "$BRANCH" | grep -qE "$VALID_BRANCH_REGEX"; then
+  echo "❌ Invalid branch name: $BRANCH"
+  echo ""
+  echo "Valid formats:"
+  echo "  feature/<name>   - New features"
+  echo "  bugfix/<name>    - Bug fixes"
+  echo "  hotfix/<name>    - Production hotfixes"
+  echo "  chore/<name>     - Maintenance tasks"
+  echo "  docs/<name>      - Documentation"
+  echo "  test/<name>      - Test improvements"
+  echo "  refactor/<name>  - Code refactoring"
+  echo "  release/x.y.z    - Release branches"
+  echo ""
+  echo "Example: feature/oracle-vox-integration"
+  exit 1
+fi
+
+# 2. SMART CODE DETECTION
 CHANGED_FILES=$(git diff --cached --name-only)
 
 # Patterns considered as code changes that require running tests/typecheck
@@ -14,5 +36,5 @@ else
 	echo "pre-commit: no code changes detected -> skipping typecheck/tests"
 fi
 
-# Always run lint-staged for formatting/lint on staged files
+# 3. ALWAYS RUN LINT-STAGED
 npx lint-staged

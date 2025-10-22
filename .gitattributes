@@ -1,0 +1,161 @@
+# Auto-detect text files and normalize line endings to LF
+* text=auto
+
+# ============================================================================
+# TEXT FILES — Explicit Declaration
+# ============================================================================
+
+# Source code
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+*.mjs text
+*.cjs text
+*.json text
+*.jsonc text
+*.md text
+*.mdx text
+*.yml text
+*.yaml text
+*.toml text
+*.xml text
+*.html text
+*.css text
+*.scss text
+*.sass text
+*.less text
+*.sql text
+*.prisma text
+*.graphql text
+*.gql text
+
+# Configuration
+*.env text
+*.env.* text
+*.config.js text
+*.config.ts text
+*.config.mjs text
+.eslintrc text
+.prettierrc text
+.editorconfig text
+.gitignore text
+.gitattributes text
+
+# Scripts (force LF)
+*.sh text eol=lf
+*.bash text eol=lf
+*.zsh text eol=lf
+*.fish text eol=lf
+
+# Documentation
+*.txt text
+*.adoc text
+LICENSE text
+README text
+CHANGELOG text
+AUTHORS text
+CONTRIBUTING text
+
+# ============================================================================
+# BINARY FILES — Explicit Declaration
+# ============================================================================
+
+# Images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.webp binary
+*.avif binary
+
+# Fonts
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.ttf binary
+*.otf binary
+
+# Archives
+*.zip binary
+*.tar binary
+*.gz binary
+*.tgz binary
+*.bz2 binary
+*.7z binary
+*.rar binary
+
+# Media
+*.mp4 binary
+*.mov binary
+*.avi binary
+*.mp3 binary
+*.wav binary
+*.ogg binary
+
+# Other
+*.pdf binary
+*.so binary
+*.dylib binary
+*.dll binary
+*.exe binary
+
+# ============================================================================
+# LOCKFILES — Prevent Diff & Merge Conflicts
+# ============================================================================
+
+# Don't show diff for lockfiles (too noisy)
+pnpm-lock.yaml -diff
+package-lock.json -diff
+yarn.lock -diff
+Cargo.lock -diff
+
+# Treat lockfiles as binary to prevent merge conflicts
+pnpm-lock.yaml merge=binary
+package-lock.json merge=binary
+yarn.lock merge=binary
+
+# ============================================================================
+# GENERATED FILES — Mark as Generated (Collapse in PRs)
+# ============================================================================
+
+*.min.js linguist-generated=true
+*.min.css linguist-generated=true
+*.map linguist-generated=true
+*-lock.json linguist-generated=true
+
+# Next.js generated
+.next/ linguist-generated=true
+.next-dev/ linguist-generated=true
+
+# Build artifacts
+/dist/ linguist-generated=true
+/build/ linguist-generated=true
+/out/ linguist-generated=true
+/coverage/ linguist-generated=true
+
+# ============================================================================
+# SPECIAL HANDLING
+# ============================================================================
+
+# Force Unix line endings for consistency across platforms
+*.sh eol=lf
+*.bash eol=lf
+Makefile eol=lf
+Dockerfile eol=lf
+docker-compose*.yml eol=lf
+
+# Prevent .env files from being diffed (security)
+.env* -diff
+
+# Export-ignore (don't include in git archive)
+.gitattributes export-ignore
+.gitignore export-ignore
+.github/ export-ignore
+.husky/ export-ignore
+tests/ export-ignore
+e2e/ export-ignore
+*.test.ts export-ignore
+*.spec.ts export-ignore

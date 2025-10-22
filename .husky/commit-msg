@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# commitlint: Enforce conventional commits
+npx --no -- commitlint --edit $1

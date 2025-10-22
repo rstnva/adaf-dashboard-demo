@@ -1,0 +1,101 @@
+# CODEOWNERS — Automatic PR Review Assignment
+# Syntax: <pattern> <owners>
+# Documentation: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# ============================================================================
+# GLOBAL OWNERSHIP
+# ============================================================================
+# Default: Everything requires review from primary maintainer
+* @rstnva
+
+# ============================================================================
+# INFRASTRUCTURE & DEVOPS
+# ============================================================================
+# Critical infrastructure changes require DevOps approval
+/.github/                @rstnva
+/.github/workflows/      @rstnva
+/.husky/                 @rstnva
+/infra/                  @rstnva
+/docker-compose*.yml     @rstnva
+/Dockerfile*             @rstnva
+/nginx.conf              @rstnva
+/.gitignore              @rstnva
+/.gitattributes          @rstnva
+
+# ============================================================================
+# DATABASE & SCHEMA
+# ============================================================================
+# Database changes require data team approval
+/prisma/                 @rstnva
+/prisma/schema.prisma    @rstnva
+/prisma/migrations/      @rstnva
+
+# ============================================================================
+# ORACLE CORE (HIGH-RISK FINANCIAL LOGIC)
+# ============================================================================
+# Oracle Core: Critical quantitative logic
+/services/oracle-core/                    @rstnva
+/services/oracle-core/consensus/          @rstnva
+/services/oracle-core/dq/                 @rstnva
+/services/oracle-core/ingest/             @rstnva
+/src/app/api/oracle/                      @rstnva
+/src/components/oracle/                   @rstnva
+
+# Vox Populi: Sentiment analysis & social signals
+/services/oracle-core/ingest/vox/         @rstnva
+/services/oracle-core/digest/vox/         @rstnva
+
+# ============================================================================
+# FEATURE STORE (DATA INTEGRITY CRITICAL)
+# ============================================================================
+/services/feature-store/                  @rstnva
+/services/feature-store/dq/               @rstnva
+/services/feature-store/storage/          @rstnva
+/src/app/api/feature-store/               @rstnva
+
+# ============================================================================
+# LAV-ADAF AGENTS (QUANTITATIVE LOGIC)
+# ============================================================================
+/lav-adaf/                                @rstnva
+/lav-adaf/agents/                         @rstnva
+/lav-adaf/apps/dashboard/                 @rstnva
+
+# ============================================================================
+# SECURITY & COMPLIANCE
+# ============================================================================
+# Security-sensitive files require security review
+/src/middleware.ts                        @rstnva
+/src/app/api/*/route.ts                  @rstnva
+/services/*/acl/                          @rstnva
+/services/*/webhooks/                     @rstnva
+
+# ============================================================================
+# FINANCIAL LOGIC & RISK MANAGEMENT
+# ============================================================================
+/src/lib/equities/                        @rstnva
+/src/lib/defi/                            @rstnva
+/src/lib/tca/                             @rstnva
+/src/lib/vaults/                          @rstnva
+/src/lib/blockspace/                      @rstnva
+
+# ============================================================================
+# TESTING & QUALITY ASSURANCE
+# ============================================================================
+# Test changes should be reviewed by QA
+/tests/                                   @rstnva
+/e2e/                                     @rstnva
+vitest.config.ts                          @rstnva
+vitest.integration.config.ts              @rstnva
+playwright.config.ts                      @rstnva
+
+# ============================================================================
+# DOCUMENTATION
+# ============================================================================
+# Documentation can be reviewed by anyone
+*.md                                      @rstnva
+/docs/                                    @rstnva
+/motor-del-dash/documentacion/            @rstnva
+
+# Package management
+package.json                              @rstnva
+pnpm-lock.yaml                            @rstnva
