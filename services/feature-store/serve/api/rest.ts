@@ -16,19 +16,16 @@
 
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import type {
-  FeatureSpec,
-  FeaturePoint,
-  FeatureEntity,
-  FeatureFrequency,
-} from '../../schema/types';
+import type { FeatureEntity, FeatureFrequency } from '../../schema/types';
+import type { FeatureSpec, FeaturePoint } from '../../schema/zod';
 import { getFeatureSpec, getCatalog } from '../../registry/catalog';
-import { getFeatureStats } from '../../storage/pg';
+import { getFeatureStats, getLatestFeaturePoint, queryFeaturePoints } from '../../storage/pg';
 import { calculateCoverage } from '../../dq/coverage';
 import {
   featureApiRequestTotal,
   featureApiResponseTime,
 } from '../../metrics/feature.metrics';
+import { writeFeaturePoints } from '../../storage/pg';
 
 // =============================================================================
 // Types
@@ -315,11 +312,12 @@ export async function GET_latest(
       ...spec
     } = entry;
 
-    // Get stats (includes latest point)
+    // Optionally fetch stats (count/oldest/newest)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const _stats = await getFeatureStats(featureId);
-    // TODO_FEATURE_STORE: Add latest_point to getFeatureStats return type
-    const latestPoint: FeaturePoint | null = null; // stats?.latest_point ?? null;
+
+    // Fetch latest point from storage
+    const latestPoint = await getLatestFeaturePoint(featureId);
 
     // Calculate metadata
     const now = Date.now();
@@ -445,12 +443,17 @@ export async function POST_query(request: NextRequest): Promise<NextResponse> {
       ...spec
     } = entry;
 
-    // TODO_FEATURE_STORE: Implementar query real desde storage/pg.ts
-    // Por ahora retornamos array vacío
-    const points: FeaturePoint[] = [];
+    // Query storage for points
+    const points = await queryFeaturePoints({
+      featureIds: [feature_id],
+      since: start_ts,
+      until: end_ts,
+      limit: _limit,
+      orderBy: _order,
+    });
 
     // Calculate coverage
-    const coverageReport = await calculateCoverage(points, entry);
+    const coverageReport = await calculateCoverage(points, spec as FeatureSpec);
     const coverage = coverageReport.points.coverage;
 
     // Build response
@@ -555,6 +558,8 @@ export async function POST_publish(
     const errors: PublishResponse['errors'] = [];
     let accepted = 0;
 
+    const toWrite: import('../../schema/zod').FeaturePoint[] = [];
+
     for (let i = 0; i < points.length; i++) {
       const pt = points[i];
 
@@ -579,9 +584,26 @@ export async function POST_publish(
         continue;
       }
 
-      // TODO_FEATURE_STORE: Implementar escritura real a storage/pg.ts
-      // Por ahora solo validamos
-      accepted++;
+      // Map to storage point
+      toWrite.push({
+        featureId: pt.feature_id,
+        ts: pt.ts,
+        value: pt.value,
+        stale: false,
+        confidence: 1.0,
+        meta: pt.meta,
+      });
+    }
+
+    // Persist if any
+    if (toWrite.length > 0) {
+      const result = await writeFeaturePoints(toWrite);
+      accepted += result.inserted;
+      if (result.failed && result.errors && result.errors.length > 0) {
+        result.errors.forEach((err, idx) =>
+          errors.push({ index: idx, feature_id: err.featureId, reason: err.reason })
+        );
+      }
     }
 
     // Build response

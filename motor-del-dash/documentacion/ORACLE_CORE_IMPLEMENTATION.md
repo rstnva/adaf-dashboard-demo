@@ -7,7 +7,35 @@
 
 ---
 
-## 📋 Resumen Ejecutivo
+## � Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](readmes/README.md) — Índice central
+- 🎯 [ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md](../../ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md) — Resumen ejecutivo
+- 🏗️ [ORACLE_ARCHITECTURE.md](../arquitectura/ORACLE_ARCHITECTURE.md) — Arquitectura técnica detallada
+- ✅ [ORACLE_CORE_CHECKLIST.md](../../ORACLE_CORE_CHECKLIST.md) — Checklist de entrega
+- 📋 [ORACLE_CORE_COMPLETED.md](../../ORACLE_CORE_COMPLETED.md) — Estado de completación
+- 🔧 [RUNBOOK_ORACLE_CORE.md](../../RUNBOOK_ORACLE_CORE.md) — Runbook operativo
+- 📊 [ORACLE_FEEDS_CATALOG.md](../../docs/ORACLE_FEEDS_CATALOG.md) — Catálogo de feeds
+
+---
+
+## 📚 Índice de Contenido
+
+1. [📋 Resumen Ejecutivo](#-resumen-ejecutivo)
+2. [🎯 Objetivos Cumplidos](#-objetivos-cumplidos)
+3. [📊 Cobertura de Tests](#-cobertura-de-tests)
+4. [🏗️ Arquitectura Técnica](#-arquitectura-técnica)
+5. [🔐 Seguridad y RBAC](#-seguridad-y-rbac)
+6. [📈 Métricas Prometheus](#-métricas-prometheus)
+7. [🚀 Deployment & Operations](#-deployment--operations)
+8. [📁 Estructura de Archivos](#-estructura-de-archivos)
+9. [🛠️ Comandos Útiles](#-comandos-útiles)
+10. [🔗 Referencias](#-referencias)
+11. [📝 Próximos Pasos](#-próximos-pasos)
+
+---
+
+## �📋 Resumen Ejecutivo
 
 El sistema **Oracle Core** es un meta-oráculo multi-fuente de datos financieros on-chain y off-chain, diseñado con estándares Fortune 500 para:
 

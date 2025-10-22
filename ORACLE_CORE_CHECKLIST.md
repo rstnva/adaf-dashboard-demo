@@ -1,5 +1,32 @@
 # ✅ Oracle Core Sprint — Checklist de Entrega
 
+---
+
+## 📑 Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](ADAF-Billions-Dash-v2/motor-del-dash/documentacion/readmes/README.md) — Índice central
+- 🎯 [ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md](ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md) — Resumen ejecutivo
+- 🏗️ [ORACLE_ARCHITECTURE.md](motor-del-dash/arquitectura/ORACLE_ARCHITECTURE.md) — Arquitectura detallada
+- 📋 [ORACLE_CORE_COMPLETED.md](ORACLE_CORE_COMPLETED.md) — Estado de completación
+- 🔧 [RUNBOOK_ORACLE_CORE.md](RUNBOOK_ORACLE_CORE.md) — Runbook operativo
+- 📚 [ORACLE_CORE_IMPLEMENTATION.md](motor-del-dash/documentacion/ORACLE_CORE_IMPLEMENTATION.md) — Guía de implementación
+- ✅ [Documentación QA](ADAF-Billions-Dash-v2/motor-del-dash/documentacion/qa/README.md) — Testing y calidad
+
+---
+
+## 📚 Índice de Contenido
+
+1. [Estado General: COMPLETADO](#estado-general-completado)
+2. [✅ Prioridad 1 — Completados](#-prioridad-1--completados)
+3. [⏳ Prioridad 2 — Pendientes](#-prioridad-2--pendientes)
+4. [❌ Prioridad 3 — No Iniciadas](#-prioridad-3--no-iniciadas)
+5. [📊 Métricas Finales](#-métricas-finales)
+6. [🎯 Próximos Hitos](#-próximos-hitos)
+7. [📁 Evidencias Generadas](#-evidencias-generadas)
+8. [✅ Aprobaciones Pendientes](#-aprobaciones-pendientes)
+
+---
+
 ## Estado General: COMPLETADO
 
 **Fecha:** 2025-10-16 18:45 CDMX  

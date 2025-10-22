@@ -7,7 +7,32 @@
 
 ---
 
-## 🚀 Quick Start (3 Commands)
+## � Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](ADAF-Billions-Dash-v2/motor-del-dash/documentacion/readmes/README.md) — Índice central
+- 🔧 [RUNBOOK_SHADOW_MODE.md](RUNBOOK_SHADOW_MODE.md) — Runbook operativo completo
+- 📖 [DOCUMENTACION_COMPLETA_SHADOW_V1_1.md](DOCUMENTACION_COMPLETA_SHADOW_V1_1.md) — Documentación completa
+- 🏗️ [SHADOW_MODE_V1_1_ARCHITECTURE.md](motor-del-dash/arquitectura/SHADOW_MODE_V1_1_ARCHITECTURE.md) — Arquitectura
+- 📦 [MODULO_SHADOW_MODE_V1_1_COMPLETO.md](motor-del-dash/modulos/MODULO_SHADOW_MODE_V1_1_COMPLETO.md) — Módulo completo
+- 📊 [SPRINT_SHADOW_MODE_V1_1_REPORT.md](motor-del-dash/sprints/SPRINT_SHADOW_MODE_V1_1_REPORT.md) — Sprint report
+
+---
+
+## 📚 Índice de Contenido
+
+1. [🚀 Quick Start (3 Commands)](#-quick-start-3-commands)
+2. [🔐 Prerequisites (One-Time Setup)](#-prerequisites-one-time-setup)
+3. [📊 Monitoring URLs](#-monitoring-urls)
+4. [🔍 Key Metrics to Watch](#-key-metrics-to-watch)
+5. [📁 Files Created](#-files-created)
+6. [✅ Success Criteria (72h Validation)](#-success-criteria-72h-validation)
+7. [🛠️ Common Commands](#-common-commands)
+8. [📞 Documentation](#-documentation)
+9. [🔄 Next Steps](#-next-steps)
+
+---
+
+## �🚀 Quick Start (3 Commands)
 
 ```bash
 # 1. Validate configuration

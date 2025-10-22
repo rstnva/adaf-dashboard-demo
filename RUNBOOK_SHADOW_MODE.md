@@ -4,6 +4,33 @@
 # Commands and procedures for running ADAF Dashboard Pro in Shadow Mode for 72h validation.
 # ================================================================================================
 
+---
+
+## 📑 Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](ADAF-Billions-Dash-v2/motor-del-dash/documentacion/readmes/README.md) — Índice central
+- 🎯 [DOCUMENTACION_COMPLETA_SHADOW_V1_1.md](DOCUMENTACION_COMPLETA_SHADOW_V1_1.md) — Documentación completa
+- 📖 [SHADOW_MODE_QUICKREF.md](SHADOW_MODE_QUICKREF.md) — Referencia rápida
+- 🏗️ [SHADOW_MODE_V1_1_ARCHITECTURE.md](motor-del-dash/arquitectura/SHADOW_MODE_V1_1_ARCHITECTURE.md) — Arquitectura
+- 📦 [MODULO_SHADOW_MODE_V1_1_COMPLETO.md](motor-del-dash/modulos/MODULO_SHADOW_MODE_V1_1_COMPLETO.md) — Módulo completo
+- 📊 [SPRINT_SHADOW_MODE_V1_1_REPORT.md](motor-del-dash/sprints/SPRINT_SHADOW_MODE_V1_1_REPORT.md) — Sprint report
+- 🔧 [RUNBOOK_ORACLE_CORE.md](RUNBOOK_ORACLE_CORE.md) — Oracle Core runbook
+
+---
+
+## 📚 Índice de Contenido
+
+1. [Quick Start](#quick-start)
+2. [Health Checks](#health-checks)
+3. [Monitoring](#monitoring)
+4. [Operational Procedures](#operational-procedures)
+5. [Alerting](#alerting)
+6. [Troubleshooting](#troubleshooting)
+7. [Post-Shadow Validation](#post-shadow-validation)
+8. [Rollback Procedures](#rollback-procedures)
+
+---
+
 ## Quick Start
 
 ```bash

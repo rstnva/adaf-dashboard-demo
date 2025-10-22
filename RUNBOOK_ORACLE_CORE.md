@@ -1,5 +1,33 @@
 # RUNBOOK — Oracle Core v1.0 (Shadow → Mixed)
 
+---
+
+## 📑 Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](ADAF-Billions-Dash-v2/motor-del-dash/documentacion/readmes/README.md) — Índice central
+- 🎯 [ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md](ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md) — Resumen ejecutivo
+- 🏗️ [ORACLE_ARCHITECTURE.md](motor-del-dash/arquitectura/ORACLE_ARCHITECTURE.md) — Arquitectura detallada
+- ✅ [ORACLE_CORE_CHECKLIST.md](ORACLE_CORE_CHECKLIST.md) — Checklist de entrega
+- 📋 [ORACLE_CORE_COMPLETED.md](ORACLE_CORE_COMPLETED.md) — Estado de completación
+- 📚 [ORACLE_CORE_IMPLEMENTATION.md](motor-del-dash/documentacion/ORACLE_CORE_IMPLEMENTATION.md) — Guía de implementación
+- 📖 [Runbooks Operativos](docs/runbooks/README.md) — Otros runbooks
+
+---
+
+## 📚 Índice de Contenido
+
+1. [Objetivo](#objetivo)
+2. [1. Validación Shadow (pre-promoción)](#1-validación-shadow-pre-promoción)
+3. [2. Promoción a Mixed](#2-promoción-a-mixed)
+4. [3. Rollback](#3-rollback)
+5. [4. Pendientes críticos](#4-pendientes-críticos)
+6. [5. CI/CD — Oracle Shadow Smoke](#5-cicd--oracle-shadow-smoke)
+7. [6. Script toggle shadow](#6-script-toggle-shadow)
+8. [7. VOX POPULI Alerts (ALR-VOX-*)](#7-vox-populi-alerts-alr-vox-)
+9. [8. ⚠️ Test pendiente: E2E pretty-path](#8--test-pendiente-e2e-pretty-path)
+
+---
+
 ## Objetivo
 
 Checklist y procedimientos para promoción de Oracle Core de modo shadow a mixed, con umbrales y validaciones Fortune 500.

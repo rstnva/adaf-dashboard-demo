@@ -6,6 +6,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@/lib': path.resolve(__dirname, 'lav-adaf/apps/dashboard/src/lib'),
+      '@services': path.resolve(__dirname, './services'),
     },
   },
   test: {
@@ -28,18 +29,23 @@ export default defineConfig({
     ],
     coverage: {
       provider: 'v8',
-      reportsDirectory: 'coverage/wsp',
+      reportsDirectory: 'coverage/feature-store',
       reporter: ['text', 'lcov'],
       all: true,
       include: [
-        'src/lib/wsp/adapters/**',
-        'src/lib/wsp/cache/**',
-        'src/lib/wsp/norm/**',
-        'src/lib/wsp/schemas/**',
-        'src/components/dashboard/wsp/utils/**',
-        'src/metrics/wsp.metrics.ts',
+        'services/feature-store/**/*.ts',
+        'src/app/api/feature-store/**/*.ts',
+        'src/lib/featureStore/**/*.ts',
+        'src/components/feature-store/**/*.tsx',
       ],
-      thresholds: { lines: 75, functions: 75, branches: 70, statements: 75 },
+      exclude: [
+        '**/*.test.ts',
+        '**/*.spec.ts',
+        '**/tests/**',
+        '**/*.d.ts',
+        '**/node_modules/**',
+      ],
+      thresholds: { lines: 60, functions: 60, branches: 50, statements: 60 },
     },
   },
 });

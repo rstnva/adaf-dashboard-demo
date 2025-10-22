@@ -7,7 +7,34 @@
 
 ---
 
-## 📐 Visión General
+## � Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](../documentacion/readmes/README.md) — Índice central
+- 🎯 [ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md](../../ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md) — Resumen ejecutivo
+- 📋 [ARCHITECTURE.md Principal](ARCHITECTURE.md) — Arquitectura general del sistema
+- ✅ [ORACLE_CORE_CHECKLIST.md](../../ORACLE_CORE_CHECKLIST.md) — Checklist de entrega
+- 🔧 [RUNBOOK_ORACLE_CORE.md](../../RUNBOOK_ORACLE_CORE.md) — Runbook operativo
+- 📚 [ORACLE_CORE_IMPLEMENTATION.md](../documentacion/ORACLE_CORE_IMPLEMENTATION.md) — Guía de implementación
+- 📊 [ORACLE_FEEDS_CATALOG.md](../../docs/ORACLE_FEEDS_CATALOG.md) — Catálogo de feeds
+
+---
+
+## 📚 Índice de Contenido
+
+1. [📐 Visión General](#-visión-general)
+2. [🏗️ Arquitectura de Capas](#-arquitectura-de-capas)
+3. [🔄 Flujo de Datos Detallado](#-flujo-de-datos-detallado)
+4. [🔐 Seguridad en Profundidad](#-seguridad-en-profundidad)
+5. [📊 Observabilidad & Monitoring](#-observabilidad--monitoring)
+6. [🚀 Deployment Strategy](#-deployment-strategy)
+7. [🧪 Testing Strategy](#-testing-strategy)
+8. [📦 Dependencias Clave](#-dependencias-clave)
+9. [🎯 Roadmap & Próximos Pasos](#-roadmap--próximos-pasos)
+10. [📁 Referencias & Documentación](#-referencias--documentación)
+
+---
+
+## �📐 Visión General
 
 El **Oracle Core** es un sistema de agregación de datos financieros que combina múltiples fuentes on-chain y off-chain para producir señales de alta confianza mediante consenso robusto, validación de calidad de datos y protecciones de seguridad.
 

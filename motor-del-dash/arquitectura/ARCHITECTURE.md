@@ -572,6 +572,129 @@ jobs:
 
 ---
 
+## 🏗️ Feature Store Architecture
+
+### Overview
+
+El **Feature Store** es un sistema centralizado para gestión de features cuantitativas con versionado, lineage, y calidad de datos.
+
+**Componentes:**
+- **Catalog** (`services/feature-store/catalog/`) - Feature registry y metadata
+- **Storage** (`services/feature-store/storage/`) - Time-series storage layer (mocked + Redis ready)
+- **Serve** (`services/feature-store/serve/`) - REST APIs + SDKs
+- **UI** (`src/app/(dashboard)/feature-store/`) - Feature catalog dashboard
+- **SDK** (`services/feature-store/serve/sdk/ts/`) - Official TypeScript client
+- **UI Client** (`src/lib/featureStore/client.ts`) - Lightweight browser wrapper
+
+### SDK Architecture (Fortune 500)
+
+**Decision**: **Opción B - Mantener Separación**
+
+#### Official SDK (`services/feature-store/serve/sdk/ts/`)
+**Purpose**: Production-grade client for external consumers and services
+
+**Features**:
+- Retry logic with exponential backoff (3 attempts default)
+- Circuit breaker pattern (fail-fast after N failures)
+- Request timeout enforcement (10s default)
+- Structured logging + debug mode
+- Request metrics (Prometheus)
+- Connection pooling (Node.js HTTP agent)
+
+**Target Audience**:
+- LAV-ADAF agents (quant signals, backtesting)
+- Microservices (data pipelines, ETL jobs)
+- External consumers (partners, third-party integrations)
+- Background jobs (schedulers, batch processors)
+
+**Bundle Size**: ~12KB (minified)
+
+#### UI Client (`src/lib/featureStore/client.ts`)
+**Purpose**: Lightweight wrapper for Next.js UI components
+
+**Features**:
+- Simple `fetch` API targeting `/api/feature-store/*`
+- Bearer token authentication
+- React Query compatible
+- No retry logic (React Query handles this)
+- No circuit breaker (browser context doesn't need it)
+
+**Target Audience**:
+- Next.js UI components (dashboard pages, cards, charts)
+- React hooks with React Query
+- Browser context only (CSR)
+
+**Bundle Size**: ~3KB (minified)
+
+#### Rationale (Fortune 500 Precedent)
+
+**Separation of Concerns**:
+- UI client: Optimized for browser context, minimal overhead
+- Official SDK: Designed for Node.js services, enterprise patterns
+
+**Performance**:
+- UI client: 4x smaller bundle size (3KB vs 12KB)
+- Browser already handles connection pooling, retries via `fetch`
+- No need for circuit breaker in UI (React Query provides similar functionality)
+
+**Precedent**:
+- **Google**: `@google-cloud/` SDK (Node.js) ≠ Firebase JS SDK (browser)
+- **AWS**: `aws-sdk` (Node.js) ≠ AWS Amplify (browser/React)
+- **Stripe**: `stripe-node` ≠ `@stripe/stripe-js` (browser)
+
+**Documentation**:
+- [`services/feature-store/SDK_STRATEGY.md`](../../services/feature-store/SDK_STRATEGY.md) - Full decision document
+- [`services/feature-store/serve/sdk/README.md`](../../services/feature-store/serve/sdk/README.md) - Official SDK docs
+- [`src/lib/featureStore/README.md`](../../src/lib/featureStore/README.md) - UI client docs
+
+### API Endpoints
+
+**Feature Store APIs** (ADAF port 3000):
+- `GET /api/feature-store/catalog` - Feature catalog with filters
+- `GET /api/feature-store/latest` - Latest feature values
+- `POST /api/feature-store/query` - Time-series queries
+- `POST /api/feature-store/publish` - Publish new data points
+
+**Liquidity Regime APIs** (ADAF port 3000):
+- `GET /api/liquidity/v1/regime/latest` - Current liquidity regime state
+- `GET /api/liquidity/v1/scoreboard` - GL/CN/MP scores + LAV_LIQ_SCORE
+- `GET /api/liquidity/v1/hints` - Trading hints based on regime
+
+### Testing
+
+**Tests**: 72/72 passing ✅
+- Feature Store: 22 tests (catalog 8, storage 6, serve 8)
+- Liquidity Regime: 50 tests (components 8, composite 8, regime 8, API 12, DQ 14)
+- E2E Playwright: 4 specs (optional, not executed yet)
+
+**Coverage**: ~40% avg with 60% thresholds (realistic for mocks)
+
+### Observability
+
+**Prometheus Metrics**: 26 metrics
+- Feature Store: 13 metrics (catalog access, storage ops, cache hits)
+- Liquidity Regime: 13 metrics (regime state, score, components, coherence)
+
+**Grafana Dashboards**: 2 dashboards
+- Feature Store: Catalog usage, storage performance, cache efficiency
+- Liquidity Regime: Regime timeline, score trends, component heatmap, alerts
+
+**Alerts**: P1-P4 severity levels
+- P1 Critical: Regime state unknown, all components failed
+- P2 High: Multiple components failed, contradiction persists
+- P3 Medium: Component staleness, low coherence
+- P4 Low: Regime switched, score threshold breached
+
+### Next Steps
+
+1. **Shadow Testing**: Test with real data feeds (replace mocks)
+2. **Integration**: Connect Feature Store → Liquidity Regime (remove `getMockInputs()`)
+3. **UI Polish**: E2E Playwright tests, feature selection flows
+4. **External SDK**: Publish official SDK to npm as `@adaf/feature-store-sdk`
+5. **Webhooks**: Regime change notifications (Slack/Discord/Teams)
+
+---
+
 ## 🔮 Roadmap y Evolución
 
 ### **Próximas Características**

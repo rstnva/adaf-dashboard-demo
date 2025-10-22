@@ -1,0 +1,1389 @@
+
+> adaf-dashboard@1.0.0 test /home/parallels/Desktop/adaf-dashboard-pro/ADAF-Billions-Dash-v2
+> vitest --run
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /home/parallels/Desktop/adaf-dashboard-pro/ADAF-Billions-Dash-v2
+
+stdout | tests/summer-performance.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard-backup/tests/summer-performance.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard-backup/tests/mock-integration.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/mock-integration.test.ts (11 tests) 6ms
+stdout | lav-adaf/apps/dashboard/tests/summer-performance.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | tests/summer-e2e.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard/tests/mock-integration.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/mock-integration.test.ts (11 tests) 6ms
+stdout | lav-adaf/apps/dashboard-backup/tests/summer-e2e.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | tests/mock-integration.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/mock-integration.test.ts (11 tests) 6ms
+stdout | lav-adaf/apps/dashboard/tests/summer-integration.unit.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | tests/summer-integration.unit.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard-backup/tests/summer-integration.unit.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/summer-integration.unit.test.ts (33 tests) 13ms
+ ✓ tests/summer-integration.unit.test.ts (33 tests) 13ms
+ ✓ lav-adaf/apps/dashboard/tests/summer-integration.unit.test.ts (33 tests) 12ms
+ ✓ tests/summer-e2e.test.ts (11 tests) 159ms
+ ✓ lav-adaf/apps/dashboard-backup/tests/summer-e2e.test.ts (11 tests) 160ms
+stdout | lav-adaf/apps/dashboard/tests/summer-e2e.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard-backup/tests/security.comprehensive.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | tests/wsp.etag.edgecases.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.etag.edgecases.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard/tests/wsp.etag.edgecases.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.etag.edgecases.test.ts (12 tests) 7ms
+ ✓ tests/wsp.etag.edgecases.test.ts (12 tests) 7ms
+ ✓ lav-adaf/apps/dashboard/tests/wsp.etag.edgecases.test.ts (12 tests) 8ms
+stdout | tests/security.comprehensive.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/security.comprehensive.test.ts (23 tests) 107ms
+ ✓ lav-adaf/apps/dashboard/tests/summer-e2e.test.ts (11 tests) 161ms
+stdout | tests/summer-api.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/summer-api.test.ts (17 tests) 18ms
+ ✓ tests/security.comprehensive.test.ts (23 tests) 111ms
+stdout | lav-adaf/apps/dashboard/tests/security.comprehensive.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/security.comprehensive.test.ts (23 tests) 109ms
+stdout | lav-adaf/apps/dashboard/tests/summer-api.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/summer-api.test.ts (17 tests) 6ms
+stdout | lav-adaf/apps/dashboard-backup/tests/summer-api.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/summer-api.test.ts (17 tests) 8ms
+stdout | tests/wsp.metrics.monitoring.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.metrics.monitoring.test.ts (14 tests) 9ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.metrics.monitoring.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.metrics.monitoring.test.ts (14 tests) 12ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.metrics.monitoring.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.metrics.monitoring.test.ts (14 tests) 8ms
+stdout | tests/wsp.adapters.circuitbreaker.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.adapters.circuitbreaker.test.ts (14 tests) 13ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.adapters.circuitbreaker.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.adapters.circuitbreaker.test.ts (14 tests) 7ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.adapters.circuitbreaker.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.adapters.circuitbreaker.test.ts (14 tests) 9ms
+stdout | tests/wsp.api.ratelimit.clean.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.api.ratelimit.clean.test.ts (12 tests) 9ms
+stdout | services/oracle-core/tests/unit/sdk/oracle-client.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/unit/sdk/oracle-client.test.ts (17 tests) 11ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.api.ratelimit.clean.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.api.ratelimit.clean.test.ts (12 tests) 8ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.api.ratelimit.clean.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.api.ratelimit.clean.test.ts (12 tests) 8ms
+stdout | lav-adaf/apps/dashboard/tests/agent.worker.test.ts
+[MOCK-PRISMA] agent.worker.test.ts: Prisma mock registered
+
+stdout | lav-adaf/apps/dashboard-backup/tests/agent.worker.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard-backup/tests/agent.worker.test.ts > Agent Worker Integration > should process news signals and generate alerts
+🤖 Processing new signals...
+Found 1 new signals to process
+✅ Created alert: NOTICIA CRITICA
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | lav-adaf/apps/dashboard-backup/tests/agent.worker.test.ts > Agent Worker Integration > should process TVL signals and detect significant drops
+🤖 Processing new signals...
+Found 2 new signals to process
+❌ No alert for signal: mock-id-3
+❌ No alert for signal: mock-id-4
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | lav-adaf/apps/dashboard-backup/tests/agent.worker.test.ts > Agent Worker Integration > should identify arbitrage opportunities
+🤖 Processing new signals...
+Found 1 new signals to process
+❌ No alert for signal: mock-id-5
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | lav-adaf/apps/dashboard-backup/tests/agent.worker.test.ts > Agent Worker Integration > should handle multiple signal types in batch
+🤖 Processing new signals...
+Found 3 new signals to process
+✅ Created alert: Noticia Relevante
+❌ No alert for signal: mock-id-7
+❌ No alert for signal: mock-id-8
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | lav-adaf/apps/dashboard-backup/tests/agent.worker.test.ts > Agent Worker Integration > should respect processing cooldown periods
+🤖 Processing new signals...
+Found 1 new signals to process
+❌ No alert for signal: mock-id-10
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+🤖 Processing new signals...
+Found 1 new signals to process
+❌ No alert for signal: mock-id-11
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/agent.worker.test.ts (5 tests) 11ms
+stdout | services/oracle-core/tests/unit/webhooks/delivery.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard/tests/agent.worker.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard/tests/agent.worker.test.ts > Agent Worker Integration > should process news signals and generate alerts
+[MOCK-PRISMA] LAV Prisma mock loaded
+Mock Prisma Client initialized
+[DEBUG] All signals before processNewSignals: [
+  {
+    "id": "mock-1",
+    "processed": false,
+    "type": "news",
+    "source": "MockFinancialNews",
+    "title": "SEC Announces New Cryptocurrency Regulations",
+    "description": "New regulatory framework for digital assets announced by securities commission",
+    "severity": "medium",
+    "metadata": {
+      "keywords": [
+        "sec",
+        "regulation",
+        "cryptocurrency"
+      ],
+      "sentiment": -0.3,
+      "impact_score": 0.6
+    },
+    "fingerprint": "test-medium-news-456",
+    "timestamp": "2024-01-15T11:00:00.000Z"
+  }
+]
+🤖 Processing new signals...
+Mock Prisma Client initialized
+Found 1 new signals to process
+✅ Created alert: Noticia Relevante
+🔍 Running DQP health checks...
+Mock Prisma Client initialized
+✅ DQP health check completed: 0 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | lav-adaf/apps/dashboard/tests/agent.worker.test.ts > Agent Worker Integration > should process TVL signals and detect significant drops
+Mock Prisma Client initialized
+[DEBUG] All signals before processNewSignals (opportunity): [
+  {
+    "id": "mock-1",
+    "processed": false,
+    "type": "onchain",
+    "source": "OC-1",
+    "title": "TVL aave",
+    "description": "Previous TVL",
+    "severity": "high",
+    "metadata": {
+      "protocol": "aave",
+      "value": 1000
+    },
+    "fingerprint": "tvl-old",
+    "timestamp": "2024-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "mock-2",
+    "processed": false,
+    "type": "onchain",
+    "source": "OC-1",
+    "title": "TVL aave",
+    "description": "Significant TVL Drop Detected",
+    "severity": "high",
+    "metadata": {
+      "protocol": "aave",
+      "value": 850
+    },
+    "fingerprint": "tvl-drop",
+    "timestamp": "2024-01-15T11:00:00.000Z"
+  }
+]
+🤖 Processing new signals...
+Found 2 new signals to process
+[DEBUG] TVL drop check: protocol=aave, v0=1000, v1=850, delta=-0.15
+✅ Created alert: TVL drop aave
+[DEBUG] TVL drop check: protocol=aave, v0=1000, v1=850, delta=-0.15
+✅ Created alert: TVL drop aave
+🔍 Running DQP health checks...
+✅ DQP health check completed: 0 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | lav-adaf/apps/dashboard/tests/agent.worker.test.ts > Agent Worker Integration > should identify arbitrage opportunities
+Mock Prisma Client initialized
+[DEBUG] All signals before processNewSignals (batch): [
+  {
+    "id": "mock-1",
+    "processed": false,
+    "type": "onchain",
+    "source": "OC-1",
+    "title": "TVL compound",
+    "description": "Previous TVL",
+    "severity": "high",
+    "metadata": {
+      "protocol": "compound",
+      "value": 2000
+    },
+    "fingerprint": "tvl-old2",
+    "timestamp": "2024-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "mock-2",
+    "processed": false,
+    "type": "onchain",
+    "source": "OC-1",
+    "title": "TVL compound",
+    "description": "Significant TVL Drop Detected",
+    "severity": "high",
+    "metadata": {
+      "protocol": "compound",
+      "value": 1700
+    },
+    "fingerprint": "tvl-drop2",
+    "timestamp": "2024-01-15T11:00:00.000Z"
+  }
+]
+🤖 Processing new signals...
+Found 2 new signals to process
+[DEBUG] TVL drop check: protocol=compound, v0=2000, v1=1700, delta=-0.15
+✅ Created alert: TVL drop compound
+[DEBUG] TVL drop check: protocol=compound, v0=2000, v1=1700, delta=-0.15
+✅ Created alert: TVL drop compound
+🔍 Running DQP health checks...
+✅ DQP health check completed: 0 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | lav-adaf/apps/dashboard/tests/agent.worker.test.ts > Agent Worker Integration > should handle multiple signal types in batch
+Mock Prisma Client initialized
+🤖 Processing new signals...
+Found 5 new signals to process
+[DEBUG] TVL drop check: protocol=curve, v0=1000, v1=800, delta=-0.2
+✅ Created alert: TVL drop curve
+[DEBUG] TVL drop check: protocol=balancer, v0=2000, v1=1700, delta=-0.15
+✅ Created alert: TVL drop balancer
+[DEBUG] TVL drop check: protocol=curve, v0=1000, v1=800, delta=-0.2
+✅ Created alert: TVL drop curve
+[DEBUG] TVL drop check: protocol=balancer, v0=2000, v1=1700, delta=-0.15
+✅ Created alert: TVL drop balancer
+✅ Created alert: Noticia Relevante
+🔍 Running DQP health checks...
+✅ DQP health check completed: 0 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | lav-adaf/apps/dashboard/tests/agent.worker.test.ts > Agent Worker Integration > should respect processing cooldown periods
+Mock Prisma Client initialized
+🤖 Processing new signals...
+Found 2 new signals to process
+[DEBUG] TVL drop check: protocol=uni, v0=1000, v1=800, delta=-0.2
+✅ Created alert: TVL drop uni
+[DEBUG] TVL drop check: protocol=uni, v0=1000, v1=800, delta=-0.2
+✅ Created alert: TVL drop uni
+🔍 Running DQP health checks...
+✅ DQP health check completed: 0 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+🤖 Processing new signals...
+Found 1 new signals to process
+[DEBUG] TVL drop check: protocol=uni, v0=800, v1=700, delta=-0.125
+✅ Created alert: TVL drop uni
+🔍 Running DQP health checks...
+✅ DQP health check completed: 0 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+ ❯ lav-adaf/apps/dashboard/tests/agent.worker.test.ts (5 tests | 1 failed) 91ms
+   × Agent Worker Integration > should handle multiple signal types in batch 3ms
+     → expected [] to have a length of 5 but got +0
+stdout | tests/wsp.metrics.core.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.metrics.core.test.ts (10 tests) 3ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.metrics.core.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.metrics.core.test.ts (10 tests) 4ms
+stdout | tests/agent.worker.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | tests/agent.worker.test.ts > Agent Worker Integration > should process news signals and generate alerts
+🤖 Processing new signals...
+Found 1 new signals to process
+✅ Created alert: NOTICIA CRITICA
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | tests/agent.worker.test.ts > Agent Worker Integration > should process TVL signals and detect significant drops
+🤖 Processing new signals...
+Found 1 new signals to process
+✅ Created alert: TVL drop uniswap
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | tests/agent.worker.test.ts > Agent Worker Integration > should identify arbitrage opportunities
+🤖 Processing new signals...
+Found 1 new signals to process
+💰 Arbitrage opportunity detected: ETH
+✅ Created alert: Arbitrage Opportunity: ETH
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | tests/agent.worker.test.ts > Agent Worker Integration > should handle multiple signal types in batch
+🤖 Processing new signals...
+Found 3 new signals to process
+✅ Created alert: Noticia Relevante
+❌ No alert for signal: mock-id-9
+❌ No alert for signal: mock-id-10
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+stdout | tests/agent.worker.test.ts > Agent Worker Integration > should respect processing cooldown periods
+🤖 Processing new signals...
+Found 1 new signals to process
+❌ No alert for signal: mock-id-12
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+🤖 Processing new signals...
+⏳ Cooldown active, 30s remaining
+🤖 Processing new signals...
+Found 1 new signals to process
+❌ No alert for signal: mock-id-13
+🔍 Running DQP health checks...
+✅ DQP health check completed: 1 OK, 0 WARN, 0 FAIL
+✅ Signal processing completed
+
+ ✓ tests/agent.worker.test.ts (5 tests) 7ms
+ ✓ services/oracle-core/tests/unit/webhooks/delivery.test.ts (12 tests) 333ms
+   ✓ WebhookDelivery > deliverAlert > retries on failure 301ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.metrics.core.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.metrics.core.test.ts (10 tests) 4ms
+stdout | src/components/oracle/__tests__/oracle-ui.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ src/components/oracle/__tests__/oracle-ui.test.tsx (12 tests) 296ms
+stdout | src/components/ops/__tests__/FarsideReconciliation.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard-backup/tests/news.ingestion.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ src/components/ops/__tests__/FarsideReconciliation.test.tsx (10 tests) 110ms
+stdout | tests/tvl.ingestion.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard-backup/src/components/ops/__tests__/FarsideReconciliation.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/tvl.ingestion.test.ts (6 tests) 22ms
+stdout | lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/src/components/ops/__tests__/FarsideReconciliation.test.tsx (10 tests) 169ms
+stdout | lav-adaf/apps/dashboard-backup/tests/tvl.ingestion.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/tvl.ingestion.test.ts (6 tests) 18ms
+ ❯ lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts (6 tests | 5 failed) 114ms
+   × TVL Data Ingestion Integration > should process TVL data and create signals 21ms
+     → expected 400 to be 201 // Object.is equality
+   × TVL Data Ingestion Integration > should detect TVL threshold breaches 4ms
+     → expected 400 to be 201 // Object.is equality
+   × TVL Data Ingestion Integration > should not create alerts for minor TVL changes 3ms
+     → expected 400 to be 201 // Object.is equality
+   × TVL Data Ingestion Integration > should prevent duplicate TVL entries 7ms
+     → expected 400 to be 201 // Object.is equality
+   × TVL Data Ingestion Integration > should handle DeFiLlama adapter integration 2ms
+     → expected 400 to be 200 // Object.is equality
+ ✓ lav-adaf/apps/dashboard-backup/tests/news.ingestion.test.ts (5 tests) 177ms
+stdout | lav-adaf/apps/dashboard/src/components/ops/__tests__/FarsideReconciliation.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/src/components/ops/__tests__/FarsideReconciliation.test.tsx (10 tests) 120ms
+stdout | lav-adaf/apps/dashboard/tests/news.ingestion.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ❯ lav-adaf/apps/dashboard/tests/news.ingestion.test.ts (5 tests | 3 failed) 77ms
+   × News Ingestion Integration > should process RSS feed and create signals 13ms
+     → expected undefined to be defined
+   × News Ingestion Integration > should classify news severity correctly 5ms
+     → expected 'high' to be 'critical' // Object.is equality
+   × News Ingestion Integration > should handle RSS adapter integration 3ms
+     → expected 201 to be 200 // Object.is equality
+stdout | lav-adaf/apps/dashboard-backup/tests/summer-layout-migration.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | tests/summer-layout-migration.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/summer-layout-migration.test.ts (7 tests) 3ms
+ ✓ lav-adaf/apps/dashboard-backup/tests/summer-layout-migration.test.ts (7 tests) 3ms
+stdout | lav-adaf/apps/dashboard/tests/summer-layout-migration.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/summer-layout-migration.test.ts (7 tests) 4ms
+stdout | tests/liquidity-regime.dq.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/liquidity-regime.dq.test.ts (14 tests) 4ms
+stdout | tests/wsp.i18n.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.i18n.test.ts (11 tests) 5ms
+stdout | tests/liquidity-regime.api.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/liquidity-regime.api.test.ts (12 tests) 5ms
+stdout | tests/news.ingestion.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/news.ingestion.test.ts (5 tests) 17ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.i18n.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.i18n.test.ts (11 tests) 5ms
+stdout | tests/basis-engine.calculator.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/basis-engine.calculator.test.ts (8 tests) 3ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.i18n.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.i18n.test.ts (11 tests) 10ms
+stdout | src/lib/__tests__/signals.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ src/lib/__tests__/signals.test.ts (8 tests) 3ms
+stdout | lav-adaf/apps/dashboard-backup/src/lib/__tests__/signals.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/src/lib/__tests__/signals.test.ts (8 tests) 3ms
+stdout | lav-adaf/apps/dashboard/src/lib/__tests__/signals.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/src/lib/__tests__/signals.test.ts (8 tests) 6ms
+stdout | services/oracle-core/tests/unit/consensus/aggregators.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/unit/consensus/aggregators.test.ts (11 tests) 4ms
+stdout | tests/wsp.metrics.final.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.metrics.final.test.ts (4 tests) 20ms
+stdout | src/lib/news/__tests__/news-oracle.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ src/lib/news/__tests__/news-oracle.test.ts (3 tests) 12ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.metrics.final.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard/tests/wsp.metrics.final.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.metrics.final.test.ts (4 tests) 29ms
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.metrics.final.test.ts (4 tests) 43ms
+ ✓ tests/summer-performance.test.ts (12 tests) 4191ms
+   ✓ 🌐 Summer.fi API Performance > should handle API rate limiting gracefully 1255ms
+   ✓ 📊 Summer.fi Load Testing > should handle multiple concurrent users 2336ms
+stdout | src/components/ssv/__tests__/EtfMetricsCard.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ src/components/ssv/__tests__/EtfMetricsCard.test.tsx (7 tests) 94ms
+stdout | tests/blockspace.api.integration.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/summer-performance.test.ts (12 tests) 4252ms
+   ✓ 🌐 Summer.fi API Performance > should handle API rate limiting gracefully 1255ms
+   ✓ 📊 Summer.fi Load Testing > should handle multiple concurrent users 2385ms
+ ✓ lav-adaf/apps/dashboard-backup/tests/summer-performance.test.ts (12 tests) 4273ms
+   ✓ 🌐 Summer.fi API Performance > should handle API rate limiting gracefully 1257ms
+   ✓ 📊 Summer.fi Load Testing > should handle multiple concurrent users 2346ms
+stdout | lav-adaf/apps/dashboard-backup/src/components/ssv/__tests__/EtfMetricsCard.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/src/components/ssv/__tests__/EtfMetricsCard.test.tsx (7 tests) 72ms
+stdout | lav-adaf/apps/dashboard/src/components/ssv/__tests__/EtfMetricsCard.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/src/components/ssv/__tests__/EtfMetricsCard.test.tsx (7 tests) 79ms
+stdout | tests/wsp.adapters.simple.branches.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.adapters.simple.branches.test.ts (6 tests) 43ms
+stdout | tests/wsp.api.routes.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.api.routes.test.ts (3 tests) 43ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.api.routes.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.api.routes.test.ts (3 tests) 44ms
+ ✓ tests/blockspace.api.integration.test.ts (5 tests) 406ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.api.routes.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.api.routes.test.ts (3 tests) 56ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.adapters.simple.branches.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | tests/wsp.metrics.branches.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.metrics.branches.test.ts (4 tests) 26ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.metrics.branches.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard/tests/wsp.adapters.simple.branches.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard/tests/wsp.metrics.branches.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.metrics.branches.test.ts (4 tests) 40ms
+ ✓ lav-adaf/apps/dashboard/tests/wsp.metrics.branches.test.ts (4 tests) 39ms
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.adapters.simple.branches.test.ts (6 tests) 170ms
+stdout | tests/feature-store.dq.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/feature-store.dq.test.ts (6 tests) 3ms
+ ✓ lav-adaf/apps/dashboard/tests/wsp.adapters.simple.branches.test.ts (6 tests) 190ms
+stdout | tests/liquidity-regime.regime.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/liquidity-regime.regime.test.ts (8 tests) 3ms
+stdout | tests/narrative-momentum.scorer.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/narrative-momentum.scorer.test.ts (6 tests) 6ms
+stdout | tests/feature-store.transform.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/feature-store.transform.test.ts (7 tests) 5ms
+stdout | tests/liquidity-regime.composite.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/liquidity-regime.composite.test.ts (8 tests) 3ms
+stdout | tests/basis-engine.signals.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/basis-engine.signals.test.ts (2 tests) 2ms
+stdout | tests/narrative-momentum.signals.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ❯ tests/narrative-momentum.signals.test.ts (5 tests | 1 failed) 8ms
+   × Narrative Momentum - Signal Generator > should generate signals from trending narratives 4ms
+     → expected 0 to be greater than 0
+stdout | tests/liquidity-regime.components.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/liquidity-regime.components.test.ts (8 tests) 4ms
+stdout | lav-adaf/apps/dashboard-backup/src/components/panels/__tests__/PresetsDrawer.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stderr | lav-adaf/apps/dashboard-backup/src/components/panels/__tests__/PresetsDrawer.test.tsx > PresetsDrawer > renders trigger button
+In HTML, <button> cannot be a descendant of <button>.
+This will cause a hydration error.
+
+  <TestWrapper>
+    <div suppressHydrationWarning={true}>
+      <PresetsDrawer>
+        <Drawer open={false} onOpenChange={function spy}>
+          <div data-mock="Drawer">
+            <DrawerTrigger asChild={true}>
+>             <button data-mock="DrawerTrigger">
+                <Button variant="outline">
+>                 <button
+>                   className="relative inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm f..."
+>                   ref={null}
+>                 >
+            ...
+
+<button> cannot contain a nested <button>.
+See this log for the ancestor stack trace.
+
+ ✓ lav-adaf/apps/dashboard-backup/src/components/panels/__tests__/PresetsDrawer.test.tsx (2 tests) 44ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.scoring.normalized.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.scoring.normalized.test.ts (3 tests) 4ms
+stdout | tests/feature-store.api.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | tests/feature-store.api.test.ts > Feature Store API
+[Metrics:Counter] feature_api_request_total: { status: 'success' } 1
+[Metrics:Histogram] feature_api_response_time_seconds: { endpoint: 'publish' } 11
+[Metrics:Counter] feature_api_request_total: { status: 'accepted' } 11
+[Metrics:Counter] feature_api_request_total: { status: 'rejected' } 0
+
+stdout | tests/feature-store.api.test.ts > Feature Store API > GET /catalog returns features
+[Metrics:Counter] feature_api_request_total: { status: 'success' } 1
+[Metrics:Histogram] feature_api_response_time_seconds: { endpoint: 'catalog' } 0
+
+stdout | tests/feature-store.api.test.ts > Feature Store API > POST /query returns points
+[Metrics:Counter] feature_api_request_total: { status: 'success' } 1
+[Metrics:Histogram] feature_api_response_time_seconds: { endpoint: 'query' } 0
+
+ ✓ tests/feature-store.api.test.ts (3 tests) 24ms
+stdout | tests/feature-store.api.test.ts > Feature Store API > POST /publish accepts points
+[Metrics:Counter] feature_api_request_total: { status: 'success' } 1
+[Metrics:Histogram] feature_api_response_time_seconds: { endpoint: 'publish' } 0
+[Metrics:Counter] feature_api_request_total: { status: 'accepted' } 1
+[Metrics:Counter] feature_api_request_total: { status: 'rejected' } 0
+
+stdout | tests/wsp.scoring.normalized.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.scoring.normalized.test.ts (3 tests) 4ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.scoring.normalized.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ❯ lav-adaf/apps/dashboard/tests/wsp.scoring.normalized.test.ts (3 tests | 1 failed) 10ms
+   × scoring normalization > uses redis stats when available 4ms
+     → expected 'fallback' to be 'redis' // Object.is equality
+stdout | tests/wsp.metrics.simple.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard/tests/wsp.metrics.simple.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.metrics.simple.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.metrics.simple.test.ts (3 tests) 20ms
+ ✓ tests/wsp.metrics.simple.test.ts (3 tests) 39ms
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.metrics.simple.test.ts (3 tests) 42ms
+stdout | services/oracle-core/tests/unit/security/rbac.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/unit/security/rbac.test.ts (8 tests) 3ms
+stdout | services/oracle-core/tests/vox/botguard.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/vox/botguard.test.ts (5 tests) 2ms
+stdout | services/oracle-core/tests/vox/botguard.test.ts > Antibots & Botguard > false positives <5% on synthetic fixtures
+False positive rate: 0.00%
+
+stdout | services/oracle-core/tests/unit/consensus/quorum.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/unit/consensus/quorum.test.ts (8 tests) 3ms
+stdout | tests/narrative-momentum.detector.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/narrative-momentum.detector.test.ts (4 tests) 5ms
+stdout | tests/wsp.adapters.calendar.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.adapters.calendar.test.ts (2 tests) 36ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.adapters.calendar.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.adapters.calendar.test.ts (2 tests) 31ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.adapters.calendar.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.adapters.calendar.test.ts (2 tests) 42ms
+stdout | tests/wsp.adapters.etf.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.adapters.etf.test.ts (2 tests) 30ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.adapters.etf.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ❯ lav-adaf/apps/dashboard/tests/wsp.adapters.etf.test.ts (2 tests | 1 failed) 35ms
+   × Adapter: ETF Flows > 200 then 304 uses cache and not stale 26ms
+     → expected "recordAdapterRequest" to be called at least once
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.adapters.etf.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.adapters.etf.test.ts (2 tests) 28ms
+stdout | src/components/panels/__tests__/PresetsDrawer.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | services/oracle-core/tests/vox/dq.quarantine.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | services/oracle-core/tests/vox/dq.quarantine.test.ts > Vox DQ & Quarantine > isInCooldown returns true within cooldown window
+[QUARANTINE] vox/test:BTC - VOX_BRIGADING for 15min
+
+ ✓ src/components/panels/__tests__/PresetsDrawer.test.tsx (2 tests) 34ms
+ ✓ services/oracle-core/tests/vox/dq.quarantine.test.ts (5 tests) 2ms
+stdout | lav-adaf/apps/dashboard/src/components/panels/__tests__/PresetsDrawer.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | services/oracle-core/tests/vox/dq.quarantine.test.ts > Vox DQ & Quarantine > checkVoxQuarantine triggers on outlier
+[QUARANTINE] vox/x/volume:BTC - VOX_OUTLIER for 15min
+
+stdout | services/oracle-core/tests/vox/dq.quarantine.test.ts > Vox DQ & Quarantine > clearExpiredQuarantines removes old entries
+[QUARANTINE] vox/expired:BTC - VOX_TEST for 0.000016666666666666667min
+
+stdout | Module.clearExpiredQuarantines (/home/parallels/Desktop/adaf-dashboard-pro/ADAF-Billions-Dash-v2/services/oracle-core/dq/vox.rules.ts:120:15)
+[QUARANTINE CLEARED] vox/expired:BTC
+
+ ✓ lav-adaf/apps/dashboard/src/components/panels/__tests__/PresetsDrawer.test.tsx (2 tests) 37ms
+stdout | tests/wsp.adapters.edgecases.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.adapters.edgecases.test.ts (8 tests) 2ms
+stdout | tests/feature-store.loaders.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | tests/feature-store.loaders.test.ts > Feature Store Loaders > loads a single feature with mock data
+[FeatureStore:Loader] Mock fetch: cex/agg/spot_depth_2pct_usd from cex-aggregator
+
+stdout | tests/feature-store.loaders.test.ts > Feature Store Loaders > respects time range filters
+[FeatureStore:Loader] Mock fetch: macro/us/walcl_total_usd from fred
+
+stdout | tests/feature-store.loaders.test.ts > Feature Store Loaders > batch loads multiple features
+[FeatureStore:Loader] Mock fetch: cex/agg/spot_depth_2pct_usd from cex-aggregator
+
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.adapters.edgecases.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.adapters.edgecases.test.ts (8 tests) 2ms
+stdout | tests/feature-store.loaders.test.ts > Feature Store Loaders > batch loads multiple features
+[FeatureStore:Loader] Mock fetch: macro/us/walcl_total_usd from fred
+
+stdout | lav-adaf/apps/dashboard/tests/wsp.adapters.edgecases.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.adapters.edgecases.test.ts (8 tests) 2ms
+stdout | tests/basis-engine.detector.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/basis-engine.detector.test.ts (3 tests) 2ms
+stdout | tests/feature-store.loaders.test.ts > Feature Store Loaders > can reset circuit breaker
+[FeatureStore:Loader] Circuit breaker RESET for source: test-source
+
+ ✓ tests/feature-store.loaders.test.ts (6 tests) 217ms
+stdout | services/oracle-core/tests/error.middleware.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/error.middleware.test.ts (7 tests) 2ms
+stdout | tests/wsp.adapters.ratesfx.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.adapters.ratesfx.test.ts (2 tests) 24ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.adapters.ratesfx.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.adapters.ratesfx.test.ts (2 tests) 34ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.adapters.ratesfx.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.adapters.ratesfx.test.ts (2 tests) 33ms
+stdout | tests/wsp.adapters.indices.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.adapters.indices.test.ts (2 tests) 38ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.adapters.indices.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.adapters.indices.test.ts (2 tests) 36ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.adapters.indices.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.adapters.indices.test.ts (2 tests) 29ms
+stdout | services/oracle-core/tests/vox/score.unit.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/vox/score.unit.test.ts (6 tests) 2ms
+stdout | tests/blockspace.api.next.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | services/oracle-core/tests/unit/adapters/redstone.adapter.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | services/oracle-core/tests/unit/adapters/chainlink.adapter.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/unit/adapters/chainlink.adapter.test.ts (1 test) 6ms
+ ✓ services/oracle-core/tests/unit/adapters/redstone.adapter.test.ts (1 test) 8ms
+stdout | services/oracle-core/tests/unit/adapters/chronicle-uma.adapter.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | services/oracle-core/tests/unit/adapters/band-tellor.adapter.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/unit/adapters/chronicle-uma.adapter.test.ts (1 test) 13ms
+ ✓ services/oracle-core/tests/unit/adapters/band-tellor.adapter.test.ts (1 test) 16ms
+stdout | services/oracle-core/tests/unit/adapters/pyth.adapter.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/unit/adapters/pyth.adapter.test.ts (1 test) 14ms
+stdout | tests/wsp.normalization.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.normalization.test.ts (2 tests) 7ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.normalization.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.normalization.test.ts (2 tests) 5ms
+stdout | services/oracle-core/tests/unit/security/rate-limit.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/unit/security/rate-limit.test.ts (3 tests) 3ms
+stdout | src/lib/derivatives.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ src/lib/derivatives.test.ts (3 tests) 2ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.normalization.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.normalization.test.ts (2 tests) 9ms
+stdout | lav-adaf/apps/dashboard-backup/src/lib/derivatives.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/src/lib/derivatives.test.ts (3 tests) 2ms
+stdout | lav-adaf/apps/dashboard/src/lib/derivatives.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/src/lib/derivatives.test.ts (3 tests) 2ms
+stdout | lav-adaf/apps/dashboard-backup/src/lib/stables.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/src/lib/stables.test.ts (3 tests) 2ms
+stdout | src/lib/stables.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ src/lib/stables.test.ts (3 tests) 2ms
+stdout | lav-adaf/apps/dashboard/src/lib/stables.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/src/lib/stables.test.ts (3 tests) 3ms
+stdout | tests/blockspace.rebates.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/blockspace.rebates.test.ts (3 tests) 3ms
+stdout | services/oracle-core/tests/vox/entity.resolver.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | services/oracle-core/tests/vox/entity.resolver.test.ts > Entity Resolver > achieves ≥98% precision on goldset
+Precision: 100.00% (25/25)
+
+ ✓ services/oracle-core/tests/vox/entity.resolver.test.ts (1 test) 4ms
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.scoring.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.scoring.test.ts (1 test) 2ms
+stdout | tests/wsp.scoring.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.scoring.test.ts (1 test) 2ms
+stdout | tests/ci-mock-test.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/ci-mock-test.test.ts (3 tests) 1ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.scoring.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.scoring.test.ts (1 test) 2ms
+stdout | services/oracle-core/tests/registry.resolver.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ services/oracle-core/tests/registry.resolver.test.ts (2 tests) 7ms
+stdout | src/components/charts/__tests__/PnlLine.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ src/components/charts/__tests__/PnlLine.test.tsx (1 test) 13ms
+stdout | tests/blockspace.relay.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/blockspace.relay.test.ts (1 test) 5ms
+stdout | lav-adaf/apps/dashboard/src/components/charts/__tests__/PnlLine.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/src/components/charts/__tests__/PnlLine.test.tsx (1 test) 12ms
+stdout | tests/blockspace.sequencer.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/blockspace.sequencer.test.ts (1 test) 2ms
+stdout | lav-adaf/apps/dashboard-backup/src/components/charts/__tests__/PnlLine.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/src/components/charts/__tests__/PnlLine.test.tsx (1 test) 12ms
+stdout | src/components/panels/__tests__/KpiCard.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ src/components/panels/__tests__/KpiCard.test.tsx (1 test) 24ms
+stdout | lav-adaf/apps/dashboard-backup/src/components/panels/__tests__/KpiCard.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/src/components/panels/__tests__/KpiCard.test.tsx (1 test) 21ms
+stdout | lav-adaf/apps/dashboard/src/components/panels/__tests__/KpiCard.test.tsx
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/src/components/panels/__tests__/KpiCard.test.tsx (1 test) 22ms
+stdout | tests/basic.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/basic.test.ts (2 tests) 1ms
+stdout | lav-adaf/apps/dashboard-backup/tests/basic.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard-backup/tests/basic.test.ts (2 tests) 2ms
+stdout | lav-adaf/apps/dashboard/tests/basic.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/basic.test.ts (2 tests) 2ms
+stdout | tests/wsp.featureFlag.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ tests/wsp.featureFlag.test.ts (1 test) 1ms
+stdout | lav-adaf/apps/dashboard/tests/wsp.featureFlag.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+stdout | lav-adaf/apps/dashboard-backup/tests/wsp.featureFlag.test.ts
+🧪 ADAF Test Setup - Fortune 500 Mock Mode Activated
+⚠️  TODO_REPLACE_WITH_REAL_DATA: Using mock Redis, Prisma, and APIs
+
+ ✓ lav-adaf/apps/dashboard/tests/wsp.featureFlag.test.ts (1 test) 1ms
+ ✓ lav-adaf/apps/dashboard-backup/tests/wsp.featureFlag.test.ts (1 test) 1ms
+ ❯ tests/blockspace.api.next.test.ts (3 tests | 3 failed) 90020ms
+   × Blockspace API (Next.js routes) > POST /routes simula relay 30009ms
+     → Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × Blockspace API (Next.js routes) > POST /rebates simula rebate 30004ms
+     → Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × Blockspace API (Next.js routes) > GET /sequencer simula alianzas 30005ms
+     → Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 15 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/blockspace.api.next.test.ts > Blockspace API (Next.js routes) > POST /routes simula relay
+ FAIL  tests/blockspace.api.next.test.ts > Blockspace API (Next.js routes) > POST /rebates simula rebate
+ FAIL  tests/blockspace.api.next.test.ts > Blockspace API (Next.js routes) > GET /sequencer simula alianzas
+Error: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯
+
+ FAIL  tests/narrative-momentum.signals.test.ts > Narrative Momentum - Signal Generator > should generate signals from trending narratives
+AssertionError: expected 0 to be greater than 0
+ ❯ tests/narrative-momentum.signals.test.ts:16:28
+     14|     const signals = generator.generateSignals(narratives, sentiment);
+     15| 
+     16|     expect(signals.length).toBeGreaterThan(0);
+       |                            ^
+     17|     signals.forEach((sig) => {
+     18|       expect(sig.id).toBeTruthy();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯
+
+ FAIL  lav-adaf/apps/dashboard/tests/agent.worker.test.ts > Agent Worker Integration > should handle multiple signal types in batch
+AssertionError: expected [] to have a length of 5 but got +0
+
+- Expected
++ Received
+
+- 5
++ 0
+
+ ❯ lav-adaf/apps/dashboard/tests/agent.worker.test.ts:205:30
+    203|       }
+    204|     })
+    205|     expect(processedSignals).toHaveLength(5)
+       |                              ^
+    206|   })
+    207| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯
+
+ FAIL  lav-adaf/apps/dashboard/tests/news.ingestion.test.ts > News Ingestion Integration > should process RSS feed and create signals
+AssertionError: expected undefined to be defined
+ ❯ lav-adaf/apps/dashboard/tests/news.ingestion.test.ts:55:29
+     53|     expect(response.status).toBe(201)
+     54|     expect(result.success).toBe(true)
+     55|     expect(result.signalId).toBeDefined()
+       |                             ^
+     56|     expect(result.fingerprint).toBeDefined()
+     57|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/15]⎯
+
+ FAIL  lav-adaf/apps/dashboard/tests/news.ingestion.test.ts > News Ingestion Integration > should classify news severity correctly
+AssertionError: expected 'high' to be 'critical' // Object.is equality
+
+Expected: "critical"
+Received: "high"
+
+ ❯ lav-adaf/apps/dashboard/tests/news.ingestion.test.ts:117:29
+    115| 
+    116|     expect(response.status).toBe(201)
+    117|     expect(result.severity).toBe('critical')
+       |                             ^
+    118|   })
+    119| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/15]⎯
+
+ FAIL  lav-adaf/apps/dashboard/tests/news.ingestion.test.ts > News Ingestion Integration > should handle RSS adapter integration
+AssertionError: expected 201 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 201
+
+ ❯ lav-adaf/apps/dashboard/tests/news.ingestion.test.ts:142:29
+    140|     
+    141|     // Puede retornar múltiples señales procesadas
+    142|     expect(response.status).toBe(200)
+       |                             ^
+    143|     const result = await response.json()
+    144|     expect(result.processed).toBeGreaterThan(0)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/15]⎯
+
+ FAIL  lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts > TVL Data Ingestion Integration > should process TVL data and create signals
+AssertionError: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ❯ lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts:51:29
+     49|     const result = await response.json()
+     50| 
+     51|     expect(response.status).toBe(201)
+       |                             ^
+     52|     expect(result.success).toBe(true)
+     53|     expect(result.signalId).toBeDefined()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/15]⎯
+
+ FAIL  lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts > TVL Data Ingestion Integration > should detect TVL threshold breaches
+AssertionError: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ❯ lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts:75:29
+     73|     const result = await response.json()
+     74| 
+     75|     expect(response.status).toBe(201)
+       |                             ^
+     76|     expect(result.alert).toBe(true)
+     77|     expect(result.severity).toBe('high')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/15]⎯
+
+ FAIL  lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts > TVL Data Ingestion Integration > should not create alerts for minor TVL changes
+AssertionError: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ❯ lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts:99:29
+     97|     const result = await response.json()
+     98| 
+     99|     expect(response.status).toBe(201)
+       |                             ^
+    100|     expect(result.success).toBe(true)
+    101|     expect(result.alert).toBe(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/15]⎯
+
+ FAIL  lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts > TVL Data Ingestion Integration > should prevent duplicate TVL entries
+AssertionError: expected 400 to be 201 // Object.is equality
+
+- Expected
++ Received
+
+- 201
++ 400
+
+ ❯ lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts:127:30
+    125|     // Primera inserción
+    126|     const response1 = await tvlIngestHandler(request1)
+    127|     expect(response1.status).toBe(201)
+       |                              ^
+    128| 
+    129|     // Segunda inserción (duplicada)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/15]⎯
+
+ FAIL  lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts > TVL Data Ingestion Integration > should handle DeFiLlama adapter integration
+AssertionError: expected 400 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 400
+
+ ❯ lav-adaf/apps/dashboard/tests/tvl.ingestion.test.ts:153:29
+    151|     const response = await tvlIngestHandler(request)
+    152|     
+    153|     expect(response.status).toBe(200)
+       |                             ^
+    154|     const result = await response.json()
+    155|     expect(result.protocol).toBe('curve')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/15]⎯
+
+ FAIL  lav-adaf/apps/dashboard/tests/wsp.adapters.etf.test.ts > Adapter: ETF Flows > 200 then 304 uses cache and not stale
+AssertionError: expected "recordAdapterRequest" to be called at least once
+ ❯ lav-adaf/apps/dashboard/tests/wsp.adapters.etf.test.ts:27:20
+     25|     const first = await getEtfFlows({ asset: 'BTC', window: '1d' });
+     26|     expect(first.stale).toBe(false);
+     27|     expect(spyReq).toHaveBeenCalled();
+       |                    ^
+     28| 
+     29|     server.use(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/15]⎯
+
+ FAIL  lav-adaf/apps/dashboard/tests/wsp.scoring.normalized.test.ts > scoring normalization > uses redis stats when available
+AssertionError: expected 'fallback' to be 'redis' // Object.is equality
+
+Expected: "redis"
+Received: "fallback"
+
+ ❯ lav-adaf/apps/dashboard/tests/wsp.scoring.normalized.test.ts:31:34
+     29|     vi.spyOn(store, 'readPctl').mockResolvedValue({ p5: { q: [0, 0, -5…
+     30|     const { inputs, normalization } = await normalizeInputs({ vix: 26,…
+     31|     expect(normalization.source).toBe('redis');
+       |                                  ^
+     32|     expect(inputs.ETF_BTC_FLOW_NORM).toBeGreaterThan(inputs.ETF_ETH_FL…
+     33|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/15]⎯
+
+ Test Files  7 failed | 150 passed (157)
+      Tests  15 failed | 1055 passed (1070)
+   Start at  17:20:04
+   Duration  98.69s (transform 3.77s, setup 8.21s, collect 8.99s, tests 107.95s, environment 47.93s, prepare 7.92s)
+
+ ELIFECYCLE  Test failed. See above for more details.

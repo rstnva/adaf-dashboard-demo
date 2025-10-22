@@ -1,3 +1,5 @@
+// DEPRECATION NOTICE (2025-10-21): Este archivo no es canónico. Usa la copia oficial en
+// ADAF-Billions-Dash-v2/motor-del-dash/memoria/compendios/ADAF_COMPENDIO_MAESTRO_v1_5_DOMINIO_TOTAL_2025-10-08.txt
 REINO BLOCKCHAIN LAV — ADAF
 COMPENDIO MAESTRO v1.5 “DOMINIO TOTAL” — Fusión oficial (TXT)
 Fecha de compendio: 2025-10-08

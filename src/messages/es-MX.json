@@ -77,6 +77,10 @@
     "lava": {
       "label": "LAV-ADAF",
       "description": "Sistema de Agentes Cuantitativos"
+    },
+    "featureStore": {
+      "label": "Feature Store",
+      "description": "Catálogo y gestión de features"
     }
   },
   "landing": {

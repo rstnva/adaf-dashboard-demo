@@ -6,7 +6,19 @@
 
 ---
 
-## 📋 ÍNDICE
+## � Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](../documentacion/readmes/README.md) — Índice central
+- 🔧 [RUNBOOK_SHADOW_MODE.md](../../RUNBOOK_SHADOW_MODE.md) — Runbook operativo
+- 📖 [SHADOW_MODE_QUICKREF.md](../../SHADOW_MODE_QUICKREF.md) — Referencia rápida
+- 📋 [DOCUMENTACION_COMPLETA_SHADOW_V1_1.md](../../DOCUMENTACION_COMPLETA_SHADOW_V1_1.md) — Doc completa
+- 🏗️ [SHADOW_MODE_V1_1_ARCHITECTURE.md](../arquitectura/SHADOW_MODE_V1_1_ARCHITECTURE.md) — Arquitectura
+- 📊 [SPRINT_SHADOW_MODE_V1_1_REPORT.md](../sprints/SPRINT_SHADOW_MODE_V1_1_REPORT.md) — Sprint report
+- 🎯 [ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md](../../ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md) — Oracle Core
+
+---
+
+## �📋 ÍNDICE
 
 1. [Resumen Ejecutivo](#resumen-ejecutivo)
 2. [Arquitectura del Módulo](#arquitectura-del-módulo)

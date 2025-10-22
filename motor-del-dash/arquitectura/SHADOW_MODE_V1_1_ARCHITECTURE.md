@@ -6,6 +6,32 @@
 
 ---
 
+## 📑 Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](../documentacion/readmes/README.md) — Índice central
+- 🔧 [RUNBOOK_SHADOW_MODE.md](../../RUNBOOK_SHADOW_MODE.md) — Runbook operativo
+- 📖 [SHADOW_MODE_QUICKREF.md](../../SHADOW_MODE_QUICKREF.md) — Referencia rápida
+- 📋 [DOCUMENTACION_COMPLETA_SHADOW_V1_1.md](../../DOCUMENTACION_COMPLETA_SHADOW_V1_1.md) — Doc completa
+- 📦 [MODULO_SHADOW_MODE_V1_1_COMPLETO.md](../modulos/MODULO_SHADOW_MODE_V1_1_COMPLETO.md) — Módulo completo
+- 📊 [SPRINT_SHADOW_MODE_V1_1_REPORT.md](../sprints/SPRINT_SHADOW_MODE_V1_1_REPORT.md) — Sprint report
+- 🏗️ [ORACLE_ARCHITECTURE.md](ORACLE_ARCHITECTURE.md) — Arquitectura Oracle Core
+
+---
+
+## 📚 Índice de Contenido
+
+1. [🎯 RESUMEN EJECUTIVO](#-resumen-ejecutivo)
+2. [🏗️ ARQUITECTURA DE ALTO NIVEL](#-arquitectura-de-alto-nivel)
+3. [📦 COMPONENTES DETALLADOS](#-componentes-detallados)
+4. [🔐 SEGURIDAD Y AUTENTICACIÓN](#-seguridad-y-autenticación)
+5. [📊 OBSERVABILIDAD](#-observabilidad)
+6. [🚀 DEPLOYMENT](#-deployment)
+7. [📈 ESCALABILIDAD](#-escalabilidad)
+8. [🔄 FLUJOS DE DATOS](#-flujos-de-datos)
+9. [🎯 ROADMAP](#-roadmap)
+
+---
+
 ## 🎯 RESUMEN EJECUTIVO
 
 Sistema Oracle descentralizado con capacidad de análisis de sentimiento social (VOX POPULI), implementado en Shadow Mode para validación pre-producción con 0 downtime.

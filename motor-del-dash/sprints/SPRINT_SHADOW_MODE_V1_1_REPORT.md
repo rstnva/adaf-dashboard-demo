@@ -8,7 +8,34 @@
 
 ---
 
-## 📋 RESUMEN EJECUTIVO
+## � Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](../documentacion/readmes/README.md) — Índice central
+- 🔧 [RUNBOOK_SHADOW_MODE.md](../../RUNBOOK_SHADOW_MODE.md) — Runbook operativo
+- 📖 [SHADOW_MODE_QUICKREF.md](../../SHADOW_MODE_QUICKREF.md) — Referencia rápida
+- 📋 [DOCUMENTACION_COMPLETA_SHADOW_V1_1.md](../../DOCUMENTACION_COMPLETA_SHADOW_V1_1.md) — Doc completa
+- 🏗️ [SHADOW_MODE_V1_1_ARCHITECTURE.md](../arquitectura/SHADOW_MODE_V1_1_ARCHITECTURE.md) — Arquitectura
+- 📦 [MODULO_SHADOW_MODE_V1_1_COMPLETO.md](../modulos/MODULO_SHADOW_MODE_V1_1_COMPLETO.md) — Módulo completo
+- 📊 [Índice de Sprints](README.md) — Otros sprint reports
+
+---
+
+## 📚 Índice de Contenido
+
+1. [📋 RESUMEN EJECUTIVO](#-resumen-ejecutivo)
+2. [🎯 OBJETIVOS DEL SPRINT](#-objetivos-del-sprint)
+3. [📦 ENTREGABLES](#-entregables)
+4. [🧪 TESTING & COBERTURA](#-testing--cobertura)
+5. [📝 DOCUMENTACIÓN](#-documentación)
+6. [🏗️ CAMBIOS TÉCNICOS](#-cambios-técnicos)
+7. [💼 IMPACTO DE NEGOCIO](#-impacto-de-negocio)
+8. [📊 MÉTRICAS FORTUNE 500](#-métricas-fortune-500)
+9. [🎓 LECCIONES APRENDIDAS](#-lecciones-aprendidas)
+10. [🎯 PRÓXIMOS PASOS](#-próximos-pasos)
+
+---
+
+## �📋 RESUMEN EJECUTIVO
 
 Sprint exitoso con **130 archivos** modificados, **99.4% de cobertura de tests** y **16MB de tamaño final** del repositorio tras limpieza. Implementación completa del **Oracle Core v1.0** y **VOX POPULI v1.1** con **Shadow Mode** para validación sin downtime.
 

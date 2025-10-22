@@ -5,7 +5,29 @@
 
 ---
 
-## 📦 DOCUMENTACIÓN GENERADA
+## � Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](ADAF-Billions-Dash-v2/motor-del-dash/documentacion/readmes/README.md) — Índice central
+- 🔧 [RUNBOOK_SHADOW_MODE.md](RUNBOOK_SHADOW_MODE.md) — Runbook operativo
+- 📖 [SHADOW_MODE_QUICKREF.md](SHADOW_MODE_QUICKREF.md) — Referencia rápida
+- 🏗️ [SHADOW_MODE_V1_1_ARCHITECTURE.md](motor-del-dash/arquitectura/SHADOW_MODE_V1_1_ARCHITECTURE.md) — Arquitectura
+- 📦 [MODULO_SHADOW_MODE_V1_1_COMPLETO.md](motor-del-dash/modulos/MODULO_SHADOW_MODE_V1_1_COMPLETO.md) — Módulo completo
+- 📊 [SPRINT_SHADOW_MODE_V1_1_REPORT.md](motor-del-dash/sprints/SPRINT_SHADOW_MODE_V1_1_REPORT.md) — Sprint report
+
+---
+
+## 📚 Índice de Contenido
+
+1. [📦 DOCUMENTACIÓN GENERADA](#-documentación-generada)
+2. [🗂️ ESTRUCTURA motor-del-dash v1.1](#-estructura-motor-del-dash-v11)
+3. [🔄 GIT STATUS](#-git-status)
+4. [📊 MÉTRICAS FINALES](#-métricas-finales)
+5. [🎯 PRÓXIMOS PASOS](#-próximos-pasos)
+6. [📝 NOTAS](#-notas)
+
+---
+
+## �📦 DOCUMENTACIÓN GENERADA
 
 ### 1. Sprint Report
 **Archivo:** `motor-del-dash/sprints/SPRINT_SHADOW_MODE_V1_1_REPORT.md`  

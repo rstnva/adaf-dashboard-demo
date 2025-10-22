@@ -366,6 +366,24 @@ Este documento centraliza los avances, decisiones y próximos pasos del proyecto
     - Ajuste del `eslint.config.mjs` para excluir el snapshot legado `ADAF-DASHBOARD-v1.1/**`, eliminando falsos positivos en lint y conservando el repositorio fuente libre de errores.
     - Ejecución de `pnpm lint` para validar el estado verde global tras los cambios y documentar la verificación como control Fortune 500.
 
+  - 2025-10-21 (Feature Store + LAV PLUS)
+    - **SPRINT COMPLETADO AL 100%**: Feature Store + Liquidity Regime (LAV PLUS)
+    - **Fase 1** (Feature Store Foundation): Schema, registry, catalog, storage, lineage, 22 tests ✅
+    - **Fase 2** (APIs + SDK + UI): REST APIs, Next.js routes, UI dashboard, SDK strategy decision ✅
+    - **Fase 3** (Liquidity Regime): GL/CN/MP components, LAV_LIQ_SCORE composite, verde/amarillo/rojo classifier, 50 tests ✅
+    - **SDK Strategy Decision (Fortune 500)**: Opción B elegida — Mantener separación
+      - Official SDK (`services/feature-store/serve/sdk/ts/`): Production-grade (retry, circuit breaker, metrics) para LAV-ADAF agents y external consumers
+      - UI Client (`src/lib/featureStore/client.ts`): Lightweight wrapper para Next.js UI (React Query compatible)
+      - Justificación: Separation of concerns, performance (bundle size), independent evolution, precedent Google/AWS/Stripe
+      - Documentación completa: `services/feature-store/SDK_STRATEGY.md`
+    - **Testing**: 72/72 tests passing (Feature Store 22 + Liquidity Regime 50)
+    - **Observability**: 26 Prometheus metrics, 2 Grafana dashboards (Feature Store + Liquidity Regime)
+    - **APIs**: 7 endpoints operacionales (4 Feature Store + 3 Liquidity Regime)
+    - **Build**: Production clean (0 errors, 0 warnings críticos)
+    - **Duración**: 36 horas vs 3-5 días estimados (eficiencia Fortune 500)
+    - **Documentación**: READMEs completos (`services/feature-store/`, `services/liquidity-regime/`, SDK_STRATEGY.md), sprint doc actualizado
+    - **Próximos pasos**: Shadow testing con datos reales, integración Feature Store → Liquidity Regime (reemplazar mocks), UI polish con E2E Playwright
+
 ---
 
 ## 8) Convenciones de actualización

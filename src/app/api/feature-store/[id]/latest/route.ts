@@ -5,7 +5,8 @@ import { GET_latest } from '@services/feature-store/serve/api/rest';
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  return withRateLimit(request, (req: NextRequest) => GET_latest(req, context));
+  const resolvedParams = await params;
+  return withRateLimit(request, (req: NextRequest) => GET_latest(req, { params: resolvedParams }));
 }

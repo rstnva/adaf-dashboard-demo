@@ -44,3 +44,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .next-dev/cache/
+
+# Large Next.js binaries (>100 MB)
+ADAF-Billions-Dash-v2/lav-adaf/apps/dashboard-backup/node_modules/
+ADAF-Billions-Dash-v2/node_modules/
+

@@ -1,6 +1,23 @@
+# ⚠️ REPO CONSOLIDADO — ADAF Billions Dash v2 (canónico)
+
+> Esta raíz se mantiene por compatibilidad histórica. Todo desarrollo y documentación canónica viven en:
+>
+> - `ADAF-Billions-Dash-v2/` (código y docs canónicos)
+> - Compendio Maestro: `ADAF-Billions-Dash-v2/motor-del-dash/memoria/compendios/ADAF_COMPENDIO_MAESTRO_v2_0.md`
+> - API Compendio (Markdown): `GET /api/docs/compendio`
+
 # ADAF Dashboard Pro
 
 > Toda la documentación técnica, operativa y de memorias vive ahora dentro de `motor-del-dash/`. Este README solo deja los accesos esenciales.
+
+---
+
+## 🧭 Navegación Rápida
+
+- 📚 **Mapa de documentación completo:** [NAVIGATION.md](./NAVIGATION.md) — Índice maestro de toda la documentación (29+ archivos, ~12,000 líneas)
+- 🏠 **HUB de READMEs:** [motor-del-dash/documentacion/readmes/README.md](./ADAF-Billions-Dash-v2/motor-del-dash/documentacion/readmes/README.md) — Índice central por tema
+- 🏗️ **Arquitectura:** [ARCHITECTURE.md](./ARCHITECTURE.md) — Arquitectura técnica completa
+- 📚 **Onboarding:** [ONBOARDING_FORTUNE500.md](./ONBOARDING_FORTUNE500.md) — Guía para nuevos desarrolladores
 
 ---
 
@@ -26,6 +43,36 @@
 - GET `/api/oracle/v1/feeds/by-id/latest?id=<feed-id>` → 200 OK / 404 JSON
 
 👉 **Docs completas:** [`motor-del-dash/documentacion/ORACLE_CORE_IMPLEMENTATION.md`](./motor-del-dash/documentacion/ORACLE_CORE_IMPLEMENTATION.md)
+
+---
+
+## 🎯 Feature Store + LAV PLUS v1.0 — PRODUCTION READY ✅
+
+**Sistema de Features Cuantitativas Fortune 500**
+
+- ✅ **Feature Store**: Catalog, registry, storage, versioning, lineage
+- ✅ **Liquidity Regime**: GL/CN/MP components, LAV_LIQ_SCORE, verde/amarillo/rojo classification
+- ✅ **APIs**: 7 endpoints (4 Feature Store + 3 Liquidity Regime)
+- ✅ **UI**: Feature Catalog dashboard (`/dashboard/feature-store`)
+- ✅ **SDKs**: Official SDK (services) + UI client (browser)
+- ✅ **Observability**: 26 Prometheus metrics, 2 Grafana dashboards
+- ✅ **Quality**: 72/72 tests passing (Feature Store 22 + Liquidity Regime 50)
+
+**SDK Strategy (Fortune 500):**
+- **Official SDK** (`services/feature-store/serve/sdk/ts/`): Production-grade para LAV-ADAF agents y external consumers (retry, circuit breaker, metrics)
+- **UI Client** (`src/lib/featureStore/client.ts`): Lightweight wrapper para Next.js UI (React Query compatible)
+- **Decisión**: Mantener separación (patrón Google/AWS/Stripe) → [`SDK_STRATEGY.md`](./services/feature-store/SDK_STRATEGY.md)
+
+**API Endpoints (ADAF port 3000):**
+- GET `/api/feature-store/catalog` → Feature catalog con filtros
+- GET `/api/feature-store/latest` → Latest feature values
+- POST `/api/feature-store/query` → Time-series queries
+- POST `/api/feature-store/publish` → Publish new data points
+- GET `/api/liquidity/v1/regime/latest` → Liquidity regime state
+- GET `/api/liquidity/v1/scoreboard` → GL/CN/MP scores + LAV_LIQ_SCORE
+- GET `/api/liquidity/v1/hints` → Trading hints based on regime
+
+👉 **Docs completas:** [`services/feature-store/README.md`](./services/feature-store/README.md) | [`services/liquidity-regime/README.md`](./services/liquidity-regime/README.md)
 
 ---
 

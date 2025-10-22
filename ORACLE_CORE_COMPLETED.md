@@ -1,5 +1,32 @@
 # 🎯 ORACLE CORE SPRINT - COMPLETADO
 
+---
+
+## 📑 Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](ADAF-Billions-Dash-v2/motor-del-dash/documentacion/readmes/README.md) — Índice central
+- 🎯 [ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md](ORACLE_CORE_V1_EXECUTIVE_SUMMARY.md) — Resumen ejecutivo
+- 🏗️ [ORACLE_ARCHITECTURE.md](motor-del-dash/arquitectura/ORACLE_ARCHITECTURE.md) — Arquitectura detallada
+- ✅ [ORACLE_CORE_CHECKLIST.md](ORACLE_CORE_CHECKLIST.md) — Checklist de entrega
+- 🔧 [RUNBOOK_ORACLE_CORE.md](RUNBOOK_ORACLE_CORE.md) — Runbook operativo
+- 📚 [ORACLE_CORE_IMPLEMENTATION.md](motor-del-dash/documentacion/ORACLE_CORE_IMPLEMENTATION.md) — Guía de implementación
+- 📖 [README Principal](README.md) — Guía del proyecto
+
+---
+
+## 📚 Índice de Contenido
+
+1. [Resumen Ejecutivo](#resumen-ejecutivo)
+2. [📊 Resultados](#-resultados)
+   - [Tests](#tests)
+   - [Entregables Completados](#entregables-completados)
+3. [📈 Métricas de Calidad Fortune 500](#-métricas-de-calidad-fortune-500)
+4. [⏭️ Próximos Pasos](#-próximos-pasos)
+5. [🏆 Lecciones Aprendidas](#-lecciones-aprendidas)
+6. [📁 Archivos Generados](#-archivos-generados)
+
+---
+
 ## Resumen Ejecutivo
 
 **Fecha:** 2025-10-16  

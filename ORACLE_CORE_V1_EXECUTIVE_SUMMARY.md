@@ -3,6 +3,36 @@
 **Fecha:** 2025-10-16
 **Estado:** ✅ PRODUCTION READY (Oracle Core + VOX POPULI v1.1)
 
+---
+
+## 📑 Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](ADAF-Billions-Dash-v2/motor-del-dash/documentacion/readmes/README.md) — Índice central
+- 🏗️ [ORACLE_ARCHITECTURE.md](motor-del-dash/arquitectura/ORACLE_ARCHITECTURE.md) — Arquitectura Oracle detallada
+- 📖 [README Principal](README.md) — Guía del proyecto
+- ✅ [ORACLE_CORE_CHECKLIST.md](ORACLE_CORE_CHECKLIST.md) — Checklist de implementación
+- 📋 [ORACLE_CORE_COMPLETED.md](ORACLE_CORE_COMPLETED.md) — Estado de completación
+- 🔧 [RUNBOOK_ORACLE_CORE.md](RUNBOOK_ORACLE_CORE.md) — Runbook operativo
+- 📚 [ORACLE_CORE_IMPLEMENTATION.md](motor-del-dash/documentacion/ORACLE_CORE_IMPLEMENTATION.md) — Guía de implementación
+- 📊 [ORACLE_FEEDS_CATALOG.md](docs/ORACLE_FEEDS_CATALOG.md) — Catálogo de feeds
+
+---
+
+## 📚 Índice de Contenido
+
+1. [📊 Métricas de Calidad](#-métricas-de-calidad)
+2. [🚀 Componentes Implementados](#-componentes-implementados)
+   - [VOX POPULI v1.1](#vox-populi-v11-sentiment-analysis)
+   - [API Endpoints](#api-endpoints-lav-adaf-port-3005)
+   - [UI Components](#ui-components-react-19)
+   - [Infraestructura Técnica](#infraestructura-técnica)
+3. [🔧 Cambios Técnicos Realizados](#-cambios-técnicos-realizados)
+4. [📈 Resultados de Tests](#-resultados-de-tests)
+5. [🎯 Próximos Pasos](#-próximos-pasos)
+6. [📝 Lecciones Aprendidas](#-lecciones-aprendidas)
+7. [🏆 Conclusión](#-conclusión)
+
+---
 
 ## 📊 Métricas de Calidad
 

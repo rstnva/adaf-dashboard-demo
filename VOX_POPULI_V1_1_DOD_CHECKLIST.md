@@ -7,6 +7,30 @@
 
 ---
 
+## 📑 Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](motor-del-dash/documentacion/readmes/README.md) — Índice central
+- 📊 [VOX POPULI Executive Summary](VOX_POPULI_V1_1_EXECUTIVE_SUMMARY.md) — Resumen ejecutivo completo
+- 🔧 [Oracle Core Implementation](motor-del-dash/documentacion/ORACLE_CORE_IMPLEMENTATION.md) — Implementación Oracle Core
+- 🏗️ [ARCHITECTURE.md](ARCHITECTURE.md) — Arquitectura del sistema
+- 📈 [RUNBOOK Oracle Core](RUNBOOK_ORACLE_CORE.md) — Guía operacional
+- 🧪 [Índice de Testing](motor-del-dash/documentacion/qa/README.md) — Tests y cobertura
+
+---
+
+## 📚 Índice de Contenido
+
+1. [Functionality](#1-functionality-)
+2. [Testing](#2-testing-)
+3. [Documentation](#3-documentation-)
+4. [Observability](#4-observability-)
+5. [Security & Compliance](#5-security--compliance-)
+6. [Operational Readiness](#6-operational-readiness-)
+7. [Deployment Status](#7-deployment-status-)
+8. [Sign-off](#8-sign-off-)
+
+---
+
 ## 1. Functionality ✅
 
 ### PR1: Derived Signals

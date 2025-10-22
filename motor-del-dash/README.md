@@ -1,3 +1,14 @@
+# ⚠️ DEPERCADO — Motor del Dash (copia legacy)
+
+> Esta carpeta quedó congelada tras la consolidación en ADAF Billions Dash v2 (mock-first).
+> Por favor usa la versión canónica:
+>
+> - Código y Docs canónicos: `ADAF-Billions-Dash-v2/motor-del-dash/`
+> - Compendio Maestro: `ADAF-Billions-Dash-v2/motor-del-dash/memoria/compendios/ADAF_COMPENDIO_MAESTRO_v2_0.md`
+> - Arquitectura: `ADAF-Billions-Dash-v2/motor-del-dash/arquitectura/ARCHITECTURE.md`
+> - Memoria técnica: `ADAF-Billions-Dash-v2/motor-del-dash/memoria/MEMORIA_GITHUB_COPILOT.md`
+> - API (Markdown): `GET /api/docs/compendio`
+
 # 📂 Motor del Dash - Documentación Completa del Sistema
 
 ## 🎯 **¿Qué es Motor del Dash?**

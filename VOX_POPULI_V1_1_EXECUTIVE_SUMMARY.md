@@ -8,6 +8,33 @@
 
 ---
 
+## 📑 Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](motor-del-dash/documentacion/readmes/README.md) — Índice central de documentación
+- ✅ [VOX POPULI v1.1 DOD Checklist](VOX_POPULI_V1_1_DOD_CHECKLIST.md) — Definition of Done completa
+- 🔧 [Oracle Core Implementation](motor-del-dash/documentacion/ORACLE_CORE_IMPLEMENTATION.md) — Implementación técnica
+- 🏗️ [ARCHITECTURE.md](ARCHITECTURE.md) — Arquitectura general del sistema
+- 📊 [RUNBOOK Oracle Core](RUNBOOK_ORACLE_CORE.md) — Guía operacional Oracle Core
+- 🧪 [Índice de Testing & QA](motor-del-dash/documentacion/qa/README.md) — Tests y cobertura
+- 📈 [Métricas y Observabilidad](motor-del-dash/documentacion/servicio/README.md) — Prometheus y Grafana
+
+---
+
+## 📚 Índice de Contenido
+
+1. [Vision & Objectives](#1-vision--objectives)
+2. [Implementation Summary (7 Atomic PRs)](#2-implementation-summary-7-atomic-prs)
+3. [Acceptance Criteria (DoD Checklist)](#3-acceptance-criteria-dod-checklist)
+4. [Technical Architecture](#4-technical-architecture)
+5. [Test Results Summary](#5-test-results-summary)
+6. [Deployment Checklist](#6-deployment-checklist)
+7. [Risk & Mitigation](#7-risk--mitigation)
+8. [Next Steps & Roadmap](#8-next-steps--roadmap)
+9. [Stakeholders & Sign-off](#9-stakeholders--sign-off)
+10. [Appendices](#10-appendices)
+
+---
+
 ## 1. Vision & Objectives
 
 ### 1.1 Strategic Vision

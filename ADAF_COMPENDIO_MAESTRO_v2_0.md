@@ -1,4 +1,6 @@
 # ADAF COMPENDIO MAESTRO v2.0 — DOMINIO TOTAL + IMPLEMENTACIÓN
+<!-- DEPRECATION NOTICE (2025-10-21): Este archivo no es canónico. Usa la copia oficial en ADAF-Billions-Dash-v2/motor-del-dash/memoria/compendios/ADAF_COMPENDIO_MAESTRO_v2_0.md -->
+# ADAF COMPENDIO MAESTRO v2.0 — DOMINIO TOTAL + IMPLEMENTACIÓN
 Fecha de compendio: 2025-10-08
 
 ---

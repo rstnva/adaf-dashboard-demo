@@ -47,7 +47,8 @@ type NavKey =
   | 'academy'
   | 'control'
   | 'monitoring'
-  | 'lava';
+  | 'lava'
+  | 'featureStore';
 
 interface NavItem {
   href: string;
@@ -60,6 +61,11 @@ const NAV_ITEMS: NavItem[] = [
     href: '/',
     icon: Home,
     i18nKey: 'inicio'
+  },
+  {
+    href: '/feature-store',
+    icon: Database,
+    i18nKey: 'featureStore'
   },
   {
     href: '/markets',

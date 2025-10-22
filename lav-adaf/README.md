@@ -1,3 +1,51 @@
+# ⚠️ DEPRECADO — LAV-ADAF (copia legacy)
+
+> Este árbol quedó congelado tras la consolidación en ADAF Billions Dash v2.
+> Usa la versión canónica dentro de `ADAF-Billions-Dash-v2/`:
+>
+> - LAV-ADAF canónico: `ADAF-Billions-Dash-v2/lav-adaf/`
+> - Compendio Maestro: `ADAF-Billions-Dash-v2/motor-del-dash/memoria/compendios/ADAF_COMPENDIO_MAESTRO_v2_0.md`
+> - Arquitectura: `ADAF-Billions-Dash-v2/motor-del-dash/arquitectura/ARCHITECTURE.md`
+> - API (Markdown): `GET /api/docs/compendio`
+
+---
+
+## 📑 Quick Links — Navegación Rápida
+
+- 🏠 [HUB de READMEs](../motor-del-dash/documentacion/readmes/README.md) — Índice central de toda la documentación
+- 📊 [Dashboard LAV-ADAF](./apps/dashboard/README.md) — Dashboard agentes puerto 3005
+- 🏗️ [ARCHITECTURE.md](../ARCHITECTURE.md) — Arquitectura general del sistema
+- 🔄 [SYNC_CHECKLIST.md](./SYNC_CHECKLIST.md) — Checklist sincronización LAV ↔ ADAF
+- 📋 [ADAF Billions Dash v2 README](../ADAF-Billions-Dash-v2/README.md) — Versión canónica consolidada
+- 🛡️ [Seguridad y Compliance](../motor-del-dash/documentacion/seguridad/) — Políticas y runbooks
+- 📈 [Monitoreo](../motor-del-dash/documentacion/servicio/) — Dashboards y alertas
+
+---
+
+## 📚 Índice de Contenido
+
+1. [Actualizaciones Sprint 5](#-actualizaciones-sprint-5)
+2. [Visión General](#-visión-general)
+3. [Quick Start](#-quick-start)
+4. [Arquitectura del Sistema](#️-arquitectura-del-sistema)
+5. [Instalación Rápida](#-instalación-rápida)
+6. [Reconstrucción Completa](#-reconstrucción-completa)
+7. [Servicios y Agentes](#-servicios-y-agentes)
+8. [APIs Disponibles](#-apis-disponibles)
+9. [Desarrollo Local](#-desarrollo-local)
+10. [Deployment](#-deployment)
+11. [Monitoreo y Observabilidad](#-monitoreo-y-observabilidad)
+12. [Seguridad y Compliance](#-seguridad-y-compliance)
+13. [Testing Strategy](#-testing-strategy)
+14. [Documentación](#-documentación)
+15. [Contribución](#-contribución)
+16. [Métricas y KPIs](#-métricas-y-kpis)
+17. [Soporte](#-soporte)
+18. [Licencia](#-licencia)
+19. [Comandos de Uso Diario](#-comandos-de-uso-diario)
+
+---
+
 # LAV/ADAF Dashboard Pro - Sistema Unificado# LAV/ADAF v1.3 - Sistema Integral de Agentes de Trading Cuantitativo
 
 
