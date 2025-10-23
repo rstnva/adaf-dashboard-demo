@@ -194,10 +194,16 @@ function generateMockProvenance(signalId: string): SignalProvenance {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  // Use 'any' to be compatible with both Next15 (Promise-based params) and tests (plain object params)
+  context: any
 ) {
   try {
-    const { id: signalId } = params;
+    const maybeParams = context?.params;
+    const resolvedParams =
+      maybeParams && typeof maybeParams?.then === 'function'
+        ? await maybeParams
+        : maybeParams;
+    const { id: signalId } = (resolvedParams || {}) as { id?: string };
 
     // Validate signal ID
     if (!signalId || signalId.trim() === '') {
